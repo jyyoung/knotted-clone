@@ -35,5 +35,5 @@ public class Member extends BaseEntity{
     // 회원 등급
     @Column(name = "member_role")
     @Enumerated(EnumType.STRING) // enum 사용 시 문제 예방하기 위해 String으로 바꿈
-    private MemberRole role;
+    private MemberRole memberRole;
 }
