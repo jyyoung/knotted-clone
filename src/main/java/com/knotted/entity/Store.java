@@ -1,14 +1,14 @@
 package com.knotted.entity;
 
-// 매장 정보 엔티티
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+// 매장 엔티티
 
 @Entity
 @Table(name = "store")
@@ -34,11 +34,11 @@ public class Store extends BaseEntity{
 
     // 영업시작시간
     @Column(name = "store_open_time")
-    private LocalDateTime openTime;
+    private LocalTime openTime;
 
     // 영업종료시간
     @Column(name = "store_close_time")
-    private LocalDateTime closeTime;
+    private LocalTime closeTime;
 
     // 매장 설명
     @Column(name = "store_description")
