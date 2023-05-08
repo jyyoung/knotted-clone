@@ -36,13 +36,8 @@ public class MemberController {
             return "/member/join";
         }
 
-        try {
-            Member member = Member.createMember(memberFormDTO, passwordEncoder);
-            memberService.saveMember(member);
-        } catch (IllegalStateException e) {
-            model.addAttribute("errorMessage", e.getMessage()); // 에러 메시지 전달
-            return "/member/join";
-        }
+        Member member = Member.createMember(memberFormDTO, passwordEncoder);
+        memberService.saveMember(member);
 
         return "redirect:/";
     }

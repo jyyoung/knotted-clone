@@ -1,6 +1,7 @@
 package com.knotted.service;
 
 import com.knotted.entity.Member;
+import com.knotted.exception.DuplicateMemberException;
 import com.knotted.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class MemberService {
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
         if(findMember != null){
-            throw new IllegalStateException("이미 가입한 이메일입니다");
+            throw new DuplicateMemberException("이미 가입한 이메일입니다");
         }
     }
 }

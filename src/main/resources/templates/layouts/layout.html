@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>knotted 클론코딩</title>
+</head>
+<body>
+
+<!--  타임리프에서 이 주석은 렌더링되지 않음  -->
+<!--  th:replace : 다른 페이지의 내용을 포함시키는 속성  -->
+<!--  layout:fragment : 레이아웃 페이지에서 치환될 컨텐츠의 영역을 지정하는 속성  -->
+<!--  fragments/header::header : fragments/header.html 파일에서 header라는 이름의 fragment를 여기에 넣음  -->
+    <div th:replace="~{fragments/header::header}"></div>
+
+    <div layout:fragment="content"></div>
+
+    <div th:replace="~{fragments/footer::footer}"></div>
+
+</body>
+</html>
