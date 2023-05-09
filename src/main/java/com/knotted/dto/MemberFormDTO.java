@@ -21,8 +21,12 @@ public class MemberFormDTO {
     private String email;
 
     // 이름
+    @Size(max = 6, message = "이름은 6자 이내로 입력해주세요")
+    @Pattern(regexp = "^[0-9a-zA-Zㄱ-ㅎ가-힣]*$")
     private String name;
 
     // 주소
+    @Size(max = 100, message = "주소는 100자 이내로 입력해주세요")
+    @Pattern(regexp = "^[0-9a-zA-Zㄱ-ㅎ가-힣]*$")
     private String address;
 }

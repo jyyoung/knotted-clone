@@ -1,11 +1,18 @@
 package com.knotted.config;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+
+import java.io.IOException;
 
 // 스프링 부트 3.0 이상이므로 스프링 시큐리티 6.0이상이 강제된다.
 // 따라서 최신 스프링 시큐리티 설정을 도입해야 한다
@@ -20,7 +27,7 @@ public class SecurityConfig{
                 .usernameParameter("email") // 로그인 페이지에서 사용자 이름을 입력받는 input 요소의 name을 설정
                 .passwordParameter("password") // 로그인 페이지에서 비밀번호를 입력받는 input 요소의 name을 설정
                 .defaultSuccessUrl("/") // 로그인 성공 후 이동할 페이지
-                .failureUrl("/member/login?success=false"); // 로그인 실패 시 이동할 URL을 설정
+                .failureUrl("/member/login/error"); // 로그인 실패 시 이동할 URL을 설정
 
         http.logout()
                 .logoutUrl("/member/logout") // 로그아웃 요청을 받을 URL

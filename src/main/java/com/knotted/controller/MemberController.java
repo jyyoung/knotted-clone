@@ -26,6 +26,13 @@ public class MemberController {
         return "/member/login";
     }
 
+    // 로그인 실패 처리를 위해 매핑을 하나 추가함
+    @GetMapping(value = "/login/error")
+    public String loginError(Model model){
+        model.addAttribute("errorMessage", "아이디 또는 비밀번호를 확인해주세요");
+        return "/member/login";
+    }
+
     @GetMapping(value = "/join")
     public String joinForm(Model model){
         model.addAttribute("memberFormDTO", new MemberFormDTO());

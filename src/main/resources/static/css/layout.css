@@ -7,6 +7,10 @@ html {
     background-color: #fdfaf7;
 }
 
+body, div, p, span, h1, h2, h3 {
+    font-size: 16px;
+}
+
 body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
@@ -32,8 +36,13 @@ input[type=text], input[type=password] {
     text-indent: 10px;
 }
 
-body, div, p, span, h1, h2, h3 {
-    font-size: 16px;
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #282828;
+    margin: 0 1px;
+    font-size: 1em;
 }
 
 header{
@@ -151,6 +160,14 @@ section h1{
     text-align: center;
 }
 
+.knotted_join_form {
+    width: 94%;
+    max-width: 768px;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
 .knotted_join_form ul,
 .knotted_login_form ul{
     margin-bottom: 10px;
@@ -171,7 +188,15 @@ section h1{
     display: inline-block;
 }
 
-.knotted_join_form li input[type="text"], .knotted_join_form li input[type="password"],
+.knotted_join_form li input[type="text"], .knotted_join_form li input[type="password"] {
+    border-radius: 5px;
+    height: 43px;
+    width: calc(80% - 115px);
+    margin-top: -5px;
+    background-color: inherit;
+    border: 1px solid #ddd;
+}
+
 .knotted_login_form li input[type="text"], .knotted_login_form li input[type="password"] {
     border-radius: 5px;
     height: 43px;
@@ -179,6 +204,23 @@ section h1{
     margin-top: -5px;
     background-color: inherit;
     border: 1px solid #ddd;
+}
+
+.knotted_join_form li > button, .knotted_join_form li > p button {
+    border: 1px solid #ffa0c5;
+    color: #ffa0c5;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    width: 100px;
+    height: 43px;
+    line-height: 41px;
+    margin-top: -2px;
+    float: right;
+}
+
+.knotted_join_form li.required label:after {
+    content: "*";
+    color: #ffa0c5;
 }
 
 .knotted_join_form > p, .knotted_login_form > p {
@@ -206,6 +248,20 @@ section h1{
 .knotted_login_form > p a:last-of-type:before {
     content: "ㅣ";
     padding-right: 10px;
+}
+
+.knotted_login_form a.join{
+    background: #282828;
+    transition: 1s;
+    border: 1px solid #FFDB7E;
+    color: #fff;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    padding: 15px;
+    border-radius: 500px;
+    margin: 0 auto;
+    margin-top: 10px;
 }
 
 footer{

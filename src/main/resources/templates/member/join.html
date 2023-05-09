@@ -7,9 +7,56 @@
 <th:block layout:fragment="css"></th:block>
 
 <div layout:fragment="content">
-    <h1>가입</h1>
+    <h1>회원가입</h1>
+
+    <div class="container">
+        <form action="/member/join" method="post" role="form" class="knotted_join_form" th:object="${memberFormDTO}">
+            <ul>
+                <li class="required">
+                    <label th:for="email">이메일</label>
+                    <input type="text" th:field="*{email}" placeholder="이메일을 입력해주세요">
+                    <button type="button">중복확인</button>
+                </li>
+                <li class="required">
+                    <label th:for="password">비밀번호</label>
+                    <input type="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요">
+                </li>
+                <li class="required">
+                    <label for="password_re">비밀번호 확인</label>
+                    <input type="password" id="password_re" placeholder="비밀번호를 다시 입력해주세요">
+                </li>
+                <li>
+                    <label th:for="name">이름</label>
+                    <input type="text" th:field="*{name}" placeholder="이름을 입력해주세요 (6자 이내)">
+                </li>
+                <li>
+                    <label th:for="address">주소</label>
+                    <input type="text" th:field="*{address}" placeholder="주소를 입력해주세요">
+                    <button type="button" onclick="execDaumPostcode()">우편번호검색</button>
+                </li>
+
+            </ul>
+
+        </form>
+
+    </div>
 </div>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
 
+    <!--/* 다음 주소 API */-->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                }
+            }).open();
+        }
+
+    </script>
+
+</th:block>
 </html>

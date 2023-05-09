@@ -18,7 +18,7 @@
     <script th:src="@{/js/swiper-bundle.min.js}"></script> <!--/* Swiper JS */-->
     <script th:src="@{/js/layout.js}"></script> <!--/* 사이트 전역 JS */-->
 
-    <!--/* 페이지별 커스텀 css, js */-->
+    <!--/* 페이지별 커스텀 css */-->
     <th:block layout:fragment="css"></th:block>
 </head>
 <body>
@@ -35,6 +35,7 @@
 
     <div th:replace="~{fragments/footer::footer}"></div>
 
+    <!--/* 페이지별 커스텀 js */-->
     <th:block layout:fragment="script"></th:block>
 </body>
 </html>
