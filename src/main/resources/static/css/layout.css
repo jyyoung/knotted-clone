@@ -2,6 +2,11 @@
 /* 사이트 공통으로 들어갈 CSS */
 @import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css);
 
+html {
+    font-size: 62.5%;
+    background-color: #fdfaf7;
+}
+
 body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
@@ -15,13 +20,16 @@ body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abb
     word-break: keep-all;
 }
 
+a {color: #000; text-decoration: none; outline: none}
+
 ul li {
     list-style: none;
 }
 
-html {
-    font-size: 62.5%;
-    background-color: #fdfaf7;
+input[type=text], input[type=password] {
+    -webkit-border-radius: 0;
+    -webkit-appearance: none;
+    text-indent: 10px;
 }
 
 body, div, p, span, h1, h2, h3 {
@@ -51,7 +59,7 @@ header .knotted_main{
     height: 36px;
     background: url(/images/logo.png) 0 0 no-repeat;
     background-size: 80px auto;
-    margin-right: 100px;
+    margin-right: 130px;
     text-indent: -9999px;
 }
 
@@ -101,8 +109,8 @@ header .knotted_member li:hover{
 
 header .knotted_member li a {
     padding-top: 30px;
-    padding-left: 3px;
-    padding-right: 3px;
+    padding-left: 0px;
+    padding-right: 0px;
     display: inline-block;
     line-height: 30px;
 }
@@ -111,6 +119,15 @@ section{
     position: relative;
     min-height: calc(100vh - 161px);
     padding-top: 60px;
+}
+
+section h1{
+    padding-top: 100px;
+    margin: 0 0 100px;
+    text-align: center;
+    font-size: 1.750em;
+    font-weight: 500;
+    letter-spacing: 0;
 }
 
 .knotted_main .knotted_main_swiper{
@@ -124,6 +141,71 @@ section{
 
 .knotted_main .knotted_main_swiper a img{
     width: 100%;
+}
+
+.knotted_login_form{
+    width: 94%;
+    max-width: 480px;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.knotted_join_form ul,
+.knotted_login_form ul{
+    margin-bottom: 10px;
+}
+
+.knotted_join_form li,
+.knotted_login_form li{
+    line-height: 40px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.knotted_join_form li label,
+.knotted_login_form li label{
+    width: 20%;
+    min-width: 60px;
+    display: inline-block;
+}
+
+.knotted_join_form li input[type="text"], .knotted_join_form li input[type="password"],
+.knotted_login_form li input[type="text"], .knotted_login_form li input[type="password"] {
+    border-radius: 5px;
+    height: 43px;
+    width: calc(80% - 10px);
+    margin-top: -5px;
+    background-color: inherit;
+    border: 1px solid #ddd;
+}
+
+.knotted_join_form > p, .knotted_login_form > p {
+    text-align: right;
+    line-height: 24px;
+}
+
+.knotted_join_form > p a, .knotted_login_form > p a {
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.knotted_join_form > button, .knotted_login_form > button{
+    background: #FFDB7E;
+    transition: 1s;
+    border: 1px solid #FFDB7E;
+    color: #846E23;
+    width: 100%;
+    max-width: 300px;
+    padding: 15px;
+    margin-top: 30px;
+    border-radius: 500px;
+}
+
+.knotted_login_form > p a:last-of-type:before {
+    content: "ㅣ";
+    padding-right: 10px;
 }
 
 footer{
@@ -168,3 +250,4 @@ footer p {
     font-size: 1.2rem;
     color: #999;
 }
+

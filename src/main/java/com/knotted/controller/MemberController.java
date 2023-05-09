@@ -21,6 +21,11 @@ public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder; // 암호화용
 
+    @GetMapping(value = "/login")
+    public String loginForm(){
+        return "/member/login";
+    }
+
     @GetMapping(value = "/join")
     public String joinForm(Model model){
         model.addAttribute("memberFormDTO", new MemberFormDTO());
