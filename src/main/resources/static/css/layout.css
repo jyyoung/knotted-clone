@@ -2,8 +2,30 @@
 /* 사이트 공통으로 들어갈 CSS */
 @import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css);
 
-*{
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: transparent;
     font-family: 'Pretendard';
+    font-weight: 400;
+    color: #282828;
+    word-break: keep-all;
+}
+
+ul li {
+    list-style: none;
+}
+
+html {
+    font-size: 62.5%;
+    background-color: #fdfaf7;
+}
+
+body, div, p, span, h1, h2, h3 {
+    font-size: 16px;
 }
 
 header{
@@ -41,8 +63,108 @@ header .knotted_top_menu li a{
     font-weight: 500;
 }
 
+header .knotted_top_menu li a:hover{
+    color: #ffa0c5 !important;
+    transition: 0.2s;
+}
+
+header .knotted_member{
+    height: 100%;
+}
+
+header .knotted_member li{
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 11px;
+    height: 100%;
+    cursor: pointer;
+}
+
+header .knotted_member li.knotted_login{
+    background: url(/images/icon_login.png) center 10px no-repeat;
+    background-size: auto 25px;
+}
+
+header .knotted_member li.knotted_mypage{
+    background: url(/images/icon_mypage.png) center 10px no-repeat;
+    background-size: auto 25px;
+}
+
+header .knotted_member li.knotted_cart{
+    background: url(/images/icon_cart.png) center 10px no-repeat;
+    background-size: auto 25px;
+}
+
+header .knotted_member li:hover{
+    transform: translate(0, -1px);
+}
+
+header .knotted_member li a {
+    padding-top: 30px;
+    padding-left: 3px;
+    padding-right: 3px;
+    display: inline-block;
+    line-height: 30px;
+}
+
 section{
     position: relative;
     min-height: calc(100vh - 161px);
     padding-top: 60px;
+}
+
+.knotted_main .knotted_main_swiper{
+    margin-bottom: 100px;
+}
+
+.knotted_main .knotted_main_swiper a{
+    display: block;
+    width: 100%;
+}
+
+.knotted_main .knotted_main_swiper a img{
+    width: 100%;
+}
+
+footer{
+    padding: 20px 0 30px;
+    margin-top: 100px;
+    border-top: 1px solid #ccc;
+}
+
+footer ul{
+    margin-bottom: 7px;
+}
+
+footer ul li{
+    display: inline-block;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    letter-spacing: -1px;
+}
+
+footer ul.footer_board li{
+    font-size: 1.4rem;
+    margin-right: 20px;
+}
+
+footer ul.footer_board li a:hover{
+    color: #ffa0c5 !important;
+    transition: 0.2s;
+}
+
+footer ul.footer_info li{
+    color: #999;
+}
+
+footer ul.footer_info li:after {
+    content: "｜";
+    margin: 0 6px;
+    color: #ccc;
+}
+
+footer p {
+    word-break: keep-all;
+    font-size: 1.2rem;
+    color: #999;
 }

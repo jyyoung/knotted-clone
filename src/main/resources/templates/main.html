@@ -5,10 +5,40 @@
       layout:decorate="~{layouts/layout}">
 
 <th:block layout:fragment="css"></th:block>
-<th:block layout:fragment="script"></th:block>
 
-<div layout:fragment="content">
-    main 영역
+<div layout:fragment="content" class="knotted_main">
+    <div class="swiper knotted_main_swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <a href="javascript:;">
+                    <img th:src="@{/images/main_banner_1.png}" alt="메인 배너">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="javascript:;">
+                    <img th:src="@{/images/main_banner_2.png}" alt="메인 배너">
+                </a>
+            </div>
+        </div>
+
+        <div class="swiper-pagination"></div>
+    </div>
 </div>
+
+<th:block layout:fragment="script">
+    <script>
+        var swiper = new Swiper(".knotted_main_swiper", {
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            allowTouchMove: false,
+            speed: 1000
+        });
+    </script>
+</th:block>
 
 </html>

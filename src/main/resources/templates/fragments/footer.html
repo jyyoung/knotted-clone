@@ -4,7 +4,25 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="footer">
-    footer 영역
+    <footer>
+        <div class="container">
+            <ul class="footer_board">
+                <li><a th:href="@{/board/qna}" class="nav-link text-black">1:1문의</a></li>
+                <li><a th:href="@{/board/notice}" class="nav-link text-black">공지사항</a></li>
+                <li><a th:href="@{/board/faq}" class="nav-link text-black">자주묻는질문</a></li>
+                <li><a th:href="@{/rule/web}" class="nav-link text-black">이용약관</a></li>
+                <li><a th:href="@{/rule/privacy}" class="nav-link text-black">개인정보처리방침</a></li>
+                <li><a th:href="@{/rule/location}" class="nav-link text-black">위치기반서비스이용약관</a></li>
+            </ul>
+            <ul class="footer_info">
+                <li>회사명 : 노티드(주식회사 지에프에프지)</li>
+                <li>대표이사명 : 이준범</li>
+                <li>사업자등록번호 : 248-81-00620</li>
+                <li>통신판매업신고번호 : 2020-서울강남-02297</li>
+                <li>주소 : 서울특별시 강남구 도산대로51길 16</li>
+            </ul>
+            <p>Copyright ⓒ 2023 Knotted. All Rights Reserved.</p></div>
+    </footer>
 </div>
 
 </html>
