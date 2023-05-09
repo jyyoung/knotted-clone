@@ -1,9 +1,7 @@
 package com.knotted.config;
 
-import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,16 +15,20 @@ public class SecurityConfig{
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.csrf().disable().cors().disable()
-                .authorizeHttpRequests(request -> request
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD)
-                        .permitAll().anyRequest().authenticated() // 어떠한 요청이라도 인증 필요
-                )
-                .formLogin(login -> login
-                        .defaultSuccessUrl("/", true) // 성공 시 메인으로
-                        .permitAll()
-                )
-                .logout(Customizer.withDefaults()); // 로그아웃은 기본 설정으로 (/logout으로 인증 해제)
+        http.formLogin() // 로그인 관련 설정
+                .loginPage("/member/login") // 로그인 페이지의 URL을 설정
+                .usernameParameter("email") // 로그인 페이지에서 사용자 이름을 입력받는 input 요소의 name을 설정
+                .passwordParameter("password") // 로그인 페이지에서 비밀번호를 입력받는 input 요소의 name을 설정
+                .defaultSuccessUrl("/") // 로그인 성공 후 이동할 페이지
+                .failureUrl("/member/login?success=false"); // 로그인 실패 시 이동할 URL을 설정
+
+        http.logout()
+                .logoutUrl("/member/logout") // 로그아웃 요청을 받을 URL
+                .logoutSuccessUrl("/"); // 로그아웃 성공 시 이동할 페이지
+
+        // 관리자 페이지 권한
+        http.authorizeHttpRequests()
+                .requestMatchers("/admin/**").hasRole("ADMIN"); // User.builder().roles()를 사용했으므로 hasRole을 사용해야 Role명이 매치가 될 것임
 
         return http.build();
     }
