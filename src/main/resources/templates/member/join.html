@@ -16,10 +16,12 @@
                     <label th:for="email">이메일</label>
                     <input type="text" th:field="*{email}" placeholder="이메일을 입력해주세요">
                     <button type="button">중복확인</button>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
                 </li>
                 <li class="required">
                     <label th:for="password">비밀번호</label>
                     <input type="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요">
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
                 </li>
                 <li class="required">
                     <label for="password_re">비밀번호 확인</label>
@@ -28,18 +30,33 @@
                 <li>
                     <label th:for="name">이름</label>
                     <input type="text" th:field="*{name}" placeholder="이름을 입력해주세요 (6자 이내)">
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError"></p>
                 </li>
-                <li>
+                <li class="address_li">
                     <label th:for="address">주소</label>
 
                     <input type="hidden" th:field="*{address}"> <!--/* 처리 후 주소가 들어갈 곳 */-->
 
-                    <input type="text" id="postcode">
+                    <input type="text" id="postcode" disabled>
                     <button type="button" onclick="execDaumPostcode()">우편번호검색</button>
-                    <input type="text" id="roadAddress">
-                    <input type="text" id="extraAddress" placeholder="상세주소를 입력해주세요">
+
+                    <div class="address_wrap">
+                        <label for="roadAddress">주소</label>
+                        <input type="text" id="roadAddress" disabled>
+                        <label for="roadAddress">상세주소</label>
+                        <input type="text" id="extraAddress" placeholder="상세주소를 입력해주세요">
+                    </div>
+
+                    <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError"></p>
                 </li>
             </ul>
+
+            <div class="join_point"> * 표시 항목은 필수 입력 항목입니다 </div>
+
+            <button type="submit" class="">회원가입</button>
+
+            <!--/* CSRF 공격 방지용 */-->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         </form>
     </div>
 </div>

@@ -181,6 +181,10 @@ section h1{
     padding: 15px 0;
 }
 
+.knotted_join_form li.address_li{
+    padding-bottom: 12px;
+}
+
 .knotted_join_form li label,
 .knotted_login_form li label{
     width: 20%;
@@ -206,6 +210,34 @@ section h1{
     border: 1px solid #ddd;
 }
 
+.knotted_join_form li input:disabled {
+    -webkit-text-fill-color: inherit;
+    opacity: 0.5;
+}
+
+.knotted_join_form li input#postcode {
+    width: 100px;
+}
+
+.knotted_join_form .address_wrap{
+    margin-top: 7px;
+}
+
+.knotted_join_form .address_wrap label{
+    font-size: 0;
+}
+
+.knotted_join_form li input#roadAddress {
+    margin-bottom: 8px;
+}
+
+.knotted_join_form .join_point {
+    color: red;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
 .knotted_join_form li > button, .knotted_join_form li > p button {
     border: 1px solid #ffa0c5;
     color: #ffa0c5;
@@ -221,6 +253,13 @@ section h1{
 .knotted_join_form li.required label:after {
     content: "*";
     color: #ffa0c5;
+}
+
+.knotted_join_form .fieldError{
+    color: red;
+    line-height: 15px;
+    margin-top: 15px;
+    font-size: 14px;
 }
 
 .knotted_join_form > p, .knotted_login_form > p {
