@@ -250,6 +250,10 @@ section h1{
     float: right;
 }
 
+.knotted_join_form li.address_li button{
+    float: none;
+}
+
 .knotted_join_form li.required label:after {
     content: "*";
     color: #ffa0c5;

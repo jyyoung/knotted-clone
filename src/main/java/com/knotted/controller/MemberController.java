@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/member/*")
 @Controller
@@ -28,8 +29,9 @@ public class MemberController {
 
     // 로그인 실패 처리를 위해 매핑을 하나 추가함
     @GetMapping(value = "/login/error")
-    public String loginError(Model model){
-        model.addAttribute("errorMessage", "아이디 또는 비밀번호를 확인해주세요");
+    public String loginError(@RequestParam(name = "error", required = false) String error, Model model){
+        model.addAttribute("errorMessage", "이메일 또는 비밀번호를 확인해주세요");
+
         return "/member/login";
     }
 
