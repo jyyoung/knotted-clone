@@ -12,6 +12,7 @@ public class Cart extends BaseEntity{
 
     // 장바구니 ID
     @Id
+    @GeneratedValue
     @Column(name = "cart_id")
     private Long id;
 

@@ -1,9 +1,6 @@
 package com.knotted.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalTime;
@@ -17,6 +14,7 @@ public class Store extends BaseEntity{
 
     // 매장 ID
     @Id
+    @GeneratedValue
     @Column(name = "store_id")
     private Long id;
 

@@ -12,6 +12,7 @@ public class Item extends BaseEntity{
 
     // 상품 ID
     @Id
+    @GeneratedValue
     @Column(name = "item_id")
     private Long id;
 

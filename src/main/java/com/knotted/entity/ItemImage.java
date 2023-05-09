@@ -12,6 +12,7 @@ public class ItemImage extends BaseEntity{
 
     // 상품 이미지 ID
     @Id
+    @GeneratedValue
     @Column(name = "item_image_id")
     private Long id;
 

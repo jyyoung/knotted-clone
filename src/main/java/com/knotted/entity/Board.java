@@ -12,6 +12,7 @@ public class Board extends BaseEntity{
 
     // 게시글 ID
     @Id
+    @GeneratedValue
     @Column(name = "board_id")
     private Long id;
 

@@ -1,9 +1,6 @@
 package com.knotted.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 // 상품 카테고리 엔티티
@@ -15,6 +12,7 @@ public class ItemCategory extends BaseEntity{
 
     // 상품 카테고리 ID
     @Id
+    @GeneratedValue
     @Column(name = "item_category_id")
     private Long id;
 

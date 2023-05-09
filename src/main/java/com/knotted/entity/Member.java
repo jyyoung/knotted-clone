@@ -16,6 +16,7 @@ public class Member extends BaseEntity{
 
     // 회원 ID
     @Id
+    @GeneratedValue // 주의!! strategy 속성은 생략해도 @GeneratedValue 자체는 생략하면 안 됨!!
     @Column(name = "member_id")
     private Long id; // 기본키 PK의 변수명은 그냥 id로 하는 것이 관례 (다른 엔티티도 마찬가지)
 

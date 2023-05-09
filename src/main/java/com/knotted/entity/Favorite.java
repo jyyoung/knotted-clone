@@ -13,6 +13,7 @@ public class Favorite extends BaseEntity{
 
     // 즐겨찾기 ID
     @Id
+    @GeneratedValue
     @Column(name = "favorite_id")
     private Long id;
 
