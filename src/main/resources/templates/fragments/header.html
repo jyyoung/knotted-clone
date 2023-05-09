@@ -4,7 +4,39 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="header">
-    header 영역
+    <header>
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start knotted_top_wrap">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none knotted_main">메인으로</a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 knotted_top_menu">
+                    <li><a href="#" class="nav-link px-2 text-black">RESERVATION</a></li>
+                    <li><a href="#" class="nav-link px-2 text-black">MENU</a></li>
+                    <li><a href="#" class="nav-link px-2 text-black">LOCATION</a></li>
+                    <li><a href="#" class="nav-link px-2 text-black">BRAND</a></li>
+                </ul>
+
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small knotted_member_menu">
+                    <li>
+                        <a href="#" class="nav-link text-black">
+                            LOGIN
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-black">
+                            MY PAGE
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-black">
+<!--                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"></use></svg>-->
+                            CART
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
 </div>
 
 </html>

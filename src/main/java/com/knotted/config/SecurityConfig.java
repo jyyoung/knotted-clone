@@ -26,9 +26,10 @@ public class SecurityConfig{
                 .logoutUrl("/member/logout") // 로그아웃 요청을 받을 URL
                 .logoutSuccessUrl("/"); // 로그아웃 성공 시 이동할 페이지
 
-        // 관리자 페이지 권한
+        // 페이지별 HTTP 요청에 대한 권한 설정
         http.authorizeHttpRequests()
-                .requestMatchers("/admin/**").hasRole("ADMIN"); // User.builder().roles()를 사용했으므로 hasRole을 사용해야 Role명이 매치가 될 것임
+                .requestMatchers("/admin/**").hasRole("ADMIN") // User.builder().roles()를 사용했으므로 hasRole을 사용해야 Role명이 매치가 될 것임
+                .anyRequest().permitAll(); // 다른 모든 페이지는 권한 없어도 됨
 
         return http.build();
     }
