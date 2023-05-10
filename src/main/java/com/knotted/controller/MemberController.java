@@ -5,14 +5,13 @@ import com.knotted.entity.Member;
 import com.knotted.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/member/*")
 @Controller
@@ -54,5 +53,14 @@ public class MemberController {
         memberService.saveMember(member);
 
         return "redirect:/";
+    }
+
+    @PostMapping(value = "/emailCheck")
+    @ResponseBody
+    public ResponseEntity emailCheck(String email){
+        // 성공, 실패 여부를 true, false라는 문자열로 보내기
+        String result = "";
+
+        return new ResponseEntity<String>(result, HttpStatus.OK);
     }
 }
