@@ -53,6 +53,7 @@ public class MemberService implements UserDetailsService {
             throw new UsernameNotFoundException(email);
         }
 
+        // 아래 부분이 스프링 시큐리티에 넘겨줄 사용자 정보 및 권한 정보 객체를 만드는 부분
         UserDetails userDetails = User.builder()
                 .username(member.getEmail()) // 로그인을 이메일로 할 것임
                 .password(member.getPassword())

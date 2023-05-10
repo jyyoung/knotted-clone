@@ -16,6 +16,11 @@
                 </ul>
 
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small knotted_member">
+                    <li class="knotted_admin" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                        <a th:href="@{/admin}" class="nav-link text-black">
+                            ADMIN
+                        </a>
+                    </li>
                     <li class="knotted_login" sec:authorize="isAnonymous()">
                         <a th:href="@{/member/login}" class="nav-link text-black">
                             LOGIN

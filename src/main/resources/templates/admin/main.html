@@ -1,0 +1,16 @@
+<!-- View 기본 템플릿 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/common}">
+
+<th:block layout:fragment="css"></th:block>
+
+<div layout:fragment="content">
+    관리자 메인 페이지
+</div>
+
+<th:block layout:fragment="script"></th:block>
+
+</html>

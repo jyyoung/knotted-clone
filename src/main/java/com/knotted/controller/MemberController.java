@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/member/*")
+@RequestMapping("/member")
 @Controller
 @RequiredArgsConstructor
 public class MemberController {

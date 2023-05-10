@@ -99,6 +99,11 @@ header .knotted_member li{
     cursor: pointer;
 }
 
+header .knotted_member li.knotted_admin{
+    background: url(/images/icon_admin.png) center 10px no-repeat;
+    background-size: auto 25px;
+}
+
 header .knotted_member li.knotted_login{
     background: url(/images/icon_login.png) center 10px no-repeat;
     background-size: auto 25px;
