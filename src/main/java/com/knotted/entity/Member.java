@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Entity
 @Table(name="member")
 @Data
-
 public class Member extends BaseEntity{
 
     // 회원 ID
@@ -32,6 +31,10 @@ public class Member extends BaseEntity{
     @Column(name = "member_name")
     private String name;
 
+    // 우편번호
+    @Column(name = "member_postcode")
+    private String postcode;
+
     // 주소
     @Column(name = "member_address")
     private String address;
@@ -50,6 +53,7 @@ public class Member extends BaseEntity{
         member.setPassword(password);
         member.setEmail(memberFormDTO.getEmail());
         member.setName(memberFormDTO.getName());
+        member.setPostcode(memberFormDTO.getPostcode());
         member.setAddress(memberFormDTO.getAddress());
 //        member.setMemberRole(MemberRole.USER);
         member.setMemberRole(MemberRole.ADMIN); // 일단 테스트를 위해 ADMIN 롤로 가입

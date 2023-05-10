@@ -37,13 +37,13 @@
 
                     <input type="hidden" th:field="*{address}"> <!--/* 처리 후 주소가 들어갈 곳 */-->
 
-                    <input type="text" id="postcode" disabled>
+                    <input type="text" th:field="*{postcode}" readonly>
                     <button type="button" onclick="execDaumPostcode()">우편번호검색</button>
 
                     <div class="address_wrap">
                         <label for="roadAddress">주소</label>
-                        <input type="text" id="roadAddress" disabled>
-                        <label for="roadAddress">상세주소</label>
+                        <input type="text" id="roadAddress" readonly>
+                        <label for="extraAddress">상세주소</label>
                         <input type="text" id="extraAddress" placeholder="상세주소를 입력해주세요">
                     </div>
 
@@ -188,6 +188,10 @@
                 alert("이메일 중복검사를 해주세요");
                 return;
             }
+
+            // submit 하기 전에 주소값을 합쳐서 input에 넣어야 함
+            let address = $("input#roadAddress").val() + $("input#extraAddress").val();
+            $("input#address").val(address);
 
             $(".knotted_join_form").submit();
         });

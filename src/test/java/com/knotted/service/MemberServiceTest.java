@@ -3,7 +3,6 @@ package com.knotted.service;
 import com.knotted.dto.MemberFormDTO;
 import com.knotted.entity.Member;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +45,9 @@ public class MemberServiceTest {
         assertEquals(member.getPassword(), savedMember.getPassword());
         assertEquals(member.getEmail(), savedMember.getEmail());
         assertEquals(member.getName(), savedMember.getName());
+        assertEquals(member.getPostcode(), savedMember.getPostcode());
         assertEquals(member.getAddress(), savedMember.getAddress());
         assertEquals(member.getMemberRole(), savedMember.getMemberRole());
 
     }
 }
-
-
-
-
-
-
-
-
