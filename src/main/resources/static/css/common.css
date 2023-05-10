@@ -278,7 +278,6 @@ section h1{
 
 .knotted_join_form > button, .knotted_login_form > button{
     background: #FFDB7E;
-    transition: 1s;
     border: 1px solid #FFDB7E;
     color: #846E23;
     width: 100%;
@@ -295,7 +294,6 @@ section h1{
 
 .knotted_login_form a.join{
     background: #282828;
-    transition: 1s;
     border: 1px solid #FFDB7E;
     color: #fff;
     display: block;

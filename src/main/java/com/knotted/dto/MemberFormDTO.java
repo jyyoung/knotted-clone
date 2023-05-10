@@ -12,7 +12,7 @@ public class MemberFormDTO {
     // 비밀번호
     @NotBlank(message = "비밀번호는 필수 입력값입니다")
     @Size(min = 8, max = 16, message = "비밀번호는 8자 이상, 16자 이하로 입력해주세요")
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[^\s]).+")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).+")
     private String password;
 
     // 이메일 (아이디처럼 사용)

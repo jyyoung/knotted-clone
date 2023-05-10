@@ -1,0 +1,73 @@
+
+@import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css);
+
+html {
+    font-size: 62.5%;
+    background-color: #fdfaf7;
+}
+
+body, div, p, span, h1, h2, h3 {
+    font-size: 16px;
+}
+
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: transparent;
+    font-family: 'Pretendard';
+    font-weight: 400;
+    color: #282828;
+    word-break: keep-all;
+}
+
+a {color: #000; text-decoration: none; outline: none}
+
+ul li {
+    list-style: none;
+}
+
+h1 {
+    padding-top: 50px;
+    text-align: center;
+    font-size: 3em;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+.container{
+    text-align: center;
+}
+
+a.knotted_main{
+    display: block;
+    width: 80px;
+    height: 36px;
+    background: url(/images/logo.png) 0 0 no-repeat;
+    background-size: 80px auto;
+    margin: 0 auto;
+    margin-top: 180px;
+    text-indent: -9999px;
+}
+
+.knotted_error{
+    padding-top: 20px;
+    font-size: 1.5em;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+.knotted_go_back{
+    margin-top: 50px;
+    font-size: 1.7em;
+    font-weight: 500;
+    letter-spacing: 0;
+    display: inline-block;
+    transition: color 0.2s;
+}
+
+.knotted_go_back:hover{
+    color: #ffa0c5;
+}

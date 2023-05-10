@@ -3,11 +3,19 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layouts/common}">
+      layout:decorate="~{layouts/error}">
 
 <th:block layout:fragment="css"></th:block>
 
 <div layout:fragment="content">
+    <div class="container">
+        <a href="/" class="knotted_main">메인으로</a>
+        <h1>401 Unauthorized</h1>
+        <div class="knotted_error">
+            권한이 없습니다
+        </div>
+        <a href="javascript:;" class="knotted_go_back">이전 페이지로 돌아가기</a>
+    </div>
 </div>
 
 <th:block layout:fragment="script"></th:block>

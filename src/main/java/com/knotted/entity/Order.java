@@ -7,7 +7,7 @@ import lombok.Data;
 // 주문 엔티티
 
 @Entity
-@Table(name = "order")
+@Table(name = "`order`") // MariaDB에서 ORDER라는 예약어가 있으므로 백틱 문자로 이스케이핑 해준다.
 @Data
 public class Order extends BaseEntity{
 
