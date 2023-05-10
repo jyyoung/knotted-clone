@@ -4,6 +4,8 @@
 html {
     font-size: 62.5%;
     background-color: #fdfaf7;
+    background-image: url("/images/watermark.png");
+    background-repeat: repeat;
 }
 
 body, div, p, span, h1, h2, h3 {

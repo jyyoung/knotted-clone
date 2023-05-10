@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="header">
@@ -17,9 +16,14 @@
                 </ul>
 
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small knotted_member">
-                    <li class="knotted_login">
+                    <li class="knotted_login" sec:authorize="isAnonymous()">
                         <a th:href="@{/member/login}" class="nav-link text-black">
                             LOGIN
+                        </a>
+                    </li>
+                    <li class="knotted_login" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/member/logout}" class="nav-link text-black">
+                            LOGOUT
                         </a>
                     </li>
                     <li class="knotted_mypage">

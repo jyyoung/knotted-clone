@@ -18,16 +18,29 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
-    public Member saveMember(Member member){ // Member 엔티티 전달받아 유효성 검사 후 DB에 반영
+    // Member 엔티티 전달받아 유효성 검사 후 DB에 반영
+    public Member saveMember(Member member){
         this.validateDuplicateMember(member);
         return memberRepository.save(member);
     }
 
+    // Member 엔티티 전달받아 이메일 중복 검사
     private void validateDuplicateMember(Member member){
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
         if(findMember != null){
             throw new DuplicateMemberException("이미 가입한 이메일입니다");
+        }
+    }
+
+    // 이메일을 매개변수로 받아 회원 중복 검사
+    public boolean checkDuplicateEmail(String email){
+        Member findMember = memberRepository.findByEmail(email);
+
+        if(findMember != null){
+            return false;
+        }else{
+            return true;
         }
     }
 

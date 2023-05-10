@@ -52,15 +52,28 @@ public class MemberController {
         Member member = Member.createMember(memberFormDTO, passwordEncoder);
         memberService.saveMember(member);
 
-        return "redirect:/";
+        return "redirect:/member/complete?mode=join&email=" + member.getEmail();
     }
 
     @PostMapping(value = "/emailCheck")
     @ResponseBody
     public ResponseEntity emailCheck(String email){
         // 성공, 실패 여부를 true, false라는 문자열로 보내기
-        String result = "";
+        String result = "false";
+
+        // 이메일 중복 검사에 성공 시 true 반환
+        if(memberService.checkDuplicateEmail(email)){
+            result = "true";
+        }
 
         return new ResponseEntity<String>(result, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/complete")
+    public String complete(@RequestParam(name = "mode") String mode, @RequestParam(name = "email", required = false) String email, Model model){
+        model.addAttribute("mode", mode);
+        model.addAttribute("email", email);
+        return "/member/complete";
+    }
+
 }

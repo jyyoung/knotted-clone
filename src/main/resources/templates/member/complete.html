@@ -1,0 +1,109 @@
+<!-- View 기본 템플릿 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/common}">
+
+<th:block layout:fragment="css">
+    <style>
+        .member_complete_container{
+            width: 94%;
+            max-width: 400px;
+            min-height: calc(100vh - 161px);
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .welcome_div{
+            background: url(/images/smile.png) center 20px no-repeat;
+            background-size: 80px auto;
+            width: 100%;
+            padding-top: 100px;
+            text-align: center;
+        }
+
+        .welcome_div span{
+            font-weight: 500;
+            color: #ffa0c5;
+        }
+
+        .welcome_div .button_wrap{
+            margin-top: 50px;
+        }
+
+        .welcome_div button{
+            background: #FFDB7E;
+            border: 1px solid #FFDB7E;
+            color: #846E23;
+            width: 100%;
+            max-width: 240px;
+            padding: 15px;
+            margin: 3px 1px;
+            border-radius: 500px;
+            font-size: 1em;
+        }
+
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+    <div th:switch="${mode}" class="member_complete_container" th:attr="data-mode=${mode}">
+        <!--/* 회원가입 완료 */-->
+        <div th:case="join" class="welcome_div">
+            <ul>
+                <li><span th:text="${email}"></span>님</li>
+                <li>환영합니다</li>
+            </ul>
+            <div class="button_wrap">
+                <button type="button" class="knotted_go_login">로그인하기</button>
+            </div>
+        </div>
+
+        <!--/* 로그인 완료 */-->
+        <div th:case="login" class="welcome_div">
+            <ul>
+                <li><span>노티드</span>에 오신 것을 환영합니다</li>
+            </ul>
+            <div>
+                <p><span class="knotted_timer">3</span>초 뒤 메인으로 이동합니다</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+        // 로그인 화면으로 이동
+        $(".knotted_go_login").on("click", function(){
+            location.href = "/member/login";
+        });
+
+        $(document).ready(function(){
+            let mode = $(".member_complete_container").data("mode");
+
+            if(mode === "login"){
+                go_login_timer();
+            }
+        });
+
+        function go_login_timer(){
+            let now_timer = 3; // 3초로 시작
+
+            let go_login_interval = setInterval(function(){
+                now_timer = now_timer - 1;
+
+                $(".knotted_timer").html(now_timer); // 줄어든 시간을 넣는다
+            }, 1000);
+
+            // 3초 후 메인 화면으로 이동
+            setTimeout(function(){
+                location.href = "/";
+            }, 3000);
+        }
+    </script>
+</th:block>
+
+</html>

@@ -25,7 +25,7 @@
                 <a th:href="@{/member/findId}">아이디찾기</a>
                 <a th:href="@{/member/findPw}">비밀번호찾기</a>
             </p>
-            <button type="submit">로그인</button>
+            <button type="button" class="knotted_login_submit">로그인</button>
             <a th:href="@{/member/join}" class="join">회원가입</a>
 
             <!--/* CSRF 공격 방지용 */-->
@@ -36,6 +36,8 @@
 
 <th:block layout:fragment="script">
     <script th:inline="javascript">
+
+        // 로그인 실패 시 에러 메시지 출력
         $(document).ready(function(){
             let errorMessage = [[${errorMessage}]];
             if(errorMessage != null){
@@ -43,6 +45,31 @@
                 history.replaceState(null, null, '/member/login'); // 현재 URL 히스토리 바꿈
             }
         });
+
+        // 로그인 처리 전 유효성 검사 등
+        $(".knotted_login_submit").on("click", function(){
+            let email = $("input#email").val();
+
+            // 일단 빈 값 있는지 검사
+            if(!($("input#email").val())){
+                alert("이메일을 입력해주세요");
+                return;
+            }
+
+            // 이메일 형식 검사
+            if(!validateEmail(email)){
+                alert("이메일 형식으로 입력해주세요");
+                return;
+            }
+
+            if(!($("input#password").val())){
+                alert("비밀번호를 입력해주세요");
+                return;
+            }
+
+            $(".knotted_login_form").submit();
+        });
+
     </script>
 </th:block>
 

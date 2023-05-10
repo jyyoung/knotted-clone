@@ -15,7 +15,7 @@
                 <li class="required">
                     <label th:for="email">이메일</label>
                     <input type="text" th:field="*{email}" placeholder="이메일을 입력해주세요">
-                    <button type="button">중복확인</button>
+                    <button type="button" class="knotted_email_check">중복확인</button>
                     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
                 </li>
                 <li class="required">
@@ -53,7 +53,7 @@
 
             <div class="join_point">* 표시 항목은 필수 입력 항목입니다</div>
 
-            <button type="submit" class="">회원가입</button>
+            <button type="button" class="knotted_join_submit">회원가입</button>
 
             <!--/* CSRF 공격 방지용 */-->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
@@ -66,6 +66,8 @@
     <!--/* 다음 주소 API */-->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+
+        // 다음 우편번호 API
         function execDaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {
@@ -104,6 +106,93 @@
                 }
             }).open();
         }
+
+        let emailCheck = false; // 이메일 중복체크 여부
+
+        // 이메일 중복확인
+        $(".knotted_email_check").on("click", function(){
+            let email = $("input#email").val();
+
+            if(!email){
+                alert("이메일을 입력해주세요");
+                return;
+            }
+
+            // 일단 이메일 형식 검사
+            if(!validateEmail(email)){
+                alert("이메일 형식으로 입력해주세요");
+                return;
+            }
+
+            let header = "[[${_csrf.headerName}]]";
+            let token = "[[${_csrf.token}]]";
+
+            $.ajax({
+                url: "/member/emailCheck",
+                type: "POST",
+                data: {
+                    email: email,
+                },
+                cache: false,
+                beforeSend : function(xhr){
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    if(result === "true"){
+                        alert("사용 가능한 이메일입니다");
+                        emailCheck = true;
+                    }else{
+                        alert("사용 불가능한 이메일입니다");
+                        emailCheck = false;
+                    }
+                },
+                error: function(jqXHR, status, error){
+                    console.error(error);
+                }
+            });
+        });
+
+        // 이메일 input값 변경 시 다시 이메일 중복체크 false
+        $("input#email").on("change", function(){
+            emailCheck = false;
+        });
+
+        // 회원가입 처리 전 유효성 검사 등
+        $(".knotted_join_submit").on("click", function(){
+
+            // 일단 빈 값 있는지 검사
+            if(!($("input#email").val())){
+                alert("이메일을 입력해주세요");
+                return;
+            }
+
+            if(!($("input#password").val())){
+                alert("비밀번호를 입력해주세요");
+                return;
+            }
+
+            if(!($("input#password_re").val())){
+                alert("비밀번호 확인을 입력해주세요");
+                return;
+            }
+
+            // 비밀번호와 비밀번호 확인이 같은지 검사
+            if($("input#password").val() != $("input#password_re").val()){
+                alert("비밀번호와 비밀번호 확인이 같지 않습니다");
+                return;
+            }
+
+            // 이메일 중복검사 했는지 확인
+            if(!emailCheck){
+                alert("이메일 중복검사를 해주세요");
+                return;
+            }
+
+            $(".knotted_join_form").submit();
+        });
+
+
     </script>
 
 </th:block>
