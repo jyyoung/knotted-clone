@@ -16,7 +16,10 @@ public class BoardCategory extends BaseEntity{
     @Column(name = "board_category_id")
     private Long id;
 
-    // 카테고리명
+    // 카테고리명 (영문, 유니크)
+    @Column(name = "board_category_category", unique = true)
+    private String category;
+
     @Column(name = "board_category_name")
     private String name;
 }

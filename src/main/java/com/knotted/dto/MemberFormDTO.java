@@ -21,16 +21,19 @@ public class MemberFormDTO {
     private String email;
 
     // 이름
+    @NotBlank(message = "이름은 필수 입력값입니다")
     @Size(max = 6, message = "이름은 6자 이내로 입력해주세요")
-    @Pattern(regexp = "^[0-9a-zA-Zㄱ-ㅎ가-힣]*$")
+    @Pattern(regexp = "^[a-zA-Zㄱ-ㅎ가-힣]*$")
     private String name;
 
     // 우편번호
+    @NotBlank(message = "우편번호는 필수 입력값입니다")
     @Size(max = 6, message = "우편번호는 최대 6자리입니다")
     @Pattern(regexp = "^[0-9]*$")
     private String postcode;
 
     // 주소
+    @NotBlank(message = "주소는 필수 입력값입니다")
     @Size(max = 100, message = "주소는 100자 이내로 입력해주세요")
     private String address;
 }
