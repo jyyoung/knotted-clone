@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/admin/store")
@@ -19,8 +20,11 @@ public class AdminStoreController {
 
     private final AdminStoreService adminStoreService;
 
+    // 매장 관리 메인 페이지. 매장 리스트도 뿌려준다.
     @GetMapping(value = {"", "/"})
     public String main(Model model){
+
+
         return "/admin/store/index";
     }
 
@@ -32,6 +36,7 @@ public class AdminStoreController {
         return "/admin/store/storeForm";
     }
 
+    // 매장 등록 처리
     @PostMapping(value = "/new")
     public String storeSubmit(@Valid StoreFormDTO storeFormDTO, BindingResult bindingResult, Model model, MultipartFile storeImageFile){
 
@@ -60,5 +65,4 @@ public class AdminStoreController {
         // 성공 시 매장 관리 페이지로 이동
         return "redirect:/admin/store";
     }
-
 }
