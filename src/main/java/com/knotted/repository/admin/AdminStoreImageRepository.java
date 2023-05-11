@@ -1,4 +1,7 @@
 package com.knotted.repository.admin;
 
-public interface AdminStoreImageRepository {
+import com.knotted.entity.StoreImage;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AdminStoreImageRepository extends JpaRepository<StoreImage, Long> {
 }
