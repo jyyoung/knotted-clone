@@ -26,6 +26,10 @@ public class Store extends BaseEntity{
     @Column(name = "store_phone_number")
     private String phoneNumber;
 
+    // 우편번호
+    @Column(name = "store_postcode")
+    private String postcode;
+
     // 주소
     @Column(name = "store_address")
     private String address;

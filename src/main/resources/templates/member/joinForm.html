@@ -7,9 +7,9 @@
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
-    <h1>회원가입</h1>
-
     <div class="container">
+        <h1>회원가입</h1>
+
         <form action="/member/join" method="post" role="form" class="knotted_join_form" th:object="${memberFormDTO}">
             <ul>
                 <li class="required">

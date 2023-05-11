@@ -9,6 +9,10 @@
 <th:block layout:fragment="content">
     <div class="container">
         <h1>매장 등록 페이지</h1>
+
+        <form action="/admin/store/new" method="post" role="form" class="knotted_store_form" th:object="${storeFormDTO}">
+
+        </form>
     </div>
 </th:block>
 
