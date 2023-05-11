@@ -1,6 +1,7 @@
 package com.knotted.controller.admin;
 
 import com.knotted.dto.StoreFormDTO;
+import com.knotted.service.admin.AdminStoreService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequiredArgsConstructor
 public class AdminStoreController {
+
+    private final AdminStoreService adminStoreService;
+
     @GetMapping(value = {"", "/"})
     public String main(Model model){
         return "/admin/store/index";
@@ -37,6 +41,14 @@ public class AdminStoreController {
 
         if(storeImageFile.isEmpty()){ // 이미지가 없다면
             model.addAttribute("errorMessage", "매장 이미지가 없습니다");
+            return "/admin/store/storeForm";
+        }
+
+        // 이미지가 있으면 매장 및 매장 이미지 저장 로직을 호출
+        try{
+            adminStoreService.saveStore(storeFormDTO, storeImageFile);
+        }catch (Exception e){
+            model.addAttribute("errorMessage", "매장 등록 중 에러가 발생했습니다");
             return "/admin/store/storeForm";
         }
 

@@ -32,4 +32,11 @@ public class StoreImage extends BaseEntity{
     // 이미지 URL 경로
     @Column(name = "image_url")
     private String imageUrl;
+
+    // 파일 업로드 성공 시 바꿀 엔티티 정보 업데이트
+    public void updateStoreImage(String imageName, String originalImageName, String imageUrl){
+        this.imageName = imageName;
+        this.originalImageName = originalImageName;
+        this.imageUrl = imageUrl;
+    }
 }
