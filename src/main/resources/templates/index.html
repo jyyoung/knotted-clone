@@ -6,24 +6,26 @@
 
 <th:block layout:fragment="css"></th:block>
 
-<div layout:fragment="content" class="knotted_main">
-    <div class="swiper knotted_main_swiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <a th:href="@{/order}">
-                    <img th:src="@{/images/main_banner_1.png}" alt="메인 배너">
-                </a>
+<th:block layout:fragment="content">
+    <div class="knotted_main">
+        <div class="swiper knotted_main_swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a th:href="@{/order}">
+                        <img th:src="@{/images/main_banner_1.png}" alt="메인 배너">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="javascript:;">
+                        <img th:src="@{/images/main_banner_2.png}" alt="메인 배너">
+                    </a>
+                </div>
             </div>
-            <div class="swiper-slide">
-                <a href="javascript:;">
-                    <img th:src="@{/images/main_banner_2.png}" alt="메인 배너">
-                </a>
-            </div>
-        </div>
 
-        <div class="swiper-pagination"></div>
+            <div class="swiper-pagination"></div>
+        </div>
     </div>
-</div>
+</th:block>
 
 <th:block layout:fragment="script">
     <script>

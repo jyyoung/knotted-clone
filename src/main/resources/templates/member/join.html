@@ -6,7 +6,7 @@
 
 <th:block layout:fragment="css"></th:block>
 
-<div layout:fragment="content">
+<th:block layout:fragment="content">
     <h1>회원가입</h1>
 
     <div class="container">
@@ -59,7 +59,7 @@
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         </form>
     </div>
-</div>
+</th:block>
 
 <th:block layout:fragment="script">
 

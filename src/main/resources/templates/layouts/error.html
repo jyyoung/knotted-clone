@@ -3,21 +3,21 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <meta charset="UTF-8">
-  <link rel="icon" th:href="@{/images/favicon.ico}">
-  <title>Knotted 클론코딩 - 에러</title>
+    <meta charset="UTF-8">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <title>Knotted 클론코딩 - 에러</title>
 
-  <!--/* CSS */-->
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" th:href="@{/css/error.css}">
+    <!--/* CSS */-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
 
-  <!--/* 페이지별 커스텀 css */-->
-  <th:block layout:fragment="css"></th:block>
+    <!--/* 페이지별 커스텀 css */-->
+    <th:block layout:fragment="css"></th:block>
 </head>
 <body>
 
 <section>
-  <div layout:fragment="content"></div>
+    <th:block layout:fragment="content"></th:block>
 </section>
 
 <!--/* JS */-->

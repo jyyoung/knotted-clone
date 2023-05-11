@@ -5,17 +5,85 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
-<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="css">
+    <style>
+        .agreement{
+            width: 90%;
+            margin: 0 auto;
+        }
 
-<div layout:fragment="content">
+        .agreement h1{
+            padding-top: 100px;
+            margin: 0 0 50px;
+            font-size: 1.750em;
+            font-weight: 500;
+        }
+
+        .agreement .rule_subject *{
+            font-size: 2rem;
+        }
+
+        .agreement .rule_content{
+            margin-top: 50px;
+        }
+
+        .agreement .github_link{
+            color: #ffa0c5;
+            animation: colorchange 2s infinite;
+            animation-timing-function: linear;
+        }
+        
+        @keyframes colorchange {
+            20% {
+                color: #ffa0c5;
+            }
+            40% {
+                color: red;
+            }
+            60% {
+                color: blue;
+            }
+            80% {
+                color: green;
+            }
+            100% {
+                color: #ffa0c5;
+            }
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="content">
     <div class="container">
-        <th:block th:switch="${rule}">
-            <h1 th:case="web">이용약관</h1>
-            <h1 th:case="privacy">개인정보처리방침</h1>
-            <h1 th:case="location">위치기반서비스이용약관</h1>
-        </th:block>
+        <div class="agreement">
+            <th:block th:switch="${rule}">
+                <th:block th:case="web">
+                    <h1>이용약관</h1>
+                </th:block>
+                <th:block th:case="privacy">
+                    <h1>개인정보처리방침</h1>
+                </th:block>
+                <th:block th:case="location">
+                    <h1>위치기반서비스이용약관</h1>
+                </th:block>
+            </th:block>
+
+            <div class="rule_subject">
+                <p>만든이 : 황정민</p>
+                <p><a href="https://github.com/jungmin0917" class="github_link">github : jungmin0917</a></p>
+                <p>제작 : 2023.05.04 ~ </p>
+            </div>
+
+            <p class="rule_content">
+                안녕하세요.<br>
+                열심히 만들어 봤습니다.<br>
+                댁은 안녕하신지요.<br>
+                뭔가 부족한 점이 있으면 언제든지 말씀해주세요.<br>
+                그럼 이만.
+            </p>
+        </div>
     </div>
-</div>
+</th:block>
 
 <th:block layout:fragment="script"></th:block>
 
