@@ -43,6 +43,11 @@ public class AdminStoreController {
             model.addAttribute("errorMessage", "매장 이미지가 없습니다");
             return "/admin/store/storeForm";
         }
+        
+        if(!storeImageFile.getContentType().startsWith("image/")){ // 이미지 파일이 아니라면
+            model.addAttribute("errorMessage", "이미지 파일이 아닙니다");
+            return "/admin/store/storeForm";
+        }
 
         // 이미지가 있으면 매장 및 매장 이미지 저장 로직을 호출
         try{

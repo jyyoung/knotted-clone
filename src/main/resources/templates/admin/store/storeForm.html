@@ -50,8 +50,8 @@
                     <p th:if="${#fields.hasErrors('closeTime')}" th:errors="*{closeTime}" class="fieldError"></p>
                 </li>
                 <li class="required">
-                    <label for="image">매장 이미지</label>
-                    <input type="file" name="storeImageFile" id="image">
+                    <label for="storeImage">매장 이미지</label>
+                    <input type="file" name="storeImageFile" id="storeImage">
                 </li>
                 <li>
                     <label th:for="description">매장설명</label>
@@ -75,6 +75,14 @@
     <!--/* 다음 주소 API */-->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+
+        // 유효성 검사 실패 등으로 다시 돌아오면 에러메시지 출력
+        $(document).ready(function(){
+            let errorMessage = [[${errorMessage}]];
+            if(errorMessage != null){
+                alert(errorMessage);
+            }
+        });
 
         // 다음 우편번호 API
         function execDaumPostcode() {
@@ -117,7 +125,42 @@
         }
 
         $(".knotted_submit").on("click", function(){
-            console.log("test");
+
+            // 프론트 유효성 검사
+            if(!($("input#name").val())){
+                alert("매장명을 입력해주세요");
+                return;
+            }
+
+            if(!($("input#phoneNumber").val())){
+                alert("전화번호를 입력해주세요");
+                return;
+            }
+
+            // submit 하기 전에 주소값을 합쳐서 input에 넣어야 함
+            let address = $("input#roadAddress").val() + $("input#extraAddress").val();
+            $("input#address").val(address);
+
+            if(!($("input#address").val())){
+                alert("주소를 입력해주세요");
+                return;
+            }
+
+            if(!($("input#openTime").val())){
+                alert("영업시작시간을 입력해주세요");
+                return;
+            }
+
+            if(!($("input#closeTime").val())){
+                alert("영업종료시간을 입력해주세요");
+                return;
+            }
+
+            if(!($("input#storeImage").val())){
+                alert("매장 이미지를 업로드해주세요");
+                return;
+            }
+
         });
 
     </script>
