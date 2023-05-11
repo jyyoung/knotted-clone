@@ -134,7 +134,7 @@ header .knotted_member li a {
 section{
     position: relative;
     min-height: calc(100vh - 161px);
-    padding-top: 60px;
+    padding-top: 120px;
 }
 
 section h1{
@@ -148,26 +148,89 @@ section h1{
 
 /* 관리자 부분 S */
 
-.knotted_admin_menu{
-    display: flex;
-    justify-content: space-evenly;
-    padding: 0px 100px;
+
+.header_admin{
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #ddd;
+    z-index: 1000;
+    position: fixed;
+    top: 60px;
+    background: rgba(253,250,247,0.8);
 }
 
-.knotted_admin_menu a{
-    display: block;
-    padding: 25px 40px;
-    border: 1px solid #aaa;
-    background-color: #fff;
-    border-radius: 20px;
-    font-size: 18px;
-    box-shadow: 0 0 3px #555;
+.header_admin .container{
+    height: 100%;
+}
+
+.header_admin .container .knotted_top_wrap{
+    height: 100%;
+}
+
+.header_admin .knotted_main{
+    width: 80px;
+    height: 36px;
+    background: url(/images/logo.png) 0 0 no-repeat;
+    background-size: 80px auto;
+    margin-right: 130px;
+    text-indent: -9999px;
+}
+
+.header_admin .knotted_top_menu li{
+    margin-right: 40px;
+}
+
+.header_admin .knotted_top_menu li a{
     font-weight: 500;
 }
 
-.knotted_admin_menu a:hover{
+.header_admin .knotted_top_menu li a:hover{
     color: #ffa0c5 !important;
     transition: 0.2s;
+}
+
+.header_admin .knotted_member{
+    height: 100%;
+}
+
+.header_admin .knotted_member li{
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 11px;
+    height: 100%;
+    cursor: pointer;
+}
+
+.header_admin .knotted_member li.knotted_admin{
+    background: url(/images/icon_admin.png) center 10px no-repeat;
+    background-size: auto 25px;
+}
+
+.header_admin .knotted_member li.knotted_login{
+    background: url(/images/icon_login.png) center 10px no-repeat;
+    background-size: auto 25px;
+}
+
+.header_admin .knotted_member li.knotted_mypage{
+    background: url(/images/icon_mypage.png) center 10px no-repeat;
+    background-size: auto 25px;
+}
+
+.header_admin .knotted_member li.knotted_cart{
+    background: url(/images/icon_cart.png) center 10px no-repeat;
+    background-size: auto 25px;
+}
+
+.header_admin .knotted_member li:hover{
+    transform: translate(0, -1px);
+}
+
+.header_admin .knotted_member li a {
+    padding-top: 30px;
+    padding-left: 0px;
+    padding-right: 0px;
+    display: inline-block;
+    line-height: 30px;
 }
 
 /* 관리자 부분 E */

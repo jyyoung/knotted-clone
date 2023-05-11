@@ -6,12 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/admin/member")
+@RequestMapping("/admin/order")
 @Controller
 @RequiredArgsConstructor
-public class AdminMemberController {
+public class AdminOrderController {
     @GetMapping(value = {"", "/"})
     public String main(Model model){
-        return "/admin/member/index";
+        return "/admin/order/index";
     }
 }
