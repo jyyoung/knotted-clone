@@ -134,12 +134,12 @@ header .knotted_member li a {
 section{
     position: relative;
     min-height: calc(100vh - 161px);
-    padding-top: 120px;
+    padding-top: 105px;
 }
 
 section h1{
-    padding-top: 100px;
-    margin: 0 0 100px;
+    padding-top: 50px;
+    margin: 0 0 50px;
     text-align: center;
     font-size: 1.750em;
     font-weight: 500;
@@ -150,7 +150,7 @@ section h1{
 
 .header_admin{
     width: 100%;
-    height: 60px;
+    height: 45px;
     border-bottom: 1px solid #ddd;
     z-index: 1000;
     position: fixed;
@@ -248,6 +248,202 @@ section h1{
 .admin_main .main_image img{
     width: 200px;
 }
+
+/* 리스트 부분 S */
+
+.sub_container{
+    padding: 0 150px;
+}
+
+.list_top_wrap{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.list_top_wrap a{
+    padding: 5px 20px;
+    border: 1px solid #aaa;
+    box-shadow: 0 0 3px #aaa;
+    border-radius: 5px;
+}
+
+.object_list{
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+}
+
+.object_list > li{
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+}
+
+.object_list > li .object_list_left{
+    width: 70%;
+    display: flex;
+}
+
+.object_list > li .object_list_right{
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.object_list > li .object_link{
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin-right: 30px;
+}
+
+.object_list > li .object_link img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.object_list > li .object_description{
+    display: flex;
+    flex-direction: column;
+}
+
+.object_list > li .object_description .object_subject{
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.object_list > li .object_description .object_content{
+    color: #999;
+}
+
+.object_list > li .object_description .object_etc{
+    margin-top: auto;
+}
+
+.object_list > li .object_list_right a{
+    padding: 3px 10px;
+    border: 1px solid #aaa;
+    box-shadow: 0 0 3px #aaa;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+/* 리스트 부분 E */
+
+/* 등록 폼 관련 부분 S */
+.knotted_form {
+    width: 94%;
+    max-width: 768px;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.knotted_form ul{
+    margin-bottom: 10px;
+}
+
+.knotted_form li{
+    line-height: 40px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.knotted_form li.address_li{
+    padding-bottom: 12px;
+}
+
+.knotted_form li label{
+    width: 20%;
+    min-width: 60px;
+    display: inline-block;
+}
+
+.knotted_form li input[type="text"], .knotted_form li input[type="password"] {
+    border-radius: 5px;
+    height: 43px;
+    width: calc(80% - 115px);
+    margin-top: -5px;
+    background-color: inherit;
+    border: 1px solid #ddd;
+}
+
+.knotted_form li input#postcode {
+    width: 100px;
+}
+
+.knotted_form .address_wrap{
+    margin-top: 7px;
+}
+
+.knotted_form .address_wrap label{
+    font-size: 0;
+}
+
+.knotted_form li input#roadAddress {
+    margin-bottom: 8px;
+}
+
+.knotted_form .require_text {
+    color: red;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.knotted_form li > button, .knotted_form li > p button {
+    border: 1px solid #ffa0c5;
+    color: #ffa0c5;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    width: 100px;
+    height: 43px;
+    line-height: 41px;
+    margin-top: -2px;
+    float: right;
+}
+
+.knotted_form li.address_li button{
+    float: none;
+}
+
+.knotted_form li.required label:after {
+    content: "*";
+    color: #ffa0c5;
+}
+
+.knotted_form .fieldError{
+    color: red;
+    line-height: 15px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.knotted_form > p{
+    text-align: right;
+    line-height: 24px;
+}
+
+.knotted_form > p a{
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.knotted_form > button{
+    background: #FFDB7E;
+    border: 1px solid #FFDB7E;
+    color: #846E23;
+    width: 100%;
+    max-width: 300px;
+    padding: 15px;
+    margin-top: 30px;
+    border-radius: 500px;
+}
+
+/* 등록 폼 관련 부분 E */
+
 
 /* 관리자 부분 E */
 

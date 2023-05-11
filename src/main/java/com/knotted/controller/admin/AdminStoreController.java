@@ -22,18 +22,20 @@ public class AdminStoreController {
 
     // 매장 등록 페이지로 이동
     @GetMapping(value = "/new")
-    public String storeForm(){
+    public String storeForm(Model model){
+        model.addAttribute("storeFormDTO", new StoreFormDTO());
+
         return "/admin/store/storeForm";
     }
 
     @PostMapping(value = "/new")
-    public String storeSubmit(@Valid StoreFormDTO storeFormDTO, BindingResult bindingResult, Model model, MultipartFile storeImage){
+    public String storeSubmit(@Valid StoreFormDTO storeFormDTO, BindingResult bindingResult, Model model, MultipartFile storeImageFile){
 
         if(bindingResult.hasErrors()){
             return "/admin/store/storeForm";
         }
 
-        if(storeImage.isEmpty()){ // 이미지가 없다면
+        if(storeImageFile.isEmpty()){ // 이미지가 없다면
             model.addAttribute("errorMessage", "매장 이미지가 없습니다");
             return "/admin/store/storeForm";
         }

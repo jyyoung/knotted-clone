@@ -8,7 +8,75 @@
 
 <th:block layout:fragment="content">
     <div class="container">
-        <h1>매장 관리 페이지</h1>
+        <h1>매장 관리</h1>
+
+        <div class="sub_container">
+            <div class="list_top_wrap">
+                <a th:href="@{/admin/store/new}">등록하기</a>
+            </div>
+
+            <!--/* 아래 부분은 나중에 REST로 실제 리스트로 대체할 부분임 */-->
+            <ul class="store_list object_list">
+                <li>
+                    <div class="object_list_left">
+                        <a href="javascript:;" class="object_link">
+                            <img th:src="@{/images/store_image_ex.jpg}" alt="항목 사진">
+                        </a>
+                        <div class="object_description">
+                            <div class="object_subject">
+                                노티드 청담
+                            </div>
+                            <div class="object_content">
+                                서울 강남구 도산대로53길 15
+                            </div>
+                            <div class="object_etc">
+                                <span class="start_time">08:00</span> ~ <span class="end_time">21:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="object_list_right">
+                        <li>
+                            <a href="javascript:;">보기</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">수정</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="delete">삭제</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="object_list_left">
+                        <a href="javascript:;" class="object_link">
+                            <img th:src="@{/images/store_image_ex.jpg}" alt="항목 사진">
+                        </a>
+                        <div class="object_description">
+                            <div class="object_subject">
+                                노티드 청담
+                            </div>
+                            <div class="object_content">
+                                서울 강남구 도산대로53길 15
+                            </div>
+                            <div class="object_etc">
+                                <span class="start_time">08:00</span> ~ <span class="end_time">21:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="object_list_right">
+                        <li>
+                            <a href="javascript:;">보기</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">수정</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="delete">삭제</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </th:block>
 
