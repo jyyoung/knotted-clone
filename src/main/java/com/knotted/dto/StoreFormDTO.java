@@ -1,9 +1,11 @@
 package com.knotted.dto;
 
+import com.knotted.entity.Store;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalTime;
 
@@ -45,4 +47,14 @@ public class StoreFormDTO {
     // 매장 이미지 엔티티
     private StoreImageDTO storeImageDTO;
 
+    // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    public Store createStore(){
+        return modelMapper.map(this, Store.class);
+    }
+
+    public static StoreFormDTO of(Store store){
+        return modelMapper.map(store, StoreFormDTO.class);
+    }
 }
