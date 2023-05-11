@@ -2,18 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layouts/error}">
+      layout:decorate="~{layouts/admin}">
 
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
     <div class="container">
-        <a href="/" class="knotted_main">메인으로</a>
-        <h1>504 Gateway Timeout</h1>
-        <div class="knotted_error">
-            시간이 초과되었습니다
-        </div>
-        <a href="javascript:;" class="knotted_go_back">이전 페이지로 돌아가기</a>
+        <h1>관리자 틀</h1>
     </div>
 </th:block>
 

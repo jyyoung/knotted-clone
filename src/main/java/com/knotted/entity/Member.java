@@ -55,8 +55,8 @@ public class Member extends BaseEntity{
         member.setName(memberFormDTO.getName());
         member.setPostcode(memberFormDTO.getPostcode());
         member.setAddress(memberFormDTO.getAddress());
-//        member.setMemberRole(MemberRole.USER);
-        member.setMemberRole(MemberRole.ADMIN); // 일단 테스트를 위해 ADMIN 롤로 가입
+        member.setMemberRole(MemberRole.USER);
+//        member.setMemberRole(MemberRole.ADMIN); // 일단 테스트를 위해 ADMIN 롤로 가입
 
         return member;
     }

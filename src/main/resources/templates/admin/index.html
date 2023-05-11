@@ -1,17 +1,15 @@
-<!-- View 기본 템플릿 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layouts/common}">
+      layout:decorate="~{layouts/admin}">
 
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
     <div class="container">
-        <h1>관리자 메인 페이지</h1>
-
-
+        <h1>관리자 페이지</h1>
+        <p class="guide_text">원하는 메뉴를 선택해주세요</p>
     </div>
 </th:block>
 

@@ -146,175 +146,31 @@ section h1{
     letter-spacing: 0;
 }
 
-/* 메인 페이지 부분 S */
-.knotted_main .knotted_main_swiper{
-    margin-bottom: 100px;
+/* 관리자 부분 S */
+
+.knotted_admin_menu{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0px 100px;
 }
 
-.knotted_main .knotted_main_swiper a{
+.knotted_admin_menu a{
     display: block;
-    width: 100%;
+    padding: 25px 40px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    border-radius: 20px;
+    font-size: 18px;
+    box-shadow: 0 0 3px #555;
+    font-weight: 500;
 }
 
-.knotted_main .knotted_main_swiper a img{
-    width: 100%;
-}
-/* 메인 페이지 부분 E */
-
-/* 회원가입, 로그인 부분 S */
-.knotted_login_form{
-    width: 94%;
-    max-width: 480px;
-    margin: 0 auto;
-    margin-top: 20px;
-    text-align: center;
+.knotted_admin_menu a:hover{
+    color: #ffa0c5 !important;
+    transition: 0.2s;
 }
 
-.knotted_join_form {
-    width: 94%;
-    max-width: 768px;
-    margin: 0 auto;
-    margin-top: 20px;
-    text-align: center;
-}
-
-.knotted_join_form ul,
-.knotted_login_form ul{
-    margin-bottom: 10px;
-}
-
-.knotted_join_form li,
-.knotted_login_form li{
-    line-height: 40px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    padding: 15px 0;
-}
-
-.knotted_join_form li.address_li{
-    padding-bottom: 12px;
-}
-
-.knotted_join_form li label,
-.knotted_login_form li label{
-    width: 20%;
-    min-width: 60px;
-    display: inline-block;
-}
-
-.knotted_join_form li input[type="text"], .knotted_join_form li input[type="password"] {
-    border-radius: 5px;
-    height: 43px;
-    width: calc(80% - 115px);
-    margin-top: -5px;
-    background-color: inherit;
-    border: 1px solid #ddd;
-}
-
-.knotted_login_form li input[type="text"], .knotted_login_form li input[type="password"] {
-    border-radius: 5px;
-    height: 43px;
-    width: calc(80% - 10px);
-    margin-top: -5px;
-    background-color: inherit;
-    border: 1px solid #ddd;
-}
-
-.knotted_join_form li input:disabled {
-    -webkit-text-fill-color: inherit;
-    opacity: 0.5;
-}
-
-.knotted_join_form li input#postcode {
-    width: 100px;
-}
-
-.knotted_join_form .address_wrap{
-    margin-top: 7px;
-}
-
-.knotted_join_form .address_wrap label{
-    font-size: 0;
-}
-
-.knotted_join_form li input#roadAddress {
-    margin-bottom: 8px;
-}
-
-.knotted_join_form .join_point {
-    color: red;
-    margin-bottom: 10px;
-    text-align: left;
-    font-size: 14px;
-}
-
-.knotted_join_form li > button, .knotted_join_form li > p button {
-    border: 1px solid #ffa0c5;
-    color: #ffa0c5;
-    border-radius: 5px;
-    font-size: 1.5rem;
-    width: 100px;
-    height: 43px;
-    line-height: 41px;
-    margin-top: -2px;
-    float: right;
-}
-
-.knotted_join_form li.address_li button{
-    float: none;
-}
-
-.knotted_join_form li.required label:after {
-    content: "*";
-    color: #ffa0c5;
-}
-
-.knotted_join_form .fieldError{
-    color: red;
-    line-height: 15px;
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-.knotted_join_form > p, .knotted_login_form > p {
-    text-align: right;
-    line-height: 24px;
-}
-
-.knotted_join_form > p a, .knotted_login_form > p a {
-    margin-left: 5px;
-    font-size: 14px;
-}
-
-.knotted_join_form > button, .knotted_login_form > button{
-    background: #FFDB7E;
-    border: 1px solid #FFDB7E;
-    color: #846E23;
-    width: 100%;
-    max-width: 300px;
-    padding: 15px;
-    margin-top: 30px;
-    border-radius: 500px;
-}
-
-.knotted_login_form > p a:last-of-type:before {
-    content: "ㅣ";
-    padding-right: 10px;
-}
-
-.knotted_login_form a.join{
-    background: #282828;
-    border: 1px solid #FFDB7E;
-    color: #fff;
-    display: block;
-    width: 100%;
-    max-width: 300px;
-    padding: 15px;
-    border-radius: 500px;
-    margin: 0 auto;
-    margin-top: 10px;
-}
-/* 회원가입, 로그인 부분 E */
+/* 관리자 부분 E */
 
 footer{
     padding: 20px 0 30px;
