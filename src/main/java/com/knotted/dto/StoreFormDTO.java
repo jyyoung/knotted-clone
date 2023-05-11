@@ -7,8 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 
-import java.time.LocalTime;
-
 @Data
 public class StoreFormDTO {
 
@@ -34,12 +32,14 @@ public class StoreFormDTO {
     // 영업시작시간
     @NotBlank(message = "영업시작시간은 필수 입력값입니다")
     @Pattern(regexp = "^[0-9]*$")
-    private LocalTime openTime;
+    @Size(min = 4, max = 4) // 4글자로 맞추기
+    private String openTime;
 
     // 영업종료시간
     @NotBlank(message = "영업종료시간은 필수 입력값입니다")
     @Pattern(regexp = "^[0-9]*$")
-    private LocalTime closeTime;
+    @Size(min = 4, max = 4)
+    private String closeTime;
 
     // 매장 설명
     private String description;

@@ -36,11 +36,11 @@ public class Store extends BaseEntity{
 
     // 영업시작시간
     @Column(name = "store_open_time")
-    private LocalTime openTime;
+    private String openTime;
 
     // 영업종료시간
     @Column(name = "store_close_time")
-    private LocalTime closeTime;
+    private String closeTime;
 
     // 매장 설명
     @Column(name = "store_description")
