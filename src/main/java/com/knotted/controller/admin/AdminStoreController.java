@@ -15,4 +15,9 @@ public class AdminStoreController {
         return "/admin/store/index";
     }
 
+    @GetMapping(value = "/new")
+    public String main(){
+        return "/admin/store/storeForm";
+    }
+
 }

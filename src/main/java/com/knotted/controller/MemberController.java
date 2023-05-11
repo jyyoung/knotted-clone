@@ -23,7 +23,7 @@ public class MemberController {
 
     @GetMapping(value = "/login")
     public String loginForm(){
-        return "/member/login";
+        return "/member/loginForm";
     }
 
     // 로그인 실패 처리를 위해 매핑을 하나 추가함
@@ -31,14 +31,14 @@ public class MemberController {
     public String loginError(@RequestParam(name = "error", required = false) String error, Model model){
         model.addAttribute("errorMessage", "이메일 또는 비밀번호를 확인해주세요");
 
-        return "/member/login";
+        return "/member/loginForm";
     }
 
     @GetMapping(value = "/join")
     public String joinForm(Model model){
         model.addAttribute("memberFormDTO", new MemberFormDTO());
 
-        return "/member/join";
+        return "/member/joinForm";
     }
 
     @PostMapping(value = "/join")
@@ -46,7 +46,7 @@ public class MemberController {
 
         // DTO의 Validation이 실패했을 경우 이동
         if(bindingResult.hasErrors()){
-            return "/member/join";
+            return "/member/joinForm";
         }
 
         Member member = Member.createMember(memberFormDTO, passwordEncoder);
