@@ -72,7 +72,7 @@ public class AdminStoreService {
 
             // StoreImage를 생성 후 엔티티만 넣어주고,
             StoreImage newStoreImage = new StoreImage(); // StoreImage 엔티티 생성
-            storeImage.setStore(store); // 위에서 저장한 엔티티를 FK로 넣어준다
+            newStoreImage.setStore(store); // 위에서 저장한 엔티티를 FK로 넣어준다
 
             // 새 이미지 등록
             adminStoreImageService.saveStoreImage(newStoreImage, storeImageFile);
