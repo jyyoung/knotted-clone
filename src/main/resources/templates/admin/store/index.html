@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/admin}">
 
 <th:block layout:fragment="css"></th:block>
@@ -20,7 +19,7 @@
                 <li th:object="${store}">
                     <div class="object_list_left">
                         <a href="javascript:;" class="object_link">
-                            <img th:src="@{/images/store_image_ex.jpg}" alt="매장 사진">
+                            <img th:src="*{storeImageDTO.imageUrl}" alt="매장 사진">
                         </a>
                         <div class="object_description">
                             <div class="object_subject" th:text="*{name}"></div>

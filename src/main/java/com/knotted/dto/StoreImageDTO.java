@@ -1,8 +1,8 @@
 package com.knotted.dto;
 
-import com.knotted.entity.Store;
-import jakarta.persistence.*;
+import com.knotted.entity.StoreImage;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 @Data
 public class StoreImageDTO {
@@ -18,4 +18,10 @@ public class StoreImageDTO {
 
     // 이미지 URL 경로
     private String imageUrl;
+
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    public static StoreImageDTO of(StoreImage storeImage){
+        return modelMapper.map(storeImage, StoreImageDTO.class);
+    }
 }

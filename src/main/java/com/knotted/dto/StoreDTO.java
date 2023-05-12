@@ -33,6 +33,9 @@ public class StoreDTO {
     // 매장 설명
     private String description;
 
+    // 매장 이미지
+    private StoreImageDTO storeImageDTO;
+
     // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
     private static ModelMapper modelMapper = new ModelMapper();
 
