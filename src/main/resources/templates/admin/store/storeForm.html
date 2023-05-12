@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/admin}">
 
 <th:block layout:fragment="css"></th:block>
@@ -10,7 +9,10 @@
     <div class="container">
         <h1>매장 등록</h1>
 
-        <form action="/admin/store/new" method="post" role="form" enctype="multipart/form-data" class="knotted_store_form knotted_form" th:object="${storeFormDTO}">
+        <form th:action="${storeId == null} ? '/admin/store/new' : '/admin/store/' + ${storeId}" method="post" role="form" enctype="multipart/form-data" class="knotted_store_form knotted_form" th:object="${storeFormDTO}">
+
+            <input type="hidden" th:field="*{id}">
+
             <ul>
                 <li class="required">
                     <label th:for="name">매장명</label>
@@ -49,9 +51,23 @@
                     <input type="text" th:field="*{closeTime}" placeholder="영업종료시간을 입력해주세요 (ex. 2100)">
                     <p th:if="${#fields.hasErrors('closeTime')}" th:errors="*{closeTime}" class="fieldError"></p>
                 </li>
-                <li class="required">
+                <li class="required file_li">
                     <label for="storeImage">매장 이미지</label>
-                    <input type="file" name="storeImageFile" id="storeImage">
+                    <th:block th:if="*{id != null}">
+                        <div class="file_div">
+                            <div class="file_preview">
+                                현재 이미지 : <span th:text="*{storeImageDTO.originalImageName}"></span>
+                            </div>
+                            <input type="file" name="storeImageFile" id="storeImage">
+                            <input type="hidden" name="storeImageId" th:value="*{storeImageDTO.id}">
+                        </div>
+                    </th:block>
+
+                    <th:block th:unless="*{id != null}">
+                        <div class="file_div">
+                            <input type="file" name="storeImageFile" id="storeImage">
+                        </div>
+                    </th:block>
                 </li>
                 <li>
                     <label th:for="description">매장설명</label>
@@ -82,6 +98,18 @@
             if(errorMessage){
                 alert(errorMessage);
             }
+
+            // 만약 수정으로 들어온 거면 address를 주소칸에 전부 넣어주도록 하기
+            let address = $("input#address").val();
+            if(address){
+                $("input#roadAddress").val(address);
+            }
+
+            // 영업시작시간, 영업종료시간에서 : 빼기
+            let openTime = $("input#openTime").val();
+            let closeTime = $("input#closeTime").val();
+            $("input#openTime").val(openTime.replace(":", ""));
+            $("input#closeTime").val(closeTime.replace(":", ""));
         });
 
         // 다음 우편번호 API
@@ -156,10 +184,10 @@
                 return;
             }
 
-            if(!($("input#storeImage").val())){
-                alert("매장 이미지를 업로드해주세요");
-                return;
-            }
+            // if(!($("input#storeImage").val())){
+            //     alert("매장 이미지를 업로드해주세요");
+            //     return;
+            // }
 
             $(".knotted_store_form").submit();
         });

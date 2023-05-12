@@ -36,10 +36,10 @@
                     </div>
                     <ul class="object_list_right">
                         <li>
-                            <a href="javascript:;">보기</a>
+                            <a th:href="@{/store/{id}(id=*{id})}">보기</a>
                         </li>
                         <li>
-                            <a href="javascript:;">수정</a>
+                            <a th:href="@{/admin/store/{id}(id=*{id})}">수정</a>
                         </li>
                         <li>
                             <a href="javascript:;" class="delete_store">삭제</a>

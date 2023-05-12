@@ -21,12 +21,13 @@ public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder; // 암호화용
 
+    // 로그인 페이지로 이동
     @GetMapping(value = "/login")
     public String loginForm(){
         return "/member/loginForm";
     }
 
-    // 로그인 실패 처리를 위해 매핑을 하나 추가함
+    // 로그인 실패 페이지로 이동
     @GetMapping(value = "/login/error")
     public String loginError(@RequestParam(name = "error", required = false) String error, Model model){
         model.addAttribute("errorMessage", "이메일 또는 비밀번호를 확인해주세요");
@@ -34,6 +35,7 @@ public class MemberController {
         return "/member/loginForm";
     }
 
+    // 회원가입 페이지로 이동
     @GetMapping(value = "/join")
     public String joinForm(Model model){
         model.addAttribute("memberFormDTO", new MemberFormDTO());
@@ -41,6 +43,7 @@ public class MemberController {
         return "/member/joinForm";
     }
 
+    // 회원가입 처리
     @PostMapping(value = "/join")
     public String joinSubmit(@Valid MemberFormDTO memberFormDTO, BindingResult bindingResult, Model model){
 
@@ -55,6 +58,7 @@ public class MemberController {
         return "redirect:/member/complete?mode=join&email=" + member.getEmail();
     }
 
+    // 이메일 중복 확인
     @PostMapping(value = "/emailCheck")
     @ResponseBody
     public ResponseEntity emailCheck(String email){
@@ -69,6 +73,7 @@ public class MemberController {
         return new ResponseEntity<String>(result, HttpStatus.OK);
     }
 
+    // 로그인 및 회원가입 성공 페이지로 이동
     @GetMapping(value = "/complete")
     public String complete(@RequestParam(name = "mode") String mode, @RequestParam(name = "email", required = false) String email, Model model){
         model.addAttribute("mode", mode);

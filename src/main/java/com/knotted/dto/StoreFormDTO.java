@@ -10,6 +10,9 @@ import org.modelmapper.ModelMapper;
 @Data
 public class StoreFormDTO {
 
+    // 매장 ID
+    private Long id;
+
     // 매장명
     @NotBlank(message = "매장명은 필수 입력값입니다")
     private String name;

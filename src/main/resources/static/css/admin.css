@@ -361,7 +361,7 @@ section h1{
     display: inline-block;
 }
 
-.knotted_form li input[type="text"], .knotted_form li input[type="password"] {
+.knotted_form li input[type="text"], .knotted_form li input[type="password"]{
     border-radius: 5px;
     height: 43px;
     width: calc(80% - 115px);
@@ -440,6 +440,16 @@ section h1{
     padding: 15px;
     margin-top: 30px;
     border-radius: 500px;
+}
+
+.knotted_form .file_li{
+    display: flex;
+}
+
+.knotted_form .file_div{
+    width: calc(80% - 115px);
+    display: inline-block;
+    padding-left: 5px;
 }
 
 /* 등록 폼 관련 부분 E */

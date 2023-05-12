@@ -1,5 +1,6 @@
 package com.knotted.entity;
 
+import com.knotted.dto.StoreFormDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -46,4 +47,14 @@ public class Store extends BaseEntity{
     @Column(name = "store_description")
     private String description;
 
+    // 매장 수정 메소드
+    public void updateStore(StoreFormDTO storeFormDTO){
+        this.name = storeFormDTO.getName();
+        this.phoneNumber = storeFormDTO.getPhoneNumber();
+        this.postcode = storeFormDTO.getPostcode();
+        this.address = storeFormDTO.getAddress();
+        this.openTime = storeFormDTO.getOpenTime();
+        this.closeTime = storeFormDTO.getCloseTime();
+        this.description = storeFormDTO.getDescription();
+    }
 }
