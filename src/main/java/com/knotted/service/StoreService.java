@@ -1,11 +1,13 @@
 package com.knotted.service;
 
 import com.knotted.dto.StoreDTO;
+import com.knotted.dto.StoreFormDTO;
 import com.knotted.dto.StoreImageDTO;
 import com.knotted.entity.Store;
 import com.knotted.entity.StoreImage;
 import com.knotted.repository.StoreImageRepository;
 import com.knotted.repository.StoreRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -42,5 +44,19 @@ public class StoreService {
         }
 
         return storeDTOList;
+    }
+
+    // 매장 하나 읽어오는 메소드
+    public StoreFormDTO getStore(Long storeId){
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // 애초에 정상적으로 찾아졌으면 여기로 넘어옴
+        StoreFormDTO storeFormDTO = StoreFormDTO.of(store);
+        StoreImage storeImage = storeImageRepository.findByStoreId(store.getId());
+        StoreImageDTO storeImageDTO = StoreImageDTO.of(storeImage);
+        storeFormDTO.setStoreImageDTO(storeImageDTO);
+
+        return storeFormDTO;
     }
 }

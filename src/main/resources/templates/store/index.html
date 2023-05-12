@@ -18,19 +18,32 @@
                 </div>
             </div>
 
-            <ul class="listview" th:each="store : ${storeList}">
-                <li th:object="${store}">
-                    <div>
-                        <div class="img"><img th:src="*{storeImageDTO.imageUrl}"></div>
-                    </div>
-                    <h2 th:text="*{name}"></h2>
-                    <p th:text="*{address}"></p>
-                </li>
+            <ul class="listview">
+                <th:block th:each="store: ${storeList}">
+                    <li th:object="${store}" th:attr="data-id=${store.id}" class="store_link">
+                        <div>
+                            <div class="img"><img th:src="*{storeImageDTO.imageUrl}"></div>
+                        </div>
+                        <h2 th:text="*{name}"></h2>
+                        <p th:text="*{address}"></p>
+                    </li>
+                </th:block>
             </ul>
         </div>
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script>
+        // 매장 클릭 시 매장으로 이동
+        $(".store_link").on("click", function(){
+            let storeId = $(this).data("id");
+
+            location.href = "/store/" + storeId;
+        });
+
+    </script>
+
+</th:block>
 
 </html>

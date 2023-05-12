@@ -380,7 +380,8 @@ section h1{
 .listview li {
     text-align: center;
     cursor: pointer;
-    padding-bottom: 60px;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
     display: inline-grid;
 }
 
@@ -414,7 +415,6 @@ section h1{
 
 .listview li h2 {
     margin: 15px 0 3px;
-    font-size: 1.8rem;
 }
 
 .listview li p {
