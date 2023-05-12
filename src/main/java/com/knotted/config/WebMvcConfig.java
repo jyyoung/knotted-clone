@@ -15,6 +15,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // /images/** 경로로 들어온 요청은 uploadPath 경로를 기준으로 파일을 읽어오도록 설정함
         registry.addResourceHandler("/images/store/**")
-                .addResourceLocations(uploadPath);
+                .addResourceLocations(uploadPath + "/store/");
+        registry.addResourceHandler("/images/item/**")
+                .addResourceLocations(uploadPath + "/item/");
     }
 }
