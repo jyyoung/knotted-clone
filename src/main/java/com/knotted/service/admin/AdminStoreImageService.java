@@ -17,10 +17,8 @@ import java.io.File;
 @RequiredArgsConstructor
 public class AdminStoreImageService {
 
-    @Value("${imageLocation}") // application.properties에서 값 가져와서 변수에 저장
-    private String imageLocation;
-
-    private final String storeImageLocation = imageLocation + "/store";
+    @Value("${storeImageLocation}") // application.properties에서 값 가져와서 변수에 저장
+    private String storeImageLocation;
 
     private final AdminStoreImageRepository adminStoreImageRepository;
     private final FileService fileService;
