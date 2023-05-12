@@ -5,12 +5,12 @@ import com.knotted.dto.StoreFormDTO;
 import com.knotted.service.admin.AdminStoreService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -67,5 +67,18 @@ public class AdminStoreController {
 
         // 성공 시 매장 관리 페이지로 이동
         return "redirect:/admin/store";
+    }
+
+    @DeleteMapping(value = "/{storeId}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteStore(@PathVariable("storeId") Long storeId){
+
+        try {
+            adminStoreService.deleteStore(storeId);
+        } catch (Exception e) {
+            return new ResponseEntity("매장 삭제 중 에러가 발생했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.noContent().build();
     }
 }

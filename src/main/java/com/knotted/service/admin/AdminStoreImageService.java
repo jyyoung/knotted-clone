@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
+import java.io.File;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -29,7 +31,7 @@ public class AdminStoreImageService {
         String imageName = "";
         String imageUrl = "";
 
-        if(!StringUtils.isEmpty(originalImageName)){ // 파일이 있다면
+        if(!StringUtils.isEmpty(originalImageName)){ // 파일 이름이 비지 않았다면
             // 매개변수들 넘겨서 업로드한다. 중복이 해결된 파일명을 imageName으로 저장함
             imageName = fileService.uploadFile(storeImageLocation, originalImageName, storeImageFile.getBytes());
             imageUrl = "/images/store/" + imageName;
@@ -39,4 +41,19 @@ public class AdminStoreImageService {
         storeImage.updateStoreImage(imageName, originalImageName, imageUrl);
         adminStoreImageRepository.save(storeImage);
     }
+
+    // 매장 이미지 파일 제거 및 DB에서 제거
+    public void deleteStoreImage(StoreImage storeImage) throws Exception{
+        String imageUrl = storeImageLocation + "/" + storeImage.getImageName();
+
+        File file = new File(imageUrl);
+
+        if(file.exists()){ // 파일이 존재하면
+            file.delete(); // 파일 제거
+        }
+
+        // 파일 제거했으면 매장 이미지 DB 제거
+        adminStoreImageRepository.delete(storeImage);
+    }
+
 }

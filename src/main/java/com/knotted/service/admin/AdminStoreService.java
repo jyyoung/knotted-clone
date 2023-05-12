@@ -8,6 +8,7 @@ import com.knotted.entity.StoreImage;
 import com.knotted.repository.admin.AdminStoreImageRepository;
 import com.knotted.repository.admin.AdminStoreRepository;
 import com.knotted.util.TimeUtils;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +67,21 @@ public class AdminStoreService {
         }
 
         return storeDTOList;
+    }
+
+    // 매장 삭제 메소드
+    public void deleteStore(Long storeId) throws Exception {
+        Store store = adminStoreRepository.findById(storeId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // 일단 삭제 전 해당 이미지 파일도 같이 제거해야 함 (어차피 실제 이미지도 제거해야 하니까 굳이 양방향 매핑 하지 않았음)
+        StoreImage storeImage = adminStoreImageRepository.findByStoreId(store.getId());
+
+        // 매장 이미지 파일 및 DB 먼저 제거
+        adminStoreImageService.deleteStoreImage(storeImage);
+
+        // 정상적으로 됐으면 매장 제거
+        adminStoreRepository.delete(store);
     }
 }
 

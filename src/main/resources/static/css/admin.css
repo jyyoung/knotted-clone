@@ -273,7 +273,7 @@ section h1{
 }
 
 .object_list > li{
-    padding: 10px 15px;
+    padding: 10px 0;
     border-bottom: 1px solid #ddd;
     display: flex;
 }
