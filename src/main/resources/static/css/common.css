@@ -38,6 +38,13 @@ input[type=text], input[type=password] {
     text-indent: 10px;
 }
 
+input[type=checkbox] {
+    border: 1px solid #c6c6c6;
+    border-radius: 3px;
+    width: 16px;
+    height: 16px;
+}
+
 button {
     background-color: transparent;
     border: none;
@@ -317,7 +324,7 @@ section h1{
 /* 회원가입, 로그인 부분 E */
 
 
-/* 매장 부분 S */
+/* 매장 메인 부분 S */
 .menucategory {
     height: auto;
     min-height: 40px;
@@ -353,7 +360,7 @@ section h1{
 }
 
 .menucategory > .search button {
-    background: url("/images/search_icon.png") 50% 50% no-repeat;
+    background: url("/images/icon_search.png") 50% 50% no-repeat;
     width: 30px;
     height: 30px;
     margin-left: 10px;
@@ -430,7 +437,103 @@ section h1{
     padding: 0 10px;
 }
 
-/* 매장 부분 E */
+/* 매장 메인 부분 E */
+
+/* 매장 상세보기 S */
+
+.view {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.view:after{
+    content: "";
+    clear: both;
+    display: block;
+}
+
+.view > .inform01 {
+    float: left;
+}
+
+.view > .inform01 > .photo {
+    margin: 0 0 15px 0;
+    width: 360px;
+    position: relative;
+    padding-top: 100%;
+    overflow: hidden;
+}
+
+.view > .inform01 > .photo img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.view > .inform02 {
+    width: calc(100% - 400px);
+    float: right;
+    height: 100%;
+}
+
+.view > .inform02 > ul{
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.view > .inform02 li {
+    color: #999;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.view > .inform02 li h2 {
+    font-size: 2.6rem;
+    font-weight: 500;
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.view > .inform02 li .map {
+    margin: 0 5px 0 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #999;
+}
+
+.view > .inform02 li.opening{
+    margin-bottom: 3px;
+}
+
+.view > .inform02 li.opening span{
+    margin-left: 10px;
+}
+
+.view > .inform02 li.description{
+    color: #282828;
+}
+
+.view > .inform02 li input[type=checkbox] {
+    display: none;
+}
+
+.view > .inform02 li input[type=checkbox] + label {
+    background: url(/images/icon_bookmark.png) no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: auto 20px;
+    background-position: 0 0;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* 매장 상세보기 E */
 
 footer{
     padding: 20px 0 30px;

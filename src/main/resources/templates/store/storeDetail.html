@@ -8,10 +8,46 @@
 
 <th:block layout:fragment="content">
     <div class="container">
-        <h1>매장 상세 보기</h1>
+        <h1>매장안내</h1>
+
+        <div class="view" th:object="${storeFormDTO}">
+            <div class="inform01">
+                <div class="photo"><img th:src="*{storeImageDTO.imageUrl}"></div>
+            </div>
+            <div class="inform02">
+                <ul>
+                    <li>
+                        <h2 th:text="*{name}"></h2>
+                        <input type="checkbox" id="bookmark"><label for="bookmark"></label>
+                    </li>
+                    <li>
+                        전화번호<p th:text="*{phoneNumber}"></p>
+                    </li>
+                    <li>
+                        주소 <p><span th:text="*{address}"></span> <a class="map">[지도보기]</a></p>
+                    </li>
+                    <li class="opening">
+                        영업시간<span><th:block th:text="*{openTime}"></th:block> ~ <th:block
+                            th:text="*{closeTime}"></th:block></span>
+                    </li>
+                    <li th:text="*{description}" class="description"></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script>
+        // 지도보기 시 네이버 지도에서 검색
+
+        $(".view a.map").on("click", function(){
+            let storeName = $(".view h2").html().trim();
+
+            location.href = "https://map.naver.com/v5/search/" + storeName;
+        });
+    </script>
+
+</th:block>
 
 </html>
