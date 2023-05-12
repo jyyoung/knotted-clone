@@ -1,5 +1,6 @@
 package com.knotted.controller.admin;
 
+import com.knotted.dto.StoreDTO;
 import com.knotted.dto.StoreFormDTO;
 import com.knotted.service.admin.AdminStoreService;
 import jakarta.validation.Valid;
@@ -10,8 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RequestMapping("/admin/store")
 @Controller
@@ -23,7 +25,9 @@ public class AdminStoreController {
     // 매장 관리 메인 페이지. 매장 리스트도 뿌려준다.
     @GetMapping(value = {"", "/"})
     public String main(Model model){
-
+        // 매장 이미지 뿌려주기
+        List<StoreDTO> storeList = adminStoreService.getAllStore();
+        model.addAttribute("storeList", storeList);
 
         return "/admin/store/index";
     }

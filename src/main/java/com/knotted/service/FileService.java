@@ -19,6 +19,12 @@ public class FileService {
         String fileName = uuid.toString() + extension; // 저장할 파일명
         String fullUploadPath = uploadPath + "/" + fileName;
 
+        // 여긴 따로 추가한 부분. 만약 uploadPath가 존재하지 않으면 거기까지의 디렉터리를 만들어준다.
+        File uploadDir = new File(uploadPath);
+        if(!uploadDir.exists()){
+            uploadDir.mkdirs();
+        }
+
         FileOutputStream fos = new FileOutputStream(fullUploadPath);
 
         fos.write(fileData);
