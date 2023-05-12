@@ -269,11 +269,11 @@ section h1{
 
 .object_list{
     border-top: 1px solid #ddd;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .object_list > li{
-    padding: 10px 0;
+    padding: 15px 0;
     border-bottom: 1px solid #ddd;
     display: flex;
 }
