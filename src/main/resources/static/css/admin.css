@@ -2,11 +2,25 @@
 /* 사이트 공통으로 들어갈 CSS */
 @import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css);
 
+
+/* 사이트 공통으로 들어갈 CSS */
+@import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css);
+
+/* 공통 헤더 부분 S */
 html {
     font-size: 62.5%;
     background-color: #fdfaf7;
     background-image: url("/images/watermark_transparent.png");
     background-repeat: repeat;
+}
+
+html, body {
+    min-width: 280px;
+    height: 100%;
+    min-height: 100%;
+    font-family: 'Pretendard';
+    margin: 0;
+    padding: 0;
 }
 
 body, div, p, span, h1, h2, h3 {
@@ -26,7 +40,29 @@ body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abb
     word-break: keep-all;
 }
 
-a {color: #000; text-decoration: none; outline: none}
+* {
+    margin: 0;
+    padding: 0;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+/* 스크롤바 없애기 */
+html::-webkit-scrollbar {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    background: transparent;
+    cursor: pointer;
+}
 
 ul li {
     list-style: none;
@@ -38,12 +74,41 @@ input[type=text], input[type=password] {
     text-indent: 10px;
 }
 
+input[type=checkbox] {
+    border: 1px solid #c6c6c6;
+    border-radius: 3px;
+    width: 16px;
+    height: 16px;
+}
+
+input {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+input, select, textarea {
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 1;
+}
+
+input, select {
+    vertical-align: middle;
+    background: transparent;
+}
+
+.container {
+    width: 1366px;
+    margin: 0 auto;
+    position: relative;
+}
+
 button {
     background-color: transparent;
     border: none;
     cursor: pointer;
     color: #282828;
-    margin: 0 1px;
     font-size: 1em;
 }
 
@@ -58,95 +123,114 @@ header{
 }
 
 header .container{
-    height: 100%;
+    width: 1366px;
+    margin: 0 auto;
 }
 
 header .container .knotted_top_wrap{
     height: 100%;
 }
 
-header .knotted_main{
+header .h_logo {
+    float: left;
+    font-size: 0;
+    margin-right: 150px;
+}
+
+header .h_logo a.knotted_main {
     width: 80px;
     height: 36px;
     background: url(/images/logo.png) 0 0 no-repeat;
     background-size: 80px auto;
-    margin-right: 130px;
+    display: inline-block;
+    margin: 12px 0;
     text-indent: -9999px;
 }
 
-header .knotted_top_menu li{
-    margin-right: 40px;
+header nav input, header nav label {
+    display: none;
 }
 
-header .knotted_top_menu li a{
+header nav > .box > .gnb {
+    display: block;
+    float: left;
+}
+
+header nav > .box > .gnb li {
+    display: inline-block;
+    margin-right: 50px;
+    line-height: 60px;
     font-weight: 500;
 }
 
-header .knotted_top_menu li a:hover{
-    color: #ffa0c5 !important;
+header nav > .box > .gnb li:hover a {
+    color: #ffa0c5;
     transition: 0.2s;
 }
 
-header .knotted_member{
-    height: 100%;
+header .h_member {
+    float: right;
 }
 
-header .knotted_member li{
+header .h_member li {
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 8px;
     font-size: 11px;
-    height: 100%;
     cursor: pointer;
 }
 
-header .knotted_member li.knotted_admin{
-    background: url(/images/icon_admin.png) center 10px no-repeat;
-    background-size: auto 25px;
+header .h_member li a {
+    padding-top: 30px;
+    display: inline-block;
+    line-height: 30px;
 }
 
-header .knotted_member li.knotted_login{
+header .h_member .h_admin {
+    background: url(/images/icon_admin.png) center 10px no-repeat;
+    background-size: auto 25px;
+    margin-right: 12px;
+}
+
+header .h_member .h_login {
     background: url(/images/icon_login.png) center 10px no-repeat;
     background-size: auto 25px;
 }
 
-header .knotted_member li.knotted_mypage{
+header .h_member .h_logout {
+    background: url(/images/icon_login.png) center 10px no-repeat;
+    background-size: auto 25px;
+}
+
+header .h_member .h_mypage {
     background: url(/images/icon_mypage.png) center 10px no-repeat;
     background-size: auto 25px;
 }
 
-header .knotted_member li.knotted_cart{
+header .h_member .h_cart {
     background: url(/images/icon_cart.png) center 10px no-repeat;
     background-size: auto 25px;
-}
-
-header .knotted_member li:hover{
-    transform: translate(0, -1px);
-}
-
-header .knotted_member li a {
-    padding-top: 30px;
-    padding-left: 0px;
-    padding-right: 0px;
-    display: inline-block;
-    line-height: 30px;
 }
 
 section{
     position: relative;
     min-height: calc(100vh - 161px);
-    padding-top: 105px;
+    padding-top: 60px;
 }
 
 section h1{
-    padding-top: 50px;
-    margin: 0 0 50px;
+    padding-top: 100px;
+    margin: 0 0 100px;
     text-align: center;
     font-size: 1.750em;
     font-weight: 500;
     letter-spacing: 0;
 }
 
+/* 공통 헤더 부분 E */
+
 /* 관리자 부분 S */
+
+/* 관리자 헤더 부분 S */
 
 .header_admin{
     width: 100%;
@@ -154,7 +238,7 @@ section h1{
     border-bottom: 1px solid #ddd;
     z-index: 1000;
     position: fixed;
-    top: 60px;
+    top: 61px;
     background: rgba(253,250,247,0.8);
 }
 
@@ -166,17 +250,10 @@ section h1{
     height: 100%;
 }
 
-.header_admin .knotted_main{
-    width: 80px;
-    height: 36px;
-    background: url(/images/logo.png) 0 0 no-repeat;
-    background-size: 80px auto;
-    margin-right: 130px;
-    text-indent: -9999px;
-}
-
 .header_admin .knotted_top_menu li{
+    display: inline-block;
     margin-right: 40px;
+    line-height: 45px;
 }
 
 .header_admin .knotted_top_menu li a{
@@ -231,6 +308,17 @@ section h1{
     display: inline-block;
     line-height: 30px;
 }
+
+section{
+    padding-top: 107px;
+}
+
+section h1{
+    padding-top: 50px;
+    margin: 0 0 50px;
+}
+
+/* 관리자 헤더 부분 E */
 
 .admin_main h1{
     margin-bottom: 20px;
@@ -311,6 +399,7 @@ section h1{
 .object_list > li .object_description .object_subject{
     font-weight: 500;
     font-size: 22px;
+    margin-bottom: 5px;
 }
 
 .object_list > li .object_description .object_content{
@@ -359,13 +448,14 @@ section h1{
     width: 20%;
     min-width: 60px;
     display: inline-block;
+    position: relative;
+    top: 2px;
 }
 
 .knotted_form li input[type="text"], .knotted_form li input[type="password"]{
     border-radius: 5px;
     height: 43px;
     width: calc(80% - 115px);
-    margin-top: -5px;
     background-color: inherit;
     border: 1px solid #ddd;
 }
@@ -401,12 +491,12 @@ section h1{
     width: 100px;
     height: 43px;
     line-height: 41px;
-    margin-top: -2px;
     float: right;
 }
 
 .knotted_form li.address_li button{
     float: none;
+    margin-left: 3px;
 }
 
 .knotted_form li.required label:after {
@@ -457,6 +547,9 @@ section h1{
 
 /* 관리자 부분 E */
 
+
+/* 공통 푸터 부분 S */
+
 footer{
     padding: 20px 0 30px;
     margin-top: 100px;
@@ -464,7 +557,13 @@ footer{
 }
 
 footer ul{
-    margin-bottom: 7px;
+    margin-bottom: 9px;
+}
+
+footer ul:after{
+    clear: both;
+    display: block;
+    content: "";
 }
 
 footer ul li{
@@ -472,6 +571,11 @@ footer ul li{
     font-size: 1.2rem;
     line-height: 2rem;
     letter-spacing: -1px;
+    float: left;
+}
+
+footer ul.footer_board{
+    margin-bottom: 11px;
 }
 
 footer ul.footer_board li{
@@ -483,7 +587,6 @@ footer ul.footer_board li a:hover{
     color: #ffa0c5 !important;
     transition: 0.2s;
 }
-
 footer ul.footer_info li{
     color: #999;
 }
@@ -494,9 +597,14 @@ footer ul.footer_info li:after {
     color: #ccc;
 }
 
+footer .footer_info li:last-child:after {
+    display: none;
+}
+
 footer p {
     word-break: keep-all;
     font-size: 1.2rem;
     color: #999;
 }
 
+/* 공통 푸터 부분 E */

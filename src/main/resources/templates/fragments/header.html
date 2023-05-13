@@ -5,45 +5,48 @@
 <th:block th:fragment="header">
     <header>
         <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start knotted_top_wrap">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none knotted_main">메인으로</a>
-
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 knotted_top_menu">
-                    <li><a th:href="@{/map}" class="nav-link px-2 text-black">MAP</a></li>
-                    <li><a th:href="@{/order}" class="nav-link px-2 text-black">RESERVATION</a></li>
-                    <li><a th:href="@{/menu}" class="nav-link px-2 text-black">MENU</a></li>
-                    <li><a th:href="@{/store}" class="nav-link px-2 text-black">LOCATION</a></li>
-                    <li><a th:href="@{/brand}" class="nav-link px-2 text-black">BRAND</a></li>
-                </ul>
-
-                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small knotted_member">
-                    <li class="knotted_admin" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-                        <a th:href="@{/admin}" class="nav-link text-black">
-                            ADMIN
-                        </a>
-                    </li>
-                    <li class="knotted_login" sec:authorize="isAnonymous()">
-                        <a th:href="@{/member/login}" class="nav-link text-black">
-                            LOGIN
-                        </a>
-                    </li>
-                    <li class="knotted_login" sec:authorize="isAuthenticated()">
-                        <a th:href="@{/member/logout}" class="nav-link text-black">
-                            LOGOUT
-                        </a>
-                    </li>
-                    <li class="knotted_mypage">
-                        <a th:href="@{/mypage}" class="nav-link text-black">
-                            MY PAGE
-                        </a>
-                    </li>
-                    <li class="knotted_cart">
-                        <a th:href="@{/cart}" class="nav-link text-black">
-                            CART
-                        </a>
-                    </li>
-                </ul>
+            <div class="h_logo">
+                <a href="/" class="knotted_main">메인으로</a>
             </div>
+            <nav>
+                <input type="checkbox" id="toggle"><label for="toggle">메인메뉴</label>
+                <div class="box">
+                    <ul class="gnb">
+                        <li><a th:href="@{/map}">MAP</a></li>
+                        <li><a th:href="@{/order}">RESERVATION</a></li>
+                        <li><a th:href="@{/menu}">MENU</a></li>
+                        <li><a th:href="@{/store}">LOCATION</a></li>
+                        <li><a th:href="@{/brand}">BRAND</a></li>
+                    </ul>
+                    <ul class="h_member">
+                        <li class="h_admin" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                            <a th:href="@{/admin}">
+                                ADMIN
+                            </a>
+                        </li>
+                        <li class="h_login" sec:authorize="isAnonymous()">
+                            <a th:href="@{/member/login}">
+                                LOGIN
+                            </a>
+                        </li>
+                        <li class="h_logout" sec:authorize="isAuthenticated()">
+                            <a th:href="@{/member/logout}">
+                                LOGOUT
+                            </a>
+                        </li>
+                        <li class="h_mypage">
+                            <a th:href="@{/mypage}">
+                                MY PAGE
+                            </a>
+                        </li>
+                        <li class="h_cart">
+                            <a th:href="@{/cart}">
+                                CART
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
     </header>
 </th:block>
