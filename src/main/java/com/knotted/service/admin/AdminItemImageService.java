@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
+import java.io.File;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -35,10 +37,23 @@ public class AdminItemImageService {
             imageUrl = "/images/item/" + imageName;
         }
 
-        // 정상적으로 업로드됐으면 매장 이미지 DB에 저장
+        // 정상적으로 업로드됐으면 상품 이미지 DB에 저장
         itemImage.updateItemImage(imageName, originalImageName, imageUrl);
         adminItemImageRepository.save(itemImage);
     }
+    
+    // 상품 이미지 파일 제거 및 DB에서 제거
+    public void deleteItemImage(ItemImage itemImage) throws Exception{
+        String imageUrl = itemImageLocation + "/" + itemImage.getImageName();
 
+        File file = new File(imageUrl);
+
+        if(file.exists()){ // 파일이 존재하면
+            file.delete(); // 파일 제거
+        }
+
+        // 파일 제거했으면 상품 이미지 DB 제거
+        adminItemImageRepository.delete(itemImage);
+    }
 
 }

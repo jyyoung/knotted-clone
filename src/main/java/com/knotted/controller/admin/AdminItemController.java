@@ -5,12 +5,12 @@ import com.knotted.dto.ItemFormDTO;
 import com.knotted.service.admin.AdminItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -67,6 +67,20 @@ public class AdminItemController {
 
         // 성공 시 상품 관리 페이지로 이동
         return "redirect:/admin/item";
+    }
+
+    // 상품 삭제 처리
+    @DeleteMapping(value = "/{itemId}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteItem(@PathVariable("itemId") Long itemId){
+
+        try {
+            adminItemService.deleteItem(itemId);
+        } catch (Exception e) {
+            return new ResponseEntity("상품 삭제 중 에러가 발생했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
 }

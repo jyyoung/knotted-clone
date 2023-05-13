@@ -4,6 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/admin}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
@@ -49,6 +54,48 @@
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script>
+
+        // 상품 삭제를 ajax로 구현
+        $(".delete_item").on("click", function(){
+
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+
+            let itemId = $(this).closest(".item").data("id");
+            let url = "/admin/item/" + itemId;
+
+            let delete_confirm = confirm("정말 삭제하시겠습니까? (상품 이미지도 같이 삭제됩니다)");
+            if(!delete_confirm){
+                return;
+            }
+
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                data: {
+                    itemId: itemId,
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    alert("상품을 삭제했습니다");
+                    location.href = "/admin/item";
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == "500"){
+                        alert("상품 삭제에 실패했습니다");
+                        return;
+                    }else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        });
+    </script>
+</th:block>
 
 </html>

@@ -7,6 +7,7 @@ import com.knotted.entity.Item;
 import com.knotted.entity.ItemImage;
 import com.knotted.repository.admin.AdminItemImageRepository;
 import com.knotted.repository.admin.AdminItemRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class AdminItemService {
 
         adminItemImageService.saveItemImage(itemImage, itemImageFile);
 
-        // 여기까지 정상적으로 됐으면 매장 및 매장 이미지 업로드, 매장 이미지 DB까지 저장 완료.
+        // 여기까지 정상적으로 됐으면 상품 및 상품 이미지 업로드, 상품 이미지 DB까지 저장 완료.
     }
 
     // 모든 상품 조회 메소드
@@ -49,16 +50,31 @@ public class AdminItemService {
         for(Item item : itemList){
             ItemDTO itemDTO = ItemDTO.of(item);
             // 해당 Item로 ItemImage를 찾아내서 추가한다
-            ItemImage itemImage = adminItemImageRepository.findByItemId(item.getId()); // 매장 이미지 엔티티 조회
+            ItemImage itemImage = adminItemImageRepository.findByItemId(item.getId()); // 상품 이미지 엔티티 조회
 
             if(itemImage != null){ // 해당 이미지가 있으면
                 ItemImageDTO itemImageDTO = ItemImageDTO.of(itemImage);
-                itemDTO.setItemImageDTO(itemImageDTO); // 매장 이미지 DTO를 매장 DTO에 세팅
+                itemDTO.setItemImageDTO(itemImageDTO); // 상품 이미지 DTO를 상품 DTO에 세팅
             }
 
             itemDTOList.add(itemDTO);
         }
 
         return itemDTOList;
+    }
+
+    // 상품 삭제 메소드
+    public void deleteItem(Long itemId) throws Exception {
+        Item item = adminItemRepository.findById(itemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // 일단 삭제 전 해당 이미지 파일도 같이 제거해야 함 (어차피 실제 이미지도 제거해야 하니까 굳이 양방향 매핑 하지 않았음)
+        ItemImage itemImage = adminItemImageRepository.findByItemId(item.getId());
+
+        // 상품 이미지 파일 및 DB 먼저 제거
+        adminItemImageService.deleteItemImage(itemImage);
+
+        // 정상적으로 됐으면 상품 제거
+        adminItemRepository.delete(item);
     }
 }
