@@ -3,6 +3,7 @@ package com.knotted.controller.admin;
 import com.knotted.dto.ItemDTO;
 import com.knotted.dto.ItemFormDTO;
 import com.knotted.service.admin.AdminItemService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -83,4 +84,21 @@ public class AdminItemController {
         return ResponseEntity.noContent().build();
     }
 
+    // 상품 수정 페이지로 이동
+    @GetMapping(value = "/{itemId}")
+    public String itemFormUpdate(@PathVariable("itemId") Long itemId, Model model){
+        // ItemFormDTO를 넘겨준다
+
+        try {
+            ItemFormDTO itemFormDTO = adminItemService.getItem(itemId);
+            model.addAttribute("itemId", itemId);
+            model.addAttribute("itemFormDTO", itemFormDTO);
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("errorMessage", "존재하지 않는 상품입니다");
+            model.addAttribute("itemFormDTO", new ItemFormDTO()); // 새로 작성으로 감
+            return "/admin/item/itemForm";
+        }
+
+        return "/admin/item/itemForm";
+    }
 }

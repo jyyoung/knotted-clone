@@ -77,4 +77,18 @@ public class AdminItemService {
         // 정상적으로 됐으면 상품 제거
         adminItemRepository.delete(item);
     }
+    
+    // 상품 읽는 메소드 (이미지까지 포함)
+    public ItemFormDTO getItem(Long itemId){
+        Item item = adminItemRepository.findById(itemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // 애초에 정상적으로 찾아졌으면 여기로 넘어옴
+        ItemFormDTO itemFormDTO = ItemFormDTO.of(item);
+        ItemImage itemImage = adminItemImageRepository.findByItemId(item.getId());
+        ItemImageDTO itemImageDTO = ItemImageDTO.of(itemImage);
+        itemFormDTO.setItemImageDTO(itemImageDTO);
+
+        return itemFormDTO;
+    }
 }

@@ -102,6 +102,7 @@ public class AdminStoreController {
         return "/admin/store/storeForm";
     }
 
+    // 매장 수정 처리
     @PostMapping(value = "/{storeId}")
     public String storeUpdate(@PathVariable("storeId") Long storeId, @Valid StoreFormDTO storeFormDTO, BindingResult bindingResult, Model model, MultipartFile storeImageFile){
         if(bindingResult.hasErrors()){

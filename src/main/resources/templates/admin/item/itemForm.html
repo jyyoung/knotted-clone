@@ -10,7 +10,7 @@
     <div class="container">
         <h1>상품 등록</h1>
 
-        <form th:action="@{/admin/item/new}" method="post" role="form" enctype="multipart/form-data" class="knotted_item_form knotted_form" th:object="${itemFormDTO}">
+        <form th:action="${itemId == null} ? '/admin/item/new' : '/admin/item/' + ${itemId}" method="post" role="form" enctype="multipart/form-data" class="knotted_item_form knotted_form" th:object="${itemFormDTO}">
 
             <input type="hidden" th:field="*{id}">
 
@@ -38,7 +38,7 @@
                 </li>
                 <li class="required">
                     <label th:for="price">상품 가격</label>
-                    <input type="text" th:field="*{price}" placeholder="상품 가격을 입력해주세요 (원)">
+                    <input type="text" th:field="*{price}" placeholder="상품 가격을 숫자만 입력해주세요 (ex. 3900)">
                     <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError"></p>
                 </li>
                 <li class="required file_li">
