@@ -394,6 +394,7 @@ section h1{
 .object_list > li .object_description{
     display: flex;
     flex-direction: column;
+    padding: 5px 0;
 }
 
 .object_list > li .object_description .object_subject{

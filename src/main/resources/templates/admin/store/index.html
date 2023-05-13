@@ -25,7 +25,7 @@
                 <th:block th:each="store : ${storeList}">
                     <li th:object="${store}" th:attr="data-id=${store.id}" class="store object">
                         <div class="object_list_left">
-                            <a href="javascript:;" class="object_link">
+                            <a th:href="@{/store/{id}(id=*{id})}" class="object_link">
                                 <img th:src="*{storeImageDTO.imageUrl}" alt="매장 사진">
                             </a>
                             <div class="object_description">

@@ -16,10 +16,8 @@ public class Item extends BaseEntity{
     @Column(name = "item_id")
     private Long id;
 
-    // 상품 카테고리 엔티티와 다대일로 매핑
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_category_id")
-    private ItemCategory itemCategory;
+    @Column(name = "item_category")
+    private String category;
 
     // 상품명
     @Column(name = "item_name")
