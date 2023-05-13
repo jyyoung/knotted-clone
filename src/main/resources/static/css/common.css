@@ -609,6 +609,75 @@ section h1{
 
 /* 매장 상세보기 E */
 
+/* 브랜드 부분 S */
+
+.business {
+    width: 100%;
+    max-width: 100% !important;
+    margin-bottom: -100px;
+    padding: 0 !important;
+    background-color: #fdfaf7;
+    color: #000;
+    font-size: 28pt;
+    position: relative;
+}
+
+.business .business_top_media .video-container {
+    pointer-events: none;
+    position: relative;
+    padding-bottom: 56.25%;
+    /* padding-top: 30px; */
+    height: 0;
+    overflow: hidden;
+}
+
+.business_logo, .business_txt {
+    max-width: 1260px;
+    margin: 0 auto;
+    padding: 200px 25px;
+    text-align: center;
+}
+
+.business_logo_img {
+    margin-bottom: 150px;
+    font-size: 0;
+}
+
+.business_logo_img img {
+    width: 80%;
+    max-width: 700px;
+}
+
+.business h2, .business p {
+    color: #000;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.business h2 {
+    margin-bottom: 50px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.business_img {
+    font-size: 0;
+}
+
+.business img{
+    width: 100%;
+}
+
+.video-container iframe, .video-container object, .video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 브랜드 부분 E */
+
 /* 공통 푸터 부분 S */
 
 footer{

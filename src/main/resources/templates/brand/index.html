@@ -7,8 +7,30 @@
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
-    <div class="container">
-        <h1>브랜드 메인 페이지</h1>
+    <div class="business">
+        <div class="business_top_media" style="position: relative;">
+            <div class="video-container">
+                <iframe id="player" width="560" height="315"
+                        src="https://www.youtube.com/embed/rT8urSfvQu0?controls=0&amp;playlist=rT8urSfvQu0&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playsinline=1&amp;vq=hd1080&amp;enablejsapi=1&amp;version=3&amp;playerapiid=ytplayer"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen="" title="Knotted 노티드"></iframe>
+            </div>
+        </div>
+        <div class="business_logo">
+            <div class="business_logo_img"><img th:src="@{/images/brand_logo.png}"></div>
+            <h2>프리미엄 케이크, 도넛, 디저트 카페</h2>
+            <p>노티드는 다양한 베이커리와 케이크, 도넛을 즐길 수 있는 디저트 카페로 합리적인 가격에 프리미엄한 맛을 제공하고 <br>노티드의 시그니처인 크림이 가득한 도넛과 귀여운 패키징으로
+                새로운 트렌드를 만들어 가며 모든 사람들에게 행복을 선사하고자 노력하고 있습니다.</p></div>
+        <div class="business_img"><img th:src="@{/images/brand_image_1.png}"></div>
+        <div class="business_txt"><p>노티드의 가장 대표적인 메뉴 '우유생크림도넛'은 한입 베어 물면 입안에 가득 퍼지는 우유크림이 기분 좋은 달콤함을 선사합니다. <br>이외에도
+            스테디셀러인 클래식바닐라도넛, 베리머치도넛, 얼그레이도넛 등 다양한 도넛들과 함께 10여종의 귀여운 홀케이크를 만날 수 있습니다. <br>홀케이크는 부담스럽지 않은 사이즈에 합리적인
+            가격으로 제공되고 있어 노티드만의 유니크한 디자인이 특별한 날을 더욱 더 특별하게 만들어 드립니다. </p></div>
+        <div class="business_img"><img th:src="@{/images/brand_image_2.jpg}"></div>
+        <div class="business_txt"><p>노티드는 보기만 해도 기분이 좋아지는 노티드의 상징 '스마일리'와 사랑스러운 '슈가베어' 이미지의 굿즈들을 제작하여 매 시즌 선보이고
+            있으며<br> 노티드를 사랑해주시는 모든 분들에게 더 가까운곳에서 노티드를 즐기 실 수 있도록 <br>다양한 분야의 여러 브랜드와 협업을 통하여 도넛만큼 달콤한 재미와 행복을 선물하고자
+            노력하고 있습니다. </p></div>
+        <div class="business_img"><img th:src="@{/images/brand_image_3.jpg}"></div>
     </div>
 </th:block>
 

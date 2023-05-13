@@ -42,6 +42,10 @@ public class Item extends BaseEntity{
     // 원산지 정보
     @Column(name = "item_origin")
     private String origin;
+
+    // 판매량
+    @Column(name = "item_sale_count")
+    private String saleCount;
 }
 
 
