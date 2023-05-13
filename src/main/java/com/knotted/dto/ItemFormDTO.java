@@ -1,8 +1,7 @@
 package com.knotted.dto;
 
 import com.knotted.entity.Item;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 
@@ -26,8 +25,9 @@ public class ItemFormDTO {
     private String nameEng;
 
     // 상품 가격
-    @NotBlank(message = "상품 가격은 필수 입력값입니다")
-    @Pattern(regexp = "^[0-9]*$")
+    // Long 타입에 대해서는 NotBlank가 아닌 NotNull을 해야 한다.
+    @NotNull(message = "상품 가격은 필수 입력값입니다")
+    @Digits(integer = 10, fraction = 0, message = "상품 가격은 숫자로만 입력해주세요")
     private Long price;
 
     // 상품 상세설명
@@ -40,7 +40,7 @@ public class ItemFormDTO {
     private String origin;
 
     // 판매량
-    private String saleCount;
+    private Long saleCount;
 
     // 상품 이미지
     private ItemImageDTO itemImageDTO;

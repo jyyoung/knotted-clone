@@ -30,10 +30,11 @@
                             </a>
                             <div class="object_description">
                                 <div class="object_subject" th:text="*{name}"></div>
-                                <div class="object_content" th:text="*{address}"></div>
-                                <div class="object_etc">
+                                <div class="object_sub_subject" th:text="*{address}"></div>
+                                <div class="object_content">
                                     <span class="start_time" th:text="*{openTime}"></span> ~ <span class="end_time" th:text="*{closeTime}"></span>
                                 </div>
+                                <div class="object_etc" th:text="*{description}"></div>
                             </div>
                         </div>
                         <ul class="object_list_right">

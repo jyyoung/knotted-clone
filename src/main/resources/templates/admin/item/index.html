@@ -21,14 +21,13 @@
                     <li th:object="${item}" th:attr="data-id=${item.id}" class="item object">
                         <div class="object_list_left">
                             <a th:href="@{/item/{id}(id=*{id})}" class="object_link">
-                                <img th:src="*{itemImageDTO.imageUrl}" alt="매장 사진">
+                                <img th:src="*{itemImageDTO.imageUrl}" alt="상품 사진">
                             </a>
                             <div class="object_description">
                                 <div class="object_subject" th:text="*{name}"></div>
-                                <div class="object_content" th:text="*{address}"></div>
-                                <div class="object_etc">
-                                    <span class="start_time" th:text="*{openTime}"></span> ~ <span class="end_time" th:text="*{closeTime}"></span>
-                                </div>
+                                <div class="object_sub_subject" th:text="*{nameEng}"></div>
+                                <div class="object_content" th:text="${item.price + '원'}"></div>
+                                <div class="object_etc" th:text="*{description}"></div>
                             </div>
                         </div>
                         <ul class="object_list_right">

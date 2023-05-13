@@ -44,7 +44,7 @@ public class Store extends BaseEntity{
     private String closeTime;
 
     // 매장 설명
-    @Column(name = "store_description")
+    @Column(name = "store_description", length = 2000)
     private String description;
 
     // 매장 수정 메소드

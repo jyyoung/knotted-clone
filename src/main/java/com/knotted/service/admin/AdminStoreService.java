@@ -29,6 +29,7 @@ public class AdminStoreService {
 
     // 파일을 다루는 거라 Exception 뜰 수도 있어서 Exception 던져 놓음. 오류가 발생하면 이 메소드를 호출하는 곳에서 예외처리를 할 것임
     // StoreFormDTO와 MultipartFile을 받아서 매장과 매장 이미지를 DB에 같이 등록하기 위함이다. 둘 중 하나가 실패하면 @Transactional에 의해 롤백된다.
+    // 매장 등록 메소드
     public void saveStore(StoreFormDTO storeFormDTO, MultipartFile storeImageFile) throws Exception{
 
         // 매장 등록 전 시간을 먼저 가운데 :를 넣어준다 (util 패키지의 클래스로 해당 기능을 구현해놓았음)
@@ -81,6 +82,7 @@ public class AdminStoreService {
 
     // StoreDTO가 바로 여기서 필요함. 화면에 뿌려줄 땐 StoreFormDTO를 쓸 순 없지 않은가.
     // Store 엔티티를 리스트로 먼저 조회 후 이걸 DTO로 변환하여 List로 만들자
+    // 모든 매장 조회 메소드
     public List<StoreDTO> getAllStore(){
         List<Store> storeList = adminStoreRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         List<StoreDTO> storeDTOList = new ArrayList<>();

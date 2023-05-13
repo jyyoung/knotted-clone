@@ -38,11 +38,11 @@
                 </li>
                 <li class="required">
                     <label th:for="price">상품 가격</label>
-                    <input type="text" th:field="*{price}" placeholder="상품 가격을 입력해주세요 (숫자만)">
+                    <input type="text" th:field="*{price}" placeholder="상품 가격을 입력해주세요 (원)">
                     <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError"></p>
                 </li>
                 <li class="required file_li">
-                    <label for="itemImage">매장 이미지</label>
+                    <label for="itemImage">상품 이미지</label>
                     <th:block th:if="*{id != null}">
                         <div class="file_div">
                             <div class="file_preview">
@@ -61,7 +61,7 @@
                 </li>
                 <li>
                     <label th:for="description">상품 설명</label>
-                    <input type="text" th:field="*{description}" placeholder="매장 설명을 입력해주세요">
+                    <input type="text" th:field="*{description}" placeholder="상품 설명을 입력해주세요">
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="fieldError"></p>
                 </li>
                 <li>

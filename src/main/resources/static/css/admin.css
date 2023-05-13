@@ -400,11 +400,16 @@ section h1{
 .object_list > li .object_description .object_subject{
     font-weight: 500;
     font-size: 22px;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
+}
+
+.object_list > li .object_description .object_sub_subject{
+    color: #999;
 }
 
 .object_list > li .object_description .object_content{
-    color: #999;
+    font-size: 20px;
+    margin-top: 10px;
 }
 
 .object_list > li .object_description .object_etc{

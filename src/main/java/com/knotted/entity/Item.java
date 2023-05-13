@@ -33,20 +33,20 @@ public class Item extends BaseEntity{
     private Long price;
 
     // 상품 상세설명
-    @Column(name = "item_description")
+    @Column(name = "item_description", length = 2000)
     private String description;
 
     // 알레르기 유발 요인
-    @Column(name = "item_allergy")
+    @Column(name = "item_allergy", length = 2000)
     private String allergy;
 
     // 원산지 정보
-    @Column(name = "item_origin")
+    @Column(name = "item_origin", length = 2000)
     private String origin;
 
     // 판매량
     @Column(name = "item_sale_count")
-    private String saleCount;
+    private Long saleCount;
 }
 
 
