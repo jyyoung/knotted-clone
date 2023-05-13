@@ -16,6 +16,7 @@ public class Item extends BaseEntity{
     @Column(name = "item_id")
     private Long id;
 
+    // 상품 카테고리
     @Column(name = "item_category")
     private String category;
 

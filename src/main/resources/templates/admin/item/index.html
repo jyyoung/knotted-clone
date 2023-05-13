@@ -9,6 +9,44 @@
 <th:block layout:fragment="content">
     <div class="container">
         <h1>상품 관리</h1>
+
+        <div class="sub_container">
+            <div class="list_top_wrap">
+                <a th:href="@{/admin/item/new}">등록하기</a>
+            </div>
+
+            <!--/* 아래 부분은 나중에 REST로 실제 리스트로 대체할 부분임 */-->
+            <ul class="item_list object_list">
+                <th:block th:each="item : ${itemList}">
+                    <li th:object="${item}" th:attr="data-id=${item.id}" class="item object">
+                        <div class="object_list_left">
+                            <a th:href="@{/item/{id}(id=*{id})}" class="object_link">
+                                <img th:src="*{itemImageDTO.imageUrl}" alt="매장 사진">
+                            </a>
+                            <div class="object_description">
+                                <div class="object_subject" th:text="*{name}"></div>
+                                <div class="object_content" th:text="*{address}"></div>
+                                <div class="object_etc">
+                                    <span class="start_time" th:text="*{openTime}"></span> ~ <span class="end_time" th:text="*{closeTime}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="object_list_right">
+                            <li>
+                                <a th:href="@{/item/{id}(id=*{id})}">보기</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/item/{id}(id=*{id})}">수정</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="delete_item">삭제</a>
+                            </li>
+                        </ul>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+        
     </div>
 </th:block>
 
