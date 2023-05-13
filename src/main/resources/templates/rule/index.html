@@ -9,6 +9,7 @@
         .agreement{
             width: 90%;
             margin: 0 auto;
+            text-align: center;
         }
 
         .agreement h1{
@@ -23,13 +24,24 @@
         }
 
         .agreement .rule_content{
-            margin-top: 50px;
+            margin-top: 20px;
+        }
+
+        .agreement .rule_subject p{
+            margin-bottom: 5px;
         }
 
         .agreement .github_link{
             color: #ffa0c5;
             animation: colorchange 2s infinite;
             animation-timing-function: linear;
+            font-size: 3rem;
+        }
+
+        .agreement img{
+            width: 250px;
+            display: inline-block;
+            margin-top: 10px;
         }
         
         @keyframes colorchange {
@@ -69,16 +81,16 @@
 
             <div class="rule_subject">
                 <p>만든이 : 황정민</p>
-                <p><a href="https://github.com/jungmin0917" class="github_link">github : jungmin0917</a> <- 클릭!</p>
                 <p>제작 : 2023.05.04 ~ </p>
+                <p><a href="https://github.com/jungmin0917" class="github_link">github : jungmin0917</a></p>
             </div>
+
+            <img th:src="@{/images/rule_main.gif}" alt="약관 메인">
 
             <p class="rule_content">
                 안녕하세요.<br>
                 열심히 만들어 봤습니다.<br>
-                댁은 안녕하신지요.<br>
                 뭔가 부족한 점이 있으면 언제든지 말씀해주세요.<br>
-                그럼 이만.
             </p>
         </div>
     </div>

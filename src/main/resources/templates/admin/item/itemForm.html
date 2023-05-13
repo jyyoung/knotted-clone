@@ -17,8 +17,14 @@
             <ul>
                 <li class="required">
                     <label th:for="name">카테고리</label>
-                    <input type="text" th:field="*{name}" placeholder="상품명을 입력해주세요">
-                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError"></p>
+
+                    <div class="category_wrap">
+                        <input type="radio" name="category" id="category_donut" value="donut" checked><label for="category_donut" class="category_on">도넛</label>
+                        <input type="radio" name="category" id="category_cake" value="cake"><label for="category_cake">케이크</label>
+                        <input type="radio" name="category" id="category_bakery" value="bakery"><label for="category_bakery">베이커리</label>
+                    </div>
+
+                    <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="fieldError"></p>
                 </li>
                 <li class="required">
                     <label th:for="name">상품명</label>
@@ -94,9 +100,20 @@
             }
         });
 
+        // 카테고리 클릭 시
+        $(".category_wrap label").on("click", function(){
+            $(this).siblings().removeClass("category_on");
+            $(this).addClass("category_on");
+        });
+
         $(".knotted_submit").on("click", function(){
 
             // 프론트 유효성 검사
+            if(!($("input[name='category']:checked").val())){
+                alert("카테고리를 골라주세요");
+                return;
+            }
+
             if(!($("input#name").val())){
                 alert("상품명을 입력해주세요");
                 return;
