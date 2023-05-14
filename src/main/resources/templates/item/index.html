@@ -9,9 +9,50 @@
 <th:block layout:fragment="content">
     <div class="container">
         <h1>메뉴</h1>
+
+        <div class="menulist">
+            <div class="menucategory">
+                <div class="search">
+                    <input type="text" id="search_word"><label for="search_word"></label>
+                    <button type="button" class="store_search">검색</button>
+                </div>
+
+                <div class="category">
+                    <input type="radio" name="category" id="category01" checked>
+                    <label for="category01">전체</label>
+                    <input type="radio" name="category" id="category02">
+                    <label for="category02" style="">도넛</label>
+                    <input type="radio" name="category" id="category03">
+                    <label for="category03" style="">케이크</label>
+                    <input type="radio" name="category" id="category04">
+                    <label for="category04" style="">베이커리</label>
+                </div>
+            </div>
+
+            <ul class="listview">
+                <th:block th:each="item : ${itemList}">
+                    <li th:object="${item}" th:attr="data-id=${item.id}" class="item_link">
+                        <div>
+                            <div class="img"><img th:src="*{itemImageDTO.imageUrl}"></div>
+                        </div>
+                        <h2 th:text="*{name}"></h2>
+                        <p th:text="${#numbers.formatDecimal(item.price, 3, 'COMMA', 0, 'POINT')}"></p>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script>
+        // 상품 클릭 시 매장으로 이동
+        $(".item_link").on("click", function(){
+            let itemId = $(this).data("id");
+
+            location.href = "/menu/" + itemId;
+        });
+    </script>
+</th:block>
 
 </html>

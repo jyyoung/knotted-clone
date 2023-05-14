@@ -19,7 +19,7 @@
             </div>
 
             <ul class="listview">
-                <th:block th:each="store: ${storeList}">
+                <th:block th:each="store : ${storeList}">
                     <li th:object="${store}" th:attr="data-id=${store.id}" class="store_link">
                         <div>
                             <div class="img"><img th:src="*{storeImageDTO.imageUrl}"></div>
@@ -41,9 +41,7 @@
 
             location.href = "/store/" + storeId;
         });
-
     </script>
-
 </th:block>
 
 </html>

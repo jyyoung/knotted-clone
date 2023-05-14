@@ -25,7 +25,7 @@ public class StoreService {
     private final StoreImageRepository storeImageRepository;
     private final StoreImageService storeImageService;
 
-    // 모든 매장 읽어오는 메소드
+    // 모든 매장 조회하는 메소드
     public List<StoreDTO> getAllStore(){
         List<Store> storeList = storeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         List<StoreDTO> storeDTOList = new ArrayList<>();
@@ -46,7 +46,7 @@ public class StoreService {
         return storeDTOList;
     }
 
-    // 매장 하나 읽어오는 메소드
+    // 매장 하나 조회하는 메소드
     public StoreFormDTO getStore(Long storeId){
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(EntityNotFoundException::new);
