@@ -613,7 +613,7 @@ section h1{
 .view > .inform02 li {
     color: #999;
     margin-bottom: 20px;
-    line-height: 1.4;
+    line-height: 24px;
 }
 
 .view > .inform02 li h2 {
@@ -642,11 +642,13 @@ section h1{
     color: #282828;
 }
 
-.view > .inform02 li input[type=checkbox] {
+.view > .inform02 li input[type=checkbox],
+.view > .inform03 li input[type=checkbox] {
     display: none;
 }
 
-.view > .inform02 li input[type=checkbox] + label {
+.view > .inform02 li input[type=checkbox] + label,
+.view > .inform03 .price li input[type=checkbox] + label {
     background: url(/images/icon_bookmark.png) no-repeat;
     width: 20px;
     height: 20px;
@@ -657,6 +659,145 @@ section h1{
 }
 
 /* 매장 상세보기 E */
+
+/* 상품 상세보기 S */
+
+.view > .inform03 {
+    width: calc(100% - 400px);
+    float: right;
+    height: 100%;
+}
+
+.view > .inform03 .price {
+    margin-bottom: 30px;
+    margin-left: 5px;
+}
+
+.view > .inform03 li {
+    line-height: 24px;
+}
+
+.view > .inform03 h2 {
+    font-size: 2.6rem;
+    font-weight: 500;
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.view > .inform03 .price li:nth-child(3) {
+    font-size: 2.4rem;
+    margin: 20px 0 0;
+}
+
+.view > .inform03 .txt {
+    margin-bottom: 50px;
+}
+
+.view > .inform03 .allergy, .view > .inform03 .nutrition {
+    position: relative;
+    border-top: 1px solid #ebebeb;
+    padding: 15px 0;
+    line-height: 26px;
+}
+
+.view > .inform03 h3 {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.view > .inform03 .allergy #btn_open01 {
+    display: none;
+}
+
+.view > .inform03 .allergy #btn_open01 + label {
+    font-size: 0;
+    position: absolute;
+    top: 15px;
+    right: 0;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.view > .inform03 .allergy #btn_open01:checked + label {
+    position: absolute;
+    top: 20px;
+    right: 0;
+}
+
+.view > .inform03 .allergy #btn_open01 + label:before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    margin-top: 5px;
+    display: inline-block;
+    border: solid #999;
+    border-width: 0 1px 1px 0;
+    transform: rotate(45deg);
+}
+
+.view > .inform03 .allergy #btn_open01:checked + label:before {
+    content: "";
+    transform: rotate(-135deg);
+}
+
+#btn_open01:checked ~ p {
+    display: block;
+}
+
+.view > .inform03 .allergy p {
+    display: none;
+    margin-top: 5px;
+}
+
+.view > .inform03 .nutrition {
+    border-bottom: 1px solid #ebebeb;
+}
+
+.view > .inform03 .nutrition #btn_open02 {
+    display: none;
+}
+
+.view > .inform03 .nutrition #btn_open02 + label {
+    font-size: 0;
+    position: absolute;
+    top: 15px;
+    right: 0;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.view > .inform03 .nutrition #btn_open02:checked + label {
+    position: absolute;
+    top: 20px;
+    right: 0;
+}
+
+.view > .inform03 .nutrition #btn_open02 + label:before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    margin-top: 5px;
+    display: inline-block;
+    border: solid #999;
+    border-width: 0 1px 1px 0;
+    transform: rotate(45deg);
+}
+
+.view > .inform03 .nutrition #btn_open02:checked + label:before {
+    content: "";
+    transform: rotate(-135deg);
+}
+
+#btn_open02:checked ~ p {
+    display: block;
+}
+
+.view > .inform03 .nutrition p {
+    display: none;
+    margin-top: 5px;
+}
+
+/* 상품 상세보기 E */
 
 /* 브랜드 부분 S */
 

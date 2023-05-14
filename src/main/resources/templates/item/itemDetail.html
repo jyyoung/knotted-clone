@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/common}">
+
+<th:block layout:fragment="css"></th:block>
+
+<th:block layout:fragment="content">
+    <div class="container">
+        <h1>상품안내</h1>
+
+        <div class="view" th:object="${itemFormDTO}">
+            <div class="inform01">
+                <div class="photo"><img th:src="*{itemImageDTO.imageUrl}"></div>
+            </div>
+            <div class="inform03">
+                <ul class="price">
+                    <li>
+                        <h2 th:text="*{name}"></h2>
+                        <input type="checkbox" id="bookmark"><label for="bookmark"></label>
+                    </li>
+                    <li th:text="*{nameEng}"></li>
+                    <li th:text="${#numbers.formatDecimal(itemFormDTO.price, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                </ul>
+                <ul class="information">
+                    <li class="txt" th:text="*{description}"></li>
+                    <li class="allergy" style="">
+                        <h3>알레르기 유발 요인</h3>
+                        <input type="checkbox" id="btn_open01">
+                        <label for="btn_open01" class="btn_open_label">열기</label>
+                        <p th:text="*{allergy}"></p>
+                    </li>
+                    <li class="nutrition" style="">
+                        <h3>원산지정보</h3>
+                        <input type="checkbox" id="btn_open02">
+                        <label for="btn_open02" class="btn_open_label">열기</label>
+                        <p th:text="*{origin}"></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+
+        // 알레르기 요인, 원산지 정보 열기 버튼
+        $(".btn_open_label").on("click", function(){
+
+        });
+    </script>
+
+</th:block>
+
+</html>

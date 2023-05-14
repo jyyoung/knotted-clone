@@ -1,6 +1,7 @@
 package com.knotted.controller;
 
 import com.knotted.dto.ItemDTO;
+import com.knotted.dto.ItemFormDTO;
 import com.knotted.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,5 +41,19 @@ public class ItemController {
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // 상품 상세 페이지
+    @GetMapping(value = "/{itemId}")
+    public String itemDetail(@PathVariable("itemId") Long itemId, Model model){
+        try {
+            ItemFormDTO itemFormDTO = itemService.getItem(itemId);
+            model.addAttribute("itemFormDTO", itemFormDTO);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "존재하지 않는 상품입니다");
+            return "redirect:/item";
+        }
+
+        return "/item/itemDetail";
     }
 }

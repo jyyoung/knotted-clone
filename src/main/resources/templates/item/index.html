@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <h2>{{ item.name }}</h2>
-                    <p>{{ item.price }}</p>
+                    <p>{{ formatPrice(item.price) }}</p>
                 </li>
             </ul>
 
@@ -81,6 +81,11 @@
             el: "#category_items",
             data: {
                 items: []
+            },
+            methods: {
+                formatPrice(price){
+                    return price.toLocaleString();
+                }
             }
         });
 

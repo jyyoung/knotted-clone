@@ -2,12 +2,13 @@ package com.knotted.service;
 
 
 import com.knotted.dto.ItemDTO;
+import com.knotted.dto.ItemFormDTO;
 import com.knotted.dto.ItemImageDTO;
 import com.knotted.entity.Item;
 import com.knotted.entity.ItemImage;
 import com.knotted.repository.ItemImageRepository;
 import com.knotted.repository.ItemRepository;
-import io.micrometer.common.util.StringUtils;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,7 @@ public class ItemService {
         return itemDTOList;
     }
 
+    // 상품 엔티티를 DTO로 변환 (이 과정에서 상품 이미지 DTO도 상품 DTO에 넣음)
     private ItemDTO convertToItemDTO(Item item){
         ItemDTO itemDTO = ItemDTO.of(item);
         // 해당 Item로 ItemImage를 찾아내서 추가한다
@@ -69,4 +71,17 @@ public class ItemService {
         return itemDTO;
     }
 
+    // 상품 하나 조회하는 메소드
+    public ItemFormDTO getItem(Long itemId){
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // 애초에 정상적으로 찾아졌으면 여기로 넘어옴
+        ItemFormDTO itemFormDTO = ItemFormDTO.of(item);
+        ItemImage itemImage = itemImageRepository.findByItemId(item.getId());
+        ItemImageDTO itemImageDTO = ItemImageDTO.of(itemImage);
+        itemFormDTO.setItemImageDTO(itemImageDTO);
+
+        return itemFormDTO;
+    }
 }
