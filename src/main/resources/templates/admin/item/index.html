@@ -25,7 +25,7 @@
                 <th:block th:each="item : ${itemList}">
                     <li th:object="${item}" th:attr="data-id=${item.id}" class="item object">
                         <div class="object_list_left">
-                            <a th:href="@{/item/{id}(id=*{id})}" class="object_link">
+                            <a th:href="@{/menu/{id}(id=*{id})}" class="object_link">
                                 <img th:src="*{itemImageDTO.imageUrl}" alt="상품 사진">
                             </a>
                             <div class="object_description">
@@ -37,7 +37,7 @@
                         </div>
                         <ul class="object_list_right">
                             <li>
-                                <a th:href="@{/item/{id}(id=*{id})}">보기</a>
+                                <a th:href="@{/menu/{id}(id=*{id})}">보기</a>
                             </li>
                             <li>
                                 <a th:href="@{/admin/item/{id}(id=*{id})}">수정</a>

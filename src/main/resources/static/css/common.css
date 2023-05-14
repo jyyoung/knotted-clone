@@ -677,6 +677,10 @@ section h1{
     line-height: 24px;
 }
 
+.view > .inform03 li.name_eng{
+    color: #999;
+}
+
 .view > .inform03 h2 {
     font-size: 2.6rem;
     font-weight: 500;

@@ -45,7 +45,7 @@ public class ItemService {
         if(category.equals("all")){
             itemList = itemRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         }else{
-            itemList = itemRepository.findByCategory(category, Sort.by(Sort.Direction.ASC, "id"));
+            itemList = itemRepository.findByCategory(category, Sort.by(Sort.Direction.DESC, "id"));
         }
 
         List<ItemDTO> itemDTOList = new ArrayList<>();

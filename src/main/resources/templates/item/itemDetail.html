@@ -20,7 +20,7 @@
                         <h2 th:text="*{name}"></h2>
                         <input type="checkbox" id="bookmark"><label for="bookmark"></label>
                     </li>
-                    <li th:text="*{nameEng}"></li>
+                    <li th:text="*{nameEng}" class="name_eng"></li>
                     <li th:text="${#numbers.formatDecimal(itemFormDTO.price, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
                 </ul>
                 <ul class="information">

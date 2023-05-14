@@ -4,6 +4,9 @@ import com.knotted.dto.ItemFormDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // 상품 엔티티
 
 @Entity
@@ -16,6 +19,11 @@ public class Item extends BaseEntity{
     @GeneratedValue
     @Column(name = "item_id")
     private Long id;
+
+    // 매장 상품 엔티티와 일대다로 매핑
+    // NPE가 발생할 우려가 있기에 명시적으로 new ArrayList<>(); 함으로써 초기화해주었다.
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<StoreItem> storeItems = new ArrayList<>();
 
     // 상품 카테고리
     @Column(name = "item_category")
