@@ -19,27 +19,45 @@
 
                 <div class="category">
                     <input type="radio" name="category" id="category01" checked>
-                    <label for="category01">전체</label>
+                    <label for="category01" data-category="">전체</label>
                     <input type="radio" name="category" id="category02">
-                    <label for="category02" style="">도넛</label>
+                    <label for="category02" style="" data-category="donut">도넛</label>
                     <input type="radio" name="category" id="category03">
-                    <label for="category03" style="">케이크</label>
+                    <label for="category03" style="" data-category="cake">케이크</label>
                     <input type="radio" name="category" id="category04">
-                    <label for="category04" style="">베이커리</label>
+                    <label for="category04" style="" data-category="bakery">베이커리</label>
                 </div>
             </div>
 
-            <ul class="listview">
-                <th:block th:each="item : ${itemList}">
-                    <li th:object="${item}" th:attr="data-id=${item.id}" class="item_link">
-                        <div>
-                            <div class="img"><img th:src="*{itemImageDTO.imageUrl}"></div>
+            <!--/* 그냥 아래 Vue.js로 모두 해결하기로 함 */-->
+<!--            <ul class="listview">-->
+<!--                <th:block th:each="item : ${itemList}">-->
+<!--                    <li th:object="${item}" th:attr="data-id=${item.id}" class="item_link">-->
+<!--                        <div>-->
+<!--                            <div class="img">-->
+<!--                                <img th:src="*{itemImageDTO.imageUrl}">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <h2 th:text="*{name}"></h2>-->
+<!--                        <p th:text="${#numbers.formatDecimal(item.price, 3, 'COMMA', 0, 'POINT')}"></p>-->
+<!--                    </li>-->
+<!--                </th:block>-->
+<!--            </ul>-->
+
+            <!--/* Vue.js로 v-for 반복문을 돌아 렌더링할 부분 */-->
+            <ul class="listview" id="category_items">
+                <!-- 일단 items에 담았기 때문에 이를 순회하면서 값을 가져온다 -->
+                <li v-for="item in items" :key="item.id" :data-id="item.id" class="item_link">
+                    <div>
+                        <div class="img">
+                            <img :src="item.itemImageDTO.imageUrl" />
                         </div>
-                        <h2 th:text="*{name}"></h2>
-                        <p th:text="${#numbers.formatDecimal(item.price, 3, 'COMMA', 0, 'POINT')}"></p>
-                    </li>
-                </th:block>
+                    </div>
+                    <h2>{{ item.name }}</h2>
+                    <p>{{ item.price }}</p>
+                </li>
             </ul>
+
         </div>
     </div>
 </th:block>
@@ -47,11 +65,62 @@
 <th:block layout:fragment="script">
     <script>
         // 상품 클릭 시 매장으로 이동
-        $(".item_link").on("click", function(){
+        // $(".item_link").on("click", function(){
+        //     let itemId = $(this).data("id");
+        //
+        //     location.href = "/menu/" + itemId;
+        // });
+        /* 주의! 동적으로 DOM이 바뀌었기에 상위 DOM을 기준으로 바인딩한다 */
+        $(".menulist").on("click", ".item_link", function(){
             let itemId = $(this).data("id");
-
             location.href = "/menu/" + itemId;
         });
+
+        // Vue 인스턴스 생성
+        const categoryItems = new Vue({
+            el: "#category_items",
+            data: {
+                items: []
+            }
+        });
+
+        $(document).ready(function(){
+            // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
+            loadCategoryItems("all");
+        });
+
+        function loadCategoryItems(category){
+            // 카테고리로 리스트 받아 옴
+            $.ajax({
+                url: "/menu/category/" + category,
+                method: "GET",
+                data: {
+                    category: category,
+                },
+                cache: false,
+                success: function(result, status){
+                    categoryItems.items = result;
+
+                    $(".initial_listview").addClass("display_none");
+                    $("#category_items").removeClass("display_none");
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
+
+        // 카테고리 클릭 시 jQuery ajax + Vue.js로 화면에 뿌리기
+        $(".menucategory .category label").on("click", function(){
+            let category = $(this).data("category");
+
+            if(!category){
+                category = "all";
+            }
+
+            loadCategoryItems(category);
+        });
+
     </script>
 </th:block>
 

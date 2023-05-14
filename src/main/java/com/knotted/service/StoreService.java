@@ -26,7 +26,7 @@ public class StoreService {
     private final StoreImageService storeImageService;
 
     // 모든 매장 조회하는 메소드
-    public List<StoreDTO> getAllStore(){
+    public List<StoreDTO> getAllStores(){
         List<Store> storeList = storeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         List<StoreDTO> storeDTOList = new ArrayList<>();
 

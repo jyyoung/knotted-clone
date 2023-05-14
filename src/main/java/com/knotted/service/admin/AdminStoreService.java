@@ -52,7 +52,7 @@ public class AdminStoreService {
     // StoreDTO가 바로 여기서 필요함. 화면에 뿌려줄 땐 StoreFormDTO를 쓸 순 없지 않은가.
     // Store 엔티티를 리스트로 먼저 조회 후 이걸 DTO로 변환하여 List로 만들자
     // 모든 매장 조회 메소드
-    public List<StoreDTO> getAllStore(){
+    public List<StoreDTO> getAllStores(){
         List<Store> storeList = adminStoreRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         List<StoreDTO> storeDTOList = new ArrayList<>();
 

@@ -27,7 +27,7 @@ public class AdminStoreController {
     // 매장 관리 메인 페이지. 매장 리스트도 뿌려준다.
     @GetMapping(value = {"", "/"})
     public String main(Model model){
-        List<StoreDTO> storeList = adminStoreService.getAllStore();
+        List<StoreDTO> storeList = adminStoreService.getAllStores();
         model.addAttribute("storeList", storeList);
 
         return "/admin/store/index";

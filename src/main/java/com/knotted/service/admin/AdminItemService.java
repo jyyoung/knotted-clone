@@ -43,7 +43,7 @@ public class AdminItemService {
     }
 
     // 모든 상품 조회 메소드
-    public List<ItemDTO> getAllItem(){
+    public List<ItemDTO> getAllItems(){
         List<Item> itemList = adminItemRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         List<ItemDTO> itemDTOList = new ArrayList<>();
 

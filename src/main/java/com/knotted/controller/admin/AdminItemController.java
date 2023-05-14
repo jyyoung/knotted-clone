@@ -3,7 +3,6 @@ package com.knotted.controller.admin;
 import com.knotted.dto.ItemDTO;
 import com.knotted.dto.ItemFormDTO;
 import com.knotted.dto.ItemImageDTO;
-import com.knotted.entity.ItemImage;
 import com.knotted.service.admin.AdminItemService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -28,7 +27,7 @@ public class AdminItemController {
     // 상품 관리 메인 페이지. 상품 리스트도 뿌려준다.
     @GetMapping(value = {"", "/"})
     public String main(Model model){
-        List<ItemDTO> itemList = adminItemService.getAllItem();
+        List<ItemDTO> itemList = adminItemService.getAllItems();
         model.addAttribute("itemList", itemList);
 
         return "/admin/item/index";

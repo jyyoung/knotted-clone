@@ -22,7 +22,7 @@ public class StoreController {
     // 매장 메인 페이지. 매장 리스트도 뿌려준다.
     @GetMapping(value = {"", "/"})
     public String main(Model model){
-        List<StoreDTO> storeList = storeService.getAllStore();
+        List<StoreDTO> storeList = storeService.getAllStores();
         model.addAttribute("storeList", storeList);
 
         return "/store/index";
