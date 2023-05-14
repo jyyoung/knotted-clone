@@ -1,5 +1,6 @@
 package com.knotted.entity;
 
+import com.knotted.dto.ItemFormDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -47,6 +48,17 @@ public class Item extends BaseEntity{
     // 판매량
     @Column(name = "item_sale_count")
     private Long saleCount;
+
+    // 상품 수정 메소드
+    public void updateItem(ItemFormDTO itemFormDTO){
+        this.category = itemFormDTO.getCategory();
+        this.name = itemFormDTO.getName();
+        this.nameEng = itemFormDTO.getNameEng();
+        this.price = itemFormDTO.getPrice();
+        this.description = itemFormDTO.getDescription();
+        this.allergy = itemFormDTO.getAllergy();
+        this.origin = itemFormDTO.getOrigin();
+    }
 }
 
 

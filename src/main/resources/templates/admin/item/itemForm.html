@@ -19,9 +19,14 @@
                     <label th:for="name">카테고리</label>
 
                     <div class="category_wrap">
-                        <input type="radio" name="category" id="category_donut" value="donut" checked><label for="category_donut" class="category_on">도넛</label>
-                        <input type="radio" name="category" id="category_cake" value="cake"><label for="category_cake">케이크</label>
-                        <input type="radio" name="category" id="category_bakery" value="bakery"><label for="category_bakery">베이커리</label>
+                        <input type="radio" name="category" id="category_donut" value="donut" th:checked="${itemId == null ? 'true' : (itemFormDTO.category == 'donut' ? 'true' : 'false')}">
+                        <label for="category_donut" th:class="${(itemId == null || (itemId != null && itemFormDTO.category == 'donut')) ? 'category_on' : ''}">도넛</label>
+
+                        <input type="radio" name="category" id="category_cake" value="cake" th:checked="${itemId != null && itemFormDTO.category == 'cake'}">
+                        <label for="category_cake" th:class="${itemId != null && itemFormDTO.category == 'cake' ? 'category_on' : ''}">케이크</label>
+
+                        <input type="radio" name="category" id="category_bakery" value="bakery" th:checked="${itemId != null && itemFormDTO.category == 'bakery'}">
+                        <label for="category_bakery" th:class="${itemId != null && itemFormDTO.category == 'bakery' ? 'category_on' : ''}">베이커리</label>
                     </div>
 
                     <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="fieldError"></p>

@@ -2,6 +2,7 @@ package com.knotted.controller.admin;
 
 import com.knotted.dto.ItemDTO;
 import com.knotted.dto.ItemFormDTO;
+import com.knotted.dto.ItemImageDTO;
 import com.knotted.service.admin.AdminItemService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -100,5 +101,38 @@ public class AdminItemController {
         }
 
         return "/admin/item/itemForm";
+    }
+
+
+    // 상품 수정 처리
+    @PostMapping(value = "/{itemId}")
+    public String itemUpdate(@PathVariable("itemId") Long itemId, @Valid ItemFormDTO itemFormDTO, BindingResult bindingResult, Model model, MultipartFile itemImageFile){
+        
+        if(bindingResult.hasErrors()){
+            // 바인딩 에러 나면 itemImageDTO가 없어서 타임리프에서 NPE가 뜨기에, 이걸 일단 빈 거라도 넣어준다
+            // 어차피 수정 시 파일 새로 올리면 파일이 있기 때문에 새로 ItemImage를 생성하기에 상관 없을 것이다
+            itemFormDTO.setItemImageDTO(new ItemImageDTO());
+
+            return "/admin/item/itemForm";
+        }
+
+        // 이미지 관련 작업부터 하기
+        if(!itemImageFile.isEmpty()) { // 새로 올린 파일이 있다면
+            // 이미지인지 확인
+            if(!itemImageFile.getContentType().startsWith("image/")){ // 이미지 파일이 아니라면
+                model.addAttribute("errorMessage", "이미지 파일이 아닙니다");
+                return "/admin/item/itemForm";
+            }
+        }
+
+        try {
+            adminItemService.updateItem(itemFormDTO, itemImageFile);
+        } catch(Exception e) {
+            model.addAttribute("errorMessage", "상품 수정 중 에러가 발생했습니다");
+            return "/admin/item/itemForm";
+        }
+
+        // 성공 시 상품 관리 페이지로 이동
+        return "redirect:/admin/item";
     }
 }

@@ -91,4 +91,32 @@ public class AdminItemService {
 
         return itemFormDTO;
     }
+
+
+    // 상품 수정 메소드
+    public void updateItem(ItemFormDTO itemFormDTO, MultipartFile itemImageFile) throws Exception{
+
+        // 상품을 먼저 수정한다
+        Item item = adminItemRepository.findById(itemFormDTO.getId())
+                .orElseThrow(EntityNotFoundException::new);
+        item.updateItem(itemFormDTO);
+
+        // 새로 올라온 이미지가 있으면 기존 거 삭제 후 등록
+        if(!itemImageFile.isEmpty()){
+            // 기존 이미지를 찾는다
+            ItemImage itemImage = adminItemImageRepository.findByItemId(item.getId()); // 상품 이미지 엔티티 조회
+
+            // 이미지가 있으면 기존 이미지부터 제거해준다
+            if(itemImage != null){
+                adminItemImageService.deleteItemImage(itemImage);
+            }
+
+            // ItemImage를 생성 후 엔티티만 넣어주고,
+            ItemImage newItemImage = new ItemImage(); // ItemImage 엔티티 생성
+            newItemImage.setItem(item); // 위에서 저장한 엔티티를 FK로 넣어준다
+
+            // 새 이미지 등록
+            adminItemImageService.saveItemImage(newItemImage, itemImageFile);
+        }
+    }
 }
