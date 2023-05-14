@@ -3,6 +3,7 @@ package com.knotted.controller.admin;
 import com.knotted.dto.ItemDTO;
 import com.knotted.dto.ItemFormDTO;
 import com.knotted.dto.ItemImageDTO;
+import com.knotted.entity.ItemImage;
 import com.knotted.service.admin.AdminItemService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -96,8 +97,7 @@ public class AdminItemController {
             model.addAttribute("itemFormDTO", itemFormDTO);
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다");
-            model.addAttribute("itemFormDTO", new ItemFormDTO()); // 새로 작성으로 감
-            return "/admin/item/itemForm";
+            return "redirect:/admin/item";
         }
 
         return "/admin/item/itemForm";
@@ -106,12 +106,14 @@ public class AdminItemController {
 
     // 상품 수정 처리
     @PostMapping(value = "/{itemId}")
-    public String itemUpdate(@PathVariable("itemId") Long itemId, @Valid ItemFormDTO itemFormDTO, BindingResult bindingResult, Model model, MultipartFile itemImageFile){
+    public String itemUpdate(@PathVariable("itemId") Long itemId, String imageName, String imageId, @Valid ItemFormDTO itemFormDTO, BindingResult bindingResult, Model model, MultipartFile itemImageFile){
         
         if(bindingResult.hasErrors()){
-            // 바인딩 에러 나면 itemImageDTO가 없어서 타임리프에서 NPE가 뜨기에, 이걸 일단 빈 거라도 넣어준다
-            // 어차피 수정 시 파일 새로 올리면 파일이 있기 때문에 새로 ItemImage를 생성하기에 상관 없을 것이다
-            itemFormDTO.setItemImageDTO(new ItemImageDTO());
+            // 바인딩 에러 나면 itemImageDTO가 없어서 타임리프에서 NPE가 뜨는 것 방지
+            ItemImageDTO itemImageDTO = new ItemImageDTO();
+            itemImageDTO.setOriginalImageName(imageName);
+            itemImageDTO.setId(Long.valueOf(imageId));
+            itemFormDTO.setItemImageDTO(itemImageDTO);
 
             return "/admin/item/itemForm";
         }

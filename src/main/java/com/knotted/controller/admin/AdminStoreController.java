@@ -2,6 +2,7 @@ package com.knotted.controller.admin;
 
 import com.knotted.dto.StoreDTO;
 import com.knotted.dto.StoreFormDTO;
+import com.knotted.dto.StoreImageDTO;
 import com.knotted.service.admin.AdminStoreService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -95,8 +96,7 @@ public class AdminStoreController {
             model.addAttribute("storeFormDTO", storeFormDTO);
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 매장입니다");
-            model.addAttribute("storeFormDTO", new StoreFormDTO()); // 새로 작성으로 감
-            return "/admin/store/storeForm";
+            return "redirect:/admin/store";
         }
 
         return "/admin/store/storeForm";
@@ -104,8 +104,17 @@ public class AdminStoreController {
 
     // 매장 수정 처리
     @PostMapping(value = "/{storeId}")
-    public String storeUpdate(@PathVariable("storeId") Long storeId, @Valid StoreFormDTO storeFormDTO, BindingResult bindingResult, Model model, MultipartFile storeImageFile){
+    public String storeUpdate(@PathVariable("storeId") Long storeId, String imageName, String imageId, @Valid StoreFormDTO storeFormDTO, BindingResult bindingResult, Model model, MultipartFile storeImageFile){
+
         if(bindingResult.hasErrors()){
+            // 바인딩 에러 나면 itemImageDTO가 없어서 타임리프에서 NPE가 뜨는 것 방지
+            StoreImageDTO storeImageDTO = new StoreImageDTO();
+            storeImageDTO.setOriginalImageName(imageName);
+            storeImageDTO.setOriginalImageName(imageId);
+            storeImageDTO.setOriginalImageName(imageName);
+            storeImageDTO.setId(Long.valueOf(imageId));
+            storeFormDTO.setStoreImageDTO(storeImageDTO);
+
             return "/admin/store/storeForm";
         }
 
