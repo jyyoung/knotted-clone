@@ -38,14 +38,22 @@ public class ItemService {
         return itemDTOList;
     }
 
-    // 특정 카테고리로 상품 조회하는 메소드
-    public List<ItemDTO> getItemsByCategory(String category){
+    // 특정 카테고리 및 검색어로 상품 조회하는 메소드
+    public List<ItemDTO> getItemsByCategoryAndSearchWord(String category, String searchWord){
         List<Item> itemList;
 
         if(category.equals("all")){
-            itemList = itemRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+            if(searchWord != null && !searchWord.isEmpty()){
+                itemList = itemRepository.findAllByNameContainingIgnoreCase(searchWord, Sort.by(Sort.Direction.DESC, "id"));
+            }else{
+                itemList = itemRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+            }
         }else{
-            itemList = itemRepository.findByCategory(category, Sort.by(Sort.Direction.DESC, "id"));
+            if(searchWord != null && !searchWord.isEmpty()){
+                itemList = itemRepository.findByCategoryAndNameContainingIgnoreCase(category, searchWord, Sort.by(Sort.Direction.DESC, "id"));
+            }else{
+                itemList = itemRepository.findByCategory(category, Sort.by(Sort.Direction.DESC, "id"));
+            }
         }
 
         List<ItemDTO> itemDTOList = new ArrayList<>();

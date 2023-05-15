@@ -4,6 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
@@ -18,13 +23,13 @@
                 </div>
 
                 <div class="category">
-                    <input type="radio" name="category" id="category01" checked>
+                    <input type="radio" name="category" id="category01" value="all" checked>
                     <label for="category01" data-category="">전체</label>
-                    <input type="radio" name="category" id="category02">
+                    <input type="radio" name="category" id="category02" value="donut">
                     <label for="category02" style="" data-category="donut">도넛</label>
-                    <input type="radio" name="category" id="category03">
+                    <input type="radio" name="category" id="category03" value="cake">
                     <label for="category03" style="" data-category="cake">케이크</label>
-                    <input type="radio" name="category" id="category04">
+                    <input type="radio" name="category" id="category04" value="bakery">
                     <label for="category04" style="" data-category="bakery">베이커리</label>
                 </div>
             </div>
@@ -112,6 +117,31 @@
             });
         }
 
+        function loadSearchItems(category, searchWord){
+
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                url: "/menu/search",
+                method: "POST",
+                data: {
+                    category: category,
+                    searchWord: searchWord,
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    categoryItems.items = result;
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
+
         // 카테고리 클릭 시 jQuery ajax + Vue.js로 화면에 뿌리기
         $(".menucategory .category label").on("click", function(){
             let category = $(this).data("category");
@@ -121,6 +151,14 @@
             }
 
             loadCategoryItems(category);
+        });
+
+        // 검색 input 값 변화 시 다시 읽어오기
+        $("#search_word").on("change", function(){
+            let category = $(".menucategory .category input[name='category']:checked").val();
+            let searchWord = $(this).val();
+
+            loadSearchItems(category, searchWord);
         });
 
     </script>

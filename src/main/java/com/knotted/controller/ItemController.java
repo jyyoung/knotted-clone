@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,11 +29,23 @@ public class ItemController {
     }
 
     // 카테고리 선택 시 해당 카테고리 리스트 반환 (REST)
-    @GetMapping(value = {"/category/{category}"})
+    @GetMapping(value = "/category/{category}")
     @ResponseBody
     public ResponseEntity<List<ItemDTO>> getItemsByCategory(@PathVariable(value = "category") String category){
         try{
-            List<ItemDTO> itemList = itemService.getItemsByCategory(category);
+            List<ItemDTO> itemList = itemService.getItemsByCategoryAndSearchWord(category, "");
+            return new ResponseEntity<>(itemList, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = "/search")
+    @ResponseBody
+    public ResponseEntity<List<ItemDTO>> getItemsBySearch(@RequestParam("category") String category,
+                                                          @RequestParam("searchWord") String searchWord){
+        try{
+            List<ItemDTO> itemList = itemService.getItemsByCategoryAndSearchWord(category, searchWord);
             return new ResponseEntity<>(itemList, HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
