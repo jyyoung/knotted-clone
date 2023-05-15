@@ -23,10 +23,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminStoreService {
 
+    private final AdminItemService adminItemService;
     private final AdminStoreRepository adminStoreRepository;
     private final AdminStoreImageRepository adminStoreImageRepository;
     private final AdminStoreImageService adminStoreImageService;
-    private final AdminItemService adminItemService;
     private final AdminStoreItemRepository adminStoreItemRepository;
 
     // 파일을 다루는 거라 Exception 뜰 수도 있어서 Exception 던져 놓음. 오류가 발생하면 이 메소드를 호출하는 곳에서 예외처리를 할 것임
@@ -176,6 +176,17 @@ public class AdminStoreService {
         }
 
         return storeItemDTOList;
+    }
+
+    // 해당 매장의 해당 상품 재고 추가하는 메소드
+    public void addStock(Long storeItemId, Long stock){
+
+        // 해당 매장 상품 엔티티 존재 확인
+        StoreItem storeItem = adminStoreItemRepository.findById(storeItemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        storeItem.setStock(storeItem.getStock() + stock);
+        adminStoreItemRepository.save(storeItem);
     }
 }
 

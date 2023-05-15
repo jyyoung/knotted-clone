@@ -4,6 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/admin}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
@@ -36,7 +41,7 @@
             </ul>
 
             <ul class="store_item_list object_list" id="items">
-                <li v-for="item in items" :key="item.id" :data-id="item.id">
+                <li v-for="item in items" :key="item.id" :data-id="item.id" class="store_item">
                     <ul>
                         <li>
                             <a :href="'/menu/' + item.itemDTO.id" class="object_link">
@@ -52,8 +57,8 @@
                         <li>
                             <input type="number" name="stock" value="0" min="0" max="100">
                         </li>
-                        <li>
-                            <button type="button">재고 추가</button>
+                        <li class="button_wrap">
+                            <button type="button" class="add_stock">추가하기</button>
                         </li>
                     </ul>
                 </li>
@@ -83,7 +88,6 @@
 
         // 모든 상품 리스트 및 현재 매장의 재고량 받아오는 함수
         function loadItems(){
-
             $.ajax({
                 url: "/admin/store/" + storeId + "/item/list",
                 method: "GET",
@@ -100,6 +104,52 @@
                 }
             });
         }
+
+        // 해당 상품 재고 추가하는 함수
+        function addStock(storeItemId, stock){
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                url: "/admin/store/" + storeItemId + "/add",
+                method: "POST",
+                data: {
+                    stock: stock,
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    loadItems(); // 전체 재고량 다시 받아옴
+                    // alert은 동기 함수이므로 loadItems를 먼저 해줘야 함
+                    alert("재고를 추가했습니다");
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == "500"){
+                        loadItems();
+                        alert("재고 추가에 실패했습니다");
+                    }else{
+                        loadItems();
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+
+        }
+
+        $(".store_item_wrap").on("click", ".add_stock", function(){
+
+            let storeItemId = $(this).closest(".store_item").data("id");
+            let stock = $(this).closest("ul").find("input[type='number']").val();
+
+            if(stock <= 0){
+                alert("추가할 수량을 1개 이상으로 입력해주세요");
+                return;
+            }
+
+            addStock(storeItemId, stock);
+        });
     </script>
 </th:block>
 

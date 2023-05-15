@@ -168,4 +168,19 @@ public class AdminStoreController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // 해당 매장의 해당 상품 재고를 추가함
+    @PostMapping(value = "/{storeItemId}/add")
+    @ResponseBody
+    public ResponseEntity<Void> addStock(@PathVariable("storeItemId") Long storeItemId,
+                                           @RequestParam("stock") Long stock){
+
+        // 이것도 서비스단에 메소드 만들어서 처리하기
+        try{
+            adminStoreService.addStock(storeItemId, stock);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

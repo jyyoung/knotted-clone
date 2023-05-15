@@ -608,7 +608,7 @@ section h1{
 
 .object_list.store_item_list > li ul{
     display: grid;
-    grid-template-columns: 80px 160px 80px 80px 100px;
+    grid-template-columns: 80px 160px 80px 80px 120px;
     place-items: center;
 }
 
@@ -620,6 +620,26 @@ section h1{
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+
+.object_list.store_item_list .button_wrap{
+    width: 100%;
+    text-align: center;
+}
+
+.object_list.store_item_list button{
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.object_list.store_item_list button:hover{
+    color: #ffa0c5;
+    transition: 0.2s;
 }
 
 .object_list.store_item_list > li ul li:nth-child(2){
