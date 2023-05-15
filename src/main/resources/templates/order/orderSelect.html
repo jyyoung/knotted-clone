@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/common}">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<th:block layout:fragment="css"></th:block>
+
+<th:block layout:fragment="content">
+    <div class="container">
+        <h1>RESERVATION</h1>
+
+        <div class="order_tab">
+            <ul class="tab_reserve">
+                <li th:classappend="${mode} == 'store' ? 'on' : ''"><a href="javascript:;">매장선택</a></li>
+                <li th:classappend="${mode} == 'date' ? 'on' : ''"><a href="javascript:;">일자선택</a></li>
+                <li th:classappend="${mode} == 'menu' ? 'on' : ''"><a href="javascript:;">메뉴선택</a></li>
+            </ul>
+        </div>
+
+        <div class="order_box">
+            <div class="order_box_wrap">
+                <!--/* 여기 아래부터를 mode에 따라 다르게 받으면 될 듯 */-->
+                <th:block th:if="${mode} == 'store'">
+
+                    <div class="order_box_header">
+                        <div class="search_box">
+                            <input type="text" id="search_word">
+                            <button type="button">검색</button>
+                        </div>
+                    </div>
+
+                    <ul class="storelist" id="stores">
+                        <!--/* 이 부분도 Vue.js로 받기 */-->
+                        <li v-for="store in stores" :key="store.id" :data-id="store.id" class="store_link">
+                            <div class="thumb">
+                                <img :src="store.storeImageDTO.imageUrl">
+                            </div>
+                            <input type="checkbox" :id="'store-' + store.id"><label :for="'store-' + store.id" class="store_name">{{ store.name }}</label>
+                            <div class="contents" id="contents">
+                                <table>
+                                    <tr>
+                                        <th>주소</th>
+                                        <td>{{ store.address }}<a class="map">[지도보기]</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>영업시간</th>
+                                        <td>{{ store.openTime }} ~ {{ store.closeTime }}</td>
+                                    </tr>
+                                    <!--/* 걍 픽업가능시간도 영업시간이랑 같게 하겠음 */-->
+                                    <tr>
+                                        <th>픽업가능시간</th>
+                                        <td>{{ store.openTime }} ~ {{ store.closeTime }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>문의</th>
+                                        <td>카카오톡 플러스 친구 <span class="kakao">[{{ store.name }}]</span> 으로 검색하여 이용해주세요.</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">{{ store.description }}</td>
+                                    </tr>
+                                </table>
+                                <div class="btn_area">
+                                    <button type="button">매장설정하기</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </th:block>
+            </div>
+        </div>
+
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+
+        // Vue 인스턴스 생성
+        const stores = new Vue({
+            el: "#stores",
+            data: {
+                stores: []
+            }
+        });
+
+        $(document).ready(function(){
+            // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
+            loadSearchItems("");
+        });
+
+        // 검색어로 매장 리스트 받아오는 함수
+        function loadSearchItems(searchWord){
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                url: "/store/search",
+                method: "POST",
+                data: {
+                    searchWord: searchWord,
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    stores.stores = result;
+                    console.log(result);
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
+
+        // 검색 input 값 변화 시 다시 읽어오기
+        $("#search_word").on("change", function(){
+            let searchWord = $(this).val();
+
+            loadSearchItems(searchWord);
+        });
+
+        // 지도보기 시 네이버 지도에서 검색
+        $(".order_box_wrap").on("click", ".storelist .contents .map", function(){
+            let storeName = $(this).closest(".store_link").find(".store_name").html().trim();
+
+            location.href = "https://map.naver.com/v5/search/" + storeName;
+        });
+
+    </script>
+
+</th:block>
+
+</html>

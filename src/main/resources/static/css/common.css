@@ -116,8 +116,30 @@ button {
     font-size: 1em;
 }
 
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
 .display_none{
     display: none !important;
+}
+
+.btn_area {
+    text-align: center;
+    margin: 50px auto 20px;
+}
+
+.btn_area button {
+    background: #FFDB7E;
+    border: 1px solid #FFDB7E;
+    color: #846E23;
+    width: 100%;
+    max-width: 240px;
+    padding: 15px;
+    margin: 3px 1px;
+    border-radius: 500px;
+    font-size: 1em;
 }
 
 header{
@@ -1145,7 +1167,116 @@ section h1{
     position: relative;
 }
 
+.order_box .storelist .thumb {
+    background-color: #ebebeb;
+    border-radius: 100px;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-right: 15px;
+    overflow: hidden;
+}
 
+.order_box .storelist .thumb img {
+    width: 100%;
+}
+
+.order_box .storelist li > input[type="checkbox"] {
+    display: none;
+}
+
+.order_box .storelist li > label {
+    cursor: pointer;
+    padding: 15px 30px 15px 15px;
+    display: block;
+    position: relative;
+}
+
+.order_box .storelist .wish > label::before {
+    content: "*";
+    color: #ffa0c5;
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.order_box .storelist li > input[type="checkbox"] + label:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    margin-top: 5px;
+    display: inline-block;
+    border: solid #999;
+    border-width: 0 1px 1px 0;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.order_box .storelist input:checked+label+div[id="contents"] {
+    display: inline-block;
+}
+
+.order_box .storelist .contents {
+    display: none;
+    color: #666;
+    font-size: .9375em;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: 0.4s;
+    padding: 10px 10px 10px 0;
+}
+
+.order_box .storelist .contents th, .order_box .storelist .contents td {
+    padding: 5px 0;
+    vertical-align: middle;
+}
+
+.order_box .storelist .contents th {
+    color: #999;
+}
+
+.order_box .storelist .contents td {
+    padding-left: 15px;
+}
+
+.order_box .storelist .contents tr:last-child td {
+    padding: 10px 0;
+}
+
+.order_box .storelist .contents .map {
+    margin: 0 5px 0 10px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #999;
+}
+
+.order_box .storelist .contents .kakao {
+    color: #ffa0c5;
+    font-weight: 500;
+    margin-left: 0;
+}
+
+.order_box .storelist .contents .btn_area {
+    margin: 10px auto 0;
+    width: 100%;
+    display: inline-block;
+}
+
+.order_box .storelist .contents button {
+    background: #FFDB7E;
+    transition: 1s;
+    border: 1px solid #FFDB7E;
+    color: #846E23;
+    min-width: 200px;
+    max-width: 280px;
+    height: 44px;
+    line-height: 42px;
+    padding: 0 15px;
+    margin: 0;
+    border-radius: 500px;
+}
 
 /* 주문(예약) 관련 부분 E */
 
