@@ -165,6 +165,7 @@ public class AdminStoreService {
                 StoreItem storeItem = new StoreItem();
                 storeItem.setStore(store);
                 storeItem.setItem(itemDTO.createItem());
+                storeItem.setStock(0L);
                 adminStoreItemRepository.save(storeItem); // DB에 저장
 
                 storeItemDTO.setId(storeItemDTO.getId());
