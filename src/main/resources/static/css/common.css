@@ -803,6 +803,352 @@ section h1{
 
 /* 상품 상세보기 E */
 
+/* 주문(예약) 관련 부분 S */
+
+.reserve {
+    text-align: center;
+    width: 94%;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: 10%;
+}
+
+.reserve > ul {
+    font-size: 0;
+    margin-bottom: 80px;
+    display: inline-block;
+}
+
+.reserve > ul li {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+
+.reserve li {
+    float: left;
+}
+
+.reserve li:first-child:nth-last-child(2), .reserve li:first-child:nth-last-child(2) ~ li {
+    width: 50%;
+}
+
+.reserve > ul li div {
+    width: 260px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 500px;
+}
+
+.reserve > ul li:nth-child(1) div {
+    background: url(/images/reserve_date.png) center no-repeat;
+    background-size: 120px auto;
+}
+
+.reserve > ul li h2 {
+    color: #ffa0c5;
+    margin-bottom: 15px;
+    font-weight: 400;
+    letter-spacing: -1px;
+}
+
+.reserve > ul li h2 button {
+    color: #ffa0c5;
+    border: 1px solid #ffa0c5;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 100px;
+}
+
+.reserve > ul li h2 button:after {
+    content: "(클릭!)";
+    margin-left: 5px;
+}
+
+.reserve > ul li h2 button:hover {
+    opacity: 0.7;
+    background-color: #ffa0c5;
+    color: #FFF;
+    transition: 0.3s;
+}
+
+.reserve > ul li p {
+    line-height: 22px;
+}
+
+.reserve > ul li p button {
+    color: #999;
+    font-weight: 400;
+    margin-top: 10px;
+    font-size: 1em;
+    text-decoration: underline;
+}
+
+.reserve > ul li:after {
+    content: "";
+    clear: both;
+}
+
+.popup {
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    min-width: 280px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: scroll;
+    z-index: 9999;
+}
+
+.popup_box {
+    border: 1px solid #282828;
+    background-color: #FFF;
+    border-radius: 15px;
+    min-height: 500px;
+    overflow: hidden;
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.popup_box > h2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+    width: 100%;
+}
+
+.popup_box .btn_close {
+    background: url(/images/close_button.png) center no-repeat;
+    background-size: 20px auto;
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+    position: absolute;
+    top: 25px;
+    right: 30px;
+}
+
+.popup_box .reserve_info {
+    width: 90%;
+    max-width: 500px;
+    height: calc(100% - 80px);
+    margin: 0 auto;
+    margin-top: 80px;
+}
+
+.popup_inner {
+    margin: 60px 10px 100px;
+    overflow-y: auto;
+    height: 500px;
+    padding-bottom: 50px;
+}
+
+.popup_box .reserve_info ul {
+    margin-top: 50px;
+    padding-bottom: 50px;
+}
+
+.popup_box .reserve_info li {
+    min-height: 25px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.popup_box .reserve_info .store li:nth-child(1) {
+    background: url(/images/reserve_info_01.png) 35px 0 no-repeat;
+    background-size: auto 25px;
+}
+
+.popup_box .reserve_info .store li:nth-child(2) {
+    background: url(/images/reserve_info_02.png) 38px 0 no-repeat;
+    background-size: auto 25px;
+}
+
+.popup_box .reserve_info .store li:nth-child(3) {
+    background: url(/images/reserve_info_03.png) 35px 0 no-repeat;
+    background-size: auto 25px;
+}
+
+.popup_box .reserve_info li:before {
+    background-color: #f1e5a8;
+    float: left;
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+    display: inline-block;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 20px;
+}
+
+.popup_box .reserve_info li:nth-child(1):before {
+    content: "1";
+}
+
+.popup_box .reserve_info li:nth-child(2):before {
+    content: "2";
+}
+
+.popup_box .reserve_info li:nth-child(3):before {
+    content: "3";
+}
+
+.popup_box .reserve_info li:after {
+    content: "";
+    clear: both;
+}
+
+.popup_box .reserve_info li p {
+    line-height: 20px;
+    padding-left: 80px;
+}
+
+.popup_box .reserve_info > h3 {
+    border-top: 1px solid #DDD;
+    padding-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.popup_box .reserve_info > p {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.popup_box .reserve_info > p:before {
+    content: "-";
+    margin-left: -10px;
+    margin-right: 5px;
+}
+
+.order_tab {
+
+}
+
+.order_tab ul.tab_reserve {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    -moz-column-gap: 0;
+    column-gap: 0;
+}
+
+.order_tab ul li {
+    background-color: #000;
+    border-bottom: 5px solid #f1e4ab;
+    text-align: center;
+    height: 44px;
+    line-height: 44px;
+    color: #FFF;
+}
+
+.order_tab ul li.on {
+    background-color: #f1e4ab;
+    border-bottom: 5px solid #f1e4ab;
+    color: #000;
+    font-weight: 500;
+}
+
+.order_tab ul li:first-child {
+    border-radius: 10px 0 0 0;
+}
+
+.order_tab ul li:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+.order_tab ul.tab_reserve li:first-child:before {
+    content: "STEP01";
+    margin-right: 5px;
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.order_tab ul.tab_reserve li:nth-child(2):before {
+    content: "STEP02";
+    margin-right: 5px;
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.order_tab ul.tab_reserve li:nth-child(3):before {
+    content: "STEP03";
+    margin-right: 5px;
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.order_tab ul li a {
+    cursor: auto;
+}
+
+.order_box {
+    border: 3px solid #f1e4ab;
+    border-width: 0 3px 3px 3px;
+    border-radius: 0 0 10px 10px;
+}
+
+.order_box_wrap {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.order_box_wrap .order_box_header {
+    padding: 10px;
+    border-bottom: 1px solid #DDD;
+}
+
+.order_box_wrap .search_box {
+    margin: 0 auto;
+    border-radius: 100px;
+    height: 35px;
+    padding: 5px 10px;
+    background-color: #ebebeb;
+}
+
+.order_box_wrap .search_box > input {
+    background-color: transparent;
+    width: calc(100% - 50px);
+    height: 35px;
+}
+
+.order_box_wrap .search_box > button {
+    background: url("/images/icon_search.png") center center no-repeat;
+    width: 30px;
+    height: 35px;
+    margin-left: 10px;
+    font-size: 0;
+    background-size: 25px auto;
+    float: right;
+}
+
+.order_box .storelist{
+
+}
+
+.order_box .storelist li {
+    box-sizing: border-box;
+    border-bottom: 1px solid #DDD;
+    padding: 10px 15px;
+    position: relative;
+}
+
+
+
+/* 주문(예약) 관련 부분 E */
+
 /* 브랜드 부분 S */
 
 .business {

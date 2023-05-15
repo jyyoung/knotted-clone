@@ -9,9 +9,67 @@
 <th:block layout:fragment="content">
     <div class="container">
         <h1>RESERVATION</h1>
+
+        <div class="reserve">
+            <ul>
+                <li>
+                    <div></div>
+                    <h2>
+                        <button type="button" id="go_store_pick">날짜선택 예약</button>
+                    </h2>
+                    <p>예약 원하시는 날짜가 있다면<br>날짜를 먼저 선택해주세요</p>
+                    <p>
+                        <button type="button" id="open_infomation">날짜선택예약이란?</button>
+                    </p>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<!--/* 팝업 레이어 필요하기에 넣음 */-->
+<th:block layout:fragment="popup">
+    <!--/* 기본적으로 보이지 않게 처리하였다 */-->
+    <div class="popup display_none" style="">
+        <div class="popup_box"><h2>날짜선택 예약</h2>
+            <button type="button" class="btn_close">닫기</button>
+            <div class="popup_inner reserve_info">
+                <ul class="store">
+                    <li><p>예약하실 매장을 선택해주세요.</p></li>
+                    <li><p>예약할 날짜를 선택해주세요.</p></li>
+                    <li><p>해당 날짜에 주문 가능한 메뉴를 선택해주세요.</p></li>
+                </ul>
+                <h3>주문시 유의사항</h3>
+                <p>사전예약은 픽업 희망일 기준 2일~7일 전 까지 가능합니다.</p>
+                <p>매장별 메뉴 및 판매 수량은 상이하게 운영되며, 조기 소진될 수 있습니다.</p>
+                <p>예약 취소는 픽업일을 제외한 2일 전까지 가능합니다.<br>(ex. 예약 후 매장/일정/메뉴 변경은 불가하며, 초기화 후 재 설정이 필요합니다.</p>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+
+        // 날짜선택으로 가기
+        $("#go_store_pick").on("click", function(){
+            location.href = "/order/store-pick";
+        });
+
+        // 날짜선택예약 안내문 켜기
+        $("#open_infomation").on("click", function(){
+            $(".popup").removeClass("display_none");
+        });
+
+        // 날짜선택예약 안내문 끄기
+        $(".popup_box .btn_close").on("click", function(){
+            $(".popup").addClass("display_none");
+        });
+
+
+    </script>
+
+</th:block>
 
 </html>
