@@ -161,13 +161,11 @@ public class AdminStoreController {
     @ResponseBody
     public ResponseEntity<List<StoreItemDTO>> storeItemList(@PathVariable("storeId") Long storeId){
         // 모든 상품 리스트 (이미지 포함한) 및 매장별 재고를 받아옴
-
         try{
             List<StoreItemDTO> storeItemList = adminStoreService.getStoreItemList(storeId);
             return new ResponseEntity<>(storeItemList, HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 }

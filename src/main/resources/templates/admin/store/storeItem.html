@@ -11,15 +11,7 @@
         <h1 th:text="${storeFormDTO.name + '점의 상품 관리'}"></h1>
 
         <ul class="store_item_list" id="items">
-            <li v-for="item in items" :key="item.id" :data-id="item.id" class="item_link">
-                <div>
-                    <div class="img">
-                        <img :src="item.itemImageDTO.imageUrl" />
-                    </div>
-                </div>
-                <h2>{{ item.name }}</h2>
-                <p>{{ formatPrice(item.price) }}</p>
-            </li>
+
         </ul>
     </div>
 </th:block>
@@ -31,12 +23,12 @@
         let storeId = [[${storeId}]];
 
         // Vue 인스턴스 생성
-        const items = new Vue({
-            el: "#items",
-            data: {
-                items: []
-            }
-        });
+        // const items = new Vue({
+        //     el: "#items",
+        //     data: {
+        //         items: []
+        //     }
+        // });
 
         $(document).ready(function(){
             loadItems();
@@ -46,7 +38,7 @@
         function loadItems(){
 
             $.ajax({
-                url: "/admin/store/" + storeId + "/item/list";
+                url: "/admin/store/" + storeId + "/item/list",
                 method: "GET",
                 data: {
                     storeId: storeId,

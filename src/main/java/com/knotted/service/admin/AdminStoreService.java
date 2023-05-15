@@ -136,15 +136,13 @@ public class AdminStoreService {
 
     // 모든 상품 리스트를 조회하고 해당 매장의 매장 상품을 조회하여 매장 상품 DTO 리스트를 반환함
     public List<StoreItemDTO> getStoreItemList(Long storeId){
-        // Store 엔티티 조회
+        // Store 엔티티 조회하여 StoreDTO 만듦
         Store store = adminStoreRepository.findById(storeId)
                 .orElseThrow(EntityNotFoundException::new);
+        StoreDTO storeDTO = StoreDTO.of(store);
 
         // 일단 모든 상품 조회하여 ItemDTO 리스트 만듦
         List<ItemDTO> itemList = adminItemService.getAllItems();
-
-        // 해당 매장의 StoreItem 엔티티 리스트 조회함
-        List<StoreItem> storeItemList = adminStoreItemRepository.findByStoreId(storeId);
 
         // StoreItemDTO 리스트 선언
         List<StoreItemDTO> storeItemDTOList = new ArrayList<>();
@@ -153,14 +151,14 @@ public class AdminStoreService {
         for(ItemDTO itemDTO : itemList){
             StoreItemDTO storeItemDTO = new StoreItemDTO();
 
-            storeItemDTO.setStore(store);
-            storeItemDTO.setItem(itemDTO.createItem());
+            storeItemDTO.setStoreDTO(storeDTO);
             storeItemDTO.setItemDTO(itemDTO);
 
             // 해당 상품이 매장 상품에 있는지 확인
             StoreItem savedStoreItem = adminStoreItemRepository.findByStoreIdAndItemId(storeId, itemDTO.getId());
 
             if(savedStoreItem != null){ // 해당 상품이 해당 매장에 있으면
+                storeItemDTO.setId(savedStoreItem.getId());
                 storeItemDTO.setStock(savedStoreItem.getStock());
             }else{ // 해당 상품이 해당 매장에 없으면
                 // 해당 상품의 매장 상품 엔티티를 생성함
@@ -169,13 +167,14 @@ public class AdminStoreService {
                 storeItem.setItem(itemDTO.createItem());
                 adminStoreItemRepository.save(storeItem); // DB에 저장
 
+                storeItemDTO.setId(storeItemDTO.getId());
                 storeItemDTO.setStock(0L);
             }
 
             storeItemDTOList.add(storeItemDTO);
         }
-        return storeItemDTOList;
 
+        return storeItemDTOList;
     }
 }
 

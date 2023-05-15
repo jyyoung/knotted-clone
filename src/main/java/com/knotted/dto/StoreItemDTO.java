@@ -10,13 +10,11 @@ public class StoreItemDTO {
     // 매장 상품 ID
     private Long id;
 
-    // 매장 엔티티와 다대일로 매핑
-    private Store store;
+    // 주의!! 여기서 DTO에 store, item 같은 엔티티를 넣을 시 무한참조가 일어난다!!!
 
-    // 상품 엔티티와 다대일로 매핑
-    private Item item;
+    // 무한순환참조 방지를 위해 DTO를 넣어준다
+    private StoreDTO storeDTO;
 
-    // 이미지가 포함되어야 하므로 ItemDTO도 넣어준다.
     private ItemDTO itemDTO;
 
     // 재고 수량
