@@ -44,7 +44,7 @@
         $(".view a.map").on("click", function(){
             let storeName = $(".view h2").html().trim();
 
-            location.href = "https://map.naver.com/v5/search/" + storeName;
+            window.open("https://map.naver.com/v5/search/" + storeName, "_blank");
         });
 
     </script>

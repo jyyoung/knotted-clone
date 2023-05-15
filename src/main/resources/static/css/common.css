@@ -102,6 +102,12 @@ input, select {
     background: transparent;
 }
 
+input:disabled, textarea:disabled, input:disabled::placeholder, textarea:disabled::placeholder {
+    color: currentcolor;
+    -webkit-text-fill-color: currentcolor;
+    opacity: 1;
+}
+
 .container {
     width: 1366px;
     margin: 0 auto;
@@ -254,6 +260,12 @@ section h1{
     font-size: 1.750em;
     font-weight: 500;
     letter-spacing: 0;
+}
+
+section::after {
+    clear: both;
+    display: block;
+    content: "";
 }
 
 /* 공통 헤더 부분 E */
@@ -1091,21 +1103,21 @@ section h1{
 
 .order_tab ul.tab_reserve li:first-child:before {
     content: "STEP01";
-    margin-right: 5px;
+    margin-right: 2px;
     font-weight: 300;
     font-size: 13px;
 }
 
 .order_tab ul.tab_reserve li:nth-child(2):before {
     content: "STEP02";
-    margin-right: 5px;
+    margin-right: 2px;
     font-weight: 300;
     font-size: 13px;
 }
 
 .order_tab ul.tab_reserve li:nth-child(3):before {
     content: "STEP03";
-    margin-right: 5px;
+    margin-right: 2px;
     font-weight: 300;
     font-size: 13px;
 }
@@ -1214,6 +1226,13 @@ section h1{
     right: 10px;
 }
 
+.order_box .storelist li > input[type="checkbox"]:checked + label:after {
+    content: "";
+    transform: rotate(-135deg);
+    position: absolute;
+    top: 15px;
+}
+
 .order_box .storelist input:checked+label+div[id="contents"] {
     display: inline-block;
 }
@@ -1277,6 +1296,249 @@ section h1{
     margin: 0;
     border-radius: 500px;
 }
+
+.reserve_wrap {
+    border: 3px solid #f1e4ab;
+    border-width: 0 3px 3px 3px;
+}
+
+.reserve_date {
+    width: 700px;
+    float: left;
+    padding: 20px;
+}
+
+.reserve_date .cal {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid #DDD;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.reserve_date .month {
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.reserve_date .cal ul {
+    font-size: 0;
+}
+
+.reserve_date .month ul {
+    width: 90%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.reserve_date .month ul li {
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.reserve_date .month li:nth-child(1) {
+    float: left;
+}
+
+.reserve_date .month li:nth-child(2) {
+    display: inline-block;
+}
+
+.reserve_date .month li:nth-child(3) {
+    float: right;
+}
+
+.reserve_date .month ul li button {
+    font-weight: 500;
+}
+
+.reserve_date .weekdays {
+    margin: 0;
+    padding: 10px 0;
+}
+
+.reserve_date .weekdays li {
+    display: inline-block;
+    width: 14.2%;
+    color: #666;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.reserve_date .days {
+    padding: 10px 0;
+    margin: 0;
+    text-align: left;
+}
+
+.reserve_date .days li {
+    display: inline-block;
+    position: relative;
+    width: calc(14.2% - 10px);
+    text-align: center;
+    margin: 5px;
+    font-size: 12px;
+    color: #777;
+}
+
+.reserve_date .days li:nth-child(7n+1) {
+    margin-left: 3px;
+}
+
+.reserve_date .days input[type=radio] {
+    display: none;
+}
+
+.reserve_date .days input[type=radio] + label {
+    margin: 0;
+    float: none;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.reserve_date .days input[type=radio] + label:hover {
+    color: #ffa0c5;
+}
+
+.reserve_date .days input[type=radio]:disabled + label {
+    color: #DDD;
+    cursor: inherit;
+}
+
+.reserve_date .days input[type=radio]:disabled + label {
+    color: #DDD;
+    cursor: inherit;
+}
+
+.reserve_date .days input[type=radio]:checked + label {
+    border-radius: 50px;
+    background: #ffa0c5;
+    color: #FFF;
+}
+
+.reserve_wrap .select {
+    text-align: right;
+    width: 100%;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.reserve_wrap .select ul {
+    font-size: 1em !important;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.reserve_wrap .select li {
+    display: inline-block;
+    line-height: 20px;
+    font-size: 1.4rem;
+}
+
+.reserve_wrap .select li:nth-child(1) div {
+    border-radius: 50px;
+    background-color: #ffa0c5;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 0 0;
+    float: left;
+}
+
+.reserve_wrap .select li:nth-child(2) div {
+    border-radius: 50px;
+    background-color: #DDD;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 0 20px;
+    float: left;
+}
+
+.reserve_time {
+    width: calc(100% - 780px);
+    float: right;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.reserve_time .timetable {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.reserve_time .timetable li {
+    width: calc(25% - 10px);
+    padding: 5px;
+    float: left;
+}
+
+.reserve_time input[id*="time"] {
+    display: none;
+}
+
+.reserve_time input[id*="time"] + label {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    display: inline-block;
+    border: 1px solid #DDD;
+    text-align: center;
+    cursor: pointer;
+}
+
+.reserve_time input[id*="time"] + label:hover {
+    color: #ffa0c5;
+    border: 1px solid #ffa0c5;
+}
+
+.reserve_time input[id*="time"]:disabled + label {
+    background-color: #EEE;
+    color: #999;
+}
+
+.reserve_time input[id*="time"]:disabled + label:hover {
+    border: 1px solid #DDD;
+}
+
+.reserve_time input[id*="time"]:checked + label {
+    background-color: #ffa0c5;
+    border: 1px solid #ffa0c5;
+    color: #FFF;
+}
+
+.reserve_time .select ul{
+    width: 100%;
+}
+
+.reserve_wrap > .info {
+    padding-left: 20px;
+    /* text-indent: -10px; */
+    margin: 20px 0 30px;
+    clear: both;
+}
+
+.reserve_wrap > .info h2 {
+    background: url(/images/reserve_info_04.png) 0 center no-repeat;
+    background-size: 20px auto;
+    padding-left: 30px;
+    line-height: 30px;
+    height: 30px;
+    margin-bottom: 20px;
+    font-weight: 400;
+    text-indent: 0;
+}
+
+.reserve_wrap > .info p {
+    margin-bottom: 5px;
+    line-height: 1.6;
+}
+
+
 
 /* 주문(예약) 관련 부분 E */
 

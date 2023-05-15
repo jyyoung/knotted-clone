@@ -15,19 +15,26 @@
     <div class="container">
         <h1>RESERVATION</h1>
 
-        <div class="order_tab">
-            <ul class="tab_reserve">
-                <li th:classappend="${mode} == 'store' ? 'on' : ''"><a href="javascript:;">매장선택</a></li>
-                <li th:classappend="${mode} == 'date' ? 'on' : ''"><a href="javascript:;">일자선택</a></li>
-                <li th:classappend="${mode} == 'menu' ? 'on' : ''"><a href="javascript:;">메뉴선택</a></li>
-            </ul>
-        </div>
+        <!--/* 여기 아래부터를 mode에 따라 다르게 받으면 될 듯 */-->
 
-        <div class="order_box">
-            <div class="order_box_wrap">
-                <!--/* 여기 아래부터를 mode에 따라 다르게 받으면 될 듯 */-->
-                <th:block th:if="${mode} == 'store'">
+        <!--/* 매장선택 부분 */-->
+        <th:block th:if="${mode} == 'store'">
+            <div class="order_tab">
+                <ul class="tab_reserve">
+                    <li class="on">
+                        <a href="javascript:;">매장선택</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">일자선택</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">메뉴선택</a>
+                    </li>
+                </ul>
+            </div>
 
+            <div class="order_box">
+                <div class="order_box_wrap">
                     <div class="order_box_header">
                         <div class="search_box">
                             <input type="text" id="search_word">
@@ -66,15 +73,172 @@
                                     </tr>
                                 </table>
                                 <div class="btn_area">
-                                    <button type="button">매장설정하기</button>
+                                    <button type="button" class="go_date_pick">매장설정하기</button>
                                 </div>
                             </div>
                         </li>
                     </ul>
-
-                </th:block>
+                </div>
             </div>
-        </div>
+        </th:block>
+
+                    <!--/* 일자선택 부분 */-->
+        <th:block th:if="${mode} == 'date'">
+
+            <div class="order_tab">
+                <ul class="tab_reserve">
+                    <li>
+                        <a href="javascript:;" th:text="${storeName}"></a>
+                    </li>
+                    <li class="on">
+                        <a href="javascript:;">일자선택</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">메뉴선택</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="reserve_wrap">
+
+                <div class="reserve_date">
+                    <!--/* cal 클래스 이 부분도 통째로 REST, Vue.js로 구현해야 함 */-->
+                    <div class="cal">
+                        <div class="month">
+                            <ul>
+                                <li>
+                                    <button type="button">&lt;</button>
+                                </li>
+                                <li><span>2023.5</span></li>
+                                <li>
+                                    <button type="button">&gt;</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="weekdays">
+                            <li>Su</li>
+                            <li>Mo</li>
+                            <li>Tu</li>
+                            <li>We</li>
+                            <li>td</li>
+                            <li>Fr</li>
+                            <li>Sa</li>
+                        </ul>
+                        <ul class="days">
+                            <li><input type="radio" name="date" id="day0" disabled=""><label for="day0">&emsp;</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day1" disabled=""><label for="day1">1</label></li>
+                            <li><input type="radio" name="date" id="day2" disabled=""><label for="day2">2</label></li>
+                            <li><input type="radio" name="date" id="day3" disabled=""><label for="day3">3</label></li>
+                            <li><input type="radio" name="date" id="day4" disabled=""><label for="day4">4</label></li>
+                            <li><input type="radio" name="date" id="day5" disabled=""><label for="day5">5</label></li>
+                            <li><input type="radio" name="date" id="day6" disabled=""><label for="day6">6</label></li>
+                            <li><input type="radio" name="date" id="day7" disabled=""><label for="day7">7</label></li>
+                            <li><input type="radio" name="date" id="day8" disabled=""><label for="day8">8</label></li>
+                            <li><input type="radio" name="date" id="day9" disabled=""><label for="day9">9</label></li>
+                            <li><input type="radio" name="date" id="day10" disabled=""><label for="day10">10</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day11" disabled=""><label for="day11">11</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day12" disabled=""><label for="day12">12</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day13" disabled=""><label for="day13">13</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day14" disabled=""><label for="day14">14</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day15" disabled=""><label for="day15">15</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day16" disabled=""><label for="day16">16</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day17"><label for="day17">17</label></li>
+                            <li><input type="radio" name="date" id="day18"><label for="day18">18</label></li>
+                            <li><input type="radio" name="date" id="day19"><label for="day19">19</label></li>
+                            <li><input type="radio" name="date" id="day20"><label for="day20">20</label></li>
+                            <li><input type="radio" name="date" id="day21"><label for="day21">21</label></li>
+                            <li><input type="radio" name="date" id="day22"><label for="day22">22</label></li>
+                            <li><input type="radio" name="date" id="day23" disabled=""><label for="day23">23</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day24" disabled=""><label for="day24">24</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day25" disabled=""><label for="day25">25</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day26" disabled=""><label for="day26">26</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day27" disabled=""><label for="day27">27</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day28" disabled=""><label for="day28">28</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day29" disabled=""><label for="day29">29</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day30" disabled=""><label for="day30">30</label>
+                            </li>
+                            <li><input type="radio" name="date" id="day31" disabled=""><label for="day31">31</label>
+                            </li>
+                        </ul>
+                        <div class="select">
+                            <ul>
+                                <li>
+                                    <div></div>
+                                    선택
+                                </li>
+                                <li>
+                                    <div></div>
+                                    불가
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reserve_time">
+                    <ul class="timetable">
+                        <li><input type="radio" name="time" id="time0"><label for="time0">10:00</label></li>
+                        <li><input type="radio" name="time" id="time1"><label for="time1">10:30</label></li>
+                        <li><input type="radio" name="time" id="time2"><label for="time2">11:00</label></li>
+                        <li><input type="radio" name="time" id="time3"><label for="time3">11:30</label></li>
+                        <li><input type="radio" name="time" id="time4"><label for="time4">12:00</label></li>
+                        <li><input type="radio" name="time" id="time5"><label for="time5">12:30</label></li>
+                        <li><input type="radio" name="time" id="time6"><label for="time6">13:00</label></li>
+                        <li><input type="radio" name="time" id="time7"><label for="time7">13:30</label></li>
+                        <li><input type="radio" name="time" id="time8"><label for="time8">14:00</label></li>
+                        <li><input type="radio" name="time" id="time9"><label for="time9">14:30</label></li>
+                        <li><input type="radio" name="time" id="time10"><label for="time10">15:00</label></li>
+                        <li><input type="radio" name="time" id="time11"><label for="time11">15:30</label></li>
+                        <li><input type="radio" name="time" id="time12"><label for="time12">16:00</label></li>
+                        <li><input type="radio" name="time" id="time13"><label for="time13">16:30</label></li>
+                        <li><input type="radio" name="time" id="time14"><label for="time14">17:00</label></li>
+                        <li><input type="radio" name="time" id="time15"><label for="time15">17:30</label></li>
+                        <li><input type="radio" name="time" id="time16"><label for="time16">18:00</label></li>
+                        <li><input type="radio" name="time" id="time17"><label for="time17">18:30</label></li>
+                        <li><input type="radio" name="time" id="time18"><label for="time18">19:00</label></li>
+                        <li><input type="radio" name="time" id="time19"><label for="time19">19:30</label></li>
+                    </ul>
+                    <div class="select">
+                        <ul>
+                            <li>
+                                <div></div>
+                                선택
+                            </li>
+                            <li>
+                                <div></div>
+                                불가
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <h2>예약주의사항</h2>
+                    <p>예약은 최소 2일 전 ~ 최대 7일 전에만 가능합니다.</p>
+                    <p>모든 메뉴 함께 픽업 가능한 일정이 노출됩니다.</p>
+                </div>
+            </div>
+
+            <div class="btn_area">
+                <button type="button">예약시간 설정하기</button>
+            </div>
+
+        </th:block>
 
     </div>
 </th:block>
@@ -131,7 +295,26 @@
         $(".order_box_wrap").on("click", ".storelist .contents .map", function(){
             let storeName = $(this).closest(".store_link").find(".store_name").html().trim();
 
-            location.href = "https://map.naver.com/v5/search/" + storeName;
+            window.open("https://map.naver.com/v5/search/" + storeName, "_blank");
+        });
+
+        // 매장설정하기 누르면 일자선택으로 간다
+        $(".order_box_wrap").on("click", ".storelist .go_date_pick", function(){
+            let storeId = $(this).closest(".store_link").data("id");
+
+            location.href = "/order/date-pick?storeId=" + storeId;
+        });
+
+        // 예약 날짜 중 예약 불가능한 날짜를 눌렀을 때
+        // timetable 클래스 내의 모든 input을 disabled한다
+        $(".reserve_wrap").on("click", ".reserve_date .days input[type=radio]:disabled + label", function(){
+            // 일단 선택했던 속성 제거해야 함
+            $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", true);
+        });
+
+        // 예약 날짜 중 예약 가능한 날짜를 눌렀을 때
+        $(".reserve_wrap").on("click", ".reserve_date .days input[type=radio]:enabled + label", function(){
+            $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", false);
         });
 
     </script>
