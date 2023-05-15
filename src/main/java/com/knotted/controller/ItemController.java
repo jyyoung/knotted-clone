@@ -42,7 +42,7 @@ public class ItemController {
 
     @PostMapping(value = "/search")
     @ResponseBody
-    public ResponseEntity<List<ItemDTO>> getItemsBySearch(@RequestParam("category") String category,
+    public ResponseEntity<List<ItemDTO>> getItemsBySearchWord(@RequestParam("category") String category,
                                                           @RequestParam("searchWord") String searchWord){
         try{
             List<ItemDTO> itemList = itemService.getItemsByCategoryAndSearchWord(category, searchWord);

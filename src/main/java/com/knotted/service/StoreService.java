@@ -46,6 +46,33 @@ public class StoreService {
         return storeDTOList;
     }
 
+    public List<StoreDTO> getStoresBySearchWord(String searchWord){
+        List<Store> storeList;
+
+        if(searchWord != null && !searchWord.isEmpty()){
+            storeList = storeRepository.findAllByNameContainingIgnoreCase(searchWord, Sort.by(Sort.Direction.DESC, "id"));
+        }else{
+            storeList = storeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        }
+
+        List<StoreDTO> storeDTOList = new ArrayList<>();
+
+        for(Store store : storeList){
+            StoreDTO storeDTO = StoreDTO.of(store);
+
+            StoreImage storeImage = storeImageRepository.findByStoreId(store.getId()); // 매장 이미지 엔티티 조회
+
+            if(storeImage != null){
+                StoreImageDTO storeImageDTO = StoreImageDTO.of(storeImage);
+                storeDTO.setStoreImageDTO(storeImageDTO);
+            }
+
+            storeDTOList.add(storeDTO);
+        }
+
+        return storeDTOList;
+    }
+
     // 매장 하나 조회하는 메소드
     public StoreFormDTO getStore(Long storeId){
         Store store = storeRepository.findById(storeId)

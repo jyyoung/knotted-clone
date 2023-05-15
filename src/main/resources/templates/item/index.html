@@ -99,6 +99,7 @@
             loadCategoryItems("all");
         });
 
+        // 카테고리로 상품 리스트 받아오는 함수
         function loadCategoryItems(category){
             // 카테고리로 리스트 받아 옴
             $.ajax({
@@ -117,6 +118,7 @@
             });
         }
 
+        // 카테고리 및 검색어로 상품 리스트 받아오는 함수
         function loadSearchItems(category, searchWord){
 
             let token = $("meta[name='_csrf']").attr("content");

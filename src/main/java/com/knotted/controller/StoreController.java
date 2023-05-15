@@ -4,11 +4,11 @@ import com.knotted.dto.StoreDTO;
 import com.knotted.dto.StoreFormDTO;
 import com.knotted.service.StoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +26,18 @@ public class StoreController {
         model.addAttribute("storeList", storeList);
 
         return "/store/index";
+    }
+
+    // 검색어로 매장 리스트 반환 (REST)
+    @PostMapping(value = "/search")
+    @ResponseBody
+    public ResponseEntity<List<StoreDTO>> getStoresBySearch(@RequestParam("searchWord") String searchWord){
+        try{
+            List<StoreDTO> storeList = storeService.getStoresBySearchWord(searchWord);
+            return new ResponseEntity<>(storeList, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // 매장 상세 페이지

@@ -4,6 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
@@ -18,17 +23,34 @@
                 </div>
             </div>
 
-            <ul class="listview">
-                <th:block th:each="store : ${storeList}">
-                    <li th:object="${store}" th:attr="data-id=${store.id}" class="store_link">
-                        <div>
-                            <div class="img"><img th:src="*{storeImageDTO.imageUrl}"></div>
+            <!--/* 그냥 아래 Vue.js로 모두 해결하기로 함 */-->
+<!--            <ul class="listview">-->
+<!--                <th:block th:each="store : ${storeList}">-->
+<!--                    <li th:object="${store}" th:attr="data-id=${store.id}" class="store_link">-->
+<!--                        <div>-->
+<!--                            <div class="img"><img th:src="*{storeImageDTO.imageUrl}"></div>-->
+<!--                        </div>-->
+<!--                        <h2 th:text="*{name}"></h2>-->
+<!--                        <p th:text="*{address}"></p>-->
+<!--                    </li>-->
+<!--                </th:block>-->
+<!--            </ul>-->
+
+
+            <!--/* Vue.js로 v-for 반복문을 돌아 렌더링할 부분 */-->
+            <ul class="listview" id="stores">
+                <!-- 일단 items에 담았기 때문에 이를 순회하면서 값을 가져온다 -->
+                <li v-for="store in stores" :key="store.id" :data-id="store.id" class="store_link">
+                    <div>
+                        <div class="img">
+                            <img :src="store.storeImageDTO.imageUrl" />
                         </div>
-                        <h2 th:text="*{name}"></h2>
-                        <p th:text="*{address}"></p>
-                    </li>
-                </th:block>
+                    </div>
+                    <h2>{{ store.name }}</h2>
+                    <p>{{ store.address }}</p>
+                </li>
             </ul>
+
         </div>
     </div>
 </th:block>
@@ -36,11 +58,63 @@
 <th:block layout:fragment="script">
     <script>
         // 매장 클릭 시 매장으로 이동
-        $(".store_link").on("click", function(){
+        // $(".store_link").on("click", function(){
+        //     let storeId = $(this).data("id");
+        //
+        //     location.href = "/store/" + storeId;
+        // });
+        /* 주의! 동적으로 DOM이 바뀌었기에 상위 DOM을 기준으로 바인딩한다 */
+        $(".storelist").on("click", ".store_link", function(){
             let storeId = $(this).data("id");
-
             location.href = "/store/" + storeId;
         });
+
+        // Vue 인스턴스 생성
+        const stores = new Vue({
+            el: "#stores",
+            data: {
+                stores: []
+            }
+        });
+
+        $(document).ready(function(){
+            // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
+            loadSearchItems("");
+        });
+
+        // 검색어로 상품 리스트 받아오는 함수
+
+        function loadSearchItems(searchWord){
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                url: "/store/search",
+                method: "POST",
+                data: {
+                    searchWord: searchWord,
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    stores.stores = result;
+                    console.log(result);
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
+
+        // 검색 input 값 변화 시 다시 읽어오기
+        $("#search_word").on("change", function(){
+            let searchWord = $(this).val();
+
+            loadSearchItems(searchWord);
+        });
+
     </script>
 </th:block>
 
