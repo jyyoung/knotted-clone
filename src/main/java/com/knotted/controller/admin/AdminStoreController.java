@@ -3,6 +3,7 @@ package com.knotted.controller.admin;
 import com.knotted.dto.StoreDTO;
 import com.knotted.dto.StoreFormDTO;
 import com.knotted.dto.StoreImageDTO;
+import com.knotted.dto.StoreItemDTO;
 import com.knotted.service.admin.AdminStoreService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -136,5 +137,37 @@ public class AdminStoreController {
         
         // 성공 시 매장 관리 페이지로 이동
         return "redirect:/admin/store";
+    }
+
+    // 매장별 상품 관리 페이지로 이동
+    @GetMapping(value = "/{storeId}/item")
+    public String storeItem(@PathVariable("storeId") Long storeId, Model model){
+
+        // 해당 storeId 있는지 확인
+        try {
+            StoreFormDTO storeFormDTO = adminStoreService.getStore(storeId);
+            model.addAttribute("storeId", storeId);
+            model.addAttribute("storeFormDTO", storeFormDTO);
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("errorMessage", "존재하지 않는 매장입니다");
+            return "redirect:/admin/store";
+        }
+
+        return "/admin/store/storeItem";
+    }
+
+    // 전체 상품 리스트 및 매장별 재고를 받아옴
+    @GetMapping(value = "/{storeId}/item/list")
+    @ResponseBody
+    public ResponseEntity<List<StoreItemDTO>> storeItemList(@PathVariable("storeId") Long storeId){
+        // 모든 상품 리스트 (이미지 포함한) 및 매장별 재고를 받아옴
+
+        try{
+            List<StoreItemDTO> storeItemList = adminStoreService.getStoreItemList(storeId);
+            return new ResponseEntity<>(storeItemList, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }

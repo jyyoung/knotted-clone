@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/admin}">
+
+<th:block layout:fragment="css"></th:block>
+
+<th:block layout:fragment="content">
+    <div class="container">
+        <h1 th:text="${storeFormDTO.name + '점의 상품 관리'}"></h1>
+
+        <ul class="store_item_list" id="items">
+            <li v-for="item in items" :key="item.id" :data-id="item.id" class="item_link">
+                <div>
+                    <div class="img">
+                        <img :src="item.itemImageDTO.imageUrl" />
+                    </div>
+                </div>
+                <h2>{{ item.name }}</h2>
+                <p>{{ formatPrice(item.price) }}</p>
+            </li>
+        </ul>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+
+    <script>
+
+        let storeId = [[${storeId}]];
+
+        // Vue 인스턴스 생성
+        const items = new Vue({
+            el: "#items",
+            data: {
+                items: []
+            }
+        });
+
+        $(document).ready(function(){
+            loadItems();
+        });
+
+        // 모든 상품 리스트 및 현재 매장의 재고량 받아오는 함수
+        function loadItems(){
+
+            $.ajax({
+                url: "/admin/store/" + storeId + "/item/list";
+                method: "GET",
+                data: {
+                    storeId: storeId,
+                },
+                cache: false,
+                success: function(result, status){
+                    console.log(result);
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
+    </script>
+</th:block>
+
+</html>

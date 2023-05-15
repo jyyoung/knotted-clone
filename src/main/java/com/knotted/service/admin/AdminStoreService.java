@@ -1,11 +1,11 @@
 package com.knotted.service.admin;
 
-import com.knotted.dto.StoreDTO;
-import com.knotted.dto.StoreFormDTO;
-import com.knotted.dto.StoreImageDTO;
+import com.knotted.dto.*;
 import com.knotted.entity.Store;
 import com.knotted.entity.StoreImage;
+import com.knotted.entity.StoreItem;
 import com.knotted.repository.admin.AdminStoreImageRepository;
+import com.knotted.repository.admin.AdminStoreItemRepository;
 import com.knotted.repository.admin.AdminStoreRepository;
 import com.knotted.util.TimeUtils;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +26,8 @@ public class AdminStoreService {
     private final AdminStoreRepository adminStoreRepository;
     private final AdminStoreImageRepository adminStoreImageRepository;
     private final AdminStoreImageService adminStoreImageService;
+    private final AdminItemService adminItemService;
+    private final AdminStoreItemRepository adminStoreItemRepository;
 
     // 파일을 다루는 거라 Exception 뜰 수도 있어서 Exception 던져 놓음. 오류가 발생하면 이 메소드를 호출하는 곳에서 예외처리를 할 것임
     // StoreFormDTO와 MultipartFile을 받아서 매장과 매장 이미지를 DB에 같이 등록하기 위함이다. 둘 중 하나가 실패하면 @Transactional에 의해 롤백된다.
@@ -130,6 +132,50 @@ public class AdminStoreService {
             // 새 이미지 등록
             adminStoreImageService.saveStoreImage(newStoreImage, storeImageFile);
         }
+    }
+
+    // 모든 상품 리스트를 조회하고 해당 매장의 매장 상품을 조회하여 매장 상품 DTO 리스트를 반환함
+    public List<StoreItemDTO> getStoreItemList(Long storeId){
+        // Store 엔티티 조회
+        Store store = adminStoreRepository.findById(storeId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // 일단 모든 상품 조회하여 ItemDTO 리스트 만듦
+        List<ItemDTO> itemList = adminItemService.getAllItems();
+
+        // 해당 매장의 StoreItem 엔티티 리스트 조회함
+        List<StoreItem> storeItemList = adminStoreItemRepository.findByStoreId(storeId);
+
+        // StoreItemDTO 리스트 선언
+        List<StoreItemDTO> storeItemDTOList = new ArrayList<>();
+
+        // 상품 리스트 반복문 돌면서 StoreItemDTO 생성하여 필드 세팅해줌
+        for(ItemDTO itemDTO : itemList){
+            StoreItemDTO storeItemDTO = new StoreItemDTO();
+
+            storeItemDTO.setStore(store);
+            storeItemDTO.setItem(itemDTO.createItem());
+            storeItemDTO.setItemDTO(itemDTO);
+
+            // 해당 상품이 매장 상품에 있는지 확인
+            StoreItem savedStoreItem = adminStoreItemRepository.findByStoreIdAndItemId(storeId, itemDTO.getId());
+
+            if(savedStoreItem != null){ // 해당 상품이 해당 매장에 있으면
+                storeItemDTO.setStock(savedStoreItem.getStock());
+            }else{ // 해당 상품이 해당 매장에 없으면
+                // 해당 상품의 매장 상품 엔티티를 생성함
+                StoreItem storeItem = new StoreItem();
+                storeItem.setStore(store);
+                storeItem.setItem(itemDTO.createItem());
+                adminStoreItemRepository.save(storeItem); // DB에 저장
+
+                storeItemDTO.setStock(0L);
+            }
+
+            storeItemDTOList.add(storeItemDTO);
+        }
+        return storeItemDTOList;
+
     }
 }
 

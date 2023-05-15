@@ -45,4 +45,9 @@ public class ItemDTO {
     public static ItemDTO of(Item item){
         return modelMapper.map(item, ItemDTO.class);
     }
+    
+    // DTO -> 엔티티 변환
+    public Item createItem(){
+        return modelMapper.map(this, Item.class);
+    }
 }

@@ -105,9 +105,6 @@
                 cache: false,
                 success: function(result, status){
                     categoryItems.items = result;
-
-                    $(".initial_listview").addClass("display_none");
-                    $("#category_items").removeClass("display_none");
                 },
                 error: function(jqXHR, status, error){
                     alert(jqXHR.responseText);
