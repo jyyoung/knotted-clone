@@ -4,6 +4,8 @@ import com.knotted.constant.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 // 주문 엔티티
 
 @Entity
@@ -22,11 +24,20 @@ public class Order extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
+    // 매장 엔티티와 다대일로 매핑
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
+
     // 주문 상태
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     
+    // 주문 일자
+    @Column(name = "order_date")
+    private LocalDateTime orderDate;
+
 }
 
 
