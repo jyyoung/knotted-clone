@@ -10,9 +10,56 @@
     <div class="container">
         <h1 th:text="${storeFormDTO.name + '점의 상품 관리'}"></h1>
 
-        <ul class="store_item_list" id="items">
+        <div class="sub_container store_item_wrap">
+            <ul class="list_top_wrap">
+                <th:block th:each="i: ${#numbers.sequence(1, 2)}">
+                    <li>
+                        <ul>
+                            <li>
 
-        </ul>
+                            </li>
+                            <li>
+
+                            </li>
+                            <li>
+                                현재 재고
+                            </li>
+                            <li>
+                                추가 수량
+                            </li>
+                            <li>
+
+                            </li>
+                        </ul>
+                    </li>
+                </th:block>
+            </ul>
+
+            <ul class="store_item_list object_list" id="items">
+                <li v-for="item in items" :key="item.id" :data-id="item.id">
+                    <ul>
+                        <li>
+                            <a :href="'/menu/' + item.itemDTO.id" class="object_link">
+                                <img :src="item.itemDTO.itemImageDTO.imageUrl" alt="상품 사진">
+                            </a>
+                        </li>
+                        <li>
+                            {{ item.itemDTO.name }}
+                        </li>
+                        <li>
+                            {{ item.stock }}
+                        </li>
+                        <li>
+                            <input type="number" name="stock" value="0" min="0" max="100">
+                        </li>
+                        <li>
+                            <button type="button">재고 추가</button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
     </div>
 </th:block>
 
@@ -23,12 +70,12 @@
         let storeId = [[${storeId}]];
 
         // Vue 인스턴스 생성
-        // const items = new Vue({
-        //     el: "#items",
-        //     data: {
-        //         items: []
-        //     }
-        // });
+        const storeItems = new Vue({
+            el: "#items",
+            data: {
+                items: []
+            }
+        });
 
         $(document).ready(function(){
             loadItems();
@@ -46,6 +93,7 @@
                 cache: false,
                 success: function(result, status){
                     console.log(result);
+                    storeItems.items = result;
                 },
                 error: function(jqXHR, status, error){
                     alert(jqXHR.responseText);

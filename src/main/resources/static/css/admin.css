@@ -27,7 +27,7 @@ body, div, p, span, h1, h2, h3 {
     font-size: 16px;
 }
 
-body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, input, button {
     margin: 0;
     padding: 0;
     border: 0;
@@ -68,7 +68,7 @@ ul li {
     list-style: none;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=number] {
     -webkit-border-radius: 0;
     -webkit-appearance: none;
     text-indent: 10px;
@@ -577,6 +577,57 @@ section h1{
     color: #fff;
     font-weight: 500;
 }
+
+/* 매장 상품 관리 부분 S */
+
+.store_item_wrap .list_top_wrap{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.object_list.store_item_list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.object_list.store_item_list > li .object_link{
+    width: 70px;
+    height: 70px;
+    margin: 0;
+}
+
+.store_item_wrap .list_top_wrap ul{
+    display: grid;
+    grid-template-columns: 80px 160px 80px 80px 100px;
+    place-items: center;
+}
+
+.store_item_wrap .list_top_wrap ul li{
+    font-weight: 500;
+}
+
+.object_list.store_item_list > li ul{
+    display: grid;
+    grid-template-columns: 80px 160px 80px 80px 100px;
+    place-items: center;
+}
+
+.object_list.store_item_list input[type='number']{
+    width: 55px;
+    height: 40px;
+    text-align: center;
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.object_list.store_item_list > li ul li:nth-child(2){
+    width: 100%;
+    padding-left: 15px;
+}
+
+/* 매장 상품 관리 부분 E */
 
 /* 등록 폼 관련 부분 E */
 
