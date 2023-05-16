@@ -34,9 +34,9 @@ public class Order extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     
-    // 주문 일자
-    @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    // 예약 일자
+    @Column(name = "reserve_date")
+    private LocalDateTime reserveDate;
 
 }
 

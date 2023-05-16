@@ -103,7 +103,8 @@
 
                 <div class="reserve_date">
                     <!--/* cal 클래스 이 부분도 통째로 REST, Vue.js로 구현해야 함 */-->
-                    <div class="cal">
+                    <!--/* 이 부분도 Vue.js로 받기 */-->
+                    <div class="cal" id="calendar">
                         <div class="month">
                             <ul>
                                 <li>
@@ -125,54 +126,11 @@
                             <li>Sa</li>
                         </ul>
                         <ul class="days">
-                            <li><input type="radio" name="date" id="day0" disabled=""><label for="day0">&emsp;</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day1" disabled=""><label for="day1">1</label></li>
-                            <li><input type="radio" name="date" id="day2" disabled=""><label for="day2">2</label></li>
-                            <li><input type="radio" name="date" id="day3" disabled=""><label for="day3">3</label></li>
-                            <li><input type="radio" name="date" id="day4" disabled=""><label for="day4">4</label></li>
-                            <li><input type="radio" name="date" id="day5" disabled=""><label for="day5">5</label></li>
-                            <li><input type="radio" name="date" id="day6" disabled=""><label for="day6">6</label></li>
-                            <li><input type="radio" name="date" id="day7" disabled=""><label for="day7">7</label></li>
-                            <li><input type="radio" name="date" id="day8" disabled=""><label for="day8">8</label></li>
-                            <li><input type="radio" name="date" id="day9" disabled=""><label for="day9">9</label></li>
-                            <li><input type="radio" name="date" id="day10" disabled=""><label for="day10">10</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day11" disabled=""><label for="day11">11</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day12" disabled=""><label for="day12">12</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day13" disabled=""><label for="day13">13</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day14" disabled=""><label for="day14">14</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day15" disabled=""><label for="day15">15</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day16" disabled=""><label for="day16">16</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day17"><label for="day17">17</label></li>
-                            <li><input type="radio" name="date" id="day18"><label for="day18">18</label></li>
-                            <li><input type="radio" name="date" id="day19"><label for="day19">19</label></li>
-                            <li><input type="radio" name="date" id="day20"><label for="day20">20</label></li>
-                            <li><input type="radio" name="date" id="day21"><label for="day21">21</label></li>
-                            <li><input type="radio" name="date" id="day22"><label for="day22">22</label></li>
-                            <li><input type="radio" name="date" id="day23" disabled=""><label for="day23">23</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day24" disabled=""><label for="day24">24</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day25" disabled=""><label for="day25">25</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day26" disabled=""><label for="day26">26</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day27" disabled=""><label for="day27">27</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day28" disabled=""><label for="day28">28</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day29" disabled=""><label for="day29">29</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day30" disabled=""><label for="day30">30</label>
-                            </li>
-                            <li><input type="radio" name="date" id="day31" disabled=""><label for="day31">31</label>
+                            <li v-for="(day, index) in calendar.days" :key="'day' + index">
+                                <input type="radio" name="date" :data-id="'day' + index" :disabled="!day.active">
+                                <label :for="'day' + index">
+                                    {{ day.date === 0 ? '&emsp;' : day.date }}
+                                </label>
                             </li>
                         </ul>
                         <div class="select">
@@ -246,7 +204,7 @@
 <th:block layout:fragment="script">
     <script>
 
-        // Vue 인스턴스 생성
+        // Vue 인스턴스 생성 - 매장 리스트
         const stores = new Vue({
             el: "#stores",
             data: {
@@ -254,9 +212,20 @@
             }
         });
 
+        // Vue 인스턴스 생성 - 달력 정보
+        const calendar = new Vue({
+            el: "#calendar",
+            data: {
+                calendar: []
+            }
+        });
+
         $(document).ready(function(){
             // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
             loadSearchItems("");
+
+            // 페이지 로드 완료되면 바로 loadDatePickCalendar로 달력 정보 받아옴
+            loadDatePickCalendar(0, 0);
         });
 
         // 검색어로 매장 리스트 받아오는 함수
@@ -316,6 +285,23 @@
         $(".reserve_wrap").on("click", ".reserve_date .days input[type=radio]:enabled + label", function(){
             $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", false);
         });
+
+        // 예약 날짜 고르는 달력 받아오는 함수
+        function loadDatePickCalendar(year, month){
+
+            $.ajax({
+                url: "/order/date-pick/calendar?year=" + year + "&month=" + month,
+                method: "GET",
+                cache: false,
+                success: function(result, status){
+                    calendar.calendar = result;
+                    console.log(result);
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
 
     </script>
 
