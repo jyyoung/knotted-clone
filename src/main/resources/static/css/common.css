@@ -1832,7 +1832,13 @@ section::after {
     float: right;
 }
 
+.order_box .inform03 .now_stock_wrap{
+    margin-top: 20px;
+}
 
+.order_box .inform03 .now_stock_wrap .now_stock{
+    color: #ffa0c5;
+}
 
 /* 주문(예약) 관련 부분 E */
 

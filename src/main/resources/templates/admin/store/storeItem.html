@@ -123,11 +123,17 @@
                     loadItems(); // 전체 재고량 다시 받아옴
                     // alert은 동기 함수이므로 loadItems를 먼저 해줘야 함
                     alert("재고를 추가했습니다");
+
+                    // 추가하면 성공하든 말든 input 비우기
+                    $(".store_item_wrap input[name='stock']").val(0);
                 },
                 error: function(jqXHR, status, error){
                     if(jqXHR.status == "500"){
                         loadItems();
                         alert("재고 추가에 실패했습니다");
+
+                        // 추가하면 성공하든 말든 input 비우기
+                        $(".store_item_wrap input[name='stock']").val(0);
                     }else{
                         loadItems();
                         alert(jqXHR.responseText);

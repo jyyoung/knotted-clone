@@ -3,10 +3,12 @@ package com.knotted.controller;
 import com.knotted.dto.CalendarDTO;
 import com.knotted.dto.DayInfoDTO;
 import com.knotted.dto.ItemFormDTO;
+import com.knotted.dto.StoreItemDTO;
 import com.knotted.entity.Store;
 import com.knotted.repository.StoreRepository;
 import com.knotted.service.ItemService;
 import com.knotted.service.OrderService;
+import com.knotted.service.StoreItemService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ public class OrderController {
 
     private final StoreRepository storeRepository;
     private final ItemService itemService;
+    private final StoreItemService storeItemService;
     private final OrderService orderService;
 
     // 주문(예약) 메인으로 이동
@@ -200,6 +203,21 @@ public class OrderController {
         }
 
         return "/order/orderSelect";
+    }
+
+    // 해당 매장의 해당 상품의 현재 재고를 확인하여 리턴함
+    @GetMapping(value = "/checkStock")
+    @ResponseBody
+    public ResponseEntity checkStock(@RequestParam("storeId") Long storeId, @RequestParam("itemId") Long itemId){
+        // 해당 매장의 재고를 확인함
+        StoreItemDTO storeItemDTO = storeItemService.getStoreItemByStoreIdAndItemId(storeId, itemId);
+
+        if(storeItemDTO.getId() == null){
+            return new ResponseEntity(0, HttpStatus.OK);
+        }
+
+        Long stock = storeItemDTO.getStock();
+        return new ResponseEntity(stock, HttpStatus.OK);
     }
 
 }

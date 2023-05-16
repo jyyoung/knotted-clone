@@ -25,6 +25,11 @@ public class Store extends BaseEntity{
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<StoreItem> storeItems = new ArrayList<>();
 
+    // 매장 엔티티와 일대일로 양방향 매핑
+    // 매장 삭제 시 해당 매장으로 담은 장바구니도 같이 삭제하도록 함
+    @OneToOne(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Cart cart;
+
     // 매장명
     @Column(name = "store_name")
     private String name;

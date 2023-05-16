@@ -168,7 +168,8 @@ public class AdminStoreService {
                 storeItem.setStock(0L);
                 adminStoreItemRepository.save(storeItem); // DB에 저장
 
-                storeItemDTO.setId(storeItemDTO.getId());
+//                storeItemDTO.setId(storeItemDTO.getId()); // 멍청하게 storeItem이 아니고 storeItemDTO를 가져오니 당연히 안 되지.
+                storeItemDTO.setId(storeItem.getId());
                 storeItemDTO.setStock(0L);
             }
 
