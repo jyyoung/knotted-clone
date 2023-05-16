@@ -18,4 +18,7 @@ public class CalendarDTO {
     // 일 정보
     private List<DayInfoDTO> days;
 
+    // 해당 달에 하나라도 active한 날짜가 있는지
+    private boolean isActiveExists;
+
 }

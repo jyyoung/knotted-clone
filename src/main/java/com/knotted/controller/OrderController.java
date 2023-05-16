@@ -83,9 +83,11 @@ public class OrderController {
         // 그래서 year, month를 입력값으로 받아서 달력 정보를 만들기로 하겠다.
 
         Calendar nowCalendar = Calendar.getInstance();
+        int nowYear = nowCalendar.get(Calendar.YEAR); // 현재 년도 구함
+        int nowMonth = nowCalendar.get(Calendar.MONTH); // 현재 달 구함
         int nowDay = nowCalendar.get(Calendar.DATE); // 현재 일자 구함
         
-        if(year == 0 || month == 0){ // 연월 정보가 없는 경우 현재 연월 기준으로 만들도록 하겠다
+        if(year == 0){ // 연월 정보가 없는 경우 현재 연월 기준으로 만들도록 하겠다 (month가 0인 경우는 실제로 존재하기 때문에 쓰지 않았다. 그 외의 예외 처리는 하지 않겠다)
             // 현재 날짜 구하기
             Calendar calendar = Calendar.getInstance(); // 이렇게 하면 현재 날짜로 인스턴스 생성
             year = calendar.get(Calendar.YEAR); // 현재 년도
@@ -105,6 +107,7 @@ public class OrderController {
         CalendarDTO calendarDTO = new CalendarDTO();
         calendarDTO.setYear(year);
         calendarDTO.setMonth(month);
+        calendarDTO.setActiveExists(false); // 기본값 false
 
         List<DayInfoDTO> days = new ArrayList<>(); // 반환할 리스트
 
@@ -123,8 +126,10 @@ public class OrderController {
             DayInfoDTO dayInfoDTO = new DayInfoDTO();
             dayInfoDTO.setDate(i);
 
-            if(i >= nowDay + 2 && i <= nowDay + 7){
+            // 클릭 활성화시킬 날짜 정함
+            if(year == nowYear && month == nowMonth && i >= nowDay + 2 && i <= nowDay + 7){
                 dayInfoDTO.setActive(true);
+                calendarDTO.setActiveExists(true); // 하나라도 active가 있으면 true
             }else{
                 dayInfoDTO.setActive(false);
             }

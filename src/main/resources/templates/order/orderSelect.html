@@ -108,11 +108,11 @@
                         <div class="month">
                             <ul>
                                 <li>
-                                    <button type="button">&lt;</button>
+                                    <button type="button" class="reload_calendar_prev">&lt;</button>
                                 </li>
-                                <li><span>2023.5</span></li>
+                                <li><span>{{ calendar.year + '.' + (calendar.month + 1) }}</span></li>
                                 <li>
-                                    <button type="button">&gt;</button>
+                                    <button type="button" class="reload_calendar_next">&gt;</button>
                                 </li>
                             </ul>
                         </div>
@@ -127,7 +127,7 @@
                         </ul>
                         <ul class="days">
                             <li v-for="(day, index) in calendar.days" :key="'day' + index">
-                                <input type="radio" name="date" :data-id="'day' + index" :disabled="!day.active">
+                                <input type="radio" name="date" :id="'day' + index" :disabled="!day.active" :checked="findIndexOfActive(day) === index">
                                 <label :for="'day' + index">
                                     {{ day.date === 0 ? '&emsp;' : day.date }}
                                 </label>
@@ -217,6 +217,19 @@
             el: "#calendar",
             data: {
                 calendar: []
+            },
+            methods: {
+                // 현재 day 요소의 인덱스를 넣어 해당 인덱스가 첫번째로 활성화된 active인지 확인한다
+                findIndexOfActive(day){
+                    // 찾으면 인덱스 반환, 아니면 -1을 반환한다
+                    let index = this.calendar.days.findIndex(item => item.active === true);
+
+                    return index;
+                },
+                isActiveExists(){
+                    // 현재 연월에 active가 하나라도 존재하는지 확인한다 (-1이면 없는 것)
+                    return this.calendar.days.findIndex(item => item.active === true);
+                }
             }
         });
 
@@ -245,7 +258,6 @@
                 },
                 success: function(result, status){
                     stores.stores = result;
-                    console.log(result);
                 },
                 error: function(jqXHR, status, error){
                     alert(jqXHR.responseText);
@@ -296,12 +308,62 @@
                 success: function(result, status){
                     calendar.calendar = result;
                     console.log(result);
+                    console.log(result.isActiveExists);
+                    if(result.activeExists === false){
+                        $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", true);
+                    }else{
+                        $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", false);
+                    }
                 },
                 error: function(jqXHR, status, error){
                     alert(jqXHR.responseText);
                 }
             });
+
         }
+
+        // 예약 달력에서 이전, 다음 버튼 누를 때 다시 받아오게 하기
+        // 달력 이전 버튼
+        $(".reserve_wrap").on("click", ".reload_calendar_prev", function(){
+            // 이번 달 연월 받아옴
+            // let year = $("#calendar").data("year");
+            // let month = $("#calendar").data("month");
+            // 주의! 위와 같이 data()를 사용하면 jQuery와 Vue의 매커니즘이 다르기 때문에 계속 이전 값이 남아있게 된다. 그러므로 Vue의 데이터를 직접 사용해야 한다.
+            let year = calendar.calendar.year;
+            let month = calendar.calendar.month;
+
+            // 다음 달 연월 계산
+            if(month - 1 < 0){
+                year -= 1;
+                month = 11;
+            }else{
+                month--;
+            }
+
+            // 선택되어 있는 checked 해제하기
+            $(".reserve_date .days input[type=radio]").prop("checked", false);
+
+            loadDatePickCalendar(year, month);
+        });
+
+        // 달력 다음 버튼
+        $(".reserve_wrap").on("click", ".reload_calendar_next", function(){
+            // 이번 달 연월 받아옴
+            let year = calendar.calendar.year;
+            let month = calendar.calendar.month;
+
+            if(month + 1 > 11){
+                year += 1;
+                month = 0;
+            }else{
+                month++;
+            }
+
+            // 선택되어 있는 checked 해제하기
+            $(".reserve_date .days input[type=radio]").prop("checked", false);
+
+            loadDatePickCalendar(year, month);
+        });
 
     </script>
 
