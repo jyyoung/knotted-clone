@@ -651,91 +651,105 @@
 
             // 수량 감소 눌렀을 때
             $(".number-input .count_minus").on("click", function(){
-                // 최소는 1이어야 하고 만약 이제 1이 됐으면 disabled 추가해줘야 함
-
-                $(".number-input .count_plus").prop("disabled", false);
-
-                let now_count = $(".number-input input").val();
-
-                if(now_count <= 1){
-                    alert("최소 1개를 주문해야 합니다");
-                    return;
-                }
-
-                now_count--;
-                $(".number-input input").val(now_count);
-
-                if(now_count == 1){
-                    $(this).prop("disabled", true);
-                }
-
-                // 전체 금액 계산해서 업데이트한다.
-                priceUpdate(now_count);
-
                 // 재고 표시를 업데이트한다
-                checkStock(storeId, itemId);
+                checkStock().then(function(stock){ // 비동기가 끝난 후 처리하기 위해 then으로 감싸주었다.
+
+                    // 최소는 1이어야 하고 만약 이제 1이 됐으면 disabled 추가해줘야 함
+                    $(".number-input .count_plus").prop("disabled", false);
+
+                    let now_count = $(".number-input input").val();
+
+                    if(now_count <= 1){
+                        alert("최소 1개를 주문해야 합니다");
+                        return;
+                    }
+
+                    now_count--;
+                    $(".number-input input").val(now_count);
+
+                    if(now_count == 1){
+                        // $(this).prop("disabled", true);
+                        // then 안쪽에 감싸주어서 this가 바뀌었다. 명시적으로 찾아야 한다
+                        $(".number-input .count_minus").prop("disabled", true);
+                    }
+
+                    // 전체 금액 계산해서 업데이트한다.
+                    priceUpdate(now_count);
+                });
             });
 
             // 수량 증가 눌렀을 때
             $(".number-input .count_plus").on("click", function(){
-                // 무조건 -버튼의 disabled 없애줘야 함
-                // 최대값은 50까지 할 것임. 이제 50이 됐으면 disabled 추가해줘야 함
-
-                $(".number-input .count_minus").prop("disabled", false);
-
-                let now_count = $(".number-input input").val();
-
-                if(now_count >= 50){
-                    alert("최대 50개까지 주문 가능합니다");
-                    return;
-                }
-
-                now_count++;
-                $(".number-input input").val(now_count);
-
-                if(now_count == 50){
-                    $(this).prop("disabled", true);
-                }
-
-                // 전체 금액 계산해서 업데이트한다.
-                priceUpdate(now_count);
-
                 // 재고 표시를 업데이트한다
-                checkStock();
+                checkStock().then(function(stock){ // 비동기가 끝난 후 처리하기 위해 then으로 감싸주었다.
+
+                    let max = 50;
+                    if(max > stock){
+                        max = stock; // 재고치보다 높으면 안 됨
+                    }
+
+                    // 무조건 -버튼의 disabled 없애줘야 함
+                    // 최대값은 50까지 할 것임. 이제 50이 됐으면 disabled 추가해줘야 함
+
+                    $(".number-input .count_minus").prop("disabled", false);
+
+                    let now_count = $(".number-input input").val();
+
+                    if(now_count >= max){
+                        alert("최대 " + max + "개까지 주문 가능합니다");
+                        return;
+                    }
+
+                    now_count++;
+                    $(".number-input input").val(now_count);
+
+                    if(now_count == max){
+                        $(".number-input .count_plus").prop("disabled", true);
+                    }
+
+                    // 전체 금액 계산해서 업데이트한다.
+                    priceUpdate(now_count);
+                });
             });
 
             // 수량이 어떤 방법으로든 변했을 때
             $(".number-input input").on("change", function(){
-                let now_count = $(".number-input input").val();
-
-                if(now_count < 1){
-                    alert("최소 1개를 주문해야 합니다");
-                    now_count = 1;
-                    $(this).val(1);
-                }
-
-                if(now_count > 50){
-                    alert("최대 50개까지 주문 가능합니다");
-                    now_count = 50;
-                    $(this).val(50);
-                }
-
-                if(now_count == 1){
-                    $(".number-input .count_plus").prop("disabled", false);
-                    $(".number-input .count_minus").prop("disabled", true);
-                }else if(now_count == 50){
-                    $(".number-input .count_minus").prop("disabled", false);
-                    $(".number-input .count_plus").prop("disabled", true);
-                }else{
-                    $(".number-input .count_minus").prop("disabled", false);
-                    $(".number-input .count_plus").prop("disabled", false);
-                }
-
-                // 전체 금액 계산해서 업데이트한다.
-                priceUpdate(now_count);
-
                 // 재고 표시를 업데이트한다
-                checkStock();
+                checkStock().then(function(stock){ // 비동기가 끝난 후 처리하기 위해 then으로 감싸주었다.
+
+                    let max = 50;
+                    if(max > stock){
+                        max = stock; // 재고치보다 높으면 안 됨
+                    }
+
+                    let now_count = $(".number-input input").val();
+
+                    if(now_count < 1){
+                        alert("최소 1개를 주문해야 합니다");
+                        now_count = 1;
+                        $(".number-input input").val(1);
+                    }
+
+                    if(now_count > max){
+                        alert("최대 " + max + "개까지 주문 가능합니다");
+                        now_count = max;
+                        $(".number-input input").val(max);
+                    }
+
+                    if(now_count == 1){
+                        $(".number-input .count_plus").prop("disabled", false);
+                        $(".number-input .count_minus").prop("disabled", true);
+                    }else if(now_count == max){
+                        $(".number-input .count_minus").prop("disabled", false);
+                        $(".number-input .count_plus").prop("disabled", true);
+                    }else{
+                        $(".number-input .count_minus").prop("disabled", false);
+                        $(".number-input .count_plus").prop("disabled", false);
+                    }
+
+                    // 전체 금액 계산해서 업데이트한다.
+                    priceUpdate(now_count);
+                });
             });
 
             // 금액 계산 후 금액 업데이트하는 함수
@@ -750,20 +764,27 @@
             function checkStock(){
                 // 재고를 실시간으로 조회해서 보이는 재고를 업데이트하도록 한다
 
-                $.ajax({
-                    url: "/order/checkStock",
-                    method: "GET",
-                    data: {
-                        storeId: storeId,
-                        itemId: itemId,
-                    },
-                    cache: false,
-                    success: function(result, status){
-                        $(".now_stock_wrap .now_stock").html(result);
-                    },
-                    error: function(jqXHR, status, error){
-                        alert(jqXHR.responseText);
-                    }
+                // 비동기적으로 처리하기 위해 Promise를 쓰도록 하겠다
+                return new Promise(function(resolve, reject) {
+
+                    $.ajax({
+                        url: "/order/checkStock",
+                        method: "GET",
+                        data: {
+                            storeId: storeId,
+                            itemId: itemId,
+                        },
+                        cache: false,
+                        success: function (result, status) {
+                            let stock = result;
+                            $(".now_stock_wrap .now_stock").html(stock);
+
+                            resolve(stock);
+                        },
+                        error: function (jqXHR, status, error) {
+                            alert(jqXHR.responseText);
+                        }
+                    });
                 });
             }
 
