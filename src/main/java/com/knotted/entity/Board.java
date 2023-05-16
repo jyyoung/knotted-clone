@@ -17,9 +17,10 @@ public class Board extends BaseEntity{
     private Long id;
 
     // 게시판 카테고리 엔티티와 다대일로 매핑
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_category_id")
-    private BoardCategory boardCategory;
+    // 카테고리 굳이 필요 없어서 지움
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "board_category_id")
+//    private BoardCategory boardCategory;
 
     // 회원 엔티티와 다대일로 매핑
     @ManyToOne(fetch = FetchType.LAZY)

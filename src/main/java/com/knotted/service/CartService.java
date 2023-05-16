@@ -1,7 +1,6 @@
 package com.knotted.service;
 
-import com.knotted.repository.OrderRepository;
-import com.knotted.repository.StoreRepository;
+import com.knotted.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,10 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class OrderService {
+public class CartService {
+    private final CartRepository cartRepository;
 
-    private final OrderRepository orderRepository;
-
-    
 
 }

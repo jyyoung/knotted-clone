@@ -322,7 +322,7 @@
                         </div>
                     </div>
                     <div class="btn_area">
-                        <button type="button" class="on order_button">주문하기</button>
+                        <button type="button" class="on order_button">장바구니에 담기</button>
                     </div>
                 </div>
             </div>
@@ -788,11 +788,10 @@
                 });
             }
 
-
-            // 주문 예약 REST로 처리하는 버튼 (주문 예약 성공하면 "닫기(더 고르기)"를 누를지 장바구니로 가기를 누를지 골라야 하기 때문)
+            // 장바구니에 담기 처리
             $(".order_box .order_button").on("click", function(){
 
-                // 주문 시 현재 장바구니에 담긴 매장과 같으면 현재 장바구니에 추가만 하고, 시간은 현재 고른 걸로 업데이트한다.
+                // 장바구니에 담기 시 현재 장바구니에 담긴 매장과 같으면 현재 장바구니에 추가만 하고, 시간은 현재 고른 걸로 업데이트한다.
                 // 만약 현재 장바구니에 담긴 매장과 다르면 장바구니 삭제 후 다시 추가하는 것으로 한다.
 
                 // 일단 넘어갈 값부터 다 가져온다
@@ -802,11 +801,31 @@
                 let itemId = $("input[name='itemId']").val();
                 let count = $("input[name='itemCount']").val();
 
-                console.log(storeId);
-                console.log(bookDate);
-                console.log(bookTime);
-                console.log(itemId);
-                console.log(count);
+                let token = $("meta[name='_csrf']").attr("content");
+                let header = $("meta[name='_csrf_header']").attr("content");
+
+                $.ajax({
+                    url: "/cart/add",
+                    method: "POST",
+                    data: {
+                        storeId: storeId,
+                        itemId: itemId,
+                        bookDate: bookDate,
+                        bookTime: bookTime,
+                        count: count,
+                    },
+                    cache: false,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (result, status) {
+                        console.log(result);
+                    },
+                    error: function (jqXHR, status, error) {
+                        alert(jqXHR.responseText);
+                    }
+                });
+
             });
 
         </script>
