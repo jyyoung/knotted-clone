@@ -104,7 +104,7 @@
                 <div class="reserve_date">
                     <!--/* cal 클래스 이 부분도 통째로 REST, Vue.js로 구현해야 함 */-->
                     <!--/* 이 부분도 Vue.js로 받기 */-->
-                    <div class="cal" id="calendar">
+                    <div class="cal" id="calendar" :data-year="calendar.year" :data-month="(calendar.month + 1)">
                         <div class="month">
                             <ul>
                                 <li>
@@ -193,7 +193,7 @@
             </div>
 
             <div class="btn_area">
-                <button type="button">예약시간 설정하기</button>
+                <button type="button" class="go_menu_pick">예약시간 설정하기</button>
             </div>
 
         </th:block>
@@ -363,6 +363,17 @@
             $(".reserve_date .days input[type=radio]").prop("checked", false);
 
             loadDatePickCalendar(year, month);
+        });
+
+        // 예약시간 설정하기 누르면 메뉴선택으로 간다
+        $(".go_menu_pick").on("click", function(){
+            // 기존의 storeId와 함께 bookDate, bookTime을 넘겨줘야 함
+            let year = calendar.calendar.year;
+            let month = (calendar.calendar.month + 1).toString().padStart(2, '0'); // 앞에 0으로 채워서 두자리로 만듦
+            let day = $(".reserve_date .days input[type=radio]:checked + label").html().trim().padStart(2, '0');
+
+            // 일단 유효성 검사는 넘기고 선택된 날짜랑 시간 있는지 정도면 체크하도록 하겠다.
+
         });
 
     </script>
