@@ -258,6 +258,70 @@
         <!--/* 메뉴 상세보기 부분 */-->
         <th:block th:if="${mode} == 'menuDetail'">
 
+            <input type="hidden" name="storeId" th:value="${storeId}">
+            <input type="hidden" name="bookDate" th:value="${bookDate}">
+            <input type="hidden" name="bookTime" th:value="${bookTime}">
+            <input type="hidden" name="itemId" th:value="${itemId}">
+
+            <div class="order_tab">
+                <ul class="tab_reserve">
+                    <li>
+                        <a href="javascript:;" th:text="${storeName}"></a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">일자선택</a>
+                    </li>
+                    <li class="on">
+                        <a href="javascript:;">메뉴선택</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="order_box">
+                <div class="order_box_wrap">
+                    <div class="boxinner" th:object="${itemFormDTO}">
+                        <div class="inform01">
+                            <div class="photo">
+                                <img th:src="*{itemImageDTO.imageUrl}">
+                            </div>
+                        </div>
+                        <div class="inform03">
+                            <ul class="price">
+                                <li><h2 th:text="*{name}"></h2></li>
+                                <li th:text="*{nameEng}"></li>
+                                <li th:text="${#numbers.formatDecimal(itemFormDTO.price, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                            </ul>
+                            <ul class="information">
+                                <li class="txt" th:text="*{description}"></li>
+                                <li class="allergy" style="">
+                                    <h3>알레르기 유발 요인</h3>
+                                    <input type="checkbox" id="btn_open01">
+                                    <label for="btn_open01">열기</label>
+                                    <p th:text="*{allergy}"></p>
+                                </li>
+                                <li class="nutrition" style="">
+                                    <h3>원산지정보</h3>
+                                    <input type="checkbox" id="btn_open02">
+                                    <label for="btn_open02">열기</label>
+                                    <p th:text="*{origin}"></p>
+                                </li>
+                            </ul>
+                            <div class="total">
+                                <div class="number-input">
+                                    <button type="button" class="count_minus" disabled>-</button>
+                                    <input type="number" pattern="\d*" min="0" max="2" class="" value="1">
+                                    <button type="button" class="count_plus">+</button>
+                                    <!--/* 아래 전체 금액 부분은 수량 바뀔 때마다 업데이트 */-->
+                                    <h3 th:text="${#numbers.formatDecimal(itemFormDTO.price, 3, 'COMMA', 0, 'POINT') + '원'}"></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn_area">
+                        <button type="button" class="on">주문하기</button>
+                    </div>
+                </div>
+            </div>
         </th:block>
 
     </div>
@@ -572,6 +636,74 @@
     <!--/* 메뉴 상세보기 부분 */-->
     <th:block th:if="${mode} == 'menuDetail'">
         <script>
+            // 수량 감소 눌렀을 때
+            $(".number-input .count_minus").on("click", function(){
+                // 최소는 1이어야 하고 만약 이제 1이 됐으면 disabled 추가해줘야 함
+
+                $(".number-input .count_plus").prop("disabled", false);
+
+                let now_count = $(".number-input input").val();
+                if(now_count <= 1){
+                    alert("최소 1개를 주문해야 합니다");
+                    return;
+                }
+
+                now_count--;
+                $(".number-input input").val(now_count);
+
+                if(now_count == 1){
+                    $(this).prop("disabled", true);
+                }
+            });
+
+            // 수량 증가 눌렀을 때
+            $(".number-input .count_plus").on("click", function(){
+                // 무조건 -버튼의 disabled 없애줘야 함
+                // 최대값은 50까지 할 것임. 이제 50이 됐으면 disabled 추가해줘야 함
+
+                $(".number-input .count_minus").prop("disabled", false);
+
+                let now_count = $(".number-input input").val();
+                if(now_count >= 50){
+                    alert("최대 50개까지 주문 가능합니다");
+                    return;
+                }
+
+                now_count++;
+                $(".number-input input").val(now_count);
+
+                if(now_count == 50){
+                    $(this).prop("disabled", true);
+                }
+            });
+
+            // 수량 부분 직접 복붙하거나 입력했을 때
+            $(".number-input input").on("change", function(){
+                let now_count = $(".number-input input").val();
+
+                if(now_count < 1){
+                    alert("최소 1개를 주문해야 합니다");
+                    now_count = 1;
+                    $(this).val(1);
+                }
+
+                if(now_count > 50){
+                    alert("최대 50개까지 주문 가능합니다");
+                    now_count = 50;
+                    $(this).val(50);
+                }
+
+                if(now_count == 1){
+                    $(".number-input .count_plus").prop("disabled", false);
+                    $(".number-input .count_minus").prop("disabled", true);
+                }else if(now_count == 50){
+                    $(".number-input .count_minus").prop("disabled", false);
+                    $(".number-input .count_plus").prop("disabled", true);
+                }else{
+                    $(".number-input .count_minus").prop("disabled", false);
+                    $(".number-input .count_plus").prop("disabled", false);
+                }
+            });
 
         </script>
 

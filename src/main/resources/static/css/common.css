@@ -85,6 +85,10 @@ input[type=radio]{
     margin-right: 10px;
 }
 
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 input {
     border: 0;
     padding: 0;
@@ -1616,6 +1620,217 @@ section::after {
     font-weight: 100;
 }
 
+.order_box .boxinner {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    -moz-column-gap: 40px;
+    column-gap: 40px;
+}
+
+.order_box .inform01 {
+
+}
+
+.order_box .inform01 > .photo {
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.order_box .inform01 > .photo img {
+    width: 100%;
+    height: auto;
+}
+
+.order_box .inform03 {
+    padding: 15px 0 30px;
+}
+
+.order_box .inform03 .price {
+    margin-bottom: 30px;
+}
+
+.order_box .inform03 ul {
+
+}
+
+.order_box .inform03 li {
+    line-height: 1.2;
+}
+
+.order_box .inform03 h2 {
+    font-size: 2.6rem;
+    font-weight: 500;
+}
+
+.order_box .inform03 .price li:nth-child(3) {
+    font-size: 2.4rem;
+    margin: 20px 0 0;
+}
+
+.order_box .inform03 .txt {
+    margin-bottom: 20px;
+}
+
+.order_box .inform03 .allergy, .order_box .inform03 .nutrition {
+    position: relative;
+    border-top: 1px solid #ebebeb;
+    padding: 10px 0;
+    line-height: 26px;
+}
+
+.order_box .inform03 h3 {
+    font-size: 18px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.order_box .inform03 .information .allergy #btn_open01 {
+    display: none;
+}
+
+.order_box .inform03 .information .allergy #btn_open01 + label {
+    font-size: 0;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.order_box .inform03 .information .allergy #btn_open01:checked + label {
+    position: absolute;
+    top: 15px;
+    right: 0;
+}
+
+.order_box .inform03 .information .allergy #btn_open01 + label:before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    margin-top: 5px;
+    display: inline-block;
+    border: solid #999;
+    border-width: 0 1px 1px 0;
+    transform: rotate(45deg);
+}
+
+.order_box .inform03 .information .allergy #btn_open01:checked + label:before {
+    content: "";
+    transform: rotate(-135deg);
+}
+
+.order_box .inform03 .information .allergy p {
+    display: none;
+}
+
+#btn_open01:checked ~ p {
+    display: block;
+}
+
+.order_box .inform03 .information .nutrition #btn_open02 {
+    display: none;
+}
+
+.order_box .inform03 .information .nutrition #btn_open02 + label {
+    font-size: 0;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.order_box .inform03 .information .nutrition #btn_open02:checked + label {
+    position: absolute;
+    top: 15px;
+    right: 0;
+}
+
+.order_box .inform03 .information .nutrition #btn_open02 + label:before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    margin-top: 5px;
+    display: inline-block;
+    border: solid #999;
+    border-width: 0 1px 1px 0;
+    transform: rotate(45deg);
+}
+
+.order_box .inform03 .information .nutrition #btn_open02:checked + label:before {
+    content: "";
+    transform: rotate(-135deg);
+}
+
+.order_box .inform03 .information .nutrition p {
+    display: none;
+}
+
+#btn_open02:checked ~ p {
+    display: block;
+}
+
+.order_box .inform03 > .total {
+    padding-top: 20px;
+    border-top: 3px solid #282828;
+}
+
+.order_box .inform03 > .total div {
+    padding-right: 10px;
+}
+
+.number-input button {
+    border-radius: 100px;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    font-size: 0;
+    display: inline-block;
+    transform: translate(0,-4px);
+}
+
+.number-input button:first-of-type {
+    background: url("/images/icon_minus.png") 0 0 no-repeat;
+    background-size: contain;
+}
+
+.number-input input {
+    margin: 1px 5px;
+    padding: 2px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 1.6rem;
+    width: 30px;
+}
+
+.number-input input:focus{
+    box-shadow: 0 0 3px #000;
+    border-radius: 5px;
+}
+
+.number-input input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+.number-input button:last-of-type {
+    background: url("/images/icon_plus.png") 0 0 no-repeat;
+    background-size: contain;
+}
+
+.number-input button:disabled {
+    opacity: 0.3;
+}
+
+.order_box .inform03 > .total h3 {
+    padding-right: 10px;
+    text-align: right;
+    float: right;
+}
 
 
 

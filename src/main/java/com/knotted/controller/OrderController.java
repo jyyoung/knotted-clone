@@ -2,10 +2,10 @@ package com.knotted.controller;
 
 import com.knotted.dto.CalendarDTO;
 import com.knotted.dto.DayInfoDTO;
-import com.knotted.entity.Item;
+import com.knotted.dto.ItemFormDTO;
 import com.knotted.entity.Store;
-import com.knotted.repository.ItemRepository;
 import com.knotted.repository.StoreRepository;
+import com.knotted.service.ItemService;
 import com.knotted.service.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ import java.util.List;
 public class OrderController {
 
     private final StoreRepository storeRepository;
-    private final ItemRepository itemRepository;
+    private final ItemService itemService;
     private final OrderService orderService;
 
     // 주문(예약) 메인으로 이동
@@ -45,12 +45,11 @@ public class OrderController {
         return store.getName();
     }
 
-    // 해당 상품 존재 여부를 확인하고 있으면 ItemName을 반환함
-    public String isItemExists(Long itemId){
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(EntityNotFoundException::new);
+    // 해당 상품 존재 여부를 확인하고 있으면 ItemFormDTO를 반환함 (이미지 정보도 있어야 함)
+    public ItemFormDTO isItemExists(Long itemId){
+        ItemFormDTO itemFormDTO = itemService.getItem(itemId);
 
-        return item.getName();
+        return itemFormDTO;
     }
 
     // 예약 - 매장선택 페이지로 이동
@@ -193,8 +192,8 @@ public class OrderController {
 
         // 해당 상품 존재 여부 확인
         try{
-            String itemName = this.isItemExists(itemId);
-            model.addAttribute("itemName", itemName);
+            ItemFormDTO itemFormDTO = this.isItemExists(itemId);
+            model.addAttribute("itemFormDTO", itemFormDTO);
         }catch(Exception e){
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다");
             return "redirect:/order/store-pick";
