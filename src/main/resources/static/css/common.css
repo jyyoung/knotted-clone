@@ -1538,6 +1538,85 @@ section::after {
     line-height: 1.6;
 }
 
+.order_box_wrap .category {
+    min-height: 30px;
+    padding: 10px;
+    border-bottom: 1px solid #DDD;
+    word-break: keep-all;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.order_box_wrap .category input[id*="category"] {
+    display: none;
+}
+
+.order_box_wrap .category input[id*="category"] + label {
+    padding: 0 15px;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    font-size: 1.4rem;
+}
+
+.order_box_wrap .category input[id*="category"]:checked + label {
+    border-radius: 50px;
+    border: 1px solid #282828;
+    display: inline-block;
+}
+
+.order_box_wrap .menulist {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    -moz-column-gap: 20px;
+    column-gap: 20px;
+    padding: 20px;
+}
+
+.order_box_wrap .menulist li {
+    text-align: center;
+    display: inline-grid;
+    margin-bottom: 20px;
+}
+
+.order_box_wrap .menulist li > a {
+    display: block;
+    cursor: pointer;
+}
+
+.order_box_wrap .menulist li > a > div {
+    background-color: #CCC;
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    padding-top: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.order_box_wrap .menulist li > a > div img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+}
+
+.order_box_wrap .menulist li > a > p {
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.order_box_wrap .menulist li > a > p:last-child {
+    font-weight: 100;
+}
+
+
 
 
 /* 주문(예약) 관련 부분 E */

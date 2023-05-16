@@ -82,8 +82,10 @@
             </div>
         </th:block>
 
-                    <!--/* 일자선택 부분 */-->
+        <!--/* 일자선택 부분 */-->
         <th:block th:if="${mode} == 'date'">
+
+            <input type="hidden" name="storeId" th:value="${storeId}">
 
             <div class="order_tab">
                 <ul class="tab_reserve">
@@ -198,185 +200,382 @@
 
         </th:block>
 
+        <!--/* 메뉴선택 부분 */-->
+        <th:block th:if="${mode} == 'menu'">
+
+            <input type="hidden" name="storeId" th:value="${storeId}">
+            <input type="hidden" name="bookDate" th:value="${bookDate}">
+            <input type="hidden" name="bookTime" th:value="${bookTime}">
+
+            <div class="order_tab">
+                <ul class="tab_reserve">
+                    <li>
+                        <a href="javascript:;" th:text="${storeName}"></a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">일자선택</a>
+                    </li>
+                    <li class="on">
+                        <a href="javascript:;">메뉴선택</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="order_box">
+                <div class="order_box_wrap">
+                    <div class="order_box_header">
+                        <div class="search_box">
+                            <input type="text" id="search_word">
+                            <button type="button">검색</button>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <input type="radio" name="category" id="category01" value="all" checked>
+                        <label for="category01" data-category="">전체</label>
+                        <input type="radio" name="category" id="category02" value="donut">
+                        <label for="category02" style="" data-category="donut">도넛</label>
+                        <input type="radio" name="category" id="category03" value="cake">
+                        <label for="category03" style="" data-category="cake">케이크</label>
+                        <input type="radio" name="category" id="category04" value="bakery">
+                        <label for="category04" style="" data-category="bakery">베이커리</label>
+                    </div>
+                    <ul class="menulist" id="category_items">
+                        <li v-for="item in items" :key="item.id" :data-id="item.id" class="item_link">
+                            <a class="go_menu_detail">
+                                <div>
+                                    <img :src="item.itemImageDTO.imageUrl" />
+                                </div>
+                                <p>{{ item.name }}</p>
+                                <p>{{ formatPrice(item.price) }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </th:block>
+
+        <!--/* 메뉴 상세보기 부분 */-->
+        <th:block th:if="${mode} == 'menuDetail'">
+
+        </th:block>
+
     </div>
 </th:block>
 
 <th:block layout:fragment="script">
+
     <script>
-
-        // Vue 인스턴스 생성 - 매장 리스트
-        const stores = new Vue({
-            el: "#stores",
-            data: {
-                stores: []
-            }
-        });
-
-        // Vue 인스턴스 생성 - 달력 정보
-        const calendar = new Vue({
-            el: "#calendar",
-            data: {
-                calendar: []
-            },
-            methods: {
-                // 현재 day 요소의 인덱스를 넣어 해당 인덱스가 첫번째로 활성화된 active인지 확인한다
-                findIndexOfActive(day){
-                    // 찾으면 인덱스 반환, 아니면 -1을 반환한다
-                    let index = this.calendar.days.findIndex(item => item.active === true);
-
-                    return index;
-                },
-                isActiveExists(){
-                    // 현재 연월에 active가 하나라도 존재하는지 확인한다 (-1이면 없는 것)
-                    return this.calendar.days.findIndex(item => item.active === true);
-                }
-            }
-        });
-
+        // 에러 메시지 출력
         $(document).ready(function(){
-            // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
-            loadSearchItems("");
-
-            // 페이지 로드 완료되면 바로 loadDatePickCalendar로 달력 정보 받아옴
-            loadDatePickCalendar(0, 0);
-        });
-
-        // 검색어로 매장 리스트 받아오는 함수
-        function loadSearchItems(searchWord){
-            let token = $("meta[name='_csrf']").attr("content");
-            let header = $("meta[name='_csrf_header']").attr("content");
-
-            $.ajax({
-                url: "/store/search",
-                method: "POST",
-                data: {
-                    searchWord: searchWord,
-                },
-                cache: false,
-                beforeSend: function(xhr){
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function(result, status){
-                    stores.stores = result;
-                },
-                error: function(jqXHR, status, error){
-                    alert(jqXHR.responseText);
-                }
-            });
-        }
-
-        // 검색 input 값 변화 시 다시 읽어오기
-        $("#search_word").on("change", function(){
-            let searchWord = $(this).val();
-
-            loadSearchItems(searchWord);
-        });
-
-        // 지도보기 시 네이버 지도에서 검색
-        $(".order_box_wrap").on("click", ".storelist .contents .map", function(){
-            let storeName = $(this).closest(".store_link").find(".store_name").html().trim();
-
-            window.open("https://map.naver.com/v5/search/" + storeName, "_blank");
-        });
-
-        // 매장설정하기 누르면 일자선택으로 간다
-        $(".order_box_wrap").on("click", ".storelist .go_date_pick", function(){
-            let storeId = $(this).closest(".store_link").data("id");
-
-            location.href = "/order/date-pick?storeId=" + storeId;
-        });
-
-        // 예약 날짜 중 예약 불가능한 날짜를 눌렀을 때
-        // timetable 클래스 내의 모든 input을 disabled한다
-        $(".reserve_wrap").on("click", ".reserve_date .days input[type=radio]:disabled + label", function(){
-            // 일단 선택했던 속성 제거해야 함
-            $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", true);
-        });
-
-        // 예약 날짜 중 예약 가능한 날짜를 눌렀을 때
-        $(".reserve_wrap").on("click", ".reserve_date .days input[type=radio]:enabled + label", function(){
-            $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", false);
-        });
-
-        // 예약 날짜 고르는 달력 받아오는 함수
-        function loadDatePickCalendar(year, month){
-
-            $.ajax({
-                url: "/order/date-pick/calendar?year=" + year + "&month=" + month,
-                method: "GET",
-                cache: false,
-                success: function(result, status){
-                    calendar.calendar = result;
-                    console.log(result);
-                    console.log(result.isActiveExists);
-                    if(result.activeExists === false){
-                        $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", true);
-                    }else{
-                        $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", false);
-                    }
-                },
-                error: function(jqXHR, status, error){
-                    alert(jqXHR.responseText);
-                }
-            });
-
-        }
-
-        // 예약 달력에서 이전, 다음 버튼 누를 때 다시 받아오게 하기
-        // 달력 이전 버튼
-        $(".reserve_wrap").on("click", ".reload_calendar_prev", function(){
-            // 이번 달 연월 받아옴
-            // let year = $("#calendar").data("year");
-            // let month = $("#calendar").data("month");
-            // 주의! 위와 같이 data()를 사용하면 jQuery와 Vue의 매커니즘이 다르기 때문에 계속 이전 값이 남아있게 된다. 그러므로 Vue의 데이터를 직접 사용해야 한다.
-            let year = calendar.calendar.year;
-            let month = calendar.calendar.month;
-
-            // 다음 달 연월 계산
-            if(month - 1 < 0){
-                year -= 1;
-                month = 11;
-            }else{
-                month--;
+            let errorMessage = "[[${errorMessage}]]";
+            if(errorMessage){
+                alert(errorMessage);
             }
-
-            // 선택되어 있는 checked 해제하기
-            $(".reserve_date .days input[type=radio]").prop("checked", false);
-
-            loadDatePickCalendar(year, month);
         });
-
-        // 달력 다음 버튼
-        $(".reserve_wrap").on("click", ".reload_calendar_next", function(){
-            // 이번 달 연월 받아옴
-            let year = calendar.calendar.year;
-            let month = calendar.calendar.month;
-
-            if(month + 1 > 11){
-                year += 1;
-                month = 0;
-            }else{
-                month++;
-            }
-
-            // 선택되어 있는 checked 해제하기
-            $(".reserve_date .days input[type=radio]").prop("checked", false);
-
-            loadDatePickCalendar(year, month);
-        });
-
-        // 예약시간 설정하기 누르면 메뉴선택으로 간다
-        $(".go_menu_pick").on("click", function(){
-            // 기존의 storeId와 함께 bookDate, bookTime을 넘겨줘야 함
-            let year = calendar.calendar.year;
-            let month = (calendar.calendar.month + 1).toString().padStart(2, '0'); // 앞에 0으로 채워서 두자리로 만듦
-            let day = $(".reserve_date .days input[type=radio]:checked + label").html().trim().padStart(2, '0');
-
-            // 일단 유효성 검사는 넘기고 선택된 날짜랑 시간 있는지 정도면 체크하도록 하겠다.
-
-        });
-
     </script>
+
+    <!--/* 매장선택 부분 */-->
+    <th:block th:if="${mode} == 'store'">
+        <script>
+
+            $(document).ready(function(){
+                // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
+                loadSearchItems("");
+            });
+
+            // Vue 인스턴스 생성 - 매장 리스트
+            const stores = new Vue({
+                el: "#stores",
+                data: {
+                    stores: []
+                }
+            });
+
+            // 검색어로 매장 리스트 받아오는 함수
+            function loadSearchItems(searchWord){
+                let token = $("meta[name='_csrf']").attr("content");
+                let header = $("meta[name='_csrf_header']").attr("content");
+
+                $.ajax({
+                    url: "/store/search",
+                    method: "POST",
+                    data: {
+                        searchWord: searchWord,
+                    },
+                    cache: false,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function(result, status){
+                        stores.stores = result;
+                    },
+                    error: function(jqXHR, status, error){
+                        alert(jqXHR.responseText);
+                    }
+                });
+            }
+
+            // 매장 검색 input 값 변화 시 다시 읽어오기
+            $("#search_word").on("change", function(){
+                let searchWord = $(this).val();
+
+                loadSearchItems(searchWord);
+            });
+
+            // 매장 지도보기 시 네이버 지도에서 검색
+            $(".order_box_wrap").on("click", ".storelist .contents .map", function(){
+                let storeName = $(this).closest(".store_link").find(".store_name").html().trim();
+
+                window.open("https://map.naver.com/v5/search/" + storeName, "_blank");
+            });
+
+            // 매장설정하기 누르면 일자선택으로 간다
+            $(".order_box_wrap").on("click", ".storelist .go_date_pick", function(){
+                let storeId = $(this).closest(".store_link").data("id");
+
+                location.href = "/order/date-pick?storeId=" + storeId;
+            });
+
+        </script>
+
+    </th:block>
+
+    <!--/* 일자선택 부분 */-->
+    <th:block th:if="${mode} == 'date'">
+        <script>
+
+            $(document).ready(function(){
+                // 페이지 로드 완료되면 바로 loadDatePickCalendar로 달력 정보 받아옴
+                loadDatePickCalendar(0, 0);
+            });
+
+            // Vue 인스턴스 생성 - 달력 정보
+            const calendar = new Vue({
+                el: "#calendar",
+                data: {
+                    calendar: []
+                },
+                methods: {
+                    // 현재 day 요소의 인덱스를 넣어 해당 인덱스가 첫번째로 활성화된 active인지 확인한다
+                    findIndexOfActive(day){
+                        // 찾으면 인덱스 반환, 아니면 -1을 반환한다
+                        let index = this.calendar.days.findIndex(item => item.active === true);
+
+                        return index;
+                    }
+                }
+            });
+
+            // 예약 날짜 중 예약 불가능한 날짜를 눌렀을 때
+            // timetable 클래스 내의 모든 input을 disabled한다
+            $(".reserve_wrap").on("click", ".reserve_date .days input[type=radio]:disabled + label", function(){
+                // 일단 선택했던 속성 제거해야 함
+                $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", true);
+            });
+
+            // 예약 날짜 중 예약 가능한 날짜를 눌렀을 때
+            $(".reserve_wrap").on("click", ".reserve_date .days input[type=radio]:enabled + label", function(){
+                $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", false);
+            });
+
+            // 예약 날짜 고르는 달력 받아오는 함수
+            function loadDatePickCalendar(year, month){
+
+                $.ajax({
+                    url: "/order/date-pick/calendar?year=" + year + "&month=" + month,
+                    method: "GET",
+                    cache: false,
+                    success: function(result, status){
+                        calendar.calendar = result;
+
+                        if(result.activeExists === false){
+                            $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", true);
+                        }else{
+                            $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", false);
+                        }
+                    },
+                    error: function(jqXHR, status, error){
+                        alert(jqXHR.responseText);
+                    }
+                });
+            }
+
+            // 예약 달력에서 이전, 다음 버튼 누를 때 다시 받아오게 하기
+            // 달력 이전 버튼
+            $(".reserve_wrap").on("click", ".reload_calendar_prev", function(){
+                // 이번 달 연월 받아옴
+                // let year = $("#calendar").data("year");
+                // let month = $("#calendar").data("month");
+                // 주의! 위와 같이 data()를 사용하면 jQuery와 Vue의 매커니즘이 다르기 때문에 계속 이전 값이 남아있게 된다. 그러므로 Vue의 데이터를 직접 사용해야 한다.
+                let year = calendar.calendar.year;
+                let month = calendar.calendar.month;
+
+                // 다음 달 연월 계산
+                if(month - 1 < 0){
+                    year -= 1;
+                    month = 11;
+                }else{
+                    month--;
+                }
+
+                // 선택되어 있는 checked 해제하기
+                $(".reserve_date .days input[type=radio]").prop("checked", false);
+
+                loadDatePickCalendar(year, month);
+            });
+
+            // 달력 다음 버튼
+            $(".reserve_wrap").on("click", ".reload_calendar_next", function(){
+                // 이번 달 연월 받아옴
+                let year = calendar.calendar.year;
+                let month = calendar.calendar.month;
+
+                if(month + 1 > 11){
+                    year += 1;
+                    month = 0;
+                }else{
+                    month++;
+                }
+
+                // 선택되어 있는 checked 해제하기
+                $(".reserve_date .days input[type=radio]").prop("checked", false);
+
+                loadDatePickCalendar(year, month);
+            });
+
+            // 예약시간 설정하기 누르면 메뉴선택으로 간다
+            $(".go_menu_pick").on("click", function(){
+                // 기존의 storeId와 함께 bookDate, bookTime을 넘겨줘야 함
+
+                let storeId = $("input[name='storeId']").val();
+
+                try{
+                    let year = calendar.calendar.year;
+                    let month = (calendar.calendar.month + 1).toString().padStart(2, '0'); // 앞에 0으로 채워서 두자리로 만듦
+                    let day = $(".reserve_date .days input[type='radio']:checked + label").html().trim().padStart(2, '0');
+                    let date = year + "-" + month + "-" + day;
+                    let time = $(".reserve_time input[name='time']:checked + label").html().trim() + ":00";
+
+                    // 일단 유효성 검사는 넘김
+
+                    location.href = "/order/menu-pick?storeId=" + storeId + "&bookDate=" + date + "&bookTime=" + time;
+
+                }catch(error){
+                    alert("날짜와 시간을 선택해주세요");
+                    return;
+                }
+            });
+
+        </script>
+    </th:block>
+
+    <!--/* 메뉴선택 부분 */-->
+    <th:block th:if="${mode} == 'menu'">
+        <script>
+
+            $(document).ready(function(){
+                // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
+                loadCategoryItems("all");
+            });
+
+            // Vue 인스턴스 생성 - 상품 리스트
+            const categoryItems = new Vue({
+                el: "#category_items",
+                data: {
+                    items: []
+                },
+                methods: {
+                    formatPrice(price){
+                        return price.toLocaleString();
+                    }
+                }
+            });
+
+            // 카테고리로 상품 리스트 받아오는 함수
+            function loadCategoryItems(category){
+                // 카테고리로 리스트 받아 옴
+                $.ajax({
+                    url: "/menu/category/" + category,
+                    method: "GET",
+                    data: {
+                        category: category,
+                    },
+                    cache: false,
+                    success: function(result, status){
+                        categoryItems.items = result;
+                    },
+                    error: function(jqXHR, status, error){
+                        alert(jqXHR.responseText);
+                    }
+                });
+            }
+
+            // 카테고리 및 검색어로 상품 리스트 받아오는 함수
+            function loadSearchItems(category, searchWord){
+
+                let token = $("meta[name='_csrf']").attr("content");
+                let header = $("meta[name='_csrf_header']").attr("content");
+
+                $.ajax({
+                    url: "/menu/search",
+                    method: "POST",
+                    data: {
+                        category: category,
+                        searchWord: searchWord,
+                    },
+                    cache: false,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function(result, status){
+                        categoryItems.items = result;
+                    },
+                    error: function(jqXHR, status, error){
+                        alert(jqXHR.responseText);
+                    }
+                });
+            }
+
+            // 카테고리 클릭 시 jQuery ajax + Vue.js로 화면에 뿌리기
+            $(".category label").on("click", function(){
+                let category = $(this).data("category");
+
+                if(!category){
+                    category = "all";
+                }
+
+                loadCategoryItems(category);
+            });
+
+            // 검색 input 값 변화 시 다시 읽어오기
+            $("#search_word").on("change", function(){
+                let category = $(".category input[name='category']:checked").val();
+                let searchWord = $(this).val();
+
+                loadSearchItems(category, searchWord);
+            });
+
+            $(".order_box").on("click", ".go_menu_detail", function(){
+                // 넘어갈 때 storeId, bookDate, bookTime, menuId(itemId) 필요함
+                let storeId = $("input[name='storeId']").val();
+                let bookDate = $("input[name='bookDate']").val();
+                let bookTime = $("input[name='bookTime']").val();
+                let itemId = $(this).closest(".item_link").data("id");
+
+                location.href = "/order/menu-pick-detail?storeId=" + storeId + "&bookDate=" + bookDate + "&bookTime=" + bookTime + "&itemId=" + itemId;
+            });
+
+        </script>
+    </th:block>
+
+    <!--/* 메뉴 상세보기 부분 */-->
+    <th:block th:if="${mode} == 'menuDetail'">
+        <script>
+
+        </script>
+
+    </th:block>
 
 </th:block>
 

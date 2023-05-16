@@ -2,8 +2,12 @@ package com.knotted.controller;
 
 import com.knotted.dto.CalendarDTO;
 import com.knotted.dto.DayInfoDTO;
+import com.knotted.entity.Item;
 import com.knotted.entity.Store;
+import com.knotted.repository.ItemRepository;
 import com.knotted.repository.StoreRepository;
+import com.knotted.service.OrderService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/order")
 @Controller
@@ -25,6 +28,8 @@ import java.util.Optional;
 public class OrderController {
 
     private final StoreRepository storeRepository;
+    private final ItemRepository itemRepository;
+    private final OrderService orderService;
 
     // 주문(예약) 메인으로 이동
     @GetMapping(value = {"", "/"})
@@ -32,41 +37,47 @@ public class OrderController {
         return "/order/index";
     }
 
+    // 해당 매장 존재 여부를 확인하고 있으면 StoreName을 반환함
+    public String isStoreExists(Long storeId){
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        return store.getName();
+    }
+
+    // 해당 상품 존재 여부를 확인하고 있으면 ItemName을 반환함
+    public String isItemExists(Long itemId){
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        return item.getName();
+    }
+
     // 예약 - 매장선택 페이지로 이동
     @GetMapping(value = "/store-pick")
     public String storePick(Model model){
-        String mode = "store";
-
-        model.addAttribute("mode", mode);
+        model.addAttribute("mode", "store");
         return "/order/orderSelect";
     }
     
     // 예약 - 일자선택 페이지로 이동
     @GetMapping(value = "/date-pick")
     public String datePick(@RequestParam("storeId") Long storeId, Model model){
-        String mode = "date";
-        model.addAttribute("mode", mode);
+        model.addAttribute("mode", "date");
+        model.addAttribute("storeId", storeId);
 
-        // storeId를 받아서 해당 storeId에 해당하는 매장이 있는지 확인한다.
-        if(storeId == null){
-            model.addAttribute("errorMessage", "잘못된 접근입니다");
-            return "/order/orderSelect";
+        // 해당 매장 존재 여부 확인
+        try{
+            String storeName = this.isStoreExists(storeId);
+            model.addAttribute("storeName", storeName);
+        }catch(Exception e){
+            model.addAttribute("errorMessage", "존재하지 않는 매장입니다");
+            return "redirect:/order/store-pick";
         }
-
-        Optional<Store> store = storeRepository.findById(storeId);
-        if(store.isEmpty()){
-            model.addAttribute("errorMessage", "선택하신 매장은 없는 매장입니다");
-            return "/order/orderSelect";
-        }
-
-        // 다른 값은 필요 없고 넘길 때 매장명만 넘기면 될 듯
-        // 옵셔널 객체는 값이 있을 수도 있고 없을 수도 있기 때문에 .get()으로 먼저 접근해줘야 한다
-        model.addAttribute("storeName", store.get().getName());
 
         // 여기서 달력 날짜도 계산해서 같이 넘겨주어야 한다.
         // 일단 오늘 날짜로부터 +2일 ~ +7일 총 6일간을 선택 가능하게 해야 하고,
         // 근데 이 부분은 REST로 설정하는 게 좋아 보인다
-        
 
         return "/order/orderSelect";
     }
@@ -144,11 +155,50 @@ public class OrderController {
 
     // 예약 - 메뉴선택 페이지로 이동
     @GetMapping(value = "/menu-pick")
-    public String menuPick(Model model){
-        String mode = "menu";
-        model.addAttribute("mode", mode);
+    public String menuPick(@RequestParam("storeId") Long storeId, @RequestParam("bookDate") String bookDate, @RequestParam("bookTime") String bookTime, Model model){ // 에러 메시지 전달용으로 세션을 사용하였다
+        model.addAttribute("mode", "menu");
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("bookDate", bookDate);
+        model.addAttribute("bookTime", bookTime);
 
-        
+        // 해당 매장 존재 여부 확인
+        try{
+            String storeName = this.isStoreExists(storeId);
+            model.addAttribute("storeName", storeName);
+        }catch(Exception e){
+            model.addAttribute("errorMessage", "존재하지 않는 매장입니다");
+            return "redirect:/order/store-pick";
+        }
+
+        return "/order/orderSelect";
+    }
+
+    // 예약 - 메뉴선택 메뉴 상세 페이지로 이동
+    @GetMapping(value = "/menu-pick-detail")
+    public String menuPickDetail(@RequestParam("storeId") Long storeId, @RequestParam("bookDate") String bookDate, @RequestParam("bookTime") String bookTime, @RequestParam("itemId") Long itemId, Model model){
+        model.addAttribute("mode", "menuDetail");
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("bookDate", bookDate);
+        model.addAttribute("bookTime", bookTime);
+        model.addAttribute("itemId", itemId);
+
+        // 해당 매장 존재 여부 확인
+        try{
+            String storeName = this.isStoreExists(storeId);
+            model.addAttribute("storeName", storeName);
+        }catch(Exception e){
+            model.addAttribute("errorMessage", "존재하지 않는 매장입니다");
+            return "redirect:/order/store-pick";
+        }
+
+        // 해당 상품 존재 여부 확인
+        try{
+            String itemName = this.isItemExists(itemId);
+            model.addAttribute("itemName", itemName);
+        }catch(Exception e){
+            model.addAttribute("errorMessage", "존재하지 않는 상품입니다");
+            return "redirect:/order/store-pick";
+        }
 
         return "/order/orderSelect";
     }
