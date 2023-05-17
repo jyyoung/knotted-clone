@@ -3,6 +3,7 @@ package com.knotted.controller;
 import com.knotted.dto.CartDTO;
 import com.knotted.dto.CartItemDTO;
 import com.knotted.service.CartService;
+import com.knotted.util.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequestMapping("/cart")
@@ -30,7 +30,11 @@ public class CartController {
         CartDTO cart = cartService.getCart(memberEmail);
         List<CartItemDTO> cartItemList = cartService.getCartItems(memberEmail);
 
-        model.addAttribute("cart", cart);
+        if(cart.getId() != null){
+            String reserveDate = TimeUtils.localDateTimeToString(cart.getReserveDate());
+            model.addAttribute("cart", cart);
+            model.addAttribute("reserveDate", reserveDate);
+        }
         model.addAttribute("cartItemList", cartItemList);
 
         return "/cart/index";
@@ -46,9 +50,9 @@ public class CartController {
         // 장바구니를 생성
         // 장바구니 상품 생성 (일단 무조건 하나씩이니까. 그리고 이미 있으면 기존 장바구니 상품에 count 추가하고)
         // 일단 예약일시를 합치고, LocalDateTime으로 변환한다
+        // 자주 쓰는 거라 TimeUtils 패키지에 메소드로 구현해놓았다.
         String reserveDateString = bookDate + " " + bookTime;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime reserveDate = LocalDateTime.parse(reserveDateString, formatter);
+        LocalDateTime reserveDate = TimeUtils.stringToLocalDateTime(reserveDateString);
 
         // 장바구니와 장바구니 생성을 하나의 Service 메소드에서 한다 (그래야 트랜잭션이 되니까)
         try {
@@ -84,6 +88,22 @@ public class CartController {
             }else{
                 return new ResponseEntity<Boolean>(true, HttpStatus.OK);
             }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // 장바구니 전체 비우기
+    @PostMapping(value = "/removeAll")
+    @ResponseBody
+    public ResponseEntity<Void> removeAll(Principal principal){
+        try {
+            String memberEmail = principal.getName();
+
+            // 장바구니 엔티티 삭제 (장바구니 상품은 cascade하게 지워짐)
+            cartService.removeCart(memberEmail);
+
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

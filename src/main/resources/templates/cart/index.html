@@ -16,11 +16,79 @@
         <h1>장바구니</h1>
 
         <div class="carttab">
-            <input type="radio" name="cart" id="cart02">
+            <input type="radio" name="cart" id="cart02" checked>
             <label for="cart02">예약</label>
-            <div class="date">노티드 청담점 2023-05-20 10:00:00
-                <button type="button">변경</button>
+            <div class="date" th:if="${cart != null}">
+                <span class="storeName" th:text="${cart.storeDTO.name + '점'}"></span>
+                <th:block th:text="${reserveDate}"></th:block>
+                <button type="button" class="store_change_button">변경</button>
             </div>
+        </div>
+
+        <div class="cartlist">
+            <ul>
+                <li>
+                    <ul>
+                        <li class="btn_delete">
+                            <button type="button">삭제</button>
+                        </li>
+                        <li class="name">
+                            <div>
+                                <img src="https://img-app.knotted-order.com/products/3/3.thumb?1680578577">
+                            </div>
+                            <h2>클래식 바닐라 도넛<p></p></h2>
+                        </li>
+                        <li class="number-input">
+                            <button type="button" disabled="">-</button>
+                            <input type="number" pattern="\d*" min="1">
+                            <button type="button">+</button>
+                            <h3>3,500원</h3>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li class="btn_delete">
+                            <button type="button">삭제</button>
+                        </li>
+                        <li class="name">
+                            <div>
+                                <img src="https://img-app.knotted-order.com/products/8/8.thumb?1681865902">
+                            </div>
+                            <h2>망고 스마일<p></p></h2>
+                        </li>
+                        <li class="number-input">
+                            <button type="button" disabled="">-</button>
+                            <input type="number" pattern="\d*" min="1">
+                            <button type="button">+</button>
+                            <h3>22,000원</h3>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="price">합계금액<span>25,500원</span></div>
+        </div>
+
+        <div class="btn_area" th:if="${cart != null}">
+            <button type="button" class="btn_list">예약상품추가</button>
+            <button type="button" class="on">결제하기</button>
+        </div>
+
+    </div>
+</th:block>
+
+<!--/* footer 아래에 들어갈 다이얼로그 박스 */-->
+<th:block layout:fragment="dialog">
+    <div class="dialogbox display_none">
+        <h1>알림
+            <button type="button" class="btn_close">닫기</button>
+        </h1>
+        <div class="msg">
+            <span>매장 변경 시 장바구니 내 주문 내역은 자동 삭제되며, 첫 화면으로 이동됩니다</span>
+        </div>
+        <div class="btn">
+            <button type="button" class="btn_left">닫기</button>
+            <button type="button" class="btn_right">확인</button>
         </div>
     </div>
 </th:block>
@@ -39,6 +107,56 @@
                 cartItems: []
             }
         });
+
+        // 다이얼로그 닫기 버튼 눌렀을 때
+        $(".dialogbox .btn_close").on("click", function(){
+            $(".dialogbox").addClass("display_none");
+        });
+
+        // 닫기 버튼을 눌렀을 때
+        $(".dialogbox .btn_left").on("click", function(){
+            $(".dialogbox").addClass("display_none");
+        });
+
+        // 확인 버튼을 눌렀을 때
+        $(".dialogbox .btn_right").on("click", function(){
+            // REST로 장바구니 내역 삭제 후 이동시키기
+            deleteAllCartItems();
+        });
+
+        // 매장 변경 버튼을 눌렀을 때
+        $(".store_change_button").on("click", function(){
+            $(".dialogbox").removeClass("display_none");
+        });
+
+        // 장바구니 전체 삭제 후 이동 함수
+        function deleteAllCartItems(){
+            // 장바구니에 담기
+            $.ajax({
+                url: "/cart/removeAll",
+                method: "POST",
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (result, status) {
+                    // 성공 시 이동시킨다
+                    location.href = "/order/store-pick";
+                },
+                error: function (jqXHR, status, error) {
+                    if(jqXHR.status == "500"){
+                        alert("장바구니 전체 삭제 중 에러가 발생했습니다");
+                    }else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        }
+
+        // 장바구니 상품 하나 삭제하는 함수
+        function deleteCartItem(){
+
+        }
 
     </script>
 

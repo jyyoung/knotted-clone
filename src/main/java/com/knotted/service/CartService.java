@@ -3,6 +3,7 @@ package com.knotted.service;
 import com.knotted.dto.CartDTO;
 import com.knotted.dto.CartItemDTO;
 import com.knotted.dto.ItemDTO;
+import com.knotted.dto.StoreDTO;
 import com.knotted.entity.*;
 import com.knotted.repository.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -132,12 +133,31 @@ public class CartService {
         return cartItemDTOList;
     }
 
+    // 장바구니 정보에 매장 정보 얹어서 반환
     public CartDTO getCart(String memberEmail){
         Member member = memberRepository.findByEmail(memberEmail);
         Cart cart = cartRepository.findByMember(member);
-        CartDTO cartDTO = CartDTO.of(cart);
+
+        CartDTO cartDTO = new CartDTO();
+        if(cart != null){
+            cartDTO = CartDTO.of(cart);
+            cartDTO.setStoreDTO(StoreDTO.of(cart.getStore()));
+        }
 
         return cartDTO;
+    }
+
+    // 해당 회원의 장바구니와 장바구니 상품을 전부 삭제함
+    public void removeCart(String memberEmail){
+        Member member = memberRepository.findByEmail(memberEmail);
+        Cart cart = cartRepository.findByMember(member);
+
+        cartRepository.delete(cart);
+    }
+
+    // 해당 회원의 장바구니 상품을 하나 삭제함
+    public void removeCartItem(){
+
     }
 
 }

@@ -331,6 +331,20 @@
     </div>
 </th:block>
 
+<!--/* footer 아래에 들어갈 다이얼로그 박스 */-->
+<th:block layout:fragment="dialog">
+    <div class="dialogbox display_none">
+        <h1>알림
+            <button type="button" class="btn_close">닫기</button>
+        </h1>
+        <div class="msg">해당 상품을 장바구니에 담았습니다.</div>
+        <div class="btn">
+            <button type="button" class="btn_left">더 담기</button>
+            <button type="button" class="btn_right">장바구니 가기</button>
+        </div>
+    </div>
+</th:block>
+
 <th:block layout:fragment="script">
 
     <script>
@@ -884,20 +898,6 @@
 
     </th:block>
 
-</th:block>
-
-<!--/* footer 아래에 들어갈 다이얼로그 박스 */-->
-<th:block layout:fragment="dialog">
-    <div class="dialogbox display_none">
-        <h1>알림
-            <button type="button" class="btn_close">닫기</button>
-        </h1>
-        <div class="msg">해당 상품을 장바구니에 담았습니다.</div>
-        <div class="btn">
-            <button type="button" class="btn_left">더 담기</button>
-            <button type="button" class="btn_right">장바구니 가기</button>
-        </div>
-    </div>
 </th:block>
 
 </html>

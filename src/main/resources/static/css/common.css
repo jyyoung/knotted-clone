@@ -1906,6 +1906,206 @@ section::after {
 
 /* 주문(예약) 관련 부분 E */
 
+/* 장바구니 부분 S */
+
+.carttab {
+    width: 100%;
+    min-height: 63px;
+}
+
+.carttab input[id*="cart"] {
+    display: none;
+}
+
+.carttab input[id*="cart"] + label {
+    text-align: center;
+    float: left;
+    background-color: #ebebeb;
+    cursor: pointer;
+    height: 44px;
+    line-height: 44px;
+    font-weight: 500;
+    border-bottom: 3px solid #f1e4ab;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.carttab input[id*="cart"]:checked + label {
+    display: inline-block;
+    background-color: #f1e4ab;
+}
+
+.carttab:after {
+    content: "";
+    clear: both;
+}
+
+.cart_null {
+    text-align: center;
+    padding: 150px 0;
+    background: url(/images/smile.png) center 50px;
+    background-size: 80px auto;
+    background-repeat: no-repeat;
+}
+
+.cart_null p {
+    font-weight: 300;
+    color: #999;
+    font-size: 14px;
+}
+
+.carttab input[id="cart02"]:checked ~ .date {
+    display: block;
+}
+
+.carttab > .date {
+    line-height: 50px;
+    text-indent: 20px;
+    margin: 15px 10px;
+    border-radius: 100px;
+    background-color: #FFF;
+}
+
+.carttab > .date .storeName{
+    margin-right: 5px;
+    color: #ffa0c5;
+    font-weight: 500;
+}
+
+.carttab > div {
+    content: "";
+    clear: both;
+    display: none;
+}
+
+.carttab > .date button {
+    padding: 5px 15px 3px;
+    background-color: #ffa0c5;
+    color: #FFF;
+    border-radius: 50px;
+    font-weight: 300;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.cartlist > ul {
+    border-top: 1px solid #999;
+}
+
+.cartlist > ul > li {
+    border-bottom: 1px solid #ebebeb;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+.cartlist > ul > li > ul {
+    margin: 10px 40px;
+    height: auto;
+    min-height: 50px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 60% auto 50px;
+    align-items: center;
+}
+
+.cartlist > ul > li > ul > li {
+    float: left;
+    position: relative;
+    vertical-align: middle;
+    height: 50px;
+}
+
+.cartlist > ul > li > ul > li.btn_delete {
+    width: 50px;
+}
+
+.cartlist > ul > li > ul > li:nth-child(1) {
+    order: 3;
+}
+
+.cartlist > ul > li > ul > li.btn_delete button {
+    background: url(/images/close_button_2.png) center center no-repeat;
+    background-size: 15px auto;
+    width: 50px;
+    height: 50px;
+    font-size: 0;
+}
+
+.cartlist > ul > li > ul > li.name {
+    line-height: 25px;
+    display: grid;
+    grid-template-columns: 70px auto;
+    align-items: center;
+}
+
+.cartlist > ul > li > ul > li:nth-child(2) {
+    order: 1;
+}
+
+.cartlist > ul > li > ul > li.name div {
+    background: url(/images/smile.png) #ebebeb 0 0 no-repeat;
+    background-size: cover;
+    border-radius: 100px;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-right: 20px;
+}
+
+.cartlist > ul > li > ul > li.name div img {
+    width: 100%;
+}
+
+.cartlist > ul > li > ul > li.name h2 {
+    font-size: 1.8rem;
+}
+
+.cartlist > ul > li > ul > li.name h2 p {
+    font-size: 1.4rem;
+    color: #999;
+}
+
+.cartlist > ul > li > ul > li.number-input {
+    line-height: 50px;
+}
+
+.cartlist > ul > li > ul > li:nth-child(3) {
+    order: 2;
+}
+
+.number-input button:after {
+    content: "";
+    clear: both;
+}
+
+.cartlist > ul > li > ul > li.number-input input {
+    width: 40px;
+    margin: 0;
+    background-color: inherit;
+}
+
+.cartlist > ul > li > ul > li.number-input h3 {
+    float: right;
+    font-weight: 500;
+    margin-right: 20px;
+}
+
+.cartlist > .price {
+    text-align: right;
+    padding: 10px 40px 20px 40px;
+}
+
+.cartlist > .price span {
+    font-weight: 500;
+    font-size: 2.4rem;
+    margin-left: 20px;
+    text-indent: 36px;
+}
+
+/* 장바구니 부분 E */
+
 /* 브랜드 부분 S */
 
 .business {
