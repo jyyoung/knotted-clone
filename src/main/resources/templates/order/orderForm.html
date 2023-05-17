@@ -14,9 +14,81 @@
 <th:block layout:fragment="content">
     <div class="container">
         <h1>결제</h1>
+
+        <div class="orderlist">
+            <div class="store">주문매장 : 노티드 안국</div>
+            <div class="store">주문일자 : 2023-05-19 15:30:00</div>
+            <button type="button" style="" class="package_select">포장선택</button>
+            <h2>주문내역</h2>
+            <ul class="box box04">
+                <li>
+                    <div></div>
+                    <h3>규격포장</h3>
+                </li>
+                <li>
+                    <ul>
+                        <li>얼그레이 도넛</li>
+                        <li>1개</li>
+                        <li>3,500</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="paylist">
+<!--            <h2>쿠폰-->
+<!--                <button type="button">쿠폰적용</button>-->
+<!--            </h2>-->
+            <h2>적립금 <span>보유적립금 0원</span></h2>
+            <input type="number" class="cash" disabled="" placeholder="1,000원 이상 시 사용 가능합니다">
+            <button type="button" disabled="">전액사용</button>
+            <div class="paperbag">
+                <ul>
+                    <li class="name">
+                        <h2>종이쇼핑백</h2>
+                    </li>
+                    <li class="number-input">
+                        <button type="button">-</button>
+                        <input type="number" pattern="\d*" min="0" value="1">
+                        <button type="button">+</button>
+                        <h3>300</h3>
+                    </li>
+                </ul>
+                <p>종이쇼핑백 구매 원치않을 경우 박스만 제공됩니다.</p>
+            </div>
+            <ul class="pay">
+                <li>주문금액</li>
+                <li>116,300원</li>
+<!--                <li>쿠폰할인</li>-->
+<!--                <li>0원</li>-->
+                <li>적립금 사용</li>
+                <li>0원</li>
+                <li>결제금액</li>
+                <li>116,300원</li>
+            </ul>
+            <div class="notice notice_reserve">
+                <h2>예약주문시 유의사항</h2>
+                <p>- 픽업시 예약자명과 예약자의 전화 번호를 말씀해주세요.</p>
+                <p>- 예약 취소는 예약일 당일을 제외한 픽업일 2일 전까지 가능합니다.</p>
+                <p>- 주문 내역 확인은 [예약 내역 확인]에서 확인 하실 수 있습니다.</p>
+                <p>- 제품 품질 유지를 위해 예약 시간 1시간 경과 시 상품은 폐기됩니다. (환불 및 픽업일 변경 불가)</p>
+            </div>
+            <div class="btn_area">
+                <button type="button" class="on">결제하기</button>
+            </div>
+        </div>
+
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script>
+        $(".container").on("click", ".package_select", function(){
+            alert("현재 포장선택은 지원하지 않습니다");
+            return;
+        });
+
+    </script>
+</th:block>
 
 </html>

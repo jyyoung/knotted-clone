@@ -1,6 +1,7 @@
 package com.knotted.dto;
 
 import com.knotted.constant.MemberRole;
+import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data
@@ -23,6 +24,12 @@ public class MemberDTO {
 
     // 주소
     private String address;
+
+    // 총 구매금액
+    private Long purchase;
+
+    // 적립금
+    private Long reward;
 
     // 회원 등급
     private MemberRole memberRole;

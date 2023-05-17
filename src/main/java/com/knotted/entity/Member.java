@@ -39,6 +39,14 @@ public class Member extends BaseEntity{
     @Column(name = "member_address")
     private String address;
 
+    // 총 구매금액
+    @Column(name = "member_purchase")
+    private Long purchase;
+
+    // 적립금
+    @Column(name = "member_reward")
+    private Long reward;
+
     // 회원 등급
     // 기본값으로 USER를 줄 거고 ADMIN은 별도로 가입하게 할 예정
     @Column(name = "member_role")
@@ -55,6 +63,8 @@ public class Member extends BaseEntity{
         member.setName(memberFormDTO.getName());
         member.setPostcode(memberFormDTO.getPostcode());
         member.setAddress(memberFormDTO.getAddress());
+        member.setPurchase(0L);
+        member.setReward(0L);
         member.setMemberRole(MemberRole.USER);
 //        member.setMemberRole(MemberRole.ADMIN); // 일단 테스트를 위해 ADMIN 롤로 가입
 

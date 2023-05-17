@@ -126,6 +126,10 @@ button {
     font-size: 1em;
 }
 
+button:disabled{
+    color: #999;
+}
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -2116,6 +2120,213 @@ section::after {
 }
 
 /* 장바구니 부분 E */
+
+/* 결제(주문) 부분 S */
+
+.orderlist {
+    width: calc(50% - 121px);
+    padding: 0 60px;
+    float: left;
+}
+
+.orderlist > .store {
+    background-color: #ebebeb;
+    border-radius: 50px;
+    padding: 15px 36px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.orderlist > button {
+    width: 100%;
+    padding: 15px 0;
+    border-radius: 50px;
+    text-align: center;
+    background: #FFDB7E;
+    color: #282828;
+}
+
+.orderlist > h2 {
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.orderlist > h2:first-of-type {
+    margin-top: 50px;
+}
+
+.orderlist > .box, .orderdetail > .box {
+    width: 100%;
+    display: inline-block;
+    margin: 15px 0;
+}
+
+.orderlist > .box li, .orderdetail > .box li {
+    line-height: 24px;
+}
+
+.orderlist > .box > li:first-child, .orderdetail > .box > li:first-child {
+    margin-bottom: 5px;
+}
+
+.orderlist > .box li > div, .orderdetail > .box li > div {
+    float: left;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.orderlist > .box04 li > div, .orderdetail > .box04 li > div {
+    background-color: #CCC;
+    border-radius: 100px;
+    background-size: 30px 30px;
+}
+
+.box04 li > h3 {
+    color: #999;
+}
+
+.orderlist > .box li > h3, .orderdetail > .box li > h3 {
+    line-height: 24px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.orderlist > .box li:after, .orderdetail > .box li:after {
+    content: "";
+    clear: both;
+}
+
+.orderlist > .box li > ul, .orderdetail > .box li > ul {
+    padding-left: 34px;
+    display: grid;
+    grid-template-columns: auto 50px 100px;
+}
+
+.orderlist > .box li > ul > li, .orderdetail > .box li > ul > li {
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.orderlist > .box li > ul > li:nth-child(1), .orderdetail > .box li > ul > li:nth-child(1) {
+    text-align: left;
+}
+
+.paylist {
+    width: calc(50% - 120px);
+    padding: 0 60px;
+    float: right;
+    padding-bottom: 50px;
+    border-left: 1px solid #DDD;
+}
+
+.paylist h2 {
+    font-weight: 500;
+    height: 42px;
+    line-height: 42px;
+}
+
+.paylist > button, .paylist > h2 > button {
+    background-color: #ebebeb;
+    border: 1px solid #DDD;
+    width: 100px;
+    height: 42px;
+    float: right;
+    font-size: 14px;
+}
+
+.paylist h2 > span {
+    color: #ffa0c5;
+    margin-left: 10px;
+}
+
+.paylist > .cash {
+    width: calc(100% - 110px);
+    height: 40px;
+    border: 1px solid #DDD;
+    text-indent: 10px;
+}
+
+.paylist > .cash:disabled {
+    color: #DDD;
+    content: "zzz";
+}
+
+.paylist .paperbag {
+    border-top: 1px solid #ccc;
+    margin: 20px 0 0;
+    padding-top: 20px;
+}
+
+.paylist .paperbag ul {
+    display: grid;
+    grid-template-columns: 100px auto;
+    line-height: 45px;
+    margin-bottom: 10px;
+}
+
+.paylist .paperbag .number-input {
+    text-align: right;
+}
+
+.paylist .paperbag h3 {
+    float: right;
+    width: 100px;
+}
+
+.paylist p {
+    font-size: 85%;
+}
+
+.paylist > .pay {
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0;
+    margin: 25px 0 10px;
+    display: inline-block;
+}
+
+.paylist > .pay li {
+    width: 50%;
+    height: 36px;
+    line-height: 36px;
+    display: block;
+}
+
+.paylist > .pay li:nth-child(2n-1) {
+    float: left;
+}
+
+.paylist > .pay li:nth-child(2n) {
+    float: right;
+    text-align: right;
+}
+
+.paylist > .pay::after {
+    content: "";
+    clear: both;
+}
+
+.paylist > .notice {
+
+}
+
+.paylist > .notice p {
+    margin-bottom: 7px;
+}
+
+
+
+
+/* 결제(주문) 부분 E */
 
 /* 브랜드 부분 S */
 
