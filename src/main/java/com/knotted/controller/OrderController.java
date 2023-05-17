@@ -15,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -225,6 +222,14 @@ public class OrderController {
     @GetMapping(value = "/pay")
     public String payForm(Model model){
         return "/order/orderForm";
+    }
+
+    // 주문 결제 처리
+    @PostMapping(value = "/new")
+    @ResponseBody
+    public ResponseEntity<Void> orderSubmit(){
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

@@ -47,7 +47,7 @@
                     <li class="number-input">
                         <button type="button">-</button>
                         <input type="number" pattern="\d*" min="0" value="1">
-                        <button type="button">+</button>
+                        <button type="button" disabled>+</button>
                         <h3>300</h3>
                     </li>
                 </ul>
@@ -69,19 +69,81 @@
                 <p>- 제품 품질 유지를 위해 예약 시간 1시간 경과 시 상품은 폐기됩니다. (환불 및 픽업일 변경 불가)</p>
             </div>
             <div class="btn_area">
-                <button type="button" class="on">결제하기</button>
+                <button type="button" class="on pay_button">결제하기</button>
             </div>
         </div>
 
     </div>
 </th:block>
 
+<th:block layout:fragment="dialog">
+    <div class="dialogbox display_none">
+        <h1>알림
+            <button type="button" class="btn_close">닫기</button>
+        </h1>
+        <div class="msg">
+            <span>노티드 송리단길 2023-05-19 12:00:00 의 예약을 결제하시겠습니까?</span>
+        </div>
+        <div class="btn">
+            <button type="button" class="btn_left">닫기</button>
+            <button type="button" class="btn_right">확인</button>
+        </div>
+    </div>
+</th:block>
+
 <th:block layout:fragment="script">
     <script>
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        // 포장선택 클릭 시
         $(".container").on("click", ".package_select", function(){
             alert("현재 포장선택은 지원하지 않습니다");
             return;
         });
+
+        // 결제하기 클릭 시
+        $(".container").on("click", ".pay_button", function(){
+            $(".dialogbox").removeClass("display_none");
+        });
+
+        // 다이얼로그 닫기 버튼 눌렀을 때
+        $(".dialogbox .btn_close, .dialogbox .btn_left").on("click", function(){
+            $(".dialogbox").addClass("display_none");
+        });
+
+        // 확인 버튼을 눌렀을 때
+        $(".dialogbox .btn_right").on("click", function(){
+
+            // 결제(주문) 처리
+            orderSubmit();
+        });
+
+        function orderSubmit(){
+            $.ajax({
+                url: "/order/new",
+                method: "POST",
+                data: {
+
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    console.log(result);
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == "500"){
+                        alert("주문 처리에 실패했습니다");
+                        return;
+                    }else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        }
 
     </script>
 </th:block>
