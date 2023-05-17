@@ -55,7 +55,7 @@ public class CartController {
             return new ResponseEntity<>("장바구니 담기 중 에러가 발생했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<>("장바구니 상품 추가 " + reserveDate, HttpStatus.OK);
+        return new ResponseEntity<>("success" + reserveDate, HttpStatus.OK);
     }
 
     // 장바구니에서 상품을 제거함

@@ -30,6 +30,20 @@ public class CartItem extends BaseEntity{
     @Column(name = "item_count")
     private Long count;
 
+    // CartItem 엔티티 생성 메소드
+    public static CartItem createCartItem(Cart cart, Item item, Long count){
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+
+        return cartItem;
+    }
+
+    // 장바구니에 있는 상품 수량을 증가시키는 메소드
+    public void addCount(Long count){
+        this.count += count;
+    }
 }
 
 

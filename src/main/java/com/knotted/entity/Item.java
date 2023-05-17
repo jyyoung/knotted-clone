@@ -25,6 +25,10 @@ public class Item extends BaseEntity{
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<StoreItem> storeItems = new ArrayList<>();
 
+    // 장바구니 상품 엔티티와 일대다로 매핑
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CartItem> cartItems = new ArrayList<>();
+
     // 상품 카테고리
     @Column(name = "item_category")
     private String category;

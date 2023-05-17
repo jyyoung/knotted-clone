@@ -803,7 +803,6 @@
                 let count = $("input[name='itemCount']").val();
 
                 // 일단 장바구니에 담기 전, 내 장바구니가 기존에 있으면 그 장바구니의 매장과 같은지 확인한다
-
                 $.ajax({
                     url: "/cart/storeCheck",
                     method: "GET",
@@ -813,19 +812,15 @@
                     cache: false,
                     success: function (result, status) {
                         // 성공 시
-                        if(result === true){ // 기존 장바구니에 없음
-
+                        if(result === true){ // 기존 장바구니가 없거나 기존 장바구니의 매장과 추가할 매장이 다름
                             // 바로 장바구니에 담기
                             addToCart(count);
-                        }else{
-
+                        }else{ // 기존 장바구니가 있음
                             let confirm_text = confirm("기존 장바구니에 담긴 매장과 다릅니다. 장바구니를 비우고 새로 담으시겠습니까? (기존 매장에서 추가하실 경우 장바구니 페이지에서 예약상품추가를 이용해주세요)");
 
                             if(confirm_text){
                                 addToCart(count);
                             }
-
-                            // 취소인 경우 아무것도 안 함
                         }
                     },
                     error: function (jqXHR, status, error) {
@@ -853,18 +848,56 @@
                         xhr.setRequestHeader(header, token);
                     },
                     success: function (result, status) {
-                        console.log(result);
+                        // 성공 시 dialogbox를 띄운다.
+
+                        $(".dialogbox").removeClass("display_none");
                     },
                     error: function (jqXHR, status, error) {
-                        alert(jqXHR.responseText);
+                        if(jqXHR.status == "500"){
+                            alert("장바구니 담기 중 에러가 발생했습니다");
+                        }else{
+                            alert(jqXHR.responseText);
+                        }
                     }
                 });
             }
+
+            // 다이얼로그 닫기 버튼 눌렀을 때
+            $(".dialogbox .btn_close").on("click", function(){
+                $(".dialogbox").addClass("display_none");
+            });
+
+            // 더 담기 버튼을 눌렀을 때
+            $(".dialogbox .btn_left").on("click", function(){
+                // 다시 아래와 같은 주소로 가야 함
+                // http://localhost:8888/order/menu-pick?storeId=1&bookDate=2023-05-19&bookTime=13:30:00
+                location.href  = "/order/menu-pick?storeId=" + storeId + "&bookDate=" + bookDate + "&bookTime=" + bookTime;
+            });
+
+            // 장바구니 가기 버튼을 눌렀을 때
+            $(".dialogbox .btn_right").on("click", function(){
+                location.href = "/cart";
+            });
+
 
         </script>
 
     </th:block>
 
+</th:block>
+
+<!--/* footer 아래에 들어갈 다이얼로그 박스 */-->
+<th:block layout:fragment="dialog">
+    <div class="dialogbox display_none">
+        <h1>알림
+            <button type="button" class="btn_close">닫기</button>
+        </h1>
+        <div class="msg">해당 상품을 장바구니에 담았습니다.</div>
+        <div class="btn">
+            <button type="button" class="btn_left">더 담기</button>
+            <button type="button" class="btn_right">장바구니 가기</button>
+        </div>
+    </div>
 </th:block>
 
 </html>

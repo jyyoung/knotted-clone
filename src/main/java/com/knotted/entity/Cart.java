@@ -37,6 +37,16 @@ public class Cart extends BaseEntity{
     // 예약 일자
     @Column(name = "reserve_date")
     private LocalDateTime reserveDate;
+
+    // Cart 엔티티 생성 메소드
+    public static Cart createCart(Member member, Store store, LocalDateTime reserveDate){
+        Cart cart = new Cart();
+        cart.setMember(member);
+        cart.setStore(store);
+        cart.setReserveDate(reserveDate);
+
+        return cart;
+    }
 }
 
 
