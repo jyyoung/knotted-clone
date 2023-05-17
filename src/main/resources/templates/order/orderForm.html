@@ -16,8 +16,8 @@
         <h1>결제</h1>
 
         <div class="orderlist">
-            <div class="store">주문매장 : 노티드 안국</div>
-            <div class="store">주문일자 : 2023-05-19 15:30:00</div>
+            <div class="store" th:text="${'주문매장 : ' + cart.storeDTO.name}"></div>
+            <div class="store" th:text="${'주문일자 : ' + reserveDate}"></div>
             <button type="button" style="" class="package_select">포장선택</button>
             <h2>주문내역</h2>
             <ul class="box box04">
@@ -25,18 +25,18 @@
                     <div></div>
                     <h3>규격포장</h3>
                 </li>
-                <li>
-                    <ul>
-                        <li>얼그레이 도넛</li>
-                        <li>1개</li>
-                        <li>3,500</li>
+                <li th:each="cartItem : ${cartItemList}">
+                    <ul th:object="${cartItem}">
+                        <li th:text="*{itemDTO.name}"></li>
+                        <li th:text="*{count + '개'}"></li>
+                        <li th:text="${#numbers.formatDecimal(cartItem.itemDTO.price * cartItem.count, 3, 'COMMA', 0, 'POINT')}"></li>
                     </ul>
                 </li>
             </ul>
         </div>
 
         <div class="paylist">
-            <h2>적립금 <span>보유적립금 0원</span></h2>
+            <h2>적립금 <span th:text="${'보유적립금 ' + member.reward + '원'}"></span></h2>
             <input type="number" class="cash" disabled="" placeholder="1,000원 이상 시 사용 가능합니다">
             <button type="button" disabled="">전액사용</button>
             <div class="paperbag">
@@ -45,13 +45,13 @@
                         <h2>종이쇼핑백</h2>
                     </li>
                     <li class="number-input">
-                        <button type="button">-</button>
-                        <input type="number" pattern="\d*" min="0" value="1">
-                        <button type="button" disabled>+</button>
+                        <button type="button" class="count_minus">-</button>
+                        <input type="number" pattern="\d*" min="0" value="1" class="paperbag_count" readonly>
+                        <button type="button" class="count_plus" disabled>+</button>
                         <h3>300</h3>
                     </li>
                 </ul>
-                <p>종이쇼핑백 구매 원치않을 경우 박스만 제공됩니다.</p>
+                <p>종이쇼핑백 구매를 원치않을 경우 박스만 제공됩니다.</p>
             </div>
             <ul class="pay">
                 <li>주문금액</li>
@@ -82,7 +82,7 @@
             <button type="button" class="btn_close">닫기</button>
         </h1>
         <div class="msg">
-            <span>노티드 송리단길 2023-05-19 12:00:00 의 예약을 결제하시겠습니까?</span>
+            <span th:text="${cart.storeDTO.name + ' ' + reserveDate}" class="pay_confirm_text"></span>의 예약을 결제하시겠습니까?
         </div>
         <div class="btn">
             <button type="button" class="btn_left">닫기</button>
@@ -120,6 +120,27 @@
             orderSubmit();
         });
 
+        // 종이쇼핑백 제거 버튼
+        $(".number-input .count_minus").on("click", function(){
+            $(".paperbag_count").val(0);
+
+            $(this).prop("disabled", true);
+            $(".number-input .count_plus").prop("disabled", false);
+        });
+
+        // 종이쇼핑백 추가 버튼
+        $(".number-input .count_plus").on("click", function(){
+            $(".paperbag_count").val(1);
+
+            $(this).prop("disabled", true);
+            $(".number-input .count_minus").prop("disabled", false);
+        });
+
+        // 전체 금액 계산 함수
+        function totalPrice(){
+
+        }
+
         function orderSubmit(){
             $.ajax({
                 url: "/order/new",
@@ -133,6 +154,9 @@
                 },
                 success: function(result, status){
                     console.log(result);
+
+                    // 결제 완료 시 주문해주셔서 감사합니다. 3초 뒤 메인 페이지로 이동합니다로 이동하기
+                    location.href = "/order/complete";
                 },
                 error: function(jqXHR, status, error){
                     if(jqXHR.status == "500"){

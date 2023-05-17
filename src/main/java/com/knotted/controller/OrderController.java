@@ -1,14 +1,15 @@
 package com.knotted.controller;
 
-import com.knotted.dto.CalendarDTO;
-import com.knotted.dto.DayInfoDTO;
-import com.knotted.dto.ItemFormDTO;
-import com.knotted.dto.StoreItemDTO;
+import com.knotted.dto.*;
+import com.knotted.entity.Member;
 import com.knotted.entity.Store;
+import com.knotted.repository.MemberRepository;
 import com.knotted.repository.StoreRepository;
+import com.knotted.service.CartService;
 import com.knotted.service.ItemService;
 import com.knotted.service.OrderService;
 import com.knotted.service.StoreItemService;
+import com.knotted.util.TimeUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -26,10 +28,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
 
+    private final MemberRepository memberRepository;
     private final StoreRepository storeRepository;
     private final ItemService itemService;
     private final StoreItemService storeItemService;
     private final OrderService orderService;
+    private final CartService cartService;
 
     // 주문(예약) 메인으로 이동
     @GetMapping(value = {"", "/"})
@@ -220,7 +224,25 @@ public class OrderController {
     // 결제(주문) 페이지로 이동
     // 주문이긴 하지만 Cart의 서비스 등을 끌어쓸 일이 많기에 Cart 쪽에 작성하였다.
     @GetMapping(value = "/pay")
-    public String payForm(Model model){
+    public String orderForm(Model model, Principal principal){
+        // 장바구니에 상품이 없으면 /order/store-pick으로 보내기
+        String memberEmail = principal.getName();
+
+        Member member = memberRepository.findByEmail(memberEmail);
+        MemberDTO memberDTO = MemberDTO.of(member);
+        CartDTO cartDTO = cartService.getCart(memberEmail);
+        String reserveDate = TimeUtils.localDateTimeToString(cartDTO.getReserveDate());
+
+        List<CartItemDTO> cartItemDTOList = cartService.getCartItems(memberEmail);
+        model.addAttribute("member", memberDTO);
+        model.addAttribute("cartItemList", cartItemDTOList);
+        model.addAttribute("cart", cartDTO);
+        model.addAttribute("reserveDate", reserveDate);
+
+        if(cartItemDTOList.size() == 0){
+            return "redirect:/order/store-pick";
+        }
+
         return "/order/orderForm";
     }
 
@@ -230,6 +252,12 @@ public class OrderController {
     public ResponseEntity<Void> orderSubmit(){
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 주문 완료 안내 페이지로 이동
+    @GetMapping(value = "/complete")
+    public String complete(){
+        return "/order/complete";
     }
 
 }

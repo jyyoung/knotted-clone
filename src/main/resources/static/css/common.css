@@ -1980,6 +1980,7 @@ section::after {
     margin-right: 5px;
     color: #ffa0c5;
     font-weight: 500;
+    font-size: 2rem;
 }
 
 .carttab > div {
@@ -2323,6 +2324,11 @@ section::after {
     margin-bottom: 7px;
 }
 
+.dialogbox .msg .pay_confirm_text{
+    color: #ffa0c5;
+    font-weight: 500;
+}
+
 /* 결제(주문) 부분 E */
 
 /* 브랜드 부분 S */
@@ -2440,6 +2446,10 @@ section::after {
 .mypage_point li span {
     font-weight: 500;
     color: #ffa0c5;
+}
+
+.mypage_point li.go_myscore{
+    cursor: pointer;
 }
 
 .mypage .list:before {

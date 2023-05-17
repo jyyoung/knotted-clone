@@ -1,8 +1,9 @@
 package com.knotted.dto;
 
 import com.knotted.constant.MemberRole;
-import jakarta.persistence.Column;
+import com.knotted.entity.Member;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 @Data
 public class MemberDTO {
@@ -33,4 +34,12 @@ public class MemberDTO {
 
     // 회원 등급
     private MemberRole memberRole;
+
+    // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    // 엔티티 -> DTO 변환
+    public static MemberDTO of(Member member){
+        return modelMapper.map(member, MemberDTO.class);
+    }
 }
