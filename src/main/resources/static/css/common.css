@@ -2323,9 +2323,6 @@ section::after {
     margin-bottom: 7px;
 }
 
-
-
-
 /* 결제(주문) 부분 E */
 
 /* 브랜드 부분 S */
@@ -2396,6 +2393,102 @@ section::after {
 }
 
 /* 브랜드 부분 E */
+
+/* 마이페이지 부분 S */
+
+.mypage {
+    padding-top: 10%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.mypage h1 {
+    text-align: center;
+    padding-top: 0;
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+
+.mypage h1 span {
+    font-weight: 500;
+    font-size: 2em;
+}
+
+.mypage h1 .grade {
+    color: #ffa0c5;
+    margin-right: 10px;
+}
+
+.mypage h1 .name:after {
+    content: "님";
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-left: 5px;
+}
+
+.mypage_point {
+    margin-bottom: 10px;
+    border-top: 3px solid #CCC;
+}
+
+.mypage_point li {
+    border-bottom: 1px solid #CCC;
+    padding: 15px;
+    line-height: 20px;
+}
+
+.mypage_point li span {
+    font-weight: 500;
+    color: #ffa0c5;
+}
+
+.mypage .list:before {
+    content: "";
+    float: none;
+}
+
+.mypage .list ul {
+    border: 1px solid #DDD;
+    border-radius: 10px;
+    /* background-color: rgba(255,255,255,0.8); */
+    padding: 0 0 10px;
+}
+
+.mypage .list ul li {
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    text-indent: 15px;
+}
+
+.mypage .list ul li.list_title {
+    font-weight: 500;
+    border-top: 1px solid #DDD;
+    margin-top: 10px;
+    padding-top: 10px;
+    color: #999;
+}
+
+.mypage .list ul li:first-child {
+    border-top: 0;
+    margin-top: 0;
+}
+
+.mypage .list ul li a {
+    display: block;
+}
+
+.mypage .list ul li:last-child {
+    border-bottom: 0;
+}
+
+.mypage .list ul:after {
+    content: "";
+    clear: both;
+}
+
+
+/* 마이페이지 부분 E */
 
 /* 공통 푸터 부분 S */
 

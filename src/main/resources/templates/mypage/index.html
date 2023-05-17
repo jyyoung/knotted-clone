@@ -8,10 +8,43 @@
 
 <th:block layout:fragment="content">
     <div class="container">
-        <h1>마이페이지</h1>
+        <div class="mypage">
+            <div class="mypage_list">
+                <h1><span class="grade">옐로우스마일</span><span class="name">황정민</span></h1>
+                <ul class="mypage_point">
+                    <li class="go_myscore">
+                        <span>150,000</span>원을 더 구매하시면, 내년 등급은 <span>핑크스마일</span>입니다.
+                    </li>
+                    <li>
+                        사용 가능한 적립금은 <span>0</span>원 입니다.
+                    </li>
+                </ul>
+                <div class="list">
+                    <ul>
+                        <li class="list_title">회원정보</li>
+                        <li><a th:href="@{/member/before-modify}">회원정보수정</a></li>
+                        <li><a th:href="@{/mypage/bookmark}">찜 리스트</a></li>
+                        <li class="list_title">나의 주문</li>
+                        <li><a th:href="@{/order/list}">예약내역</a></li>
+                        <li class="list_title">고객센터</li>
+                        <li><a th:href="@{/board/notice}">공지사항</a></li>
+                        <li><a th:href="@{/board/event}">이벤트</a></li>
+                        <li><a th:href="@{/board/faq}">자주묻는질문</a></li>
+                        <li><a th:href="@{/board/qna}">1:1문의</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script>
+        $(".go_myscore").on("click", function(){
+            location.href = "/mypage/myscore";
+        });
+    </script>
+
+</th:block>
 
 </html>

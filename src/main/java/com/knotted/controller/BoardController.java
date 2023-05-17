@@ -15,9 +15,10 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {"/notice", "/faq", "/qna", "/event"})
     public String showBoard(Model model){
         return "/board/index";
     }
+
 
 }
