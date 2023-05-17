@@ -1,9 +1,6 @@
 package com.knotted.service;
 
-import com.knotted.dto.CartDTO;
-import com.knotted.dto.CartItemDTO;
-import com.knotted.dto.ItemDTO;
-import com.knotted.dto.StoreDTO;
+import com.knotted.dto.*;
 import com.knotted.entity.*;
 import com.knotted.repository.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,6 +22,7 @@ public class CartService {
     private final StoreRepository storeRepository;
     private final ItemRepository itemRepository;
     private final ItemService itemService;
+    private final StoreItemService storeItemService;
 
     // 회원 이메일 및 매장 ID로 Cart 찾는다. 있으면 해당 Cart의 매장 ID와 비교한다
     // 장바구니가 없거나 해당 매장 ID와 같은 경우 true 반환, 아니면 false 반환
@@ -124,8 +122,19 @@ public class CartService {
             ItemDTO itemDTO = itemService.convertToItemDTO(cartItem.getItem());
 
             CartItemDTO cartItemDTO = new CartItemDTO();
+            cartItemDTO.setId(cartItem.getId());
             cartItemDTO.setItemDTO(itemDTO);
             cartItemDTO.setCount(cartItem.getCount());
+
+            // 해당 매장 상품의 재고량을 확인하여 cartItemDTO에 넣을 것이다.
+            StoreItemDTO storeItemDTO = storeItemService.getStoreItemByStoreIdAndItemId(cart.getStore().getId(), itemDTO.getId());
+            cartItemDTO.setStock(storeItemDTO.getStock());
+
+            // 만약 현재 담겨있는 값이 매장 상품에 있는 재고량보다 많을 경우, changeCount로 최대 재고량까지만 담을 수 있게 업데이트한다
+            if(cartItem.getCount() > storeItemDTO.getStock()){
+                cartItem.updateCount(storeItemDTO.getStock());
+                cartItemDTO.setCount(cartItem.getCount());
+            }
 
             cartItemDTOList.add(cartItemDTO);
         }
@@ -148,7 +157,7 @@ public class CartService {
     }
 
     // 해당 회원의 장바구니와 장바구니 상품을 전부 삭제함
-    public void removeCart(String memberEmail){
+    public void deleteCart(String memberEmail){
         Member member = memberRepository.findByEmail(memberEmail);
         Cart cart = cartRepository.findByMember(member);
 
@@ -156,7 +165,54 @@ public class CartService {
     }
 
     // 해당 회원의 장바구니 상품을 하나 삭제함
-    public void removeCartItem(){
+    public void deleteCartItem(String memberEmail, Long cartItemId){
+        // 해당 장바구니 상품이 요청한 회원의 것인지 확인
+        // 회원의 Cart
+        Member member = memberRepository.findByEmail(memberEmail);
+        Cart cart = cartRepository.findByMember(member);
+
+        // 요청한 장바구니 상품의 Cart
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+        Cart savedCart = cartItem.getCart();
+
+        // 두 객체를 비교하여 다르면 IllegalStateException을 던진다
+        if(!cart.equals(savedCart)){
+            throw new IllegalStateException("다른 회원의 장바구니를 수정할 수 없습니다");
+        }
+
+        // 정상적이라면 장바구니 상품을 삭제한다
+        cartItemRepository.delete(cartItem);
+
+        // 삭제 후 장바구니 상품이 하나도 없을 경우 해당 회원의 장바구니도 삭제한다
+        // 여기까지 왔다는 건 위의 Cart가 회원의 것이란 것이므로
+        List<CartItem> cartItemList = cartItemRepository.findAllByCart(cart);
+
+        // 만약 해당 회원의 장바구니 상품이 하나도 없으면 해당 회원의 장바구니도 삭제한다
+        if(cartItemList.size() == 0){
+            cartRepository.delete(cart);
+        }
+    }
+
+    // 해당 회원의 장바구니 상품 개수 변경
+    public void changeCount(String memberEmail, Long cartItemId, Long count){
+        // 해당 장바구니 상품이 요청한 회원의 것인지 확인
+        // 회원의 Cart
+        Member member = memberRepository.findByEmail(memberEmail);
+        Cart cart = cartRepository.findByMember(member);
+
+        // 요청한 장바구니 상품의 Cart
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+        Cart savedCart = cartItem.getCart();
+
+        // 두 객체를 비교하여 다르면 IllegalStateException을 던진다
+        if(!cart.equals(savedCart)){
+            throw new IllegalStateException("다른 회원의 장바구니를 수정할 수 없습니다");
+        }
+
+        // 정상적이라면 업데이트한다
+        cartItem.updateCount(count);
 
     }
 

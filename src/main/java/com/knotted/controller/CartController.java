@@ -80,12 +80,20 @@ public class CartController {
     }
 
     // 장바구니에서 상품을 제거함
-    @PostMapping(value = "/remove")
+    @PostMapping(value = "/delete")
     @ResponseBody
-    public ResponseEntity<String> removeFromCart(@RequestParam("cartId") Long cartId, @RequestParam("cartItemId") Long cartItemId){
+    public ResponseEntity<String> deleteFromCart(@RequestParam("cartItemId") Long cartItemId, Principal principal){
+        // 삭제하는 게 본인 것인지 확인해야 함
+        try {
+            String memberEmail = principal.getName();
+            cartService.deleteCartItem(memberEmail, cartItemId);
 
-        return new ResponseEntity<>("장바구니 상품 제거", HttpStatus.OK);
-
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // 장바구니에 담기 전 기존 장바구니의 매장과 같은지 확인
@@ -107,16 +115,34 @@ public class CartController {
     }
 
     // 장바구니 전체 비우기
-    @PostMapping(value = "/removeAll")
+    @PostMapping(value = "/deleteAll")
     @ResponseBody
-    public ResponseEntity<Void> removeAll(Principal principal){
+    public ResponseEntity<Void> deleteAll(Principal principal){
         try {
             String memberEmail = principal.getName();
 
             // 장바구니 엔티티 삭제 (장바구니 상품은 cascade하게 지워짐)
-            cartService.removeCart(memberEmail);
+            cartService.deleteCart(memberEmail);
 
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // 장바구니 상품 개수 변경
+    @PostMapping(value = "/changeCount")
+    @ResponseBody
+    public ResponseEntity<Void> changeCount(@RequestParam("cartItemId") Long cartItemId, @RequestParam("count") Long count, Principal principal){
+        // 바꾸는 게 본인 것인지 확인해야 함
+
+        try {
+            String memberEmail = principal.getName();
+            cartService.changeCount(memberEmail, cartItemId, count);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

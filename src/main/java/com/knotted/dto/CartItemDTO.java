@@ -17,4 +17,7 @@ public class CartItemDTO {
     // 상품 수량
     private Long count;
 
+    // 해당 매장 상품의 재고량
+    private Long stock;
+
 }

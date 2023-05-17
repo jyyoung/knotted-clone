@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
 <head>
@@ -27,10 +26,10 @@
 
         <div class="cartlist" id="cartItems" th:if="${cart != null}">
             <ul>
-                <li v-for="cartItem in cartItems" :key="cartItem.id" :data-id="cartItem.id">
+                <li v-for="cartItem in cartItems" :key="cartItem.id" :data-id="cartItem.id" class="cartItem">
                     <ul>
                         <li class="btn_delete">
-                            <button type="button">삭제</button>
+                            <button type="button" class="delete_cart_item">삭제</button>
                         </li>
                         <li class="name">
                             <div>
@@ -39,9 +38,9 @@
                             <h2>{{ cartItem.itemDTO.name }}<p></p></h2>
                         </li>
                         <li class="number-input">
-                            <button type="button">-</button>
-                            <input type="number" pattern="\d*" min="1" :value="cartItem.count">
-                            <button type="button">+</button>
+                            <button type="button" class="count_minus" :disabled="cartItem.count === 1">-</button>
+                            <input type="number" pattern="\d*" min="1" :value="cartItem.count" class="item_count" readonly>
+                            <button type="button" class="count_plus" :disabled="cartItem.count === cartItem.stock">+</button>
                             <h3>{{ formatPrice(cartItem.itemDTO.price * cartItem.count) + '원' }}</h3>
                         </li>
                     </ul>
@@ -89,109 +88,188 @@
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
 
-        // Vue 인스턴스 생성 - 장바구니 상품 리스트
-        const cartItems = new Vue({
-            el: "#cartItems",
-            data: {
-                cartItems: [],
-                totalPrice: 0
-            },
-            methods: {
-                formatPrice(price){
-                    return price.toLocaleString();
-                }
-            }
-        });
-
-        $(document).ready(function(){
-            // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
-            loadCartItems();
-        });
-
-        // 장바구니 상품 리스트 받아오는 함수
-        function loadCartItems(){
-            $.ajax({
-                url: "/cart",
-                method: "POST",
-                cache: false,
-                beforeSend: function(xhr){
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function(result, status){
-                    cartItems.cartItems = result;
-                    // 전체 금액 합산해서 업데이트하기
-
-                    let total = 0;
-                    // forEach문으로 합산하겠다.
-                    cartItems.cartItems.forEach(function(cartItem){
-                        total += cartItem.itemDTO.price * cartItem.count;
-                    });
-
-                    // 전체 금액을 Vue 객체에 넣어서 업데이트
-                    cartItems.totalPrice = total;
-                },
-                error: function(jqXHR, status, error){
-                    alert(jqXHR.responseText);
-                }
-            });
-        }
-
-        // 다이얼로그 닫기 버튼 눌렀을 때
-        $(".dialogbox .btn_close").on("click", function(){
-            $(".dialogbox").addClass("display_none");
-        });
-
-        // 닫기 버튼을 눌렀을 때
-        $(".dialogbox .btn_left").on("click", function(){
-            $(".dialogbox").addClass("display_none");
-        });
-
-        // 확인 버튼을 눌렀을 때
-        $(".dialogbox .btn_right").on("click", function(){
-            // REST로 장바구니 내역 삭제 후 이동시키기
-            deleteAllCartItems();
-        });
-
-        // 매장 변경 버튼을 눌렀을 때
-        $(".store_change_button").on("click", function(){
-            $(".dialogbox").removeClass("display_none");
-        });
-
-        // 장바구니 전체 삭제 후 이동 함수
-        function deleteAllCartItems(){
-            // 장바구니에 담기
-            $.ajax({
-                url: "/cart/removeAll",
-                method: "POST",
-                cache: false,
-                beforeSend: function(xhr){
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (result, status) {
-                    // 성공 시 이동시킨다
-                    location.href = "/order/store-pick";
-                },
-                error: function (jqXHR, status, error) {
-                    if(jqXHR.status == "500"){
-                        alert("장바구니 전체 삭제 중 에러가 발생했습니다");
-                    }else{
-                        alert(jqXHR.responseText);
-                    }
-                }
-            });
-        }
-
-        // 장바구니 상품 하나 삭제하는 함수
-        function deleteCartItem(){
-
-        }
-
     </script>
 
     <!--/* 장바구니가 있을 때만 */-->
     <th:block th:if="${cart != null}">
 
         <script>
+
+            // Vue 인스턴스 생성 - 장바구니 상품 리스트
+            const cartItems = new Vue({
+                el: "#cartItems",
+                data: {
+                    cartItems: [],
+                    totalPrice: 0
+                },
+                methods: {
+                    formatPrice(price){
+                        return price.toLocaleString();
+                    }
+                }
+            });
+
+            $(document).ready(function(){
+                // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
+                loadCartItems();
+            });
+
+            // 장바구니 상품 리스트 받아오는 함수
+            function loadCartItems(){
+                $.ajax({
+                    url: "/cart",
+                    method: "POST",
+                    cache: false,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function(result, status){
+                        cartItems.cartItems = result;
+                        // 전체 금액 합산해서 업데이트하기
+
+                        let total = 0;
+                        // forEach문으로 합산하겠다.
+                        cartItems.cartItems.forEach(function(cartItem){
+                            total += cartItem.itemDTO.price * cartItem.count;
+                        });
+
+                        // 전체 금액을 Vue 객체에 넣어서 업데이트
+                        cartItems.totalPrice = total;
+                    },
+                    error: function(jqXHR, status, error){
+                        alert(jqXHR.responseText);
+                    }
+                });
+            }
+
+            // 다이얼로그 닫기 버튼 눌렀을 때
+            $(".dialogbox .btn_close, .dialogbox .btn_left").on("click", function(){
+                $(".dialogbox").addClass("display_none");
+            });
+
+            // 확인 버튼을 눌렀을 때
+            $(".dialogbox .btn_right").on("click", function(){
+                // REST로 장바구니 내역 삭제 후 이동시키기
+                deleteAllCartItems();
+            });
+
+            // 매장 변경 버튼을 눌렀을 때
+            $(".store_change_button").on("click", function(){
+                $(".dialogbox").removeClass("display_none");
+            });
+
+            // 장바구니 전체 삭제 후 이동 함수
+            function deleteAllCartItems(){
+                // 장바구니에 담기
+                $.ajax({
+                    url: "/cart/deleteAll",
+                    method: "POST",
+                    cache: false,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (result, status) {
+                        // 성공 시 이동시킨다
+                        location.href = "/order/store-pick";
+                    },
+                    error: function (jqXHR, status, error) {
+                        if(jqXHR.status == "500"){
+                            alert("장바구니 전체 삭제 중 에러가 발생했습니다");
+                        }else{
+                            alert(jqXHR.responseText);
+                        }
+                    }
+                });
+            }
+
+            // 장바구니 상품 하나 삭제하는 함수
+            function deleteCartItem(cartItemId){
+
+                $.ajax({
+                    url: "/cart/delete",
+                    method: "POST",
+                    data: {
+                        cartItemId: cartItemId,
+                    },
+                    cache: false,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (result, status) {
+                        // 성공했으면 다시 로드한다
+                        loadCartItems();
+                    },
+                    error: function (jqXHR, status, error) {
+                        if(jqXHR.status == "400"){
+                            alert("다른 회원의 장바구니를 수정할 수 없습니다");
+                        }else if(jqXHR.status == "500"){
+                            alert("장바구니 상품 삭제 중 에러가 발생했습니다");
+                        }else{
+                            alert(jqXHR.responseText);
+                        }
+                    }
+                });
+
+            }
+
+            // 장바구니 상품 수정하는 함수
+            function updateCount(cartItemId, count){
+
+                $.ajax({
+                    url: "/cart/changeCount",
+                    method: "POST",
+                    data: {
+                        cartItemId: cartItemId,
+                        count: count,
+                    },
+                    cache: false,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (result, status) {
+                        // 성공했으면 다시 로드한다
+                        loadCartItems();
+                    },
+                    error: function (jqXHR, status, error) {
+                        if(jqXHR.status == "400"){
+                            alert("다른 회원의 장바구니를 수정할 수 없습니다");
+                        }else if(jqXHR.status == "500"){
+                            alert("장바구니 상품 수량 변경 중 에러가 발생했습니다");
+                        }else{
+                            alert(jqXHR.responseText);
+                        }
+                    }
+                });
+
+            }
+
+            // 장바구니 상품 개수 감소 버튼
+            $(".cartlist").on("click", ".count_minus", function(){
+                let cartItemId = $(this).closest(".cartItem").data("id");
+                let count = $(this).closest(".number-input").find(".item_count").val();
+                count--;
+                updateCount(cartItemId, count);
+            });
+
+            // 장바구니 상품 개수 증가 버튼
+            $(".cartlist").on("click", ".count_plus", function(){
+                let cartItemId = $(this).closest(".cartItem").data("id");
+                let count = $(this).closest(".number-input").find(".item_count").val();
+                count++;
+                updateCount(cartItemId, count);
+            });
+
+            // 장바구니 상품 삭제 버튼 눌렀을 때
+            $(".cartlist").on("click", ".delete_cart_item", function(){
+                let cartItemId = $(this).closest(".cartItem").data("id");
+
+                let confirmText = confirm("정말 삭제하시겠습니까?");
+
+                if(confirmText){
+                    deleteCartItem(cartItemId);
+                }
+            });
+
             // 예약상품추가 눌렀을 때
             $(".add_cart_item").on("click", function(){
                 // http://localhost:8888/order/menu-pick?storeId=2&bookDate=2023-05-19&bookTime=10:00:00
@@ -211,6 +289,7 @@
             $(".go_pay").on("click", function(){
                 location.href = "/order/pay";
             });
+
         </script>
 
     </th:block>
