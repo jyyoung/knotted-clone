@@ -1,5 +1,6 @@
 package com.knotted.controller;
 
+import com.knotted.dto.CartDTO;
 import com.knotted.dto.CartItemDTO;
 import com.knotted.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/cart")
@@ -24,8 +24,13 @@ public class CartController {
 
     // 장바구니 메인 및 리스트 조회
     @GetMapping(value = {"", "/"})
-    public String main(Model model){
-        List<CartItemDTO> cartItemList = new ArrayList<>();
+    public String main(Model model, Principal principal){
+        String memberEmail = principal.getName();
+
+        CartDTO cart = cartService.getCart(memberEmail);
+        List<CartItemDTO> cartItemList = cartService.getCartItems(memberEmail);
+
+        model.addAttribute("cart", cart);
         model.addAttribute("cartItemList", cartItemList);
 
         return "/cart/index";
@@ -45,11 +50,10 @@ public class CartController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime reserveDate = LocalDateTime.parse(reserveDateString, formatter);
 
-        String memberEmail = principal.getName();
-
         // 장바구니와 장바구니 생성을 하나의 Service 메소드에서 한다 (그래야 트랜잭션이 되니까)
-
         try {
+            String memberEmail = principal.getName();
+
             cartService.addToCart(memberEmail, storeId, itemId, reserveDate, count);
         } catch (Exception e) {
             return new ResponseEntity<>("장바구니 담기 중 에러가 발생했습니다", HttpStatus.INTERNAL_SERVER_ERROR);

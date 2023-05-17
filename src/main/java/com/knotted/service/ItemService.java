@@ -66,7 +66,8 @@ public class ItemService {
     }
 
     // 상품 엔티티를 DTO로 변환 (이 과정에서 상품 이미지 DTO도 상품 DTO에 넣음)
-    private ItemDTO convertToItemDTO(Item item){
+    // CartService에서도 쓸 거라 private에서 public으로 바꿔줌
+    public ItemDTO convertToItemDTO(Item item){
         ItemDTO itemDTO = ItemDTO.of(item);
         // 해당 Item로 ItemImage를 찾아내서 추가한다
         ItemImage itemImage = itemImageRepository.findByItemId(item.getId()); // 상품 이미지 엔티티 조회

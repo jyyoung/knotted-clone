@@ -4,14 +4,44 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
     <div class="container">
         <h1>장바구니</h1>
+
+        <div class="carttab">
+            <input type="radio" name="cart" id="cart02">
+            <label for="cart02">예약</label>
+            <div class="date">노티드 청담점 2023-05-20 10:00:00
+                <button type="button">변경</button>
+            </div>
+        </div>
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+
+    <script>
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        // Vue 인스턴스 생성 - 장바구니 상품 리스트
+        const cartItems = new Vue({
+            el: "#cartItems",
+            data: {
+                cartItems: []
+            }
+        });
+
+    </script>
+
+</th:block>
 
 </html>

@@ -47,6 +47,11 @@ public class Cart extends BaseEntity{
 
         return cart;
     }
+
+    // 예약일시 변경 메소드
+    public void updateReserveDate(LocalDateTime reserveDate){
+        this.reserveDate = reserveDate;
+    }
 }
 
 
