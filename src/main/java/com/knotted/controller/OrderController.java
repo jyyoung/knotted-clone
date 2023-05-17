@@ -15,7 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -215,6 +218,13 @@ public class OrderController {
 
         Long stock = storeItemDTO.getStock();
         return new ResponseEntity(stock, HttpStatus.OK);
+    }
+
+    // 결제(주문) 페이지로 이동
+    // 주문이긴 하지만 Cart의 서비스 등을 끌어쓸 일이 많기에 Cart 쪽에 작성하였다.
+    @GetMapping(value = "/pay")
+    public String payForm(Model model){
+        return "/order/orderForm";
     }
 
 }

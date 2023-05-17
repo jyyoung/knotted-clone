@@ -55,8 +55,8 @@
         </div>
 
         <div class="btn_area" th:if="${cart != null}">
-            <button type="button" class="btn_list">예약상품추가</button>
-            <button type="button" class="on">결제하기</button>
+            <button type="button" class="btn_list add_cart_item">예약상품추가</button>
+            <button type="button" class="on go_pay">결제하기</button>
         </div>
 
         <div class="cart_null" th:if="${cart == null}">
@@ -187,6 +187,33 @@
         }
 
     </script>
+
+    <!--/* 장바구니가 있을 때만 */-->
+    <th:block th:if="${cart != null}">
+
+        <script>
+            // 예약상품추가 눌렀을 때
+            $(".add_cart_item").on("click", function(){
+                // http://localhost:8888/order/menu-pick?storeId=2&bookDate=2023-05-19&bookTime=10:00:00
+                // 위와 같은 주소로 이동해야 함
+
+                let storeId = "[[${cart.storeDTO.id}]]";
+                let reserveDate = "[[${reserveDate}]]";
+                let dates = reserveDate.split(" ");
+                let bookDate = dates[0];
+                let bookTime = dates[1];
+
+                location.href = "/order/menu-pick?storeId=" + storeId + "&bookDate=" + bookDate + "&bookTime=" + bookTime;
+
+            });
+
+            // 결제하기 눌렀을 때
+            $(".go_pay").on("click", function(){
+                location.href = "/order/pay";
+            });
+        </script>
+
+    </th:block>
 
 </th:block>
 

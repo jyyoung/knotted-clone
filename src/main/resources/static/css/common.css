@@ -152,6 +152,12 @@ table {
     font-size: 1em;
 }
 
+.btn_area button.btn_list {
+    background: #EEE;
+    border: 1px solid #DDD;
+    color: #666;
+}
+
 header{
     width: 100%;
     height: 60px;
