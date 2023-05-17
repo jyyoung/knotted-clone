@@ -2081,7 +2081,7 @@ section::after {
 }
 
 .cartlist > ul > li > ul > li.number-input input {
-    width: 40px;
+    width: 33px;
     margin: 0;
     background-color: inherit;
 }
@@ -2092,9 +2092,14 @@ section::after {
     margin-right: 20px;
 }
 
+.cartlist > ul > li:last-child {
+    border-bottom: 1px solid #999;
+}
+
 .cartlist > .price {
     text-align: right;
     padding: 10px 40px 20px 40px;
+    padding-top: 15px;
 }
 
 .cartlist > .price span {

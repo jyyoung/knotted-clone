@@ -28,16 +28,29 @@ public class CartController {
         String memberEmail = principal.getName();
 
         CartDTO cart = cartService.getCart(memberEmail);
-        List<CartItemDTO> cartItemList = cartService.getCartItems(memberEmail);
 
         if(cart.getId() != null){
             String reserveDate = TimeUtils.localDateTimeToString(cart.getReserveDate());
             model.addAttribute("cart", cart);
             model.addAttribute("reserveDate", reserveDate);
         }
-        model.addAttribute("cartItemList", cartItemList);
 
         return "/cart/index";
+    }
+
+    // 장바구니 리스트 조회
+    @PostMapping(value = {"", "/"})
+    @ResponseBody
+    public ResponseEntity<List<CartItemDTO>> getCartItems(Principal principal){
+        try {
+            String memberEmail = principal.getName();
+
+            List<CartItemDTO> cartItemList = cartService.getCartItems(memberEmail);
+
+            return new ResponseEntity<>(cartItemList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // 장바구니에 상품을 추가한다

@@ -25,53 +25,42 @@
             </div>
         </div>
 
-        <div class="cartlist">
+        <div class="cartlist" id="cartItems" th:if="${cart != null}">
             <ul>
-                <li>
+                <li v-for="cartItem in cartItems" :key="cartItem.id" :data-id="cartItem.id">
                     <ul>
                         <li class="btn_delete">
                             <button type="button">삭제</button>
                         </li>
                         <li class="name">
                             <div>
-                                <img src="https://img-app.knotted-order.com/products/3/3.thumb?1680578577">
+                                <img :src="cartItem.itemDTO.itemImageDTO.imageUrl">
                             </div>
-                            <h2>클래식 바닐라 도넛<p></p></h2>
+                            <h2>{{ cartItem.itemDTO.name }}<p></p></h2>
                         </li>
                         <li class="number-input">
-                            <button type="button" disabled="">-</button>
-                            <input type="number" pattern="\d*" min="1">
+                            <button type="button">-</button>
+                            <input type="number" pattern="\d*" min="1" :value="cartItem.count">
                             <button type="button">+</button>
-                            <h3>3,500원</h3>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <ul>
-                        <li class="btn_delete">
-                            <button type="button">삭제</button>
-                        </li>
-                        <li class="name">
-                            <div>
-                                <img src="https://img-app.knotted-order.com/products/8/8.thumb?1681865902">
-                            </div>
-                            <h2>망고 스마일<p></p></h2>
-                        </li>
-                        <li class="number-input">
-                            <button type="button" disabled="">-</button>
-                            <input type="number" pattern="\d*" min="1">
-                            <button type="button">+</button>
-                            <h3>22,000원</h3>
+                            <h3>{{ formatPrice(cartItem.itemDTO.price * cartItem.count) + '원' }}</h3>
                         </li>
                     </ul>
                 </li>
             </ul>
-            <div class="price">합계금액<span>25,500원</span></div>
+
+            <!--/* 여기 전체 합계금액은 로드 완료 시 전체 합산해서 업데이트할 것임 */-->
+            <div class="price">
+                합계금액<span>{{ formatPrice(totalPrice) + '원' }}</span>
+            </div>
         </div>
 
         <div class="btn_area" th:if="${cart != null}">
             <button type="button" class="btn_list">예약상품추가</button>
             <button type="button" class="on">결제하기</button>
+        </div>
+
+        <div class="cart_null" th:if="${cart == null}">
+            <p> 장바구니가 비었습니다</p>
         </div>
 
     </div>
@@ -104,9 +93,48 @@
         const cartItems = new Vue({
             el: "#cartItems",
             data: {
-                cartItems: []
+                cartItems: [],
+                totalPrice: 0
+            },
+            methods: {
+                formatPrice(price){
+                    return price.toLocaleString();
+                }
             }
         });
+
+        $(document).ready(function(){
+            // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
+            loadCartItems();
+        });
+
+        // 장바구니 상품 리스트 받아오는 함수
+        function loadCartItems(){
+            $.ajax({
+                url: "/cart",
+                method: "POST",
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    cartItems.cartItems = result;
+                    // 전체 금액 합산해서 업데이트하기
+
+                    let total = 0;
+                    // forEach문으로 합산하겠다.
+                    cartItems.cartItems.forEach(function(cartItem){
+                        total += cartItem.itemDTO.price * cartItem.count;
+                    });
+
+                    // 전체 금액을 Vue 객체에 넣어서 업데이트
+                    cartItems.totalPrice = total;
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
 
         // 다이얼로그 닫기 버튼 눌렀을 때
         $(".dialogbox .btn_close").on("click", function(){
