@@ -643,6 +643,11 @@
 
             let storeId = $("input[name='storeId']").val();
             let itemId = $("input[name='itemId']").val();
+            let bookDate = $("input[name='bookDate']").val();
+            let bookTime = $("input[name='bookTime']").val();
+
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
 
             $(document).ready(function(){
                 // 페이지 로드 완료되면 재고량 업데이트함
@@ -795,15 +800,44 @@
                 // 만약 현재 장바구니에 담긴 매장과 다르면 장바구니 삭제 후 다시 추가하는 것으로 한다.
 
                 // 일단 넘어갈 값부터 다 가져온다
-                let storeId = $("input[name='storeId']").val();
-                let bookDate = $("input[name='bookDate']").val();
-                let bookTime = $("input[name='bookTime']").val();
-                let itemId = $("input[name='itemId']").val();
                 let count = $("input[name='itemCount']").val();
 
-                let token = $("meta[name='_csrf']").attr("content");
-                let header = $("meta[name='_csrf_header']").attr("content");
+                // 일단 장바구니에 담기 전, 내 장바구니가 기존에 있으면 그 장바구니의 매장과 같은지 확인한다
 
+                $.ajax({
+                    url: "/cart/storeCheck",
+                    method: "GET",
+                    data: {
+                        storeId: storeId, // 매장 정보만 보내면 됨
+                    },
+                    cache: false,
+                    success: function (result, status) {
+                        // 성공 시
+                        if(result === true){ // 기존 장바구니에 없음
+
+                            // 바로 장바구니에 담기
+                            addToCart(count);
+                        }else{
+
+                            let confirm_text = confirm("기존 장바구니에 담긴 매장과 다릅니다. 장바구니를 비우고 새로 담으시겠습니까? (기존 매장에서 추가하실 경우 장바구니 페이지에서 예약상품추가를 이용해주세요)");
+
+                            if(confirm_text){
+                                addToCart(count);
+                            }
+
+                            // 취소인 경우 아무것도 안 함
+                        }
+                    },
+                    error: function (jqXHR, status, error) {
+                        alert(jqXHR.responseText);
+                    }
+                });
+            });
+
+            // 장바구니에 담기 처리
+            function addToCart(count){
+
+                // 장바구니에 담기
                 $.ajax({
                     url: "/cart/add",
                     method: "POST",
@@ -825,8 +859,7 @@
                         alert(jqXHR.responseText);
                     }
                 });
-
-            });
+            }
 
         </script>
 

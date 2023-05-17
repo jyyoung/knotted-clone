@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +36,26 @@ public class CartController {
     // 만약 현재 장바구니에 담긴 매장과 다르면 장바구니 삭제 후 다시 추가하는 것으로 한다.
     @PostMapping(value = "/add")
     @ResponseBody
-    public ResponseEntity<String> addToCart(@RequestParam("storeId") Long storeId, @RequestParam("itemId") Long itemId, @RequestParam("bookDate") String bookDate, @RequestParam("bookTime") String bookTime, @RequestParam("count") Long count){
+    public ResponseEntity<String> addToCart(@RequestParam("storeId") Long storeId, @RequestParam("itemId") Long itemId, @RequestParam("bookDate") String bookDate, @RequestParam("bookTime") String bookTime, @RequestParam("count") Long count, Principal principal){
 
-        return new ResponseEntity<>("테스트", HttpStatus.OK);
+        // 장바구니를 생성
+        // 장바구니 상품 생성 (일단 무조건 하나씩이니까. 그리고 이미 있으면 기존 장바구니 상품에 count 추가하고)
+        // 일단 예약일시를 합치고, LocalDateTime으로 변환한다
+        String reserveDateString = bookDate + " " + bookTime;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime reserveDate = LocalDateTime.parse(reserveDateString, formatter);
+
+        String memberEmail = principal.getName();
+
+        // 장바구니와 장바구니 생성을 하나의 Service 메소드에서 한다 (그래야 트랜잭션이 되니까)
+
+        try {
+            cartService.addToCart(memberEmail, storeId, itemId, reserveDate, count);
+        } catch (Exception e) {
+            return new ResponseEntity<>("장바구니 담기 중 에러가 발생했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>("장바구니 상품 추가 " + reserveDate, HttpStatus.OK);
     }
 
     // 장바구니에서 상품을 제거함
@@ -43,8 +63,31 @@ public class CartController {
     @ResponseBody
     public ResponseEntity<String> removeFromCart(@RequestParam("cartId") Long cartId, @RequestParam("cartItemId") Long cartItemId){
 
-        return new ResponseEntity<>("테스트", HttpStatus.OK);
+        return new ResponseEntity<>("장바구니 상품 제거", HttpStatus.OK);
 
     }
-    
+
+    // 장바구니에 담기 전 기존 장바구니의 매장과 같은지 확인
+    @GetMapping(value = "/storeCheck")
+    @ResponseBody
+    public ResponseEntity<Boolean> storeCheck(@RequestParam("storeId") Long storeId, Principal principal){
+        try {
+            String memberEmail = principal.getName(); // 현재 사용자의 이메일
+
+            // 다른 매장의 상품이 장바구니에 있다면
+            if(!cartService.storeCheck(memberEmail, storeId)){
+                return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
+
+
+
+
+
+

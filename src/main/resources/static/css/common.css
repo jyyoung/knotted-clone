@@ -1665,7 +1665,7 @@ section::after {
     font-weight: 500;
 }
 
-.order_box .inform03 .price li:nth-child(3) {
+.order_box .inform03 .price li:nth-of-type(3) {
     font-size: 2.4rem;
     margin: 20px 0 0;
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 // 장바구니 엔티티
 
@@ -17,6 +19,10 @@ public class Cart extends BaseEntity{
     @GeneratedValue
     @Column(name = "cart_id")
     private Long id;
+    
+    // 장바구니 상품 엔티티와 일대다로 매핑 (Cascade 삭제 위해)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CartItem> cartItems = new ArrayList<>();
 
     // 회원 엔티티와 일대일로 매핑
     @OneToOne(fetch = FetchType.LAZY)
