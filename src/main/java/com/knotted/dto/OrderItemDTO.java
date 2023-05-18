@@ -15,7 +15,7 @@ public class OrderItemDTO {
     private ItemDTO itemDTO;
 
     // 결제 당시의 상품명 (상품명이 바뀌는 경우도 있음)
-    private Long name;
+    private String name;
 
     // 결제 당시의 상품 1개 금액 (가격이 바뀌는 경우도 당연히 있음)
     private Long price;

@@ -33,6 +33,10 @@ public class Order extends BaseEntity{
     @Column(name = "paper_bag_used")
     private boolean paperBagUsed;
 
+    // 결제 금액
+    @Column(name = "order_price")
+    private Long orderPrice;
+
     // 주문 상태
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)

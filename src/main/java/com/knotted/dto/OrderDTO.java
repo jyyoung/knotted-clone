@@ -14,10 +14,10 @@ public class OrderDTO {
     // 주문 ID
     private Long id;
 
-    // 회원 엔티티와 다대일로 매핑
+    // 회원 DTO
     private MemberDTO memberDTO;
 
-    // 매장 엔티티와 다대일로 매핑
+    // 매장 DTO
     private StoreDTO storeDTO;
 
     // 종이쇼핑백 사용 여부
@@ -25,6 +25,9 @@ public class OrderDTO {
 
     // 주문 상태
     private OrderStatus orderStatus;
+
+    // 결제 금액
+    private Long orderPrice;
 
     // 예약 일자
     private LocalDateTime reserveDate;

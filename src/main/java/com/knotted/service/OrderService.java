@@ -1,14 +1,10 @@
 package com.knotted.service;
 
+import com.knotted.constant.OrderStatus;
 import com.knotted.dto.CartDTO;
 import com.knotted.dto.CartItemDTO;
-import com.knotted.entity.Item;
-import com.knotted.entity.Member;
-import com.knotted.entity.StoreItem;
-import com.knotted.repository.ItemRepository;
-import com.knotted.repository.MemberRepository;
-import com.knotted.repository.OrderRepository;
-import com.knotted.repository.StoreItemRepository;
+import com.knotted.entity.*;
+import com.knotted.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +23,8 @@ public class OrderService {
     private final CartService cartService;
     private final StoreItemRepository storeItemRepository;
     private final ItemRepository itemRepository;
+    private final StoreRepository storeRepository;
+    private final OrderItemRepository orderItemRepository;
 
     // 주문 생성 (각종 유효성 검사도 함)
     public List<Long> createOrder(String memberEmail, boolean paperbag, Long useReward){
@@ -41,6 +39,8 @@ public class OrderService {
         }
 
         Long storeId = cartDTO.getStoreDTO().getId();
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(EntityNotFoundException::new);
 
         // 매장 상품 재고보다 많이 주문한 상품들을 저장하기 위한 리스트
         List<Long> errorCartItemList = new ArrayList<>();
@@ -112,7 +112,44 @@ public class OrderService {
         // 회원 적립금 증가시킨다
         member.addReward(reward);
 
+        // 주문을 생성한다
+        Order order = new Order();
+        order.setMember(member);
+        order.setStore(store);
+        order.setPaperBagUsed(paperbag);
+        order.setOrderPrice(totalPrice);
+        order.setOrderStatus(OrderStatus.ORDER);
+        order.setReserveDate(cartDTO.getReserveDate());
 
+        orderRepository.save(order); // 주문 생성
+
+        // 이 생성된 주문 번호로 주문 상품들 생성할 것
+        Long orderId = order.getId();
+
+        // 주문 상품을 생성한다
+        for(CartItemDTO cartItemDTO : cartDTO.getCartItemDTOList()){
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+
+            Long itemId = cartItemDTO.getItemDTO().getId();
+
+            Item item = itemRepository.findById(itemId)
+                    .orElseThrow(EntityNotFoundException::new);
+
+            orderItem.setItem(item);
+            orderItem.setName(item.getName());
+            orderItem.setPrice(item.getPrice());
+            orderItem.setCount(cartItemDTO.getCount());
+
+            orderItemRepository.save(orderItem);
+        }
+        
+        // 장바구니 및 장바구니 상품을 삭제한다
+        cartService.deleteCart(memberEmail);
+
+        // 여기까지 정상적으로 왔으면 빈 에러 카트 리스트를 반환한다
+        return errorCartItemList;
     }
 
 }
