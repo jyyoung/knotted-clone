@@ -44,7 +44,6 @@ public class StoreItemService {
 
             // 아이템 정보를 포함시킨다
             storeItemDTO.setItemDTO(itemService.convertToItemDTO(storeItem.getItem()));
-
             storeItemDTOList.add(storeItemDTO);
         }
 

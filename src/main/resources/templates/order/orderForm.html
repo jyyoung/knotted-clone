@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
 <head>
@@ -192,18 +191,17 @@
                     xhr.setRequestHeader(header, token);
                 },
                 success: function(result, status){
-                    console.log(result);
-
                     // 결제 완료 시 주문해주셔서 감사합니다. 3초 뒤 메인 페이지로 이동합니다로 이동하기
-                    // location.href = "/order/complete";
+                    if(result.success === true){
+                        location.href = "/order/complete";
+                    }else{
+                        alert(result.errorMessage);
+                    }
                 },
                 error: function(jqXHR, status, error){
-                    if(jqXHR.status == "500"){
-                        alert("주문 처리에 실패했습니다");
-                        return;
-                    }else{
-                        alert(jqXHR.responseText);
-                    }
+                    // 에러 메시지나 이런 건 컨트롤러단에서 전부 구현함
+                    // 이쪽으로 넘어올 일이 없음
+                    alert(jqXHR.responseText);
                 }
             });
         }

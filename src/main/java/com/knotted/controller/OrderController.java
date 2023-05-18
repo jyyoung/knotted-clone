@@ -4,6 +4,7 @@ import com.knotted.dto.*;
 import com.knotted.entity.Member;
 import com.knotted.entity.Store;
 import com.knotted.repository.MemberRepository;
+import com.knotted.repository.StoreItemRepository;
 import com.knotted.repository.StoreRepository;
 import com.knotted.service.CartService;
 import com.knotted.service.ItemService;
@@ -34,6 +35,7 @@ public class OrderController {
     private final StoreItemService storeItemService;
     private final OrderService orderService;
     private final CartService cartService;
+    private final StoreItemRepository storeItemRepository;
 
     // 주문(예약) 메인으로 이동
     @GetMapping(value = {"", "/"})
@@ -249,7 +251,11 @@ public class OrderController {
     // 주문 결제 처리
     @PostMapping(value = "/new")
     @ResponseBody
-    public ResponseEntity<String> orderSubmit(@RequestParam("paperbag") boolean paperbag, @RequestParam("useReward") Long useReward, Principal principal){
+    public ResponseEntity<OrderResponseDTO> orderSubmit(@RequestParam("paperbag") boolean paperbag, @RequestParam("useReward") Long useReward, Principal principal){
+
+        // 또, 매장 상품 재고가 어떤 주문상품이 초과했는지 알려주기 위해 OrderResponseDTO를 넘겨줄 것이다.
+        OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
+
         try {
             // 회원 정보만 알면 해당 회원의 장바구니 및 장바구니 상품 정보 알 수 있다.
             // 넘어올 정보는 종이쇼핑백 사용 여부와 적립금 사용액이다.
@@ -263,11 +269,34 @@ public class OrderController {
             // 유효성 검사는, 만약 결제할 장바구니 상품이 없을 때
             // 구매할 장바구니 상품 중 하나라도 매장 상품 재고보다 모자랄 때
 
-            // 일단 회원 정보로 장바구니 및
+            String memberEmail = principal.getName();
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            List<Long> errorCartItemList = orderService.createOrder(memberEmail);
+
+            // 만약 재고보다 많이 주문한 상품이 있으면 에러로 처리한다
+            if(errorCartItemList.size() > 0){
+                orderResponseDTO.setSuccess(false);
+                orderResponseDTO.setErrorCartItemList(errorCartItemList);
+                orderResponseDTO.setErrorMessage("재고를 초과하여 주문한 상품이 있습니다. 다시 한 번 확인해주세요");
+
+                return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
+            }
+
+            // 여기까지 정상적으로 온 경우 정상 처리로 반환한다
+            orderResponseDTO.setSuccess(true);
+            return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
+
+        } catch (IllegalStateException e) {
+            orderResponseDTO.setSuccess(false);
+            orderResponseDTO.setErrorMessage("결제할 상품이 없습니다");
+
+            // OrderResponseDTO에 에러 메시지를 담기 위해 HttpStatus.OK로 반환함
+            return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("결제 처리 중 에러가 발생했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+            orderResponseDTO.setSuccess(false);
+            orderResponseDTO.setErrorMessage("결제 처리 중 에러가 발생했습니다");
+
+            return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
         }
     }
 

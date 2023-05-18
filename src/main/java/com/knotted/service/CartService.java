@@ -151,7 +151,7 @@ public class CartService {
         CartDTO cartDTO = new CartDTO();
         if(cart != null){
             cartDTO = CartDTO.of(cart);
-            cartDTO.setStoreDTO(StoreDTO.of(cart.getStore()));
+            cartDTO.setStoreDTO(StoreDTO.of(cart.getStore())); // 매장 정보 담음
 
             List<CartItemDTO> cartItemList = this.getCartItems(memberEmail);
 
@@ -161,8 +161,8 @@ public class CartService {
                 totalPrice += cartItemDTO.getItemDTO().getPrice() * cartItemDTO.getCount();
             }
 
-            cartDTO.setCartItemDTOList(cartItemList);
-            cartDTO.setTotalPrice(totalPrice);
+            cartDTO.setCartItemDTOList(cartItemList); // 매장 상품 정보 담음
+            cartDTO.setTotalPrice(totalPrice); // 전체 금액 담음
         }
 
         return cartDTO;
