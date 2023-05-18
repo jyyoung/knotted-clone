@@ -11,7 +11,7 @@ public class CartItemDTO {
     // 장바구니 DTO
     private CartDTO cartDTO;
 
-    // 상품 엔티티
+    // 상품 DTO
     private ItemDTO itemDTO;
 
     // 상품 수량

@@ -29,6 +29,10 @@ public class Order extends BaseEntity{
     @JoinColumn(name = "store_id")
     private Store store;
 
+    // 종이쇼핑백 사용 여부
+    @Column(name = "paper_bag_used")
+    private boolean paperBagUsed;
+
     // 주문 상태
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)

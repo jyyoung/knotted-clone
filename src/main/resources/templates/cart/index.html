@@ -38,9 +38,9 @@
                             <h2>{{ cartItem.itemDTO.name }}<p></p></h2>
                         </li>
                         <li class="number-input">
-                            <button type="button" class="count_minus" :disabled="cartItem.count === 1">-</button>
+                            <button type="button" class="count_minus" :disabled="cartItem.count <= 1">-</button>
                             <input type="number" pattern="\d*" min="1" :value="cartItem.count" class="item_count" readonly>
-                            <button type="button" class="count_plus" :disabled="cartItem.count === cartItem.stock">+</button>
+                            <button type="button" class="count_plus" :disabled="cartItem.count >= cartItem.stock">+</button>
                             <h3>{{ cartItem.count ? formatPrice(cartItem.itemDTO.price * cartItem.count) + '원' : '' }}</h3>
                         </li>
                     </ul>

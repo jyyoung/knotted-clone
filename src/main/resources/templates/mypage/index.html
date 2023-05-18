@@ -9,14 +9,14 @@
 <th:block layout:fragment="content">
     <div class="container">
         <div class="mypage">
-            <div class="mypage_list">
-                <h1><span class="grade">옐로우스마일</span><span class="name">황정민</span></h1>
+            <div class="mypage_list" th:object="${memberDTO}">
+                <h1><span class="grade">옐로우스마일</span><span class="name" th:text="*{name}"></span></h1>
                 <ul class="mypage_point">
                     <li class="go_myscore">
                         <span>150,000</span>원을 더 구매하시면, 내년 등급은 <span>핑크스마일</span>입니다.
                     </li>
                     <li>
-                        사용 가능한 적립금은 <span>0</span>원 입니다.
+                        사용 가능한 적립금은 <span th:text="*{reward}">0</span>원 입니다.
                     </li>
                 </ul>
                 <div class="list">

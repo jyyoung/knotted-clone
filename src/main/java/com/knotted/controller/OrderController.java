@@ -249,9 +249,26 @@ public class OrderController {
     // 주문 결제 처리
     @PostMapping(value = "/new")
     @ResponseBody
-    public ResponseEntity<Void> orderSubmit(){
+    public ResponseEntity<String> orderSubmit(@RequestParam("paperbag") boolean paperbag, @RequestParam("useReward") Long useReward, Principal principal){
+        try {
+            // 회원 정보만 알면 해당 회원의 장바구니 및 장바구니 상품 정보 알 수 있다.
+            // 넘어올 정보는 종이쇼핑백 사용 여부와 적립금 사용액이다.
 
-        return new ResponseEntity<>(HttpStatus.OK);
+            // 회원의 구매 금액(결제 금액으로)을 증가시키고, 적립금은 결제 금액의 5%를 주고
+            // 해당 매장 상품의 재고를 감소시키고
+            // 해당 상품의 판매량을 증가시키고
+            // 해당 회원의 장바구니 및 장바구니 상품을 전부 삭제하고
+            // 주문 및 주문 상품을 생성한다
+
+            // 유효성 검사는, 만약 결제할 장바구니 상품이 없을 때
+            // 구매할 장바구니 상품 중 하나라도 매장 상품 재고보다 모자랄 때
+
+            // 일단 회원 정보로 장바구니 및
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("결제 처리 중 에러가 발생했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // 주문 완료 안내 페이지로 이동

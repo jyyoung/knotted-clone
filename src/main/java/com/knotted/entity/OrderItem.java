@@ -26,8 +26,12 @@ public class OrderItem extends BaseEntity{
     @JoinColumn(name = "item_id")
     private Item item;
 
-    // 주문 금액
-    @Column(name = "order_price")
+    // 결제 당시의 상품명 (상품명이 바뀌는 경우도 있음)
+    @Column(name = "item_name")
+    private Long name;
+
+    // 결제 당시의 상품 1개 금액 (가격이 바뀌는 경우도 당연히 있음)
+    @Column(name = "item_price")
     private Long price;
 
     // 상품 수량

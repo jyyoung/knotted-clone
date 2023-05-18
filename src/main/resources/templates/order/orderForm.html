@@ -184,7 +184,8 @@
                 url: "/order/new",
                 method: "POST",
                 data: {
-
+                    paperbag: paperbag, // 종이쇼핑백 사용 유무
+                    useReward: useReward, // 적립금 사용액
                 },
                 cache: false,
                 beforeSend: function(xhr){
@@ -194,7 +195,7 @@
                     console.log(result);
 
                     // 결제 완료 시 주문해주셔서 감사합니다. 3초 뒤 메인 페이지로 이동합니다로 이동하기
-                    location.href = "/order/complete";
+                    // location.href = "/order/complete";
                 },
                 error: function(jqXHR, status, error){
                     if(jqXHR.status == "500"){
