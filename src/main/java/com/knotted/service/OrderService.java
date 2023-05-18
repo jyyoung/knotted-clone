@@ -3,6 +3,7 @@ package com.knotted.service;
 import com.knotted.constant.OrderStatus;
 import com.knotted.dto.CartDTO;
 import com.knotted.dto.CartItemDTO;
+import com.knotted.dto.OrderResponseDTO;
 import com.knotted.entity.*;
 import com.knotted.repository.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,7 +29,9 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
 
     // 주문 생성 (각종 유효성 검사도 함)
-    public List<Long> createOrder(String memberEmail, boolean paperbag, Long useReward){
+    public OrderResponseDTO createOrder(String memberEmail, boolean paperbag, Long useReward){
+
+        OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
 
         // 일단 회원 정보로 장바구니 및 장바구니 상품 정보 가져오기
         Member member = memberRepository.findByEmail(memberEmail);
@@ -45,6 +48,7 @@ public class OrderService {
 
         // 매장 상품 재고보다 많이 주문한 상품들을 저장하기 위한 리스트
         List<Long> errorCartItemList = new ArrayList<>();
+        orderResponseDTO.setErrorCartItemList(errorCartItemList); // 일단 빈 거 넣음
         
         Long totalPrice = 0L; // 전체 결제 금액 초기화
 
@@ -77,7 +81,9 @@ public class OrderService {
         
         // 만약 재고보다 많이 주문한 상품이 있으면 주문 처리하지 않고 리스트를 리턴함
         if(errorCartItemList.size() > 0){
-            return errorCartItemList;
+            orderResponseDTO.setSuccess(false);
+            orderResponseDTO.setErrorCartItemList(errorCartItemList);
+            return orderResponseDTO;
         }
         
         // 유효성 처리 끝
@@ -155,7 +161,9 @@ public class OrderService {
         cartRepository.delete(cart);
 
         // 여기까지 정상적으로 왔으면 빈 에러 카트 리스트를 반환한다
-        return errorCartItemList;
+        orderResponseDTO.setSuccess(true);
+        orderResponseDTO.setOrderId(orderId);
+        return orderResponseDTO;
     }
 
 }

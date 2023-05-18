@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
 <head>
@@ -191,9 +192,9 @@
                     xhr.setRequestHeader(header, token);
                 },
                 success: function(result, status){
-                    // 결제 완료 시 주문해주셔서 감사합니다. 3초 뒤 메인 페이지로 이동합니다로 이동하기
                     if(result.success === true){
-                        location.href = "/order/complete";
+                        // 결제 완료 안내 페이지로 넘어감
+                        location.href = "/order/paid";
                     }else{
                         alert(result.errorMessage);
                     }

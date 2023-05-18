@@ -271,12 +271,12 @@ public class OrderController {
 
             String memberEmail = principal.getName();
 
-            List<Long> errorCartItemList = orderService.createOrder(memberEmail, paperbag, useReward);
+            orderResponseDTO = orderService.createOrder(memberEmail, paperbag, useReward);
 
             // 만약 재고보다 많이 주문한 상품이 있으면 에러로 처리한다
-            if(errorCartItemList.size() > 0){
+            if(orderResponseDTO.getErrorCartItemList().size() > 0){
                 orderResponseDTO.setSuccess(false);
-                orderResponseDTO.setErrorCartItemList(errorCartItemList);
+                orderResponseDTO.setErrorCartItemList(orderResponseDTO.getErrorCartItemList());
                 orderResponseDTO.setErrorMessage("재고를 초과하여 주문한 상품이 있습니다. 다시 한 번 확인해주세요");
 
                 return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
@@ -301,9 +301,9 @@ public class OrderController {
     }
 
     // 주문 완료 안내 페이지로 이동
-    @GetMapping(value = "/complete")
+    @GetMapping(value = "/paid")
     public String complete(){
-        return "/order/complete";
+        return "/order/paid";
     }
 
 }
