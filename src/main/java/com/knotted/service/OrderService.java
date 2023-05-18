@@ -20,6 +20,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
+    private final CartRepository cartRepository;
     private final CartService cartService;
     private final StoreItemRepository storeItemRepository;
     private final ItemRepository itemRepository;
@@ -146,7 +147,12 @@ public class OrderService {
         }
         
         // 장바구니 및 장바구니 상품을 삭제한다
-        cartService.deleteCart(memberEmail);
+        // 주의!!! 아래와 같이 불렀을 경우 조회는 문제 없지만 실제 데이터를 조작하는 경우,
+        // 독립적인 트랜잭션 컨텍스트에서 사용 시 실패하더라도 다른 데이터가 롤백하지 않는 문제가 있다.
+        // 그러므로 이건 현재 Service 내부에서 실행하도록 하겠다.
+//        cartService.deleteCart(memberEmail);
+        Cart cart = cartRepository.findByMember(member);
+        cartRepository.delete(cart);
 
         // 여기까지 정상적으로 왔으면 빈 에러 카트 리스트를 반환한다
         return errorCartItemList;

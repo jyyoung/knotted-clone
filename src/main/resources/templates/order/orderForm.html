@@ -192,8 +192,6 @@
                 },
                 success: function(result, status){
                     // 결제 완료 시 주문해주셔서 감사합니다. 3초 뒤 메인 페이지로 이동합니다로 이동하기
-                    console.log(result);
-
                     if(result.success === true){
                         location.href = "/order/complete";
                     }else{

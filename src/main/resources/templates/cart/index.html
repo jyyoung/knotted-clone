@@ -14,52 +14,55 @@
     <div class="container">
         <h1>장바구니</h1>
 
-        <div class="carttab">
-            <input type="radio" name="cart" id="cart02" checked>
-            <label for="cart02">예약</label>
-            <div class="date" th:if="${cart != null}">
-                <span class="storeName" th:text="${cart.storeDTO.name + '점'}"></span>
-                <th:block th:text="${reserveDate}"></th:block>
-                <button type="button" class="store_change_button">변경</button>
+        <div id="cartItems">
+            <div class="carttab">
+                <input type="radio" name="cart" id="cart02" checked>
+                <label for="cart02">예약</label>
+                <div class="date" v-if="cartItems && cartItems.cartItemDTOList && cartItems.cartItemDTOList.length > 0" th:if="${cart != null}">
+                    <span class="storeName" :text="cartItems.storeDTO.name + '점'"></span>
+                    <th:block th:text="${reserveDate}"></th:block>
+                    <button type="button" class="store_change_button">변경</button>
+                </div>
             </div>
-        </div>
 
-        <div class="cartlist" id="cartItems" th:if="${cart != null}">
-            <ul>
-                <li v-for="cartItem in cartItems.cartItemDTOList" :key="cartItem.id" :data-id="cartItem.id" class="cartItem">
-                    <ul>
-                        <li class="btn_delete">
-                            <button type="button" class="delete_cart_item">삭제</button>
-                        </li>
-                        <li class="name">
-                            <div>
-                                <img :src="cartItem.itemDTO.itemImageDTO.imageUrl">
-                            </div>
-                            <h2>{{ cartItem.itemDTO.name }}<p></p></h2>
-                        </li>
-                        <li class="number-input">
-                            <button type="button" class="count_minus" :disabled="cartItem.count <= 1">-</button>
-                            <input type="number" pattern="\d*" min="1" :value="cartItem.count" class="item_count" readonly>
-                            <button type="button" class="count_plus" :disabled="cartItem.count >= cartItem.stock">+</button>
-                            <h3>{{ cartItem.count ? formatPrice(cartItem.itemDTO.price * cartItem.count) + '원' : '' }}</h3>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            <div class="cartlist" v-if="cartItems && cartItems.cartItemDTOList && cartItems.cartItemDTOList.length > 0" th:if="${cart != null}">
+                <ul>
+                    <li v-for="cartItem in cartItems.cartItemDTOList" :key="cartItem.id" :data-id="cartItem.id" class="cartItem">
+                        <ul>
+                            <li class="btn_delete">
+                                <button type="button" class="delete_cart_item">삭제</button>
+                            </li>
+                            <li class="name">
+                                <div>
+                                    <img :src="cartItem.itemDTO.itemImageDTO.imageUrl">
+                                </div>
+                                <h2>{{ cartItem.itemDTO.name }}<p></p></h2>
+                            </li>
+                            <li class="number-input">
+                                <button type="button" class="count_minus" :disabled="cartItem.count <= 1">-</button>
+                                <input type="number" pattern="\d*" min="1" :value="cartItem.count" class="item_count" readonly>
+                                <button type="button" class="count_plus" :disabled="cartItem.count >= cartItem.stock">+</button>
+                                <h3>{{ cartItem.count ? formatPrice(cartItem.itemDTO.price * cartItem.count) + '원' : '' }}</h3>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 
-            <!--/* 여기 전체 합계금액은 로드 완료 시 전체 합산해서 업데이트할 것임 */-->
-            <div class="price">
-                합계금액<span>{{ cartItems.totalPrice ? formatPrice(cartItems.totalPrice) + '원' : '' }}</span>
+                <!--/* 여기 전체 합계금액은 로드 완료 시 전체 합산해서 업데이트할 것임 */-->
+                <div class="price">
+                    합계금액<span>{{ cartItems.totalPrice ? formatPrice(cartItems.totalPrice) + '원' : '' }}</span>
+                </div>
             </div>
-        </div>
 
-        <div class="btn_area" th:if="${cart != null}">
-            <button type="button" class="btn_list add_cart_item">예약상품추가</button>
-            <button type="button" class="on go_pay">결제하기</button>
-        </div>
+            <div class="btn_area" v-if="cartItems && cartItems.cartItemDTOList && cartItems.cartItemDTOList.length > 0" th:if="${cart != null}">
+                <button type="button" class="btn_list add_cart_item">예약상품추가</button>
+                <button type="button" class="on go_pay">결제하기</button>
+            </div>
 
-        <div class="cart_null" th:if="${cart == null}">
-            <p>장바구니가 비었습니다</p>
+            <div class="cart_null" v-if="!cartItems || !cartItems.cartItemDTOList || cartItems.cartItemDTOList.length === 0">
+                <p>장바구니가 비었습니다</p>
+            </div>
+
         </div>
 
     </div>
@@ -88,25 +91,25 @@
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
 
+        // Vue 인스턴스 생성 - 장바구니 상품 리스트
+        const cartItems = new Vue({
+            el: "#cartItems",
+            data: {
+                cartItems: []
+            },
+            methods: {
+                formatPrice(price){
+                    return price.toLocaleString();
+                }
+            }
+        });
+
     </script>
 
     <!--/* 장바구니가 있을 때만 */-->
     <th:block th:if="${cart != null}">
 
         <script>
-
-            // Vue 인스턴스 생성 - 장바구니 상품 리스트
-            const cartItems = new Vue({
-                el: "#cartItems",
-                data: {
-                    cartItems: []
-                },
-                methods: {
-                    formatPrice(price){
-                        return price.toLocaleString();
-                    }
-                }
-            });
 
             $(document).ready(function(){
                 // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
@@ -123,7 +126,6 @@
                         xhr.setRequestHeader(header, token);
                     },
                     success: function(result, status){
-                        console.log(result);
                         cartItems.cartItems = result;
                     },
                     error: function(jqXHR, status, error){
@@ -137,16 +139,16 @@
                 $(".dialogbox").addClass("display_none");
             });
 
-            // 확인 버튼을 눌렀을 때
+            // 다이얼로그 확인 버튼을 눌렀을 때
             $(".dialogbox .btn_right").on("click", function(){
                 // REST로 장바구니 내역 삭제 후 이동시키기
                 deleteAllCartItems();
             });
 
-            // 매장 변경 버튼을 눌렀을 때
-            $(".store_change_button").on("click", function(){
+            // 매장 변경 버튼 눌렀을 때
+            $(".container").on("click", ".store_change_button", function(){
                 $(".dialogbox").removeClass("display_none");
-            });
+            })
 
             // 장바구니 전체 삭제 후 이동 함수
             function deleteAllCartItems(){
@@ -234,7 +236,7 @@
             }
 
             // 장바구니 상품 개수 감소 버튼
-            $(".cartlist").on("click", ".count_minus", function(){
+            $(".container").on("click", ".count_minus", function(){
                 let cartItemId = $(this).closest(".cartItem").data("id");
                 let count = $(this).closest(".number-input").find(".item_count").val();
                 count--;
@@ -242,7 +244,7 @@
             });
 
             // 장바구니 상품 개수 증가 버튼
-            $(".cartlist").on("click", ".count_plus", function(){
+            $(".container").on("click", ".count_plus", function(){
                 let cartItemId = $(this).closest(".cartItem").data("id");
                 let count = $(this).closest(".number-input").find(".item_count").val();
                 count++;
@@ -250,7 +252,7 @@
             });
 
             // 장바구니 상품 삭제 버튼 눌렀을 때
-            $(".cartlist").on("click", ".delete_cart_item", function(){
+            $(".container").on("click", ".delete_cart_item", function(){
                 let cartItemId = $(this).closest(".cartItem").data("id");
 
                 let confirmText = confirm("정말 삭제하시겠습니까?");
@@ -261,7 +263,7 @@
             });
 
             // 예약상품추가 눌렀을 때
-            $(".add_cart_item").on("click", function(){
+            $(".container").on("click", ".add_cart_item", function(){
                 // http://localhost:8888/order/menu-pick?storeId=2&bookDate=2023-05-19&bookTime=10:00:00
                 // 위와 같은 주소로 이동해야 함
 
@@ -272,18 +274,15 @@
                 let bookTime = dates[1];
 
                 location.href = "/order/menu-pick?storeId=" + storeId + "&bookDate=" + bookDate + "&bookTime=" + bookTime;
-
             });
 
-            // 결제하기 눌렀을 때
-            $(".go_pay").on("click", function(){
+            $(".container").on("click", ".go_pay", function(){
                 location.href = "/order/pay";
             });
 
         </script>
 
     </th:block>
-
 </th:block>
 
 </html>
