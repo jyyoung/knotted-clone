@@ -231,16 +231,17 @@ public class OrderController {
         Member member = memberRepository.findByEmail(memberEmail);
         MemberDTO memberDTO = MemberDTO.of(member);
         CartDTO cartDTO = cartService.getCart(memberEmail);
+
+        // 장바구니 상품이 하나도 없을 때
+        if(cartDTO.getCartItemDTOList() == null){
+            return "redirect:/order/store-pick";
+        }
+
         String reserveDate = TimeUtils.localDateTimeToString(cartDTO.getReserveDate());
 
         model.addAttribute("member", memberDTO);
         model.addAttribute("cartDTO", cartDTO);
         model.addAttribute("reserveDate", reserveDate);
-
-        // 장바구니 상품이 하나도 없을 때
-        if(cartDTO.getCartItemDTOList().size() == 0){
-            return "redirect:/order/store-pick";
-        }
 
         return "/order/orderForm";
     }

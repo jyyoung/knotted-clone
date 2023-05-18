@@ -101,10 +101,10 @@
 
         let paperbag = true; // 종이쇼핑백 사용 유무
         let useReward = 0; // 적립금 사용액
+        let totalPrice = [[${cartDTO.totalPrice}]]; // 장바구니 상품 총액
 
         $(document).ready(function(){
             // 페이지 로드 완료 시
-
 
         });
 
@@ -137,6 +137,10 @@
 
             $(this).prop("disabled", true);
             $(".number-input .count_plus").prop("disabled", false);
+
+            paperbag = false;
+
+            finalPriceCalc();
         });
 
         // 종이쇼핑백 추가 버튼
@@ -145,7 +149,33 @@
 
             $(this).prop("disabled", true);
             $(".number-input .count_minus").prop("disabled", false);
+
+            paperbag = true;
+
+            finalPriceCalc();
         });
+
+        function finalPriceCalc(){
+            let finalPrice = totalPrice; // 종이쇼핑백 가격이 포함된 총 주문금액
+
+            if(paperbag){
+                finalPrice += 300;
+            }
+
+            let finalRewardPriceText = "";
+
+            if(useReward > 0){
+                let finalRewardPrice = finalPrice - useReward; // 적립금 사용이 포함된 총 결제금액
+                finalRewardPriceText = finalRewardPrice.toLocaleString() + "원";
+            }else{
+                finalRewardPriceText = finalPrice.toLocaleString() + "원";
+            }
+
+            let finalPriceText = finalPrice.toLocaleString() + "원";
+
+            $(".paylist .total_price").html(finalPriceText);
+            $(".paylist .final_price").html(finalRewardPriceText);
+        }
 
         // 주문 결제 처리하는 함수
         // 다른 건 전부 서버단에서 처리할 수 있고, 종이쇼핑백 유무 및 적립금 사용액만 추가로 보낸다
