@@ -70,4 +70,19 @@ public class Member extends BaseEntity{
 
         return member;
     }
+
+    // 회원의 구매금액을 증가시키는 메소드
+    public void addPurchase(Long orderPrice){
+        this.purchase += orderPrice;
+    }
+
+    // 회원의 적립금을 감소시키는 메소드
+    public void addReward(Long reward){
+        this.reward += reward;
+    }
+    
+    // 회원의 적립금을 증가시키는 메소드
+    public void subtractReward(Long reward){
+        this.reward -= reward;
+    }
 }

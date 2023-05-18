@@ -271,7 +271,7 @@ public class OrderController {
 
             String memberEmail = principal.getName();
 
-            List<Long> errorCartItemList = orderService.createOrder(memberEmail);
+            List<Long> errorCartItemList = orderService.createOrder(memberEmail, paperbag, useReward);
 
             // 만약 재고보다 많이 주문한 상품이 있으면 에러로 처리한다
             if(errorCartItemList.size() > 0){

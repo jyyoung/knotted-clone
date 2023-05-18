@@ -71,6 +71,12 @@ public class Item extends BaseEntity{
         this.allergy = itemFormDTO.getAllergy();
         this.origin = itemFormDTO.getOrigin();
     }
+
+    // 상품의 판매량을 증가시키는 메소드
+    public void addSaleCount(Long saleCount){
+        this.saleCount += saleCount;
+    }
+
 }
 
 
