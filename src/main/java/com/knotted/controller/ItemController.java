@@ -66,15 +66,18 @@ public class ItemController {
             List<ItemDTO> newItemList = new ArrayList<>(); // 재고 여부를 추가해 담을 리스트
 
             // 특정 매장의 상품 재고 여부 확인을 위해 추가함
-            for(ItemDTO itemDTO : itemList){
-                StoreItem storeItem = storeItemRepository.findByStoreIdAndItemId(storeId, itemDTO.getId());
-                if(storeItem == null || storeItem.getStock() == 0){
-                    itemDTO.setOnStock(false);
-                }else{
-                    itemDTO.setOnStock(true);
-                }
+            // storeId가 있을 때만 처리
+            if(storeId != 0){
+                for(ItemDTO itemDTO : itemList){
+                    StoreItem storeItem = storeItemRepository.findByStoreIdAndItemId(storeId, itemDTO.getId());
+                    if(storeItem == null || storeItem.getStock() == 0){
+                        itemDTO.setOnStock(false);
+                    }else{
+                        itemDTO.setOnStock(true);
+                    }
 
-                newItemList.add(itemDTO);
+                    newItemList.add(itemDTO);
+                }
             }
 
             return new ResponseEntity<>(newItemList, HttpStatus.OK);

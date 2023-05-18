@@ -1594,6 +1594,23 @@ section::after {
     text-align: center;
     display: inline-grid;
     margin-bottom: 20px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.order_box_wrap .menulist li .no_stock_item{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 
 .order_box_wrap .menulist li > a {

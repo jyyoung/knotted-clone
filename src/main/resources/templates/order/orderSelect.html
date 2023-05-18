@@ -241,6 +241,9 @@
                     </div>
                     <ul class="menulist" id="items">
                         <li v-for="item in items" :key="item.id" :data-id="item.id" class="item_link">
+                            <div v-if="item.onStock === false" class="no_stock_item">
+                                현재 매장에 재고가 없는 상품입니다
+                            </div>
                             <a class="go_menu_detail">
                                 <div>
                                     <img :src="item.itemImageDTO.imageUrl" />
@@ -555,9 +558,16 @@
     <th:block th:if="${mode} == 'menu'">
         <script>
 
+            let storeId = $("input[name='storeId']").val();
+            let bookDate = $("input[name='bookDate']").val();
+            let bookTime = $("input[name='bookTime']").val();
+
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+
             $(document).ready(function(){
-                // 페이지 로드 완료되면 바로 loadSearchItems로 전체 상품 불러옴
-                loadSearchItems("all", "");
+                // 페이지 로드 완료되면 바로 전체 상품 불러옴
+                loadItems("all", "", storeId);
             });
 
             // Vue 인스턴스 생성 - 상품 리스트
@@ -574,23 +584,22 @@
             });
 
             // 카테고리 및 검색어로 상품 리스트 받아오는 함수
-            function loadSearchItems(category, searchWord){
-
-                let token = $("meta[name='_csrf']").attr("content");
-                let header = $("meta[name='_csrf_header']").attr("content");
+            function loadItems(category, searchWord, storeId){
 
                 $.ajax({
-                    url: "/menu/search",
+                    url: "/menu/search/storeItem",
                     method: "POST",
                     data: {
                         category: category,
                         searchWord: searchWord,
+                        storeId: storeId,
                     },
                     cache: false,
                     beforeSend: function(xhr){
                         xhr.setRequestHeader(header, token);
                     },
                     success: function(result, status){
+                        console.log(result);
                         items.items = result;
                     },
                     error: function(jqXHR, status, error){
@@ -607,7 +616,7 @@
                     category = "all";
                 }
 
-                loadSearchItems(category, "");
+                loadItems(category, "", storeId);
             });
 
             // 검색 input 값 변화 시 다시 읽어오기
@@ -615,14 +624,11 @@
                 let category = $(".category input[name='category']:checked").val();
                 let searchWord = $(this).val();
 
-                loadSearchItems(category, searchWord);
+                loadItems(category, searchWord, storeId);
             });
 
             $(".order_box").on("click", ".go_menu_detail", function(){
                 // 넘어갈 때 storeId, bookDate, bookTime, menuId(itemId) 필요함
-                let storeId = $("input[name='storeId']").val();
-                let bookDate = $("input[name='bookDate']").val();
-                let bookTime = $("input[name='bookTime']").val();
                 let itemId = $(this).closest(".item_link").data("id");
 
                 location.href = "/order/menu-pick-detail?storeId=" + storeId + "&bookDate=" + bookDate + "&bookTime=" + bookTime + "&itemId=" + itemId;
