@@ -14,6 +14,9 @@
 
             <input type="hidden" th:field="*{id}">
 
+            <!--/* 상품 등록인 경우만 saleCount 0으로 초기화 */-->
+            <input type="hidden" name="saleCount" id="saleCount" th:if="${itemId == null}" value="0">
+
             <ul>
                 <li class="required">
                     <label th:for="name">카테고리</label>
