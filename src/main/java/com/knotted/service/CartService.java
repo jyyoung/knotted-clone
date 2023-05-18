@@ -143,6 +143,7 @@ public class CartService {
     }
 
     // 장바구니 정보에 매장 정보 얹어서 반환
+    // 리팩토링 - CartItemDTO 리스트까지 넣는다
     public CartDTO getCart(String memberEmail){
         Member member = memberRepository.findByEmail(memberEmail);
         Cart cart = cartRepository.findByMember(member);
@@ -151,6 +152,17 @@ public class CartService {
         if(cart != null){
             cartDTO = CartDTO.of(cart);
             cartDTO.setStoreDTO(StoreDTO.of(cart.getStore()));
+
+            List<CartItemDTO> cartItemList = this.getCartItems(memberEmail);
+
+            // 총합도 계산해서 같이 넘기기
+            Long totalPrice = 0L;
+            for(CartItemDTO cartItemDTO : cartItemList){
+                totalPrice += cartItemDTO.getItemDTO().getPrice() * cartItemDTO.getCount();
+            }
+
+            cartDTO.setCartItemDTOList(cartItemList);
+            cartDTO.setTotalPrice(totalPrice);
         }
 
         return cartDTO;

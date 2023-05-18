@@ -233,13 +233,12 @@ public class OrderController {
         CartDTO cartDTO = cartService.getCart(memberEmail);
         String reserveDate = TimeUtils.localDateTimeToString(cartDTO.getReserveDate());
 
-        List<CartItemDTO> cartItemDTOList = cartService.getCartItems(memberEmail);
         model.addAttribute("member", memberDTO);
-        model.addAttribute("cartItemList", cartItemDTOList);
-        model.addAttribute("cart", cartDTO);
+        model.addAttribute("cartDTO", cartDTO);
         model.addAttribute("reserveDate", reserveDate);
 
-        if(cartItemDTOList.size() == 0){
+        // 장바구니 상품이 하나도 없을 때
+        if(cartDTO.getCartItemDTOList().size() == 0){
             return "redirect:/order/store-pick";
         }
 

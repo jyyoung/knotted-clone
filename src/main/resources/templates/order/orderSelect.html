@@ -239,7 +239,7 @@
                         <input type="radio" name="category" id="category04" value="bakery">
                         <label for="category04" style="" data-category="bakery">베이커리</label>
                     </div>
-                    <ul class="menulist" id="category_items">
+                    <ul class="menulist" id="items">
                         <li v-for="item in items" :key="item.id" :data-id="item.id" class="item_link">
                             <a class="go_menu_detail">
                                 <div>
@@ -362,7 +362,6 @@
         <script>
 
             $(document).ready(function(){
-                // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
                 loadSearchItems("");
             });
 
@@ -557,13 +556,13 @@
         <script>
 
             $(document).ready(function(){
-                // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
-                loadCategoryItems("all");
+                // 페이지 로드 완료되면 바로 loadSearchItems로 전체 상품 불러옴
+                loadSearchItems("all", "");
             });
 
             // Vue 인스턴스 생성 - 상품 리스트
-            const categoryItems = new Vue({
-                el: "#category_items",
+            const items = new Vue({
+                el: "#items",
                 data: {
                     items: []
                 },
@@ -573,25 +572,6 @@
                     }
                 }
             });
-
-            // 카테고리로 상품 리스트 받아오는 함수
-            function loadCategoryItems(category){
-                // 카테고리로 리스트 받아 옴
-                $.ajax({
-                    url: "/menu/category/" + category,
-                    method: "GET",
-                    data: {
-                        category: category,
-                    },
-                    cache: false,
-                    success: function(result, status){
-                        categoryItems.items = result;
-                    },
-                    error: function(jqXHR, status, error){
-                        alert(jqXHR.responseText);
-                    }
-                });
-            }
 
             // 카테고리 및 검색어로 상품 리스트 받아오는 함수
             function loadSearchItems(category, searchWord){
@@ -611,7 +591,7 @@
                         xhr.setRequestHeader(header, token);
                     },
                     success: function(result, status){
-                        categoryItems.items = result;
+                        items.items = result;
                     },
                     error: function(jqXHR, status, error){
                         alert(jqXHR.responseText);
@@ -627,7 +607,7 @@
                     category = "all";
                 }
 
-                loadCategoryItems(category);
+                loadSearchItems(category, "");
             });
 
             // 검색 input 값 변화 시 다시 읽어오기

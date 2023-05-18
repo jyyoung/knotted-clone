@@ -1,7 +1,6 @@
 package com.knotted.controller;
 
 import com.knotted.dto.CartDTO;
-import com.knotted.dto.CartItemDTO;
 import com.knotted.service.CartService;
 import com.knotted.util.TimeUtils;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RequestMapping("/cart")
 @Controller
@@ -27,11 +25,11 @@ public class CartController {
     public String main(Model model, Principal principal){
         String memberEmail = principal.getName();
 
-        CartDTO cart = cartService.getCart(memberEmail);
+        CartDTO cartDTO = cartService.getCart(memberEmail);
 
-        if(cart.getId() != null){
-            String reserveDate = TimeUtils.localDateTimeToString(cart.getReserveDate());
-            model.addAttribute("cart", cart);
+        if(cartDTO.getId() != null){
+            String reserveDate = TimeUtils.localDateTimeToString(cartDTO.getReserveDate());
+            model.addAttribute("cart", cartDTO);
             model.addAttribute("reserveDate", reserveDate);
         }
 
@@ -41,13 +39,13 @@ public class CartController {
     // 장바구니 리스트 조회
     @PostMapping(value = {"", "/"})
     @ResponseBody
-    public ResponseEntity<List<CartItemDTO>> getCartItems(Principal principal){
+    public ResponseEntity<CartDTO> getCartItems(Principal principal){
         try {
             String memberEmail = principal.getName();
 
-            List<CartItemDTO> cartItemList = cartService.getCartItems(memberEmail);
+            CartDTO cartDTO = cartService.getCart(memberEmail);
 
-            return new ResponseEntity<>(cartItemList, HttpStatus.OK);
+            return new ResponseEntity<>(cartDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

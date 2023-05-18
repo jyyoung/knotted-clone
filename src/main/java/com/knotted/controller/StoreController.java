@@ -54,5 +54,4 @@ public class StoreController {
         return "/store/storeDetail";
     }
 
-
 }

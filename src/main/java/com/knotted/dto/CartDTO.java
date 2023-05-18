@@ -5,6 +5,7 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class CartDTO {
@@ -20,6 +21,12 @@ public class CartDTO {
 
     // 예약일자
     private LocalDateTime reserveDate;
+
+    // 장바구니 상품 DTO 리스트
+    private List<CartItemDTO> cartItemDTOList;
+
+    // 장바구니 상품 총 금액
+    private Long totalPrice;
 
     // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
     private static ModelMapper modelMapper = new ModelMapper();

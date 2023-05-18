@@ -26,7 +26,7 @@
 
         <div class="cartlist" id="cartItems" th:if="${cart != null}">
             <ul>
-                <li v-for="cartItem in cartItems" :key="cartItem.id" :data-id="cartItem.id" class="cartItem">
+                <li v-for="cartItem in cartItems.cartItemDTOList" :key="cartItem.id" :data-id="cartItem.id" class="cartItem">
                     <ul>
                         <li class="btn_delete">
                             <button type="button" class="delete_cart_item">삭제</button>
@@ -41,7 +41,7 @@
                             <button type="button" class="count_minus" :disabled="cartItem.count === 1">-</button>
                             <input type="number" pattern="\d*" min="1" :value="cartItem.count" class="item_count" readonly>
                             <button type="button" class="count_plus" :disabled="cartItem.count === cartItem.stock">+</button>
-                            <h3>{{ formatPrice(cartItem.itemDTO.price * cartItem.count) + '원' }}</h3>
+                            <h3>{{ cartItem.count ? formatPrice(cartItem.itemDTO.price * cartItem.count) + '원' : '' }}</h3>
                         </li>
                     </ul>
                 </li>
@@ -49,7 +49,7 @@
 
             <!--/* 여기 전체 합계금액은 로드 완료 시 전체 합산해서 업데이트할 것임 */-->
             <div class="price">
-                합계금액<span>{{ formatPrice(totalPrice) + '원' }}</span>
+                합계금액<span>{{ cartItems.totalPrice ? formatPrice(cartItems.totalPrice) + '원' : '' }}</span>
             </div>
         </div>
 
@@ -99,8 +99,7 @@
             const cartItems = new Vue({
                 el: "#cartItems",
                 data: {
-                    cartItems: [],
-                    totalPrice: 0
+                    cartItems: []
                 },
                 methods: {
                     formatPrice(price){
@@ -124,17 +123,8 @@
                         xhr.setRequestHeader(header, token);
                     },
                     success: function(result, status){
+                        console.log(result);
                         cartItems.cartItems = result;
-                        // 전체 금액 합산해서 업데이트하기
-
-                        let total = 0;
-                        // forEach문으로 합산하겠다.
-                        cartItems.cartItems.forEach(function(cartItem){
-                            total += cartItem.itemDTO.price * cartItem.count;
-                        });
-
-                        // 전체 금액을 Vue 객체에 넣어서 업데이트
-                        cartItems.totalPrice = total;
                     },
                     error: function(jqXHR, status, error){
                         alert(jqXHR.responseText);

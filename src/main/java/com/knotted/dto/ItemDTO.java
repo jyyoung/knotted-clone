@@ -35,6 +35,9 @@ public class ItemDTO {
     // 판매량
     private String saleCount;
 
+    // 특정 매장에서의 재고 여부
+    private boolean onStock;
+
     // 상품 이미지
     private ItemImageDTO itemImageDTO;
 

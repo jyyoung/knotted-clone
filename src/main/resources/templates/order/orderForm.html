@@ -15,8 +15,10 @@
     <div class="container">
         <h1>결제</h1>
 
-        <div class="orderlist">
-            <div class="store" th:text="${'주문매장 : ' + cart.storeDTO.name}"></div>
+        <input type="hidden" name="totalPrice" th:value="${cartDTO.totalPrice}">
+
+        <div class="orderlist" th:object="${cartDTO}">
+            <div class="store" th:text="*{'주문매장 : ' + storeDTO.name}"></div>
             <div class="store" th:text="${'주문일자 : ' + reserveDate}"></div>
             <button type="button" style="" class="package_select">포장선택</button>
             <h2>주문내역</h2>
@@ -25,11 +27,11 @@
                     <div></div>
                     <h3>규격포장</h3>
                 </li>
-                <li th:each="cartItem : ${cartItemList}">
+                <li th:each="cartItem : *{cartItemDTOList}">
                     <ul th:object="${cartItem}">
                         <li th:text="*{itemDTO.name}"></li>
                         <li th:text="*{count + '개'}"></li>
-                        <li th:text="${#numbers.formatDecimal(cartItem.itemDTO.price * cartItem.count, 3, 'COMMA', 0, 'POINT')}"></li>
+                        <li th:text="${#numbers.formatDecimal(cartItem.itemDTO.price * cartItem.count, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
                     </ul>
                 </li>
             </ul>
@@ -48,18 +50,18 @@
                         <button type="button" class="count_minus">-</button>
                         <input type="number" pattern="\d*" min="0" value="1" class="paperbag_count" readonly>
                         <button type="button" class="count_plus" disabled>+</button>
-                        <h3>300</h3>
+                        <h3 class="paperbag_price"></h3>
                     </li>
                 </ul>
                 <p>종이쇼핑백 구매를 원치않을 경우 박스만 제공됩니다.</p>
             </div>
             <ul class="pay">
                 <li>주문금액</li>
-                <li>116,300원</li>
+                <li class="total_price" th:text="${#numbers.formatDecimal(cartDTO.totalPrice + 300, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
                 <li>적립금 사용</li>
-                <li>0원</li>
+                <li class="use_reward">0원</li>
                 <li>결제금액</li>
-                <li>116,300원</li>
+                <li class="final_price" th:text="${#numbers.formatDecimal(cartDTO.totalPrice + 300, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
             </ul>
             <div class="notice notice_reserve">
                 <h2>예약주문시 유의사항</h2>
@@ -82,7 +84,7 @@
             <button type="button" class="btn_close">닫기</button>
         </h1>
         <div class="msg">
-            <span th:text="${cart.storeDTO.name + ' ' + reserveDate}" class="pay_confirm_text"></span>의 예약을 결제하시겠습니까?
+            <span th:text="${cartDTO.storeDTO.name + ' ' + reserveDate}" class="pay_confirm_text"></span>의 예약을 결제하시겠습니까?
         </div>
         <div class="btn">
             <button type="button" class="btn_left">닫기</button>
@@ -96,6 +98,15 @@
 
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
+
+        let paperbag = true; // 종이쇼핑백 사용 유무
+        let useReward = 0; // 적립금 사용액
+
+        $(document).ready(function(){
+            // 페이지 로드 완료 시
+
+
+        });
 
         // 포장선택 클릭 시
         $(".container").on("click", ".package_select", function(){
@@ -136,11 +147,8 @@
             $(".number-input .count_minus").prop("disabled", false);
         });
 
-        // 전체 금액 계산 함수
-        function totalPrice(){
-
-        }
-
+        // 주문 결제 처리하는 함수
+        // 다른 건 전부 서버단에서 처리할 수 있고, 종이쇼핑백 유무 및 적립금 사용액만 추가로 보낸다
         function orderSubmit(){
             $.ajax({
                 url: "/order/new",
