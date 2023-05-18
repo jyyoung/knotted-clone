@@ -294,7 +294,7 @@ public class OrderController {
             return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             orderResponseDTO.setSuccess(false);
-            orderResponseDTO.setErrorMessage("결제 처리 중 에러가 발생했습니다");
+            orderResponseDTO.setErrorMessage(e.getMessage());
 
             return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
         }

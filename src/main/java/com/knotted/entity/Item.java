@@ -59,7 +59,7 @@ public class Item extends BaseEntity{
 
     // 판매량
     @Column(name = "item_sale_count")
-    private Long saleCount;
+    private Long saleCount = 0L; // 초기값 할당
 
     // 상품 수정 메소드
     public void updateItem(ItemFormDTO itemFormDTO){

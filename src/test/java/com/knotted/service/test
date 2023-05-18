@@ -1,0 +1,2233 @@
+
+2023-05-18T17:31:03.339+09:00  WARN 10364 --- [nio-8888-exec-1] n.n.u.t.l.fragments.FragmentProcessor    : You don't need to put the layout:fragment/data-layout-fragment attribute into the <head> section - the decoration process will automatically copy the <head> section of your content templates into your layout page.
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_item_id,
+        c1_0.cart_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    where
+        i1_0.item_id in(?,?)
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    update
+        item
+    set
+        item_allergy=?,
+        item_category=?,
+        item_description=?,
+        item_name=?,
+        item_name_eng=?,
+        item_origin=?,
+        item_price=?,
+        item_sale_count=?,
+        update_date=?
+    where
+        item_id=?
+Hibernate:
+    update
+        store_item
+    set
+        item_id=?,
+        item_stock=?,
+        store_id=?,
+        update_date=?
+    where
+        store_item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        next_val as id_val
+    from
+        order_seq for update
+Hibernate:
+    update
+        order_seq
+    set
+        next_val= ?
+    where
+        next_val=?
+Hibernate:
+    select
+        next_val as id_val
+    from
+        order_item_seq for update
+Hibernate:
+    update
+        order_item_seq
+    set
+        next_val= ?
+    where
+        next_val=?
+Hibernate:
+    insert
+    into
+        `
+
+    order` (
+        member_id, order_price, order_status, paper_bag_used, reg_date, reserve_date, store_id, update_date, order_id
+    )
+values
+    (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate:
+    insert
+    into
+        order_item
+        (item_count, item_id, item_name, order_id, item_price, reg_date, update_date, order_item_id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate:
+    insert
+    into
+        order_item
+        (item_count, item_id, item_name, order_id, item_price, reg_date, update_date, order_item_id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate:
+    update
+        member
+    set
+        member_address=?,
+        member_email=?,
+        member_role=?,
+        member_name=?,
+        member_password=?,
+        member_postcode=?,
+        member_purchase=?,
+        member_reward=?,
+        update_date=?
+    where
+        member_id=?
+Hibernate:
+    update
+        item
+    set
+        item_allergy=?,
+        item_category=?,
+        item_description=?,
+        item_name=?,
+        item_name_eng=?,
+        item_origin=?,
+        item_price=?,
+        item_sale_count=?,
+        update_date=?
+    where
+        item_id=?
+Hibernate:
+    update
+        store_item
+    set
+        item_id=?,
+        item_stock=?,
+        store_id=?,
+        update_date=?
+    where
+        store_item_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.cart_item_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_item_id,
+        c1_0.cart_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    where
+        i1_0.item_id in(?,?)
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_item_id,
+        c1_0.cart_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    where
+        i1_0.item_id in(?,?)
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.cart_item_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
+Hibernate:
+    delete
+    from
+        cart_item
+    where
+        cart_item_id=?
+Hibernate:
+    delete
+    from
+        cart_item
+    where
+        cart_item_id=?
+Hibernate:
+    delete
+    from
+        cart
+    where
+        cart_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    order by
+        s1_0.store_id desc
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        s1_0.store_image_id,
+        s1_0.image_name,
+        s1_0.image_url,
+        s1_0.original_image_name,
+        s1_0.reg_date,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_image s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        s1_0.store_image_id,
+        s1_0.image_name,
+        s1_0.image_url,
+        s1_0.original_image_name,
+        s1_0.reg_date,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_image s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    order by
+        i1_0.item_id desc
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    order by
+        s1_0.store_id desc
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        s1_0.store_image_id,
+        s1_0.image_name,
+        s1_0.image_url,
+        s1_0.original_image_name,
+        s1_0.reg_date,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_image s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        s1_0.store_image_id,
+        s1_0.image_name,
+        s1_0.image_url,
+        s1_0.original_image_name,
+        s1_0.reg_date,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_image s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    order by
+        i1_0.item_id desc
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        next_val as id_val
+    from
+        cart_seq for update
+Hibernate:
+    update
+        cart_seq
+    set
+        next_val= ?
+    where
+        next_val=?
+Hibernate:
+    select
+        next_val as id_val
+    from
+        cart_item_seq for update
+Hibernate:
+    update
+        cart_item_seq
+    set
+        next_val= ?
+    where
+        next_val=?
+Hibernate:
+    insert
+    into
+        cart
+        (member_id, reg_date, reserve_date, store_id, update_date, cart_id)
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate:
+    insert
+    into
+        cart_item
+        (cart_id, item_count, item_id, reg_date, update_date, cart_item_id)
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_item_id,
+        c1_0.cart_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_item_id,
+        c1_0.cart_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_item_id,
+        c1_0.cart_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        s1_0.store_id,
+        s1_0.store_address,
+        s1_0.store_close_time,
+        s1_0.store_description,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone_number,
+        s1_0.store_postcode,
+        s1_0.reg_date,
+        s1_0.update_date
+    from
+        store s1_0
+    where
+        s1_0.store_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.store_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_item_id,
+        c1_0.cart_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
+Hibernate:
+    select
+        i1_0.item_id,
+        i1_0.item_allergy,
+        i1_0.item_category,
+        i1_0.item_description,
+        i1_0.item_name,
+        i1_0.item_name_eng,
+        i1_0.item_origin,
+        i1_0.item_price,
+        i1_0.reg_date,
+        i1_0.item_sale_count,
+        i1_0.update_date
+    from
+        item i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        i1_0.item_image_id,
+        i1_0.image_name,
+        i1_0.image_url,
+        i1_0.item_id,
+        i1_0.original_image_name,
+        i1_0.reg_date,
+        i1_0.update_date
+    from
+        item_image i1_0
+    where
+        i1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    select
+        s1_0.store_item_id,
+        s1_0.item_id,
+        s1_0.reg_date,
+        s1_0.item_stock,
+        s1_0.store_id,
+        s1_0.update_date
+    from
+        store_item s1_0
+    where
+        s1_0.store_id=?
+        and s1_0.item_id=?
+Hibernate:
+    insert
+    into
+        `
+
+    order` (
+        member_id, order_price, order_status, paper_bag_used, reg_date, reserve_date, store_id, update_date, order_id
+    )
+values
+    (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate:
+    insert
+    into
+        order_item
+        (item_count, item_id, item_name, order_id, item_price, reg_date, update_date, order_item_id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate:
+    update
+        member
+    set
+        member_address=?,
+        member_email=?,
+        member_role=?,
+        member_name=?,
+        member_password=?,
+        member_postcode=?,
+        member_purchase=?,
+        member_reward=?,
+        update_date=?
+    where
+        member_id=?
+Hibernate:
+    update
+        item
+    set
+        item_allergy=?,
+        item_category=?,
+        item_description=?,
+        item_name=?,
+        item_name_eng=?,
+        item_origin=?,
+        item_price=?,
+        item_sale_count=?,
+        update_date=?
+    where
+        item_id=?
+Hibernate:
+    update
+        store_item
+    set
+        item_id=?,
+        item_stock=?,
+        store_id=?,
+        update_date=?
+    where
+        store_item_id=?
+Hibernate:
+    select
+        m1_0.member_id,
+        m1_0.member_address,
+        m1_0.member_email,
+        m1_0.member_role,
+        m1_0.member_name,
+        m1_0.member_password,
+        m1_0.member_postcode,
+        m1_0.member_purchase,
+        m1_0.reg_date,
+        m1_0.member_reward,
+        m1_0.update_date
+    from
+        member m1_0
+    where
+        m1_0.member_email=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.member_id,
+        c1_0.reg_date,
+        c1_0.reserve_date,
+        c1_0.store_id,
+        c1_0.update_date
+    from
+        cart c1_0
+    where
+        c1_0.member_id=?
+Hibernate:
+    select
+        c1_0.cart_id,
+        c1_0.cart_item_id,
+        c1_0.item_count,
+        c1_0.item_id,
+        c1_0.reg_date,
+        c1_0.update_date
+    from
+        cart_item c1_0
+    where
+        c1_0.cart_id=?
