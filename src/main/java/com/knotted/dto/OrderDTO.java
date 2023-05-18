@@ -2,6 +2,7 @@ package com.knotted.dto;
 
 import com.knotted.constant.OrderStatus;
 import com.knotted.entity.Order;
+import jakarta.persistence.Column;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 
@@ -25,6 +26,9 @@ public class OrderDTO {
 
     // 주문 상태
     private OrderStatus orderStatus;
+
+    // 주문 금액 (적립금 사용 전)
+    private Long totalPrice;
 
     // 결제 금액
     private Long orderPrice;

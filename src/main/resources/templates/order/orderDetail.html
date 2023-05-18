@@ -10,7 +10,43 @@
     <div class="container">
         <h1>주문상세보기</h1>
 
-
+        <div class="orderdetail" th:object="${orderDTO}">
+            <h2 th:text="*{'주문번호 : ' + id}"></h2>
+            <div class="detail_tab">
+                <span th:text="${reserveDate}"></span><span>결제완료</span>
+                <button type="button" class="btn_cancel">예약취소</button>
+            </div>
+            <ul class="store">
+                <li><h2>주문매장</h2></li>
+                <li th:text="*{storeDTO.name}"></li>
+            </ul>
+            <h2>주문내역</h2>
+            <ul class="box box04">
+                <li>
+                    <div></div>
+                    <h3>규격포장</h3>
+                </li>
+                <li th:each="orderItem : *{orderItemDTOList}">
+                    <ul th:object="${orderItem}">
+                        <li th:text="*{name}"></li>
+                        <li th:text="*{count + '개'}"></li>
+                        <li th:text="*{#numbers.formatDecimal(price * count, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="paylist">
+                <ul class="pay">
+                    <li>주문금액</li>
+                    <li th:text="*{#numbers.formatDecimal(totalPrice, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                    <li>적립금</li>
+                    <li>0원</li>
+                    <li>결제금액</li>
+                    <li class="totalprice" th:text="*{#numbers.formatDecimal(orderPrice, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                    <li>결제일</li>
+                    <li class="date" th:text="${reserveDate}"></li>
+                </ul>
+            </div>
+        </div>
 
     </div>
 </th:block>

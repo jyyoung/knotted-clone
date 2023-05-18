@@ -1,6 +1,8 @@
 package com.knotted.dto;
 
+import com.knotted.entity.OrderItem;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 @Data
 public class OrderItemDTO {
@@ -22,4 +24,12 @@ public class OrderItemDTO {
 
     // 상품 수량
     private Long count;
+
+    // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    // 엔티티를 DTO로 변환하여 리턴
+    public static OrderItemDTO of(OrderItem orderItem){
+        return modelMapper.map(orderItem, OrderItemDTO.class);
+    }
 }

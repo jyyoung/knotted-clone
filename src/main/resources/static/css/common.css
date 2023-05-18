@@ -2139,7 +2139,7 @@ section::after {
 
 /* 장바구니 부분 E */
 
-/* 결제(주문) 부분 S */
+/* 결제(주문) 화면 부분 S */
 
 .orderlist {
     width: calc(50% - 121px);
@@ -2352,7 +2352,7 @@ section::after {
     font-weight: 500;
 }
 
-/* 결제(주문) 부분 E */
+/* 결제(주문) 화면 부분 E */
 
 /* 주문 완료 화면 부분 S */
 
@@ -2408,9 +2408,108 @@ section::after {
     margin-left: 10px;
 }
 
-
-
 /* 주문 완료 화면 부분 E */
+
+/* 주문 상세보기 부분 S */
+
+.orderdetail {
+    width: 94%;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.orderdetail > h2 {
+    padding-top: 35px;
+    margin: 0 0 20px;
+    font-weight: 500;
+}
+
+.orderdetail > h2:nth-child(1) {
+    border-top: 0;
+    padding-top: 0;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.orderdetail div.detail_tab span {
+    line-height: 44px;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin-right: 10px;
+    color: #f5a9ca;
+    font-weight: 500;
+}
+
+.orderdetail div.detail_tab button {
+    float: right;
+    background-color: #f1e7ac;
+    min-width: 120px;
+    margin: 0 5px;
+    border-radius: 3px;
+    line-height: 44px;
+    font-size: 1.6rem;
+    padding: 0 15px;
+}
+
+.orderdetail div.detail_tab button.btn_cancel {
+    background-color: transparent;
+    border: 1px solid #DDD;
+}
+
+.orderdetail .store {
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.orderdetail .store li {
+    display: inline-block;
+    text-align: left;
+}
+
+.orderdetail .store li h2 {
+    font-weight: 500;
+}
+
+.orderdetail .store li:last-child {
+    float: right;
+    text-align: right;
+}
+
+.orderlist > .box, .orderdetail > .box {
+    width: 100%;
+    display: inline-block;
+    margin: 15px 0;
+}
+
+.orderlist > .box li, .orderdetail > .box li {
+    line-height: 24px;
+}
+
+.orderlist > .box > li:first-child, .orderdetail > .box > li:first-child {
+    margin-bottom: 5px;
+}
+
+.orderdetail .paylist {
+    width: 100%;
+    padding: 0;
+    border: 0;
+}
+
+.paylist > .pay li.totalprice {
+    font-weight: 500;
+    font-size: 150%;
+}
+
+.paylist > .pay li.date {
+    font-weight: 200;
+    font-size: 1.4rem;
+}
+
+/* 주문 상세보기 부분 E */
 
 /* 브랜드 부분 S */
 

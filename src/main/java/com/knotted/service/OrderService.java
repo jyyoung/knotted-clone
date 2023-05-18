@@ -98,16 +98,19 @@ public class OrderService {
         // 해당 상품의 판매량을 증가시킨다 - OK
         // 주문 및 주문 상품을 생성한다 - OK
         // 마지막으로 해당 회원의 장바구니 및 장바구니 상품을 전부 삭제한다 - 안 됨
-        
+
         // 일단 paperbag, useReward를 이용해서 결제 금액을 계산한다
+
         if(paperbag){
             // 종이 쇼핑백 300원으로 설정함
             totalPrice += 300;
         }
 
+        Long orderPrice = totalPrice; // 결제 금액 (적립금 사용 후)
+
         // 적립금 사용하였으면
         if(useReward > 0){
-            totalPrice -= useReward;
+            orderPrice -= useReward;
             
             // 회원 적립금 감소시킨다
             member.subtractReward(useReward);
@@ -117,10 +120,10 @@ public class OrderService {
         }
         
         // 회원의 구매금액을 최종 결제금액으로 증가시킨다
-        member.addPurchase(totalPrice);
+        member.addPurchase(orderPrice);
 
         // 최종 결제금액의 5% 계산한다
-        Long reward = Math.round(totalPrice * 0.05);
+        Long reward = Math.round(orderPrice * 0.05);
 
         // 회원 적립금 증가시킨다
         member.addReward(reward);
@@ -130,7 +133,8 @@ public class OrderService {
         order.setMember(member);
         order.setStore(store);
         order.setPaperBagUsed(paperbag);
-        order.setOrderPrice(totalPrice);
+        order.setTotalPrice(totalPrice);
+        order.setOrderPrice(orderPrice);
         order.setOrderStatus(OrderStatus.ORDER);
         order.setReserveDate(cartDTO.getReserveDate());
 

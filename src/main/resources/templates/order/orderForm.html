@@ -39,7 +39,7 @@
 
         <div class="paylist">
             <h2>적립금 <span th:text="${'보유적립금 ' + #numbers.formatDecimal(member.reward, 3, 'COMMA', 0, 'POINT') + '원'}"></span></h2>
-            <input type="number" class="cash" th:disabled="${member.reward < 1000}" th:attr="placeholder=${member.reward < 1000 ? '1,000원 이상 시 사용 가능합니다' : ''}">
+            <input type="number" class="cash" min="0" th:max="${member.reward}" th:disabled="${member.reward < 1000}" th:attr="placeholder=${member.reward < 1000 ? '1,000원 이상 시 사용 가능합니다' : ''}">
             <button type="button" th:disabled="${member.reward < 1000}" class="reward_all_use">전액사용</button>
             <div class="paperbag">
                 <ul>
@@ -175,6 +175,9 @@
                 alert("최대 적립금보다 많이 사용할 수 없습니다");
 
                 $(this).val(reward);
+            }else if(useReward < 0 || !useReward){
+                useReward = 0;
+                $(this).val(useReward);
             }
 
             finalPriceCalc();
@@ -189,16 +192,15 @@
             }
 
             let finalRewardPriceText = "";
-            let useRewardPriceText = "";
 
             if(useReward > 0){
                 let finalRewardPrice = finalPrice - useReward; // 적립금 사용이 포함된 총 결제금액
-                useRewardPriceText = useReward.toLocaleString() + "원";
                 finalRewardPriceText = finalRewardPrice.toLocaleString() + "원";
             }else{
                 finalRewardPriceText = finalPrice.toLocaleString() + "원";
             }
 
+            let useRewardPriceText = useReward.toLocaleString() + "원";
             let finalPriceText = finalPrice.toLocaleString() + "원";
 
             $(".paylist .total_price").html(finalPriceText);

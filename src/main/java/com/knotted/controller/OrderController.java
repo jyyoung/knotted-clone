@@ -6,12 +6,8 @@ import com.knotted.entity.Order;
 import com.knotted.entity.Store;
 import com.knotted.repository.MemberRepository;
 import com.knotted.repository.OrderRepository;
-import com.knotted.repository.StoreItemRepository;
 import com.knotted.repository.StoreRepository;
-import com.knotted.service.CartService;
-import com.knotted.service.ItemService;
-import com.knotted.service.OrderService;
-import com.knotted.service.StoreItemService;
+import com.knotted.service.*;
 import com.knotted.util.TimeUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +34,7 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final CartService cartService;
-    private final StoreItemRepository storeItemRepository;
+    private final OrderItemService orderItemService;
 
     // 주문(예약) 메인으로 이동
     @GetMapping(value = {"", "/"})
@@ -345,6 +341,18 @@ public class OrderController {
 
         OrderDTO orderDTO = OrderDTO.of(order);
         String reserveDate = TimeUtils.localDateTimeToString(orderDTO.getReserveDate());
+
+        // 매장 정보도 담는다
+        Store store = order.getStore();
+        StoreDTO storeDTO = StoreDTO.of(store);
+        orderDTO.setStoreDTO(storeDTO);
+
+        // 주문 상품 정보도 담는다
+        List<OrderItemDTO> orderItemDTOList = orderItemService.getOrderItems(orderId);
+        orderDTO.setOrderItemDTOList(orderItemDTOList);
+
+        // 해당 주문의 적립금 사용 정보도 담는다
+
 
         model.addAttribute("orderDTO", orderDTO);
         model.addAttribute("reserveDate", reserveDate);

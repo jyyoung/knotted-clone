@@ -33,6 +33,10 @@ public class Order extends BaseEntity{
     @Column(name = "paper_bag_used")
     private boolean paperBagUsed;
 
+    // 주문 금액 (적립금 사용 전)
+    @Column(name = "total_price")
+    private Long totalPrice;
+
     // 결제 금액
     @Column(name = "order_price")
     private Long orderPrice;

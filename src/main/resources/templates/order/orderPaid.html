@@ -34,8 +34,10 @@
 
 <th:block layout:fragment="script">
     <script>
+        let orderId = [[${orderDTO.id}]];
+
         $(".go_order_detail").on("click", function(){
-            location.href = "/order/detail/{orderId}";
+            location.href = "/order/detail/" + orderId;
         });
     </script>
 </th:block>
