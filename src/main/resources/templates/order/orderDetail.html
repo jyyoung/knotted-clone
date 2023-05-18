@@ -30,18 +30,18 @@
                     <ul th:object="${orderItem}">
                         <li th:text="*{name}"></li>
                         <li th:text="*{count + '개'}"></li>
-                        <li th:text="*{#numbers.formatDecimal(price * count, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                        <li th:text="*{#numbers.formatInteger(price * count, 0, 'COMMA') + '원'}"></li>
                     </ul>
                 </li>
             </ul>
             <div class="paylist">
                 <ul class="pay">
                     <li>주문금액</li>
-                    <li th:text="*{#numbers.formatDecimal(totalPrice, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                    <li th:text="*{#numbers.formatInteger(totalPrice, 0, 'COMMA') + '원'}"></li>
                     <li>적립금</li>
                     <li>0원</li>
                     <li>결제금액</li>
-                    <li class="totalprice" th:text="*{#numbers.formatDecimal(orderPrice, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                    <li class="totalprice" th:text="*{#numbers.formatInteger(orderPrice, 0, 'COMMA') + '원'}"></li>
                     <li>결제일</li>
                     <li class="date" th:text="${reserveDate}"></li>
                 </ul>

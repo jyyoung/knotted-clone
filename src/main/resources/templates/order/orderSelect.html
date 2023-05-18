@@ -293,7 +293,7 @@
                                 <input type="hidden" name="itemPrice" th:value="*{price}">
                                 <li><h2 th:text="*{name}"></h2></li>
                                 <li th:text="*{nameEng}"></li>
-                                <li th:text="${#numbers.formatDecimal(itemFormDTO.price, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                                <li th:text="${#numbers.formatInteger(itemFormDTO.price, 0, 'COMMA') + '원'}"></li>
                             </ul>
                             <ul class="information">
                                 <li class="txt" th:text="*{description}"></li>
@@ -316,7 +316,7 @@
                                     <input type="number" pattern="\d*" min="0" max="2" name="itemCount" class="item_count" value="1">
                                     <button type="button" class="count_plus">+</button>
                                     <!--/* 아래 전체 금액 부분은 수량 바뀔 때마다 업데이트 */-->
-                                    <h3 th:text="${#numbers.formatDecimal(itemFormDTO.price, 3, 'COMMA', 0, 'POINT') + '원'}" class="total_price"></h3>
+                                    <h3 th:text="${#numbers.formatInteger(itemFormDTO.price, 0, 'COMMA') + '원'}" class="total_price"></h3>
                                 </div>
                             </div>
                             <div class="now_stock_wrap">

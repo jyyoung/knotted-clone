@@ -21,7 +21,7 @@
                         <input type="checkbox" id="bookmark"><label for="bookmark"></label>
                     </li>
                     <li th:text="*{nameEng}" class="name_eng"></li>
-                    <li th:text="${#numbers.formatDecimal(itemFormDTO.price, 3, 'COMMA', 0, 'POINT') + '원'}"></li>
+                    <li th:text="${#numbers.formatInteger(itemFormDTO.price, 0, 'COMMA') + '원'}"></li>
                 </ul>
                 <ul class="information">
                     <li class="txt" th:text="*{description}"></li>

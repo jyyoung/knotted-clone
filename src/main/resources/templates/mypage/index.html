@@ -16,7 +16,7 @@
                         <span>150,000</span>원을 더 구매하시면, 내년 등급은 <span>핑크스마일</span>입니다.
                     </li>
                     <li class="go_point">
-                        사용 가능한 적립금은 <span th:text="*{#numbers.formatDecimal(reward, 3, 'COMMA', 0, 'POINT')}"></span>원 입니다.
+                        사용 가능한 적립금은 <span th:text="*{#numbers.formatInteger(reward, 0, 'COMMA')}"></span>원 입니다.
                     </li>
                 </ul>
                 <div class="list">
