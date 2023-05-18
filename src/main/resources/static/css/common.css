@@ -2277,6 +2277,12 @@ section::after {
     content: "zzz";
 }
 
+.paylist > .cash::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
 .paylist .paperbag {
     border-top: 1px solid #ccc;
     margin: 20px 0 0;

@@ -93,6 +93,6 @@ public class Member extends BaseEntity{
     
     // 회원의 사용 적립금을 증가시키는 메소드
     public void addRewardUse(Long rewardUse){
-        this.rewardUse -= rewardUse;
+        this.rewardUse += rewardUse;
     }
 }
