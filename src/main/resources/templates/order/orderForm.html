@@ -194,7 +194,8 @@
                 success: function(result, status){
                     if(result.success === true){
                         // 결제 완료 안내 페이지로 넘어감
-                        location.href = "/order/paid";
+                        let orderId = result.orderId;
+                        location.href = "/order/paid/" + orderId;
                     }else{
                         alert(result.errorMessage);
                     }

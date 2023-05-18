@@ -161,7 +161,6 @@ public class OrderService {
         cartRepository.delete(cart);
 
         // 여기까지 정상적으로 왔으면 빈 에러 카트 리스트를 반환한다
-        orderResponseDTO.setSuccess(true);
         orderResponseDTO.setOrderId(orderId);
         return orderResponseDTO;
     }

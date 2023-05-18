@@ -2,8 +2,10 @@ package com.knotted.controller;
 
 import com.knotted.dto.*;
 import com.knotted.entity.Member;
+import com.knotted.entity.Order;
 import com.knotted.entity.Store;
 import com.knotted.repository.MemberRepository;
+import com.knotted.repository.OrderRepository;
 import com.knotted.repository.StoreItemRepository;
 import com.knotted.repository.StoreRepository;
 import com.knotted.service.CartService;
@@ -33,6 +35,7 @@ public class OrderController {
     private final StoreRepository storeRepository;
     private final ItemService itemService;
     private final StoreItemService storeItemService;
+    private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final CartService cartService;
     private final StoreItemRepository storeItemRepository;
@@ -301,8 +304,26 @@ public class OrderController {
     }
 
     // 주문 완료 안내 페이지로 이동
-    @GetMapping(value = "/paid")
-    public String complete(){
+    @GetMapping(value = "/paid/{orderId}")
+    public String orderPaid(@PathVariable("orderId") Long orderId, Model model, Principal principal){
+        // 해당 OrderId의 주문이 현재 로그인한 사용자 것인지 확인
+        String memberEmail = principal.getName();
+        Member member = memberRepository.findByEmail(memberEmail);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+        Member savedMember = order.getMember();
+
+        // 해당 주문이 없거나 해당 주문 사용자와 현재 사용자가 다른 경우
+        if(order == null || !savedMember.equals(member)){
+            return "/index"; // 그냥 메인으로 보냄 (추후 에러메시지 기능 추가할 것)
+        }
+
+        OrderDTO orderDTO = OrderDTO.of(order);
+        String reserveDate = TimeUtils.localDateTimeToString(orderDTO.getReserveDate());
+
+        model.addAttribute("orderDTO", orderDTO);
+        model.addAttribute("reserveDate", reserveDate);
+
         return "/order/paid";
     }
 
