@@ -38,6 +38,12 @@ public class MypageController {
         return "/mypage/myScore";
     }
 
+    // 적립 내역 페이지로 이동
+    @GetMapping(value = "/point")
+    public String point(Model model){
+        return "/mypage/point";
+    }
+
     // 찜 리스트 페이지로 이동
     @GetMapping(value = "/bookmark")
     public String bookmark(Model model){

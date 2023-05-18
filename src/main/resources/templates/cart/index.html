@@ -19,7 +19,7 @@
                 <input type="radio" name="cart" id="cart02" checked>
                 <label for="cart02">예약</label>
                 <div class="date" v-if="cartItems && cartItems.cartItemDTOList && cartItems.cartItemDTOList.length > 0" th:if="${cart != null}">
-                    <span class="storeName" :text="cartItems.storeDTO.name + '점'"></span>
+                    <span class="storeName">{{ cartItems.storeDTO.name + '점'}}</span>
                     <th:block th:text="${reserveDate}"></th:block>
                     <button type="button" class="store_change_button">변경</button>
                 </div>

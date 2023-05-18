@@ -27,6 +27,7 @@ public class OrderService {
     private final ItemRepository itemRepository;
     private final StoreRepository storeRepository;
     private final OrderItemRepository orderItemRepository;
+    private final RewardHistoryRepository rewardHistoryRepository;
 
     // 주문 생성 (각종 유효성 검사도 함)
     public OrderResponseDTO createOrder(String memberEmail, boolean paperbag, Long useReward){
@@ -95,19 +96,24 @@ public class OrderService {
         // 회원 적립금은 지금 결제한 금액의 5%를 준다 - OK
         // 해당 매장 상품의 재고를 감소시킨다 - OK
         // 해당 상품의 판매량을 증가시킨다 - OK
-        // 주문 및 주문 상품을 생성한다
-        // 마지막으로 해당 회원의 장바구니 및 장바구니 상품을 전부 삭제한다 (장바구니 삭제만 하면 상품은 같이 지워짐)
+        // 주문 및 주문 상품을 생성한다 - OK
+        // 마지막으로 해당 회원의 장바구니 및 장바구니 상품을 전부 삭제한다 - 안 됨
         
         // 일단 paperbag, useReward를 이용해서 결제 금액을 계산한다
         if(paperbag){
             // 종이 쇼핑백 300원으로 설정함
             totalPrice += 300;
         }
+
+        // 적립금 사용하였으면
         if(useReward > 0){
             totalPrice -= useReward;
             
             // 회원 적립금 감소시킨다
             member.subtractReward(useReward);
+
+            // 회원 사용 적립금 증가시킨다
+            member.addRewardUse(useReward);
         }
         
         // 회원의 구매금액을 최종 결제금액으로 증가시킨다
@@ -151,6 +157,31 @@ public class OrderService {
 
             orderItemRepository.save(orderItem);
         }
+
+        // 적립 내역 생성
+
+        // 적립금 사용하였으면
+        if(useReward > 0){
+            // 적립금 사용 내역을 생성한다
+            RewardHistory rewardHistory = new RewardHistory();
+            rewardHistory.setMember(member);
+            rewardHistory.setOrder(order);
+            rewardHistory.setStore(store);
+            rewardHistory.setType(true); // 사용은 1(true)
+            rewardHistory.setPoint(useReward);
+
+            rewardHistoryRepository.save(rewardHistory); // 적립금 사용 내역 생성
+        }
+
+        // 적립금 획득 내역을 생성한다
+        RewardHistory acquireRewardHistory = new RewardHistory();
+        acquireRewardHistory.setMember(member);
+        acquireRewardHistory.setOrder(order);
+        acquireRewardHistory.setStore(store);
+        acquireRewardHistory.setType(false); // 획득은 0(false)
+        acquireRewardHistory.setPoint(reward);
+
+        rewardHistoryRepository.save(acquireRewardHistory); // 적립금 획득 내역 생성
         
         // 장바구니 및 장바구니 상품을 삭제한다
         // 주의!!! 아래와 같이 불렀을 경우 조회는 문제 없지만 실제 데이터를 조작하는 경우,

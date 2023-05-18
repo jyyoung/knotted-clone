@@ -32,6 +32,9 @@ public class MemberDTO {
     // 적립금
     private Long reward;
 
+    // 사용한 적립금
+    private Long rewardUse;
+
     // 회원 등급
     private MemberRole memberRole;
 

@@ -47,6 +47,10 @@ public class Member extends BaseEntity{
     @Column(name = "member_reward")
     private Long reward;
 
+    // 사용한 적립금
+    @Column(name = "member_reward_use")
+    private Long rewardUse;
+
     // 회원 등급
     // 기본값으로 USER를 줄 거고 ADMIN은 별도로 가입하게 할 예정
     @Column(name = "member_role")
@@ -65,6 +69,7 @@ public class Member extends BaseEntity{
         member.setAddress(memberFormDTO.getAddress());
         member.setPurchase(0L);
         member.setReward(0L);
+        member.setRewardUse(0L);
         member.setMemberRole(MemberRole.USER);
 //        member.setMemberRole(MemberRole.ADMIN); // 일단 테스트를 위해 ADMIN 롤로 가입
 
@@ -76,13 +81,18 @@ public class Member extends BaseEntity{
         this.purchase += orderPrice;
     }
 
-    // 회원의 적립금을 감소시키는 메소드
+    // 회원의 적립금을 증가시키는 메소드
     public void addReward(Long reward){
         this.reward += reward;
     }
     
-    // 회원의 적립금을 증가시키는 메소드
+    // 회원의 적립금을 감소시키는 메소드
     public void subtractReward(Long reward){
         this.reward -= reward;
+    }
+    
+    // 회원의 사용 적립금을 증가시키는 메소드
+    public void addRewardUse(Long rewardUse){
+        this.rewardUse -= rewardUse;
     }
 }

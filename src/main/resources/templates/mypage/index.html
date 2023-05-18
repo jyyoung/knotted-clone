@@ -15,8 +15,8 @@
                     <li class="go_myscore">
                         <span>150,000</span>원을 더 구매하시면, 내년 등급은 <span>핑크스마일</span>입니다.
                     </li>
-                    <li>
-                        사용 가능한 적립금은 <span th:text="*{reward}">0</span>원 입니다.
+                    <li class="go_point">
+                        사용 가능한 적립금은 <span th:text="*{#numbers.formatDecimal(reward, 3, 'COMMA', 0, 'POINT')}"></span>원 입니다.
                     </li>
                 </ul>
                 <div class="list">
@@ -40,8 +40,14 @@
 
 <th:block layout:fragment="script">
     <script>
+        // 나의 등급 페이지로 이동
         $(".go_myscore").on("click", function(){
             location.href = "/mypage/myscore";
+        });
+
+        // 적립 내역 페이지로 이동
+        $(".go_point").on("click", function(){
+            location.href = "/mypage/point";
         });
     </script>
 
