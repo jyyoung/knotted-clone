@@ -2827,7 +2827,7 @@ section::after {
 }
 
 .reserve_listview tr td:nth-child(3) h2 {
-    font-size: 2rem;
+    margin-top: 2px;
     margin-bottom: 10px;
     line-height: 20px;
 }

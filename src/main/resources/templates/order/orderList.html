@@ -112,7 +112,11 @@
             <tbody>
                 <!--/* 여기 tr 부분을 순회하면서 주문 내역 출력 */-->
                 <tr th:each="orderDTO : ${orderDTOList}" th:object="${orderDTO}" th:attr="data-id=${orderDTO.id}" class="go_order_detail">
-                    <td th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td>
+                        <span th:text="*{#temporals.format(regDate, 'yyyy-MM-dd')}"></span>
+                        <br>
+                        <span th:text="*{#temporals.format(regDate, 'HH:mm:ss')}"></span>
+                    </td>
                     <td>
                         <a th:text="*{id}"></a>
                     </td>
