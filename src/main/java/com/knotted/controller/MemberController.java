@@ -1,7 +1,9 @@
 package com.knotted.controller;
 
+import com.knotted.dto.MemberDTO;
 import com.knotted.dto.MemberFormDTO;
 import com.knotted.entity.Member;
+import com.knotted.repository.MemberRepository;
 import com.knotted.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RequestMapping("/member")
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
 
+    private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder; // 암호화용
 
@@ -79,6 +84,27 @@ public class MemberController {
         model.addAttribute("mode", mode);
         model.addAttribute("email", email);
         return "/member/complete";
+    }
+
+    // 회원정보 수정 비밀번호 확인 페이지로 이동
+    @GetMapping(value = "/before-modify")
+    public String beforeModify(Model model, Principal principal){
+        String memberEmail = principal.getName();
+        Member member = memberRepository.findByEmail(memberEmail);
+
+        MemberDTO memberDTO = MemberDTO.of(member);
+
+        model.addAttribute("memberDTO", memberDTO);
+
+        return "/member/beforeModifyForm";
+    }
+
+    // 회원정보 수정 비밀번호 확인 처리
+    @PostMapping(value = "/before-modify")
+    @ResponseBody
+    public ResponseEntity<Void> beforeModifySubmit(@RequestParam("password") String password, Principal principal){
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

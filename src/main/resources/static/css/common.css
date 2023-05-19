@@ -116,6 +116,12 @@ input:disabled, textarea:disabled, input:disabled::placeholder, textarea:disable
     opacity: 1;
 }
 
+input[type=text], input[type=password] {
+    -webkit-border-radius: 0;
+    -webkit-appearance: none;
+    text-indent: 10px;
+}
+
 .container {
     width: 1366px;
     margin: 0 auto;
@@ -3251,8 +3257,81 @@ section::after {
     clear: both;
 }
 
-
 /* 마이페이지 부분 E */
+
+/* 회원정보 수정 부분 S */
+
+.login, .join_check {
+    width: 94%;
+    max-width: 480px;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.login .login_outinfo {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.login > div > p {
+    margin-bottom: 10px;
+    line-height: 24px;
+    padding-left: 30px;
+    text-indent: -30px;
+}
+
+.login > div > p:before {
+    content: "";
+    background: url(/images/reserve_info_04.png) 0 0 no-repeat;
+    background-size: auto 18px;
+    padding-left: 30px;
+}
+
+.join ul, .login ul, .join_check ul {
+    margin-bottom: 10px;
+}
+
+.join li, .login li, .join_check li {
+    line-height: 45px;
+    text-align: left;
+    border-bottom: 1px solid #EEE;
+    padding: 15px 0;
+}
+
+.join li label, .login li label {
+    width: 20%;
+    min-width: 60px;
+    display: inline-block;
+}
+
+.join li:after, .login li:after, .join_check li:after {
+    content: "";
+    clear: both;
+}
+
+.login li input[type="text"], .login li input[type="password"] {
+    border-radius: 5px;
+    height: 43px;
+    width: calc(80% - 10px);
+    margin-top: -5px;
+    background-color: inherit;
+    border: 1px solid #DDD;
+}
+
+.join > button, .login > button, .join_check button {
+    background: #FFDB7E;
+    transition: 1s;
+    border: 1px solid #FFDB7E;
+    color: #846E23;
+    width: 100%;
+    max-width: 300px;
+    padding: 15px;
+    margin-top: 30px;
+    border-radius: 500px;
+}
+
+/* 회원정보 수정 부분 E */
 
 /* 공통 푸터 부분 S */
 
