@@ -1,5 +1,6 @@
 package com.knotted.service;
 
+import com.knotted.dto.ItemDTO;
 import com.knotted.dto.OrderItemDTO;
 import com.knotted.entity.Order;
 import com.knotted.entity.OrderItem;
@@ -32,6 +33,11 @@ public class OrderItemService {
 
         for(OrderItem orderItem : orderItemList){
             OrderItemDTO orderItemDTO = OrderItemDTO.of(orderItem);
+
+            // OrderItemDTO 안의 ItemDTO도 같이 넣어준다
+            ItemDTO itemDTO = ItemDTO.of(orderItem.getItem());
+            orderItemDTO.setItemDTO(itemDTO);
+
             orderItemDTOList.add(orderItemDTO);
         }
 

@@ -422,7 +422,7 @@ public class OrderController {
     // 주문 취소 처리
     @PostMapping(value = "/cancel/{orderId}")
     @ResponseBody
-    public ResponseEntity<Void> orderCancelSubmit(@PathVariable("orderId") Long orderId, OrderCancelType cancelType, String cancelDescription, Principal principal) {
+    public ResponseEntity<String> orderCancelSubmit(@PathVariable("orderId") Long orderId, OrderCancelType cancelType, String cancelDescription, Principal principal) {
 
         String memberEmail = principal.getName();
 
@@ -434,7 +434,7 @@ public class OrderController {
         } catch (IllegalStateException e) { // 주문한 사용자가 요청한 경우가 아니거나 이미 취소된 예약인 경우
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) { // 주문 취소 중 에러가 발생한 경우
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
