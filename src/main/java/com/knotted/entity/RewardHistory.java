@@ -8,7 +8,7 @@ import lombok.Data;
 @Entity
 @Table(name = "reward_history")
 @Data
-public class RewardHistory {
+public class RewardHistory extends BaseEntity{
 
     // 적립 내역 ID
     @Id
@@ -38,5 +38,9 @@ public class RewardHistory {
     // 적립 금액 또는 사용 금액
     @Column(name = "reward_point")
     private Long point;
+
+    // 적립 내용 (간단히 상품명 + 외 이런 식으로 적기)
+    @Column(name = "reward_description")
+    private String description;
 
 }

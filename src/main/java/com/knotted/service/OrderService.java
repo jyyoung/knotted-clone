@@ -144,6 +144,10 @@ public class OrderService {
         // 이 생성된 주문 번호로 주문 상품들 생성할 것
         Long orderId = order.getId();
 
+        // 적립 내용에 사용할 변수
+        String rewardDescription = "";
+        String useRewardDescription = "";
+
         // 주문 상품을 생성한다
         for(CartItemDTO cartItemDTO : cartDTO.getCartItemDTOList()){
 
@@ -155,6 +159,14 @@ public class OrderService {
             Item item = itemRepository.findById(itemId)
                     .orElseThrow(EntityNotFoundException::new);
 
+            if(rewardDescription.isEmpty()){
+                rewardDescription = item.getName() + " 외 구매에 대한 적립금 획득";
+            }
+
+            if(useRewardDescription.isEmpty()){
+                useRewardDescription = item.getName() + " 외 구매에 대한 적립금 사용";
+            }
+
             orderItem.setItem(item);
             orderItem.setName(item.getName());
             orderItem.setPrice(item.getPrice());
@@ -162,8 +174,6 @@ public class OrderService {
 
             orderItemRepository.save(orderItem);
         }
-
-        // 적립 내역 생성
 
         // 적립금 사용하였으면
         if(useReward > 0){
@@ -174,6 +184,7 @@ public class OrderService {
             rewardHistory.setStore(store);
             rewardHistory.setType(true); // 사용은 1(true)
             rewardHistory.setPoint(useReward);
+            rewardHistory.setDescription(useRewardDescription);
 
             rewardHistoryRepository.save(rewardHistory); // 적립금 사용 내역 생성
         }
@@ -185,6 +196,7 @@ public class OrderService {
         acquireRewardHistory.setStore(store);
         acquireRewardHistory.setType(false); // 획득은 0(false)
         acquireRewardHistory.setPoint(reward);
+        acquireRewardHistory.setDescription(rewardDescription);
 
         rewardHistoryRepository.save(acquireRewardHistory); // 적립금 획득 내역 생성
         

@@ -39,11 +39,11 @@
                         </thead>
                         <tbody>
                             <!--/* 여기서 tr로 내역 반복하면서 출력 */-->
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr th:each="acquire : ${acquireList}" th:object="${acquire}">
+                                <td th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="*{#numbers.formatInteger(point, 0, 'COMMA') + '원'}"></td>
+                                <td th:text="*{description}"></td>
+                                <td th:text="*{storeDTO.name}"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -62,11 +62,11 @@
                         </thead>
                         <tbody>
                             <!--/* 여기서 tr로 내역 반복하면서 출력 */-->
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr th:each="use : ${useList}" th:object="${use}">
+                                <td th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="*{#numbers.formatInteger(point, 0, 'COMMA') + '원'}"></td>
+                                <td th:text="*{description}"></td>
+                                <td th:text="*{storeDTO.name}"></td>
                             </tr>
                         </tbody>
                     </table>
