@@ -8,7 +8,71 @@
 
 <th:block layout:fragment="content">
     <div class="container">
-        <h1>적립내역</h1>
+        <h1>적립금</h1>
+
+        <div class="mypoint">
+            <ul>
+                <li>
+                    <p>현재적립금</p>
+                    <h2 th:text="${#numbers.formatInteger(memberDTO.reward, 0, 'COMMA') + '원'}"></h2>
+                </li>
+                <li>
+                    <p>사용된 적립금</p>
+                    <h2 th:text="${#numbers.formatInteger(memberDTO.rewardUse, 0, 'COMMA') + '원'}"></h2>
+                </li>
+            </ul>
+
+            <div class="pointtab">
+                <input type="radio" name="point" id="point01" checked><label for="point01">적립내역</label>
+                <input type="radio" name="point" id="point02"><label for="point02">사용내역</label>
+
+                <!--/* 적립내역 */-->
+                <div class="point01">
+                    <table class="board_list">
+                        <thead>
+                            <tr>
+                                <th>거래일</th>
+                                <th>적립금액</th>
+                                <th>내역</th>
+                                <th>매장</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--/* 여기서 tr로 내역 반복하면서 출력 */-->
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--/* 사용내역 */-->
+                <div class="point02">
+                    <table class="board_list">
+                        <thead>
+                            <tr>
+                                <th>거래일</th>
+                                <th>사용금액</th>
+                                <th>내역</th>
+                                <th>매장</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--/* 여기서 tr로 내역 반복하면서 출력 */-->
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </th:block>
 

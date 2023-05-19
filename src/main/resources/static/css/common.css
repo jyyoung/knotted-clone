@@ -2951,6 +2951,114 @@ section::after {
 
 /* 주문(예약) 취소 부분 E */
 
+/* 적립 내역 부분 S */
+
+.mypoint {
+
+}
+
+.mypoint ul {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    border: 1px solid #DDD;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.mypoint ul li {
+    display: inline-grid;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.mypoint ul li p {
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.mypoint ul li h2 {
+    font-size: 120%;
+}
+
+.pointtab {
+    width: 100%;
+    min-height: 63px;
+}
+
+.pointtab:after {
+    content: "";
+    clear: both;
+}
+
+.pointtab input[id*="point"] {
+    display: none;
+}
+
+.pointtab input[id*="point"] + label {
+    width: 50%;
+    text-align: center;
+    float: left;
+    background-color: #ebebeb;
+    cursor: pointer;
+    padding: 0;
+    height: 44px;
+    line-height: 44px;
+    border-bottom: 3px solid #f1e4ab;
+    margin-bottom: 15px;
+}
+
+.pointtab input[id*="point"]:checked + label {
+    display: inline-block;
+    background-color: #f1e4ab;
+}
+
+.pointtab > div {
+    content: "";
+    clear: both;
+    display: none;
+}
+
+.pointtab input[id="point01"]:checked ~ .point01 {
+    display: block;
+}
+
+.pointtab input[id="point02"]:checked ~ .point02 {
+    display: block;
+}
+
+.board_list {
+    width: 100%;
+    border-top: 2px solid #CCC;
+}
+
+.board_list tr {
+    border-bottom: 1px solid #EEE;
+}
+
+.board_list tr th, .board_list tr td {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.board_list tr th {
+    border-bottom: 1px solid #DDD;
+    height: 24px;
+    line-height: 24px;
+}
+
+.pointtab .board_list tr th, .pointtab .board_list tr td {
+    width: 20%;
+}
+
+.board_list tr td {
+    height: 30px;
+    vertical-align: middle;
+}
+
+
+/* 적립 내역 부분 E */
+
 /* 브랜드 부분 S */
 
 .business {

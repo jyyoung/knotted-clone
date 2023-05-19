@@ -50,7 +50,7 @@
                         <button type="button" class="count_minus">-</button>
                         <input type="number" pattern="\d*" min="0" value="1" class="paperbag_count" readonly>
                         <button type="button" class="count_plus" disabled>+</button>
-                        <h3 class="paperbag_price"></h3>
+                        <h3 class="paperbag_price">300원</h3>
                     </li>
                 </ul>
                 <p>종이쇼핑백 구매를 원치않을 경우 박스만 제공됩니다.</p>
@@ -138,6 +138,7 @@
 
             $(this).prop("disabled", true);
             $(".number-input .count_plus").prop("disabled", false);
+            $(".paperbag_price").html("0원");
 
             paperbag = false;
 
@@ -150,6 +151,7 @@
 
             $(this).prop("disabled", true);
             $(".number-input .count_minus").prop("disabled", false);
+            $(".paperbag_price").html("300원");
 
             paperbag = true;
 
