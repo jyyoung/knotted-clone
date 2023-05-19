@@ -35,6 +35,7 @@ public class OrderController {
     private final OrderService orderService;
     private final CartService cartService;
     private final OrderItemService orderItemService;
+    private final RewardHistoryService rewardHistoryService;
 
     // 주문(예약) 메인으로 이동
     @GetMapping(value = {"", "/"})
@@ -352,9 +353,13 @@ public class OrderController {
         orderDTO.setOrderItemDTOList(orderItemDTOList);
 
         // 해당 주문의 적립금 사용 정보도 담는다
-
+        RewardHistoryDTO rewardHistoryDTO = rewardHistoryService.getUseRewardHistory(orderId);
+        if(rewardHistoryDTO.getPoint() == null){
+            rewardHistoryDTO.setPoint(0L);
+        }
 
         model.addAttribute("orderDTO", orderDTO);
+        model.addAttribute("rewardHistoryDTO", rewardHistoryDTO);
         model.addAttribute("reserveDate", reserveDate);
 
         return "/order/orderDetail";

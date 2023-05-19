@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
 <th:block layout:fragment="css"></th:block>
@@ -38,8 +37,8 @@
                 <ul class="pay">
                     <li>주문금액</li>
                     <li th:text="*{#numbers.formatInteger(totalPrice, 0, 'COMMA') + '원'}"></li>
-                    <li>적립금</li>
-                    <li>0원</li>
+                    <li>사용 적립금</li>
+                    <li th:text="${#numbers.formatInteger(rewardHistoryDTO.point, 0, 'COMMA') + '원'}"></li>
                     <li>결제금액</li>
                     <li class="totalprice" th:text="*{#numbers.formatInteger(orderPrice, 0, 'COMMA') + '원'}"></li>
                     <li>결제일</li>

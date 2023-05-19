@@ -131,7 +131,10 @@ public class CartService {
             cartItemDTO.setStock(storeItemDTO.getStock());
 
             // 만약 현재 담겨있는 값이 매장 상품에 있는 재고량보다 많을 경우, changeCount로 최대 재고량까지만 담을 수 있게 업데이트한다
-            if(cartItem.getCount() > storeItemDTO.getStock()){
+            // 만약 해당 매장 상품 재고량이 0이거나 없는 경우, 장바구니에서 삭제한다
+            if(storeItemDTO == null || storeItemDTO.getStock() == 0){
+                cartItemRepository.delete(cartItem);
+            }if(cartItem.getCount() > storeItemDTO.getStock()){
                 cartItem.updateCount(storeItemDTO.getStock());
                 cartItemDTO.setCount(cartItem.getCount());
             }
