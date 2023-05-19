@@ -4,6 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
@@ -11,6 +16,8 @@
         <h1>상품안내</h1>
 
         <div class="view" th:object="${itemFormDTO}">
+            <input type="hidden" name="itemId" id="itemId" th:value="${itemId}">
+
             <div class="inform01">
                 <div class="photo"><img th:src="*{itemImageDTO.imageUrl}"></div>
             </div>
@@ -18,7 +25,8 @@
                 <ul class="price">
                     <li>
                         <h2 th:text="*{name}"></h2>
-                        <input type="checkbox" id="bookmark"><label for="bookmark"></label>
+                        <input type="checkbox" id="bookmark" th:checked="${favoriteExists}">
+                        <label for="bookmark" class="bookmark_button"></label>
                     </li>
                     <li th:text="*{nameEng}" class="name_eng"></li>
                     <li th:text="${#numbers.formatInteger(itemFormDTO.price, 0, 'COMMA') + '원'}"></li>
@@ -45,6 +53,45 @@
 
 <th:block layout:fragment="script">
     <script>
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        let itemId = [[${itemId}]];
+
+        // 찜 버튼 눌렀을 때
+        $(".bookmark_button").on("click", function(){
+            console.log("test");
+
+            toggleFavorite();
+        });
+
+        function toggleFavorite(){
+            $.ajax({
+                url: "/favorite/item/" + itemId,
+                method: "POST",
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    if(result === true){ // 방금 즐겨찾기를 추가한 거면
+                        $("#bookmark").prop("checked", true);
+                    }else{ // 즐겨찾기를 삭제한 거면
+                        $("#bookmark").prop("checked", false);
+                    }
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == "400"){
+                        alert("존재하지 않는 상품입니다");
+                    }else if(jqXHR.status == "500"){
+                        alert("찜 추가/삭제 중 에러가 발생했습니다");
+                    }else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        }
     </script>
 
 </th:block>

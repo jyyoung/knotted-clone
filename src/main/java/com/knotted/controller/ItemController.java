@@ -4,6 +4,7 @@ import com.knotted.dto.ItemDTO;
 import com.knotted.dto.ItemFormDTO;
 import com.knotted.entity.StoreItem;
 import com.knotted.repository.StoreItemRepository;
+import com.knotted.service.FavoriteService;
 import com.knotted.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class ItemController {
 
     private final ItemService itemService;
     private final StoreItemRepository storeItemRepository; // 해당 매장 상품의 개수를 파악하기 위해 추가함
+    private final FavoriteService favoriteService;
 
     // 상품 메인 페이지. 상품 리스트도 뿌려준다.
     @GetMapping(value = {"", "/"})
@@ -89,10 +92,19 @@ public class ItemController {
 
     // 상품 상세 페이지
     @GetMapping(value = "/{itemId}")
-    public String itemDetail(@PathVariable("itemId") Long itemId, Model model){
+    public String itemDetail(@PathVariable("itemId") Long itemId, Model model, Principal principal){
         try {
             ItemFormDTO itemFormDTO = itemService.getItem(itemId);
             model.addAttribute("itemFormDTO", itemFormDTO);
+
+            // 해당 사용자가 즐겨찾기 갖고 있는지 확인
+            if(principal != null){ // 로그인한 사용자의 경우에만 추가
+                String memberEmail = principal.getName();
+
+                boolean favoriteExists = favoriteService.itemFavoriteExists(memberEmail, itemId);
+                model.addAttribute("favoriteExists", favoriteExists);
+            }
+
         } catch (Exception e) {
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다");
             return "redirect:/item";

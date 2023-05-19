@@ -857,6 +857,10 @@ section::after {
     margin-top: 5px;
 }
 
+.view > .inform03 li input[type=checkbox]:checked + label {
+    background-position: right 0;
+}
+
 /* 상품 상세보기 E */
 
 /* 주문(예약) 관련 부분 S */
