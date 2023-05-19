@@ -4,14 +4,151 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
     <div class="container">
         <h1>찜 리스트</h1>
+
+        <div class="menulist">
+            <div class="menucategory">
+                <div class="category">
+                    <input type="radio" name="category" id="category01" value="product" checked autocomplete="off">
+                    <label for="category01">PRODUCT</label>
+                    <input type="radio" name="category" id="category02" value="store" autocomplete="off">
+                    <label for="category02">STORE</label>
+                </div>
+            </div>
+            <ul class="listview" id="items">
+                <li style="" v-for="item in items" :key="item.id" :data-id="item.id" class="item_link">
+                    <div>
+                        <div class="img">
+                            <img :src="item.itemImageDTO.imageUrl" style="width: 100%;">
+                        </div>
+                        <button type="button" class="btn_listdelete">삭제</button>
+                    </div>
+                    <h2>{{ item.name }}</h2>
+                    <p>{{ formatPrice(item.price) }}</p>
+                </li>
+            </ul>
+
+            <ul class="listview display_none" id="stores">
+                <li style="" v-for="store in stores" :key="store.id" :data-id="store.id" class="store_link">
+                    <div>
+                        <div class="img">
+                            <img :src="store.storeImageDTO.imageUrl" style="width: 100%;">
+                        </div>
+                        <button type="button" class="btn_listdelete">삭제</button>
+                    </div>
+                    <h2>{{ store.name }}</h2>
+                    <p>{{ store.address }}</p>
+                </li>
+            </ul>
+        </div>
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script>
+
+        // Vue로 구현할 것
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        // Vue 인스턴스 생성 - 상품 리스트
+        const items = new Vue({
+            el: "#items",
+            data: {
+                items: []
+            },
+            methods: {
+                formatPrice(price){
+                    return price.toLocaleString();
+                }
+            }
+        });
+
+        // Vue 인스턴스 생성 - 매장 리스트
+        const stores = new Vue({
+            el: "#stores",
+            data: {
+                stores: []
+            },
+        });
+
+        $(document).ready(function(){
+            loadItems(); // 처음 화면은 상품 뿌려줌
+        });
+
+        // 즐겨찾기한 상품 리스트 받아옴
+        function loadItems(){
+            $.ajax({
+                url: "/favorite/item/list",
+                method: "POST",
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    items.items = result;
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
+
+        // 즐겨찾기한 매장 리스트 받아옴
+        function loadStores(){
+            $.ajax({
+                url: "/favorite/store/list",
+                method: "POST",
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    stores.stores = result;
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
+
+        // 상품 카테고리 클릭 시
+        $("#category01").on("click", function(){
+            $("#stores").addClass("display_none");
+            loadItems();
+            $("#items").removeClass("display_none");
+        });
+
+        // 매장 카테고리 클릭 시
+        $("#category02").on("click", function(){
+            $("#items").addClass("display_none");
+            loadStores();
+            $("#stores").removeClass("display_none");
+        });
+
+        // 상품 클릭 시
+        $(".menulist").on("click", ".item_link", function(){
+            let itemId = $(this).data("id");
+            location.href = "/menu/" + itemId;
+        });
+
+        // 매장 클릭 시
+        $(".menulist").on("click", ".store_link", function(){
+            let storeId = $(this).data("id");
+            location.href = "/store/" + storeId;
+        });
+
+    </script>
+
+</th:block>
 
 </html>

@@ -3064,8 +3064,26 @@ section::after {
     vertical-align: middle;
 }
 
-
 /* 적립 내역 부분 E */
+
+/* 찜 리스트 부분 S */
+
+.listview li .btn_listdelete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    background: url(/images/close_button_2.png) rgba(265,265,265,0.5) center no-repeat;
+    background-size: 30% auto;
+    width: 20%;
+    height: 20%;
+    max-width: 50px;
+    max-height: 50px;
+    display: inline-block;
+    font-size: 0;
+}
+
+/* 찜 리스트 부분 E */
 
 /* 브랜드 부분 S */
 

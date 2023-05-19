@@ -46,6 +46,7 @@ public class StoreService {
         return storeDTOList;
     }
 
+    // 검색어로 매장 리스트 조회
     public List<StoreDTO> getStoresBySearchWord(String searchWord){
         List<Store> storeList;
 

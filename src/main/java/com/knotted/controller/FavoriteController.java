@@ -1,6 +1,8 @@
 package com.knotted.controller;
 
 
+import com.knotted.dto.ItemDTO;
+import com.knotted.dto.StoreDTO;
 import com.knotted.service.FavoriteService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
+import java.util.List;
 
 @RequestMapping("/favorite")
 @Controller
@@ -63,8 +66,41 @@ public class FavoriteController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
+
+    // 사용자의 상품 즐겨찾기 리스트 반환
+    @PostMapping("/item/list")
+    @ResponseBody
+    public ResponseEntity<List<ItemDTO>> getFavoriteItems(Principal principal){
+
+        String memberEmail = principal.getName();
+
+        try {
+            List<ItemDTO> itemDTOList = favoriteService.getFavoriteItems(memberEmail);
+
+            return new ResponseEntity<>(itemDTOList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    // 사용자의 매장 즐겨찾기 리스트 반환
+    @PostMapping("/store/list")
+    @ResponseBody
+    public ResponseEntity<List<StoreDTO>> getFavoriteStores(Principal principal){
+
+        String memberEmail = principal.getName();
+
+        try {
+            List<StoreDTO> storeDTOList = favoriteService.getFavoriteStores(memberEmail);
+
+            return new ResponseEntity<>(storeDTOList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
 
 
