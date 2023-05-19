@@ -1317,7 +1317,6 @@ section::after {
 
 .order_box .storelist .contents button {
     background: #FFDB7E;
-    transition: 1s;
     border: 1px solid #FFDB7E;
     color: #846E23;
     min-width: 200px;
@@ -3321,7 +3320,6 @@ section::after {
 
 .join > button, .login > button, .join_check button {
     background: #FFDB7E;
-    transition: 1s;
     border: 1px solid #FFDB7E;
     color: #846E23;
     width: 100%;
