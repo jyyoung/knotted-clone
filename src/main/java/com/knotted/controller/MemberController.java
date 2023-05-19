@@ -93,18 +93,43 @@ public class MemberController {
         Member member = memberRepository.findByEmail(memberEmail);
 
         MemberDTO memberDTO = MemberDTO.of(member);
-
         model.addAttribute("memberDTO", memberDTO);
 
-        return "/member/beforeModifyForm";
+        return "/member/beforeModify";
     }
 
     // 회원정보 수정 비밀번호 확인 처리
     @PostMapping(value = "/before-modify")
     @ResponseBody
     public ResponseEntity<Void> beforeModifySubmit(@RequestParam("password") String password, Principal principal){
+        String memberEmail = principal.getName();
+        Member member = memberRepository.findByEmail(memberEmail);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        String encodedPassword = member.getPassword(); // 저장된 인코딩된 비밀번호
+        String rawPassword = password; // 입력 폼으로 넘어온 비밀번호
+
+        if(verifyPassword(rawPassword, encodedPassword)){ // 비밀번호 일치 시
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{ // 비밀번호 틀렸을 시
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // 회원정보 수정 페이지로 이동
+    @GetMapping(value = "/modify")
+    public String modifyForm(Model model, Principal principal){
+        String memberEmail = principal.getName();
+        Member member = memberRepository.findByEmail(memberEmail);
+
+        MemberFormDTO memberFormDTO = MemberFormDTO.of(member);
+        model.addAttribute("memberFormDTO", memberFormDTO);
+
+        return "/member/modifyForm";
+    }
+    
+    // PasswordEncoder 객체의 matches() 메소드로 인코딩되지 않은 비밀번호와 인코딩된 비밀번호가 같은지 여부 확인
+    private boolean verifyPassword(String rawPassword, String encodedPassword){
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
 }

@@ -1,10 +1,12 @@
 package com.knotted.dto;
 
+import com.knotted.entity.Member;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 @Data
 public class MemberFormDTO {
@@ -36,4 +38,12 @@ public class MemberFormDTO {
     @NotBlank(message = "주소는 필수 입력값입니다")
     @Size(max = 100, message = "주소는 100자 이내로 입력해주세요")
     private String address;
+
+    // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    // 엔티티를 DTO로 변환하여 리턴
+    public static MemberFormDTO of(Member member){
+        return modelMapper.map(member, MemberFormDTO.class);
+    }
 }
