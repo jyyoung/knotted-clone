@@ -29,8 +29,8 @@ public class Cart extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    // 매장 엔티티와 일대일로 매핑
-    @OneToOne(fetch = FetchType.LAZY)
+    // 수정 - 장바구니와 매장은 다대일 관계이다!!!
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
 

@@ -60,6 +60,12 @@ public class Order extends BaseEntity{
     @Column(name = "order_cancel_description")
     private String cancelDescription;
 
+    public void updateOrder(OrderStatus status, OrderCancelType cancelType, String cancelDescription){
+        this.status = status;
+        this.cancelType = cancelType;
+        this.cancelDescription = cancelDescription;
+    }
+
 }
 
 

@@ -15,7 +15,7 @@
 
             <h2 th:text="*{'주문번호 : ' + id}"></h2>
             <div class="detail_tab">
-                <span th:text="${reserveDate}"></span><span>결제 및 예약완료</span>
+                <span th:text="${reserveDate}"></span><span>예약 및 결제완료</span>
                 <button type="button" class="btn_cancel">예약취소</button>
             </div>
             <ul class="store">
@@ -45,7 +45,7 @@
                     <li>결제금액</li>
                     <li class="totalprice" th:text="*{#numbers.formatInteger(orderPrice, 0, 'COMMA') + '원'}"></li>
                     <li>결제일</li>
-                    <li class="date" th:text="${reserveDate}"></li>
+                    <li class="date" th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></li>
                 </ul>
             </div>
         </div>

@@ -4,15 +4,166 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
     <div class="container">
         <h1>예약취소</h1>
 
+        <div class="orderdetail" th:object="${orderDTO}">
+            <input type="hidden" name="orderId" id="orderId" th:value="*{id}">
+
+            <h2 th:text="*{'주문번호 : ' + id}"></h2>
+            <div class="detail_tab">
+                <span th:text="${reserveDate + ' 에 예약된 주문'}"></span>
+            </div>
+            <ul class="store">
+                <li><h2>주문매장</h2></li>
+                <li th:text="*{storeDTO.name}"></li>
+            </ul>
+            <h2>예약 취소사유를 선택해주세요.</h2>
+            <div class="cancel_comment">
+                <ul>
+                    <li>
+                        <input type="radio" name="comment" id="comment01" value="단순변심" checked>
+                        <label for="comment01">단순변심</label>
+                        <input type="radio" name="comment" id="comment02" value="주문실수">
+                        <label for="comment02">주문실수</label>
+                        <input type="radio" name="comment" id="comment03" value="일정불가">
+                        <label for="comment03">일정불가</label>
+                        <input type="radio" name="comment" id="comment04" value="기타">
+                        <label for="comment04">기타</label>
+                    </li>
+                    <li><h2>예약 취소 상세사유</h2></li>
+                    <li><textarea name="description" id="description"></textarea></li>
+                </ul>
+            </div>
+            <div class="paylist">
+                <ul class="pay">
+                    <li>주문금액</li>
+                    <li th:text="*{#numbers.formatInteger(totalPrice, 0, 'COMMA') + '원'}"></li>
+                    <li>사용 적립금</li>
+                    <li th:text="${#numbers.formatInteger(rewardHistoryDTO.point, 0, 'COMMA') + '원'}"></li>
+                    <li>결제금액</li>
+                    <li th:text="*{#numbers.formatInteger(orderPrice, 0, 'COMMA') + '원'}">3,000원</li>
+                    <li>주문취소 금액</li>
+                    <li class="cancelprice" th:text="*{#numbers.formatInteger(orderPrice, 0, 'COMMA') + '원'}"></li>
+                </ul>
+            </div>
+            <div class="btn_area">
+                <button type="button" class="order_cancel">예약 취소하기</button>
+            </div>
+        </div>
+
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+
+<!--/* 다이얼로그 박스 */-->
+<th:block layout:fragment="dialog">
+    <div class="dialogbox display_none">
+        <h1>알림
+            <button type="button" class="btn_close">닫기</button>
+        </h1>
+        <div class="msg">예약을 취소하시겠습니까?</div>
+        <div class="btn">
+            <button type="button" class="btn_left">닫기</button>
+            <button type="button" class="btn_right">확인</button>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        let orderId = [[${orderId}]];
+
+        // 예약 취소 버튼 눌렀을 때
+        $(".orderdetail .order_cancel").on("click", function(){
+            // 다이얼로그 띄움
+            $(".dialogbox").removeClass("display_none");
+        });
+
+        // 다이얼로그 닫기 버튼 눌렀을 때
+        $(".dialogbox .btn_close, .dialogbox .btn_left").on("click", function(){
+            $(".dialogbox").addClass("display_none");
+        });
+
+        // 확인 버튼을 눌렀을 때
+        $(".dialogbox .btn_right").on("click", function(){
+
+            // 주문 취소 처리
+            orderCancel();
+        });
+
+        function orderCancel(){
+
+            // 취소 시 주문 번호, 예약 취소사유, 예약 취소 상세사유가 필요함
+
+            // 예약 취소사유
+            let cancelTypeText = $("input[name='comment']:checked").val();
+            let cancelType = "";
+            switch (cancelTypeText){
+                case "단순변심":
+                    cancelType = "MIND";
+                    break;
+                case "주문실수":
+                    cancelType = "MISTAKE";
+                    break;
+                case "일정불가":
+                    cancelType = "SCHEDULE";
+                    break;
+                case "기타":
+                    cancelType = "ETC";
+                    break;
+                default:
+                    alert("잘못된 접근입니다");
+                    return;
+            }
+
+            // 예약 취소 상세사유
+            let cancelDescription = $("#description").val();
+
+            $.ajax({
+                url: "/order/cancel/" + orderId,
+                method: "POST",
+                data: {
+                    orderId: orderId,
+                    cancelType: cancelType,
+                    cancelDescription: cancelDescription,
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (result, status) {
+                    // 성공 시 해당 주문 상세보기로 이동시킨다
+                    location.href = "/order/detail/" + orderId;
+                },
+                error: function (jqXHR, status, error) {
+                    if(jqXHR.status == "400"){
+                        alert("이미 취소된 주문이거나 사용자의 주문이 아닙니다");
+                    }else if(jqXHR.status == "404"){
+                        alert("해당 주문이 존재하지 않습니다");
+                    }else if(jqXHR.status == "500"){
+                        alert("주문 취소 중 에러가 발생했습니다");
+                    }else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+
+        }
+
+    </script>
+
+</th:block>
 
 </html>

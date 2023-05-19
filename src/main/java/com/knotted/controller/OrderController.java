@@ -1,5 +1,6 @@
 package com.knotted.controller;
 
+import com.knotted.constant.OrderCancelType;
 import com.knotted.dto.*;
 import com.knotted.entity.Member;
 import com.knotted.entity.Order;
@@ -304,23 +305,28 @@ public class OrderController {
     @GetMapping(value = "/paid/{orderId}")
     public String orderPaid(@PathVariable("orderId") Long orderId, Model model, Principal principal){
 
-        // 해당 OrderId의 주문이 현재 로그인한 사용자 것인지 확인
-        String memberEmail = principal.getName();
-        Member member = memberRepository.findByEmail(memberEmail);
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(EntityNotFoundException::new);
-        Member savedMember = order.getMember();
+        try {
+            // 해당 OrderId의 주문이 현재 로그인한 사용자 것인지 확인
+            String memberEmail = principal.getName();
+            Member member = memberRepository.findByEmail(memberEmail);
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(EntityNotFoundException::new);
+            Member savedMember = order.getMember();
 
-        // 해당 주문이 없거나 해당 주문 사용자와 현재 사용자가 다른 경우
-        if(order == null || !savedMember.equals(member)){
-            return "/index"; // 그냥 메인으로 보냄 (추후 에러메시지 기능 추가할 것)
+            // 해당 주문 사용자와 현재 사용자가 다른 경우
+            if(!savedMember.equals(member)){
+                return "redirect:/";
+            }
+
+            OrderDTO orderDTO = OrderDTO.of(order);
+            String reserveDate = TimeUtils.localDateTimeToString(orderDTO.getReserveDate());
+
+            model.addAttribute("orderDTO", orderDTO);
+            model.addAttribute("reserveDate", reserveDate);
+
+        } catch (EntityNotFoundException e) {
+            return "redirect:/"; // 에러 시 그냥 메인으로 보냄 (추후 에러메시지 기능 추가할 것)
         }
-
-        OrderDTO orderDTO = OrderDTO.of(order);
-        String reserveDate = TimeUtils.localDateTimeToString(orderDTO.getReserveDate());
-
-        model.addAttribute("orderDTO", orderDTO);
-        model.addAttribute("reserveDate", reserveDate);
 
         return "/order/orderPaid";
     }
@@ -329,39 +335,44 @@ public class OrderController {
     @GetMapping(value = "/detail/{orderId}")
     public String orderDetail(@PathVariable("orderId") Long orderId, Model model, Principal principal){
 
-        // 해당 OrderId의 주문이 현재 로그인한 사용자 것인지 확인
-        String memberEmail = principal.getName();
-        Member member = memberRepository.findByEmail(memberEmail);
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(EntityNotFoundException::new);
-        Member savedMember = order.getMember();
+        try {
+            // 해당 OrderId의 주문이 현재 로그인한 사용자 것인지 확인
+            String memberEmail = principal.getName();
+            Member member = memberRepository.findByEmail(memberEmail);
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(EntityNotFoundException::new);
+            Member savedMember = order.getMember();
 
-        // 해당 주문이 없거나 해당 주문 사용자와 현재 사용자가 다른 경우
-        if(order == null || !savedMember.equals(member)){
-            return "/index"; // 그냥 메인으로 보냄 (추후 에러메시지 기능 추가할 것)
+            // 해당 주문 사용자와 현재 사용자가 다른 경우
+            if(!savedMember.equals(member)){
+                return "redirect:/";
+            }
+
+            OrderDTO orderDTO = OrderDTO.of(order);
+            String reserveDate = TimeUtils.localDateTimeToString(orderDTO.getReserveDate());
+
+            // 매장 정보도 담는다
+            Store store = order.getStore();
+            StoreDTO storeDTO = StoreDTO.of(store);
+            orderDTO.setStoreDTO(storeDTO);
+
+            // 주문 상품 정보도 담는다
+            List<OrderItemDTO> orderItemDTOList = orderItemService.getOrderItems(orderId);
+            orderDTO.setOrderItemDTOList(orderItemDTOList);
+
+            // 해당 주문의 적립금 사용 정보도 담는다
+            RewardHistoryDTO rewardHistoryDTO = rewardHistoryService.getUseRewardHistory(orderId);
+            if(rewardHistoryDTO.getPoint() == null){
+                rewardHistoryDTO.setPoint(0L);
+            }
+
+            model.addAttribute("orderDTO", orderDTO);
+            model.addAttribute("rewardHistoryDTO", rewardHistoryDTO);
+            model.addAttribute("reserveDate", reserveDate);
+
+        } catch (EntityNotFoundException e) {
+            return "redirect:/";
         }
-
-        OrderDTO orderDTO = OrderDTO.of(order);
-        String reserveDate = TimeUtils.localDateTimeToString(orderDTO.getReserveDate());
-
-        // 매장 정보도 담는다
-        Store store = order.getStore();
-        StoreDTO storeDTO = StoreDTO.of(store);
-        orderDTO.setStoreDTO(storeDTO);
-
-        // 주문 상품 정보도 담는다
-        List<OrderItemDTO> orderItemDTOList = orderItemService.getOrderItems(orderId);
-        orderDTO.setOrderItemDTOList(orderItemDTOList);
-
-        // 해당 주문의 적립금 사용 정보도 담는다
-        RewardHistoryDTO rewardHistoryDTO = rewardHistoryService.getUseRewardHistory(orderId);
-        if(rewardHistoryDTO.getPoint() == null){
-            rewardHistoryDTO.setPoint(0L);
-        }
-
-        model.addAttribute("orderDTO", orderDTO);
-        model.addAttribute("rewardHistoryDTO", rewardHistoryDTO);
-        model.addAttribute("reserveDate", reserveDate);
 
         return "/order/orderDetail";
     }
@@ -370,40 +381,64 @@ public class OrderController {
     @GetMapping(value = "/cancel/{orderId}")
     public String orderCancel(@PathVariable("orderId") Long orderId, Model model, Principal principal){
 
-        // 해당 OrderId의 주문이 현재 로그인한 사용자 것인지 확인
-        String memberEmail = principal.getName();
-        Member member = memberRepository.findByEmail(memberEmail);
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(EntityNotFoundException::new);
-        Member savedMember = order.getMember();
+        try {
+            // 해당 OrderId의 주문이 현재 로그인한 사용자 것인지 확인
+            String memberEmail = principal.getName();
+            Member member = memberRepository.findByEmail(memberEmail);
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(EntityNotFoundException::new);
+            Member savedMember = order.getMember();
 
-        // 해당 주문이 없거나 해당 주문 사용자와 현재 사용자가 다른 경우
-        if(order == null || !savedMember.equals(member)){
-            return "/index"; // 그냥 메인으로 보냄 (추후 에러메시지 기능 추가할 것)
+            // 해당 주문 사용자와 현재 사용자가 다른 경우
+            if(!savedMember.equals(member)){
+                return "redirect:/";
+            }
+
+            OrderDTO orderDTO = OrderDTO.of(order);
+            String reserveDate = TimeUtils.localDateTimeToString(orderDTO.getReserveDate());
+
+            // 매장 정보도 담는다
+            Store store = order.getStore();
+            StoreDTO storeDTO = StoreDTO.of(store);
+            orderDTO.setStoreDTO(storeDTO);
+
+            // 해당 주문의 적립금 사용 정보도 담는다
+            RewardHistoryDTO rewardHistoryDTO = rewardHistoryService.getUseRewardHistory(orderId);
+            if(rewardHistoryDTO.getPoint() == null){
+                rewardHistoryDTO.setPoint(0L);
+            }
+
+            model.addAttribute("orderDTO", orderDTO);
+            model.addAttribute("rewardHistoryDTO", rewardHistoryDTO);
+            model.addAttribute("reserveDate", reserveDate);
+
+        } catch (EntityNotFoundException e) {
+            return "redirect:/";
         }
-
-        OrderDTO orderDTO = OrderDTO.of(order);
-        String reserveDate = TimeUtils.localDateTimeToString(orderDTO.getReserveDate());
-
-        // 매장 정보도 담는다
-        Store store = order.getStore();
-        StoreDTO storeDTO = StoreDTO.of(store);
-        orderDTO.setStoreDTO(storeDTO);
-
-        // 해당 주문의 적립금 사용 정보도 담는다
-        RewardHistoryDTO rewardHistoryDTO = rewardHistoryService.getUseRewardHistory(orderId);
-        if(rewardHistoryDTO.getPoint() == null){
-            rewardHistoryDTO.setPoint(0L);
-        }
-
-        model.addAttribute("orderDTO", orderDTO);
-        model.addAttribute("rewardHistoryDTO", rewardHistoryDTO);
-        model.addAttribute("reserveDate", reserveDate);
 
         return "/order/orderCancel";
     }
     
     // 주문 취소 처리
+    @PostMapping(value = "/cancel/{orderId}")
+    @ResponseBody
+    public ResponseEntity<Void> orderCancelSubmit(@PathVariable("orderId") Long orderId, OrderCancelType cancelType, String cancelDescription, Principal principal) {
+
+        String memberEmail = principal.getName();
+
+        try {
+            // 주문 취소 처리 메소드 호출
+            orderService.cancelOrder(memberEmail, orderId, cancelType, cancelDescription);
+        } catch (EntityNotFoundException e) { // 해당 주문이 존재하지 않는 경우
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalStateException e) { // 주문한 사용자가 요청한 경우가 아니거나 이미 취소된 예약인 경우
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) { // 주문 취소 중 에러가 발생한 경우
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     // 주문(예약) 내역 페이지로 이동
     @GetMapping(value = "/list")

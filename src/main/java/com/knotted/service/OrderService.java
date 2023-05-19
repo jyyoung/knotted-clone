@@ -1,5 +1,6 @@
 package com.knotted.service;
 
+import com.knotted.constant.OrderCancelType;
 import com.knotted.constant.OrderStatus;
 import com.knotted.dto.*;
 import com.knotted.entity.*;
@@ -198,6 +199,87 @@ public class OrderService {
         // 여기까지 정상적으로 왔으면 빈 에러 카트 리스트를 반환한다
         orderResponseDTO.setOrderId(orderId);
         return orderResponseDTO;
+    }
+
+    // 주문 취소(삭제) 처리
+    public void cancelOrder(String memberEmail, Long orderId, OrderCancelType cancelType, String cancelDescription){
+
+        // 해당 주문으로 인해 받은 적립금이 있는지 확인 후,
+        // 해당 적립금 획득 내역을 삭제한다
+        // 해당 회원의 적립금을 감소시킨다.
+        // 또한 해당 회원의 구매금액을 결제금액만큼 감소시킨다.
+        
+        // 해당 주문에 사용된 적립금이 있는지 확인 후,
+        // 해당 적립금 사용 내역을 삭제한다.
+        // 해당 회원의 적립금을 증가시킨다.
+        // 해당 회원의 사용 적립금을 감소시킨다.
+        
+        // 해당 주문의 주문 상태를 CANCEL로 바꾸고, 예약 취소 사유 및 예약 취소 상세사유를 설정한다.
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        Store store = order.getStore();
+        if(store == null){
+            throw new EntityNotFoundException();
+        }
+
+        // 취소 요청된 주문이 현재 사용자의 주문인지 확인
+        Member member = memberRepository.findByEmail(memberEmail);
+        Member savedMember = order.getMember();
+        if(!member.equals(savedMember)){
+            throw new IllegalStateException();
+        }
+
+        // 이미 취소된 요청인지 확인
+        if(order.getStatus().equals("CANCEL")){
+            throw new IllegalStateException();
+        }
+
+        // 해당 주문의 적립금 획득 내역 조회
+        RewardHistory acquireRewardHistory = rewardHistoryRepository.findByOrderAndType(order, false);
+        if(acquireRewardHistory != null){
+            Long acquireReward = acquireRewardHistory.getPoint();
+            Long orderPrice = order.getOrderPrice();
+
+            // 회원의 적립금 감소
+            member.subtractReward(acquireReward);
+
+            // 회원의 구매금액을 결제금액만큼 감소
+            member.subtractPurchase(orderPrice);
+
+            // 적립금 획득 내역 삭제
+            rewardHistoryRepository.delete(acquireRewardHistory);
+        }
+
+        // 해당 주문의 적립금 사용 내역 조회
+        RewardHistory useRewardHistory = rewardHistoryRepository.findByOrderAndType(order, true);
+        if(useRewardHistory != null){
+            Long useReward = useRewardHistory.getPoint();
+
+            // 회원의 적립금 증가
+            member.addReward(useReward);
+
+            // 회원의 사용 적립금 감소
+            member.subtractRewardUse(useReward);
+
+            // 적립금 사용 내역 삭제
+            rewardHistoryRepository.delete(useRewardHistory);
+        }
+
+        // 해당 주문의 주문 상품을 순회하면서 해당 매장의 재고를 다시 증가시켜야 한다!
+        List<OrderItemDTO> orderItemDTOList = orderItemService.getOrderItems(orderId);
+        for(OrderItemDTO orderItemDTO : orderItemDTOList){
+            Long itemId = orderItemDTO.getItemDTO().getId();
+            Long count = orderItemDTO.getCount();
+            StoreItem storeItem = storeItemRepository.findByStoreIdAndItemId(store.getId(), itemId);
+
+            storeItem.addStock(count); // 해당 매장의 재고를 증가시킨다
+        }
+
+        // 주문 업데이트
+        order.updateOrder(OrderStatus.CANCEL, cancelType, cancelDescription);
+
     }
 
     // 해당 회원의 주문 조회

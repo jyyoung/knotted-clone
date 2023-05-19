@@ -13,6 +13,4 @@ public interface StoreItemRepository extends JpaRepository<StoreItem, Long> {
     // 해당 매장의 특정 상품 조회
     StoreItem findByStoreIdAndItemId(Long storeId, Long itemId);
 
-
-
 }

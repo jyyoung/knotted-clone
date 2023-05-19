@@ -30,6 +30,11 @@ public class StoreItem extends BaseEntity{
     @Column(name = "item_stock")
     private Long stock;
 
+    // 매장 상품의 재고를 증가시키는 메소드
+    public void addStock(Long stock){
+        this.stock += stock;
+    }
+
     // 매장 상품의 재고를 감소시키는 메소드
     public void subtractStock(Long stock){
         this.stock -= stock;

@@ -23,7 +23,7 @@ body, div, p, span, h1, h2, h3 {
     font-size: 16px;
 }
 
-body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, input, button{
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, input, textarea, button{
     margin: 0;
     padding: 0;
     border: 0;
@@ -93,6 +93,10 @@ input {
     border: 0;
     padding: 0;
     margin: 0;
+}
+
+input:focus, textarea:focus{
+    outline: none;
 }
 
 input, select, textarea {
@@ -2424,7 +2428,7 @@ section::after {
     font-weight: 500;
 }
 
-.orderdetail > h2:nth-child(1) {
+.orderdetail > h2:nth-of-type(1) {
     border-top: 0;
     padding-top: 0;
     margin-top: 0;
@@ -2854,6 +2858,73 @@ section::after {
 }
 
 /* 주문(예약) 리스트 부분 E */
+
+/* 주문(예약) 취소 부분 S */
+
+.cancel_comment li {
+    margin-bottom: 10px;
+    display: flow-root;
+}
+
+.cancel_comment li:first-child {
+    text-align: center;
+    margin-bottom: 20px;
+    border-right: 0;
+}
+
+.cancel_comment input[type=radio] {
+    display: none;
+}
+
+.cancel_comment input[type=radio] + label {
+    margin: 0;
+    width: calc(25% - 2px);
+    height: 43px;
+    line-height: 43px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid #c6c6c6;
+    border-right: 0;
+    float: left;
+}
+
+.cancel_comment input[type=radio]:checked + label {
+    background: #ffa0c5;
+    color: #FFF;
+}
+
+.cancel_comment label:first-of-type {
+    border-radius: 5px 0 0 5px;
+}
+
+.cancel_comment label:last-of-type {
+    border-right: 1px solid #c6c6c6 !important;
+    border-radius: 0 5px 5px 0;
+}
+
+.cancel_comment textarea {
+    resize: none;
+    width: calc(100% - 22px);
+    border: 1px solid #c6c6c6;
+    border-radius: 5px;
+    padding: 10px;
+    text-indent: 0;
+    background-color: inherit;
+}
+
+.paylist > .pay li.cancelprice {
+    font-weight: 500;
+    font-size: 150%;
+    color: red;
+}
+
+.paylist > .pay li.cancelprice:before {
+    content: "-";
+}
+
+
+
+/* 주문(예약) 취소 부분 E */
 
 /* 브랜드 부분 S */
 
