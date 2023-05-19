@@ -15,8 +15,28 @@
 
             <h2 th:text="*{'주문번호 : ' + id}"></h2>
             <div class="detail_tab">
-                <span th:text="${reserveDate}"></span><span>예약 및 결제완료</span>
-                <button type="button" class="btn_cancel">예약취소</button>
+                <!--/* 주문완료 상태의 경우 */-->
+                <th:block th:if="${#strings.equals(orderDTO.status, 'ORDER')}">
+                    <span th:text="${reserveDate}"></span><span>예약 및 결제완료</span>
+                    <button type="button" class="btn_cancel">예약취소</button>
+                </th:block>
+
+                <!--/* 주문취소 상태의 경우 */-->
+                <th:block th:if="${#strings.equals(orderDTO.status, 'CANCEL')}">
+                    <span th:text="${reserveDate}"></span><span>취소완료</span>
+                    <div class="cancel_data">
+                        <p>주문취소된 주문서입니다.</p>
+                        <ul>
+                            <th:block th:switch="*{cancelType.toString()}">
+                                <li th:case="MIND">단순변심</li>
+                                <li th:case="MISTAKE">주문실수</li>
+                                <li th:case="SCHEDULE">일정불가</li>
+                                <li th:case="ETC">기타</li>
+                            </th:block>
+                            <li th:text="*{cancelDescription}"></li>
+                        </ul>
+                    </div>
+                </th:block>
             </div>
             <ul class="store">
                 <li><h2>주문매장</h2></li>
@@ -46,6 +66,13 @@
                     <li class="totalprice" th:text="*{#numbers.formatInteger(orderPrice, 0, 'COMMA') + '원'}"></li>
                     <li>결제일</li>
                     <li class="date" th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></li>
+
+                    <th:block th:if="${#strings.equals(orderDTO.status, 'CANCEL')}">
+                        <li>결제취소금액</li>
+                        <li class="cancelprice" th:text="*{#numbers.formatInteger(orderPrice, 0, 'COMMA') + '원'}"></li>
+                        <li>결제취소일</li>
+                        <li class="date" th:text="*{#temporals.format(updateDate, 'yyyy-MM-dd HH:mm:ss')}"></li>
+                    </th:block>
                 </ul>
             </div>
         </div>

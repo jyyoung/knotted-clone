@@ -2513,6 +2513,33 @@ section::after {
     font-size: 1.4rem;
 }
 
+.orderdetail .cancel_data {
+
+}
+
+.orderdetail .cancel_data p {
+    color: #f5a9ca;
+    font-weight: 500;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.orderdetail .cancel_data ul li {
+    margin-bottom: 5px;
+}
+
+.orderdetail .cancel_data ul li:first-of-type:before {
+    content: "취소사유";
+    margin-right: 10px;
+    color: #999;
+}
+
+.orderdetail .cancel_data ul li:last-of-type:before {
+    content: "상세사유";
+    margin-right: 10px;
+    color: #999;
+}
+
 /* 주문 상세보기 부분 E */
 
 /* 주문(예약) 리스트 부분 S */
@@ -2921,8 +2948,6 @@ section::after {
 .paylist > .pay li.cancelprice:before {
     content: "-";
 }
-
-
 
 /* 주문(예약) 취소 부분 E */
 

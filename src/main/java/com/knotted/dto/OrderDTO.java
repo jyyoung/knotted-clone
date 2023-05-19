@@ -45,6 +45,9 @@ public class OrderDTO {
     // 주문 일시
     private LocalDateTime regDate;
 
+    // 주문취소 일시
+    private LocalDateTime updateDate;
+
     // 주문 상품 DTO 리스트
     private List<OrderItemDTO> orderItemDTOList;
 
