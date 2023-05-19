@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/common}">
+
+<th:block layout:fragment="css"></th:block>
+
+<th:block layout:fragment="content">
+    <div class="container">
+        <h1>예약리스트</h1>
+
+        <div class="searchbox">
+            <ul>
+                <li class="label">
+                    <label for="date_type01">
+                        <input type="radio" name="date_type" id="date_type01" value="created" checked>
+                        <span></span>주문일
+                    </label>
+                    <label for="date_type02">
+                        <input type="radio" name="date_type" id="date_type02" value="reserved">
+                        <span></span>예약일
+                    </label>
+                </li>
+                <li>
+                    <div class="date_tab">
+                        <input type="radio" name="date" id="date01">
+                        <label for="date01">1주일</label>
+                        <input type="radio" name="date" id="date02">
+                        <label for="date02">1개월</label>
+                        <input type="radio" name="date" id="date03">
+                        <label for="date03">3개월</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="date_cal">
+                        <input type="checkbox" title="날짜입력" id="date_cal_s"><span></span>
+                        <label for="date_cal_s" class="btn_cal">달력</label>
+                        <div class="cal">
+                            <div class="month">
+                                <ul>
+                                    <li>
+                                        <button type="button">&lt;</button>
+                                    </li>
+                                    <li><span>2023.05</span></li>
+                                    <li>
+                                        <button type="button">&gt;</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="weekdays">
+                                <li>Su</li>
+                                <li>Mo</li>
+                                <li>Tu</li>
+                                <li>We</li>
+                                <li>Th</li>
+                                <li>Fr</li>
+                                <li>Sa</li>
+                            </ul>
+                            <ul class="days">
+                                <!--/* 이 부분에 달력 정보 순환 돌면서 li 추가 */-->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="date_cal">
+                        <input type="checkbox" title="날짜입력" id="date_cal_l"><span></span>
+                        <label for="date_cal_l" class="btn_cal">달력</label>
+                        <div class="cal">
+                            <div class="month">
+                                <ul>
+                                    <li>
+                                        <button type="button">&lt;</button>
+                                    </li>
+                                    <li><span>2023.05</span></li>
+                                    <li>
+                                        <button type="button">&gt;</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="weekdays">
+                                <li>Su</li>
+                                <li>Mo</li>
+                                <li>Tu</li>
+                                <li>We</li>
+                                <li>Th</li>
+                                <li>Fr</li>
+                                <li>Sa</li>
+                            </ul>
+                            <ul class="days">
+                                <!--/* 이 부분에 달력 정보 순환 돌면서 li 추가 */-->
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="btn_area">
+                <button type="button">검색</button>
+            </div>
+        </div>
+
+        <table class="order_listview reserve_listview">
+            <thead>
+                <tr>
+                    <th>주문일</th>
+                    <th>주문번호</th>
+                    <th>주문내용</th>
+                    <th>결제금액</th>
+                    <th>주문상태</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--/* 여기 tr 부분을 순회하면서 주문 내역 출력 */-->
+                <tr th:each="orderDTO : ${orderDTOList}" th:object="${orderDTO}" th:attr="data-id=${orderDTO.id}" class="go_order_detail">
+                    <td th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td>
+                        <a th:text="*{id}"></a>
+                    </td>
+                    <td>
+                        <!--/* 상품은 첫 번째 상품명만 표시해준다 */-->
+                        <h2 th:text="*{orderItemDTOList.get(0).name + ' 외'}"></h2>
+                        <p>예약매장<span th:text="*{storeDTO.name}"></span></p>
+                        <p>예약일자<span th:text="*{#temporals.format(reserveDate, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                    </td>
+                    <td th:text="*{#numbers.formatInteger(orderPrice, 0, 'COMMA') + '원'}"></td>
+                    <td>결제완료</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+        $(".order_listview .go_order_detail").on("click", function(){
+            let orderId = $(this).closest("tr").data("id");
+
+            location.href = "/order/detail/" + orderId;
+        });
+    </script>
+
+</th:block>
+
+</html>

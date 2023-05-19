@@ -2511,6 +2511,350 @@ section::after {
 
 /* 주문 상세보기 부분 E */
 
+/* 주문(예약) 리스트 부분 S */
+
+.searchbox {
+    width: calc(100% - 43px);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #DDD;
+    margin-bottom: 30px;
+}
+
+.searchbox > ul {
+    display: inline-block;
+}
+
+.searchbox > ul > li {
+    display: inline-block;
+    float: left;
+    padding: 5px 0;
+}
+
+.searchbox .label {
+    line-height: 42px;
+}
+
+.searchbox .label label {
+    margin-right: 15px;
+    text-indent: 15px;
+}
+
+.searchbox .label input[type=radio] {
+    display: none;
+}
+
+.searchbox .label span {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background: transparent;
+    border: 1px solid #DDD;
+    border-radius: 50px;
+    margin: 0 10px 0 0;
+    vertical-align: middle;
+}
+
+.searchbox .label input[type=radio]:checked ~ span {
+    background-color: #FFF;
+    border: 4px solid #ffa0c5;
+    width: 10px;
+    height: 10px;
+}
+
+.searchbox > ul > li:after {
+    content: "";
+    clear: both;
+}
+
+.searchbox .date_tab {
+    margin-right: 10px;
+    margin-left: 5px;
+    font-size: 0;
+    text-align: left;
+}
+
+.searchbox .date_tab input[id*="date"] {
+    display: none;
+}
+
+.searchbox .date_tab input[id*="date"] + label {
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.4rem;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #DDD;
+    width: 80px;
+    display: inline-block;
+}
+
+.searchbox .date_tab input[id*="date"] + label:nth-of-type(2) {
+    border-left: 0;
+    border-right: 0;
+}
+
+.searchbox .date_cal {
+    width: 140px;
+    height: 40px;
+    border: 1px solid #DDD;
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.searchbox .date_cal:first-of-type {
+    margin-right: 28px;
+}
+
+.searchbox .date_cal input[type=checkbox] {
+    display: none;
+}
+
+.searchbox .date_cal > span {
+    line-height: 40px;
+    padding-left: 10px;
+}
+
+.searchbox .date_cal .btn_cal {
+    font-size: 0;
+    width: 40px;
+    line-height: 40px;
+    background: url(/images/icon_calendar.png) center no-repeat;
+    background-size: 20px auto;
+    border-left: 1px solid #DDD;
+    float: right;
+    margin: 0;
+    cursor: pointer;
+}
+
+.searchbox .cal {
+    position: absolute;
+    top: 42px;
+    left: -1px;
+    width: 300px;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+    display: none;
+    z-index: 999;
+}
+
+.searchbox .cal ul {
+    font-size: 0;
+}
+
+.searchbox .month {
+    padding: 10px 0;
+    width: 100%;
+    background: #ffa0c5;
+    text-align: center;
+}
+
+.searchbox .month ul {
+    width: 90%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.searchbox .month ul li {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    color: #FFF;
+}
+
+.searchbox .month li:nth-child(1) {
+    float: left;
+}
+
+.searchbox .month ul li button {
+    color: #FFF;
+}
+
+.searchbox .month li:nth-child(2) {
+    display: inline-block;
+}
+
+.searchbox .month ul li span {
+    color: #FFF;
+    font-size: 20px;
+}
+
+.searchbox .month li:nth-child(3) {
+    float: right;
+}
+
+.searchbox .weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background-color: #ddd;
+}
+
+.searchbox .weekdays li {
+    display: inline-block;
+    width: 14.2%;
+    color: #666;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.searchbox .days {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+    text-align: left;
+}
+
+.searchbox .days li {
+    display: inline-block;
+    position: relative;
+    width: calc(14.2% - 10px);
+    text-align: center;
+    margin: 5px;
+    line-height: 32px;
+    font-size: 12px;
+    color: #777;
+}
+
+.searchbox .days li:nth-child(7n+1) {
+    margin-left: 3px;
+}
+
+.searchbox .days input[type=radio] {
+    display: none;
+}
+
+.searchbox .days input[type=radio] + label {
+    margin: 0;
+    float: none;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    line-height: 32px;
+    cursor: pointer;
+}
+
+.searchbox .date_cal:first-of-type:after {
+    content: "~";
+    position: absolute;
+    top: 0;
+    right: -22px;
+    line-height: 40px;
+}
+
+.searchbox .btn_area {
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.searchbox .btn_area button {
+    background: #f5a9ca;
+    border: 1px solid #ffa0c5;
+    color: #FFF;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    font-size: 1em;
+}
+
+.searchbox .btn_area button:before {
+    content: "";
+    clear: both;
+}
+
+.order_listview {
+    width: 100%;
+    border-top: 2px solid #333;
+}
+
+.order_listview tr {
+    border-bottom: 1px solid #DDD;
+}
+
+.order_listview tr.go_order_detail{
+    cursor: pointer;
+}
+
+.order_listview tr th, .order_listview tr td {
+    padding: 10px 0;
+}
+
+.order_listview tr th {
+    border-bottom: 1px solid #333;
+    line-height: 30px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.order_listview tr th:nth-child(1), .order_listview tr th:nth-child(4), .order_listview tr th:nth-child(5) {
+    width: 150px;
+}
+
+.order_listview tr th:nth-child(2) {
+    width: 200px;
+}
+
+.reserve_listview tr td:nth-child(3) {
+    line-height: 20px;
+}
+
+.order_listview tr td {
+    height: 60px;
+    vertical-align: middle;
+}
+
+.order_listview tr td {
+    text-align: center;
+}
+
+.order_listview tr td:nth-child(2) {
+    font-weight: 600;
+}
+
+.order_listview tr td:nth-child(3) {
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.order_listview tr td:nth-child(3) h2 {
+    line-height: 60px;
+    font-size: 120%;
+}
+
+.reserve_listview tr td:nth-child(3) h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    line-height: 20px;
+}
+
+.reserve_listview tr td:nth-child(3) p {
+    color: #999;
+    line-height: 20px;
+}
+
+.reserve_listview tr td:nth-child(3) span {
+    margin: 0 20px 0 0;
+    color: #282828;
+}
+
+.reserve_listview tr td:nth-child(3) span:before {
+    content: ":";
+    margin: 0 5px;
+    color: #999;
+}
+
+.order_listview tr td:nth-child(5) {
+    color: #f5a9ca;
+    font-weight: 500;
+}
+
+/* 주문(예약) 리스트 부분 E */
+
 /* 브랜드 부분 S */
 
 .business {

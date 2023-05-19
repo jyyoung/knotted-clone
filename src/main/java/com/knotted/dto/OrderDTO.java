@@ -1,8 +1,8 @@
 package com.knotted.dto;
 
+import com.knotted.constant.OrderCancelType;
 import com.knotted.constant.OrderStatus;
 import com.knotted.entity.Order;
-import jakarta.persistence.Column;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 
@@ -25,7 +25,7 @@ public class OrderDTO {
     private boolean paperBagUsed;
 
     // 주문 상태
-    private OrderStatus orderStatus;
+    private OrderStatus status;
 
     // 주문 금액 (적립금 사용 전)
     private Long totalPrice;
@@ -35,6 +35,15 @@ public class OrderDTO {
 
     // 예약 일자
     private LocalDateTime reserveDate;
+
+    // 예약 취소 사유
+    private OrderCancelType cancelType;
+
+    // 예약 취소 상세사유
+    private String cancelDescription;
+
+    // 주문 일시
+    private LocalDateTime regDate;
 
     // 주문 상품 DTO 리스트
     private List<OrderItemDTO> orderItemDTOList;

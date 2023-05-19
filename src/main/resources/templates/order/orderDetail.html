@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
 <th:block layout:fragment="css"></th:block>
@@ -10,6 +11,8 @@
         <h1>주문상세보기</h1>
 
         <div class="orderdetail" th:object="${orderDTO}">
+            <input type="hidden" name="orderId" id="orderId" th:value="*{id}">
+
             <h2 th:text="*{'주문번호 : ' + id}"></h2>
             <div class="detail_tab">
                 <span th:text="${reserveDate}"></span><span>결제완료</span>
@@ -53,6 +56,11 @@
 <th:block layout:fragment="script">
     <script>
 
+        let orderId = [[${orderDTO.id}]];
+
+        $(".orderdetail .btn_cancel").on("click", function(){
+            location.href = "/order/cancel/" + orderId;
+        });
 
     </script>
 </th:block>

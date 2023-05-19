@@ -325,6 +325,7 @@ public class OrderController {
         return "/order/orderPaid";
     }
 
+    // 주문 상세 보기 페이지로 이동
     @GetMapping(value = "/detail/{orderId}")
     public String orderDetail(@PathVariable("orderId") Long orderId, Model model, Principal principal){
 
@@ -363,6 +364,59 @@ public class OrderController {
         model.addAttribute("reserveDate", reserveDate);
 
         return "/order/orderDetail";
+    }
+
+    // 주문 취소 페이지로 이동
+    @GetMapping(value = "/cancel/{orderId}")
+    public String orderCancel(@PathVariable("orderId") Long orderId, Model model, Principal principal){
+
+        // 해당 OrderId의 주문이 현재 로그인한 사용자 것인지 확인
+        String memberEmail = principal.getName();
+        Member member = memberRepository.findByEmail(memberEmail);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+        Member savedMember = order.getMember();
+
+        // 해당 주문이 없거나 해당 주문 사용자와 현재 사용자가 다른 경우
+        if(order == null || !savedMember.equals(member)){
+            return "/index"; // 그냥 메인으로 보냄 (추후 에러메시지 기능 추가할 것)
+        }
+
+        OrderDTO orderDTO = OrderDTO.of(order);
+        String reserveDate = TimeUtils.localDateTimeToString(orderDTO.getReserveDate());
+
+        // 매장 정보도 담는다
+        Store store = order.getStore();
+        StoreDTO storeDTO = StoreDTO.of(store);
+        orderDTO.setStoreDTO(storeDTO);
+
+        // 해당 주문의 적립금 사용 정보도 담는다
+        RewardHistoryDTO rewardHistoryDTO = rewardHistoryService.getUseRewardHistory(orderId);
+        if(rewardHistoryDTO.getPoint() == null){
+            rewardHistoryDTO.setPoint(0L);
+        }
+
+        model.addAttribute("orderDTO", orderDTO);
+        model.addAttribute("rewardHistoryDTO", rewardHistoryDTO);
+        model.addAttribute("reserveDate", reserveDate);
+
+        return "/order/orderCancel";
+    }
+    
+    // 주문 취소 처리
+
+    // 주문(예약) 내역 페이지로 이동
+    @GetMapping(value = "/list")
+    public String getOrders(Model model, Principal principal){
+
+        String memberEmail = principal.getName();
+
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+
+        orderDTOList = orderService.getOrders(memberEmail);
+        model.addAttribute("orderDTOList", orderDTOList);
+
+        return "/order/orderList";
     }
 
 }

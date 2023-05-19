@@ -1,5 +1,6 @@
 package com.knotted.entity;
 
+import com.knotted.constant.OrderCancelType;
 import com.knotted.constant.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -44,11 +45,20 @@ public class Order extends BaseEntity{
     // 주문 상태
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    private OrderStatus status;
     
     // 예약 일자
     @Column(name = "reserve_date")
     private LocalDateTime reserveDate;
+
+    // 예약 취소 사유
+    @Column(name = "order_cancel_type")
+    @Enumerated(EnumType.STRING)
+    private OrderCancelType cancelType;
+
+    // 예약 취소 상세사유
+    @Column(name = "order_cancel_description")
+    private String cancelDescription;
 
 }
 

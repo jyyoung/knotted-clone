@@ -1,13 +1,12 @@
 package com.knotted.service;
 
 import com.knotted.constant.OrderStatus;
-import com.knotted.dto.CartDTO;
-import com.knotted.dto.CartItemDTO;
-import com.knotted.dto.OrderResponseDTO;
+import com.knotted.dto.*;
 import com.knotted.entity.*;
 import com.knotted.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +19,14 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final OrderItemService orderItemService;
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
     private final CartService cartService;
+    private final StoreRepository storeRepository;
     private final StoreItemRepository storeItemRepository;
     private final ItemRepository itemRepository;
-    private final StoreRepository storeRepository;
-    private final OrderItemRepository orderItemRepository;
     private final RewardHistoryRepository rewardHistoryRepository;
 
     // 주문 생성 (각종 유효성 검사도 함)
@@ -135,7 +135,7 @@ public class OrderService {
         order.setPaperBagUsed(paperbag);
         order.setTotalPrice(totalPrice);
         order.setOrderPrice(orderPrice);
-        order.setOrderStatus(OrderStatus.ORDER);
+        order.setStatus(OrderStatus.ORDER);
         order.setReserveDate(cartDTO.getReserveDate());
 
         orderRepository.save(order); // 주문 생성
@@ -198,6 +198,33 @@ public class OrderService {
         // 여기까지 정상적으로 왔으면 빈 에러 카트 리스트를 반환한다
         orderResponseDTO.setOrderId(orderId);
         return orderResponseDTO;
+    }
+
+    // 해당 회원의 주문 조회
+    public List<OrderDTO> getOrders(String memberEmail){
+
+        Member member = memberRepository.findByEmail(memberEmail);
+        List<Order> orderList = orderRepository.findByMember(member, Sort.by(Sort.Direction.DESC, "id"));
+
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+
+        for(Order order : orderList){
+            OrderDTO orderDTO = OrderDTO.of(order);
+            
+            // 주문 상품 리스트 정보 넣기
+            List<OrderItemDTO> orderItemDTOList = orderItemService.getOrderItems(orderDTO.getId());
+            orderDTO.setOrderItemDTOList(orderItemDTOList);
+            
+            // 주문한 매장 정보 넣기
+            Store store = storeRepository.findById(order.getStore().getId())
+                    .orElseThrow(EntityNotFoundException::new);
+            StoreDTO storeDTO = StoreDTO.of(store);
+            orderDTO.setStoreDTO(storeDTO);
+
+            orderDTOList.add(orderDTO);
+        }
+
+        return orderDTOList;
     }
 
 }
