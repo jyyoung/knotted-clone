@@ -4,6 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
@@ -11,6 +16,8 @@
         <h1>매장안내</h1>
 
         <div class="view" th:object="${storeFormDTO}">
+            <input type="hidden" name="storeId" id="storeId" th:value="${storeId}">
+
             <div class="inform01">
                 <div class="photo"><img th:src="*{storeImageDTO.imageUrl}"></div>
             </div>
@@ -18,7 +25,8 @@
                 <ul>
                     <li>
                         <h2 th:text="*{name}"></h2>
-                        <input type="checkbox" id="bookmark"><label for="bookmark"></label>
+                        <input type="checkbox" id="bookmark" th:checked="${favoriteExists}">
+                        <label for="bookmark" class="bookmark_button"></label>
                     </li>
                     <li>
                         전화번호<p th:text="*{phoneNumber}"></p>
@@ -40,12 +48,51 @@
 <th:block layout:fragment="script">
     <script>
 
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        let storeId = [[${storeId}]];
+
         // 지도보기 시 네이버 지도에서 검색
         $(".view a.map").on("click", function(){
             let storeName = $(".view h2").html().trim();
 
             window.open("https://map.naver.com/v5/search/" + storeName, "_blank");
         });
+
+        // 찜 버튼 눌렀을 때
+        $(".bookmark_button").on("click", function(){
+            console.log("test");
+            toggleFavorite();
+        });
+
+        function toggleFavorite(){
+            $.ajax({
+                url: "/favorite/store/" + storeId,
+                method: "POST",
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    if(result === true){ // 방금 즐겨찾기를 추가한 거면
+                        $("#bookmark").prop("checked", true);
+                    }else{ // 즐겨찾기를 삭제한 거면
+                        $("#bookmark").prop("checked", false);
+                    }
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == "400"){
+                        alert("존재하지 않는 매장입니다");
+                    }else if(jqXHR.status == "500"){
+                        alert("찜 추가/삭제 중 에러가 발생했습니다");
+                    }else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        }
+
 
     </script>
 

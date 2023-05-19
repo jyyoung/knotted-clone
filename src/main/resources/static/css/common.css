@@ -710,6 +710,10 @@ section::after {
     cursor: pointer;
 }
 
+.view > .inform02 li input[type=checkbox]:checked + label {
+    background-position: right 0;
+}
+
 /* 매장 상세보기 E */
 
 /* 상품 상세보기 S */
