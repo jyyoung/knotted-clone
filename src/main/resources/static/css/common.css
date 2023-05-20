@@ -3324,6 +3324,13 @@ section::after {
     border-radius: 500px;
 }
 
+.knotted_join_form li .modify_div{
+    width: calc(80% - 115px);
+    display: inline-block;
+    position: relative;
+    top: 2px;
+}
+
 /* 회원정보 수정 부분 E */
 
 /* 공통 푸터 부분 S */

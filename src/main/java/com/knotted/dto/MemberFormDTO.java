@@ -39,6 +39,9 @@ public class MemberFormDTO {
     @Size(max = 100, message = "주소는 100자 이내로 입력해주세요")
     private String address;
 
+    // 현재 비밀번호 (회원정보 수정용)
+    private String nowPassword;
+
     // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
     private static ModelMapper modelMapper = new ModelMapper();
 

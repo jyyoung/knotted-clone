@@ -1,5 +1,6 @@
 package com.knotted.service;
 
+import com.knotted.dto.MemberFormDTO;
 import com.knotted.entity.Member;
 import com.knotted.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // Member 엔티티 전달받아 유효성 검사 후 DB에 반영
     public Member saveMember(Member member){
@@ -60,5 +63,10 @@ public class MemberService implements UserDetailsService {
                 .build();
 
         return userDetails; // 사용자 정보, 권한 정보를 스프링 시큐리티에 넘겨줌
+    }
+
+    // 회원정보 수정 메소드 (트랜잭션 적용 위해 서비스단에서 update 실행)
+    public void updateMember(Member member, MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder){
+        member.updateMember(memberFormDTO, passwordEncoder);
     }
 }

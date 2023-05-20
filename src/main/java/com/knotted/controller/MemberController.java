@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -130,6 +131,33 @@ public class MemberController {
     // PasswordEncoder 객체의 matches() 메소드로 인코딩되지 않은 비밀번호와 인코딩된 비밀번호가 같은지 여부 확인
     private boolean verifyPassword(String rawPassword, String encodedPassword){
         return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    // 회원정보 수정 처리
+    @PostMapping(value = "/modify")
+    public String modifySubmit(@Valid MemberFormDTO memberFormDTO, BindingResult bindingResult, Model model, Principal principal){
+
+        String memberEmail = principal.getName();
+        Member member = memberRepository.findByEmail(memberEmail);
+
+        String encodedPassword = member.getPassword(); // 저장된 인코딩된 비밀번호
+        String rawPassword = memberFormDTO.getNowPassword(); // 폼으로 넘어온 현재 비밀번호
+
+        if(!verifyPassword(rawPassword, encodedPassword)){ // 현재 비밀번호 불일치 시
+            // nowPassword 필드에 대한 에러를 추가한다
+            bindingResult.addError(new FieldError("memberFormDTO", "nowPassword", "현재 비밀번호가 일치하지 않습니다"));
+        }
+
+        if(bindingResult.hasErrors()){
+            return "/member/modifyForm";
+        }
+
+        // 회원정보 수정 메소드 호출
+        // 컨트롤러에서 이렇게 트랜잭션 없이 업데이트하면 안 된다. 서비스단에서 구현하든지 해야 한다.
+        memberService.updateMember(member, memberFormDTO, passwordEncoder);
+
+        // 수정 성공하면 mypage로 넘어감
+        return "redirect:/mypage";
     }
 
 }

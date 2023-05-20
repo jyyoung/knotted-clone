@@ -14,15 +14,22 @@
             <ul>
                 <li class="required">
                     <label th:for="email">이메일</label>
+                    <input type="hidden" th:field="*{email}">
+                    <div class="modify_div" th:text="*{email}"></div>
                 </li>
                 <li class="required">
-                    <label th:for="password">비밀번호</label>
-                    <input type="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요" autocomplete="off">
+                    <label th:for="password">현재 비밀번호</label>
+                    <input type="password" name="nowPassword" id="nowPassword" placeholder="현재 비밀번호를 입력해주세요" autocomplete="off">
+                    <p th:if="${#fields.hasErrors('nowPassword')}" th:errors="*{nowPassword}" class="fieldError"></p>
+                </li>
+                <li class="required">
+                    <label th:for="password">새 비밀번호</label>
+                    <input type="password" th:field="*{password}" placeholder="새 비밀번호를 입력해주세요" autocomplete="off">
                     <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
                 </li>
                 <li class="required">
-                    <label for="password_re">비밀번호 확인</label>
-                    <input type="password" id="password_re" placeholder="비밀번호를 다시 입력해주세요" autocomplete="off">
+                    <label for="password_re">새 비밀번호 확인</label>
+                    <input type="password" id="password_re" placeholder="새 비밀번호를 다시 입력해주세요" autocomplete="off">
                 </li>
                 <li class="required">
                     <label th:for="name">이름</label>
@@ -39,7 +46,7 @@
 
                     <div class="address_wrap">
                         <label for="roadAddress">주소</label>
-                        <input type="text" id="roadAddress" readonly>
+                        <input type="text" id="roadAddress" readonly th:value="*{address}">
                         <label for="extraAddress">상세주소</label>
                         <input type="text" id="extraAddress" placeholder="상세주소를 입력해주세요">
                     </div>
@@ -50,7 +57,7 @@
 
             <div class="join_point">* 표시 항목은 필수 입력 항목입니다</div>
 
-            <button type="button" class="knotted_join_submit">회원가입</button>
+            <button type="button" class="knotted_join_submit">회원정보수정</button>
 
             <!--/* CSRF 공격 방지용 */-->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
@@ -107,13 +114,18 @@
         // 회원가입 처리 전 유효성 검사 등
         $(".knotted_join_submit").on("click", function(){
 
+            if(!($("input#nowPassword").val())){
+                alert("현재 비밀번호를 입력해주세요");
+                return;
+            }
+
             if(!($("input#password").val())){
-                alert("비밀번호를 입력해주세요");
+                alert("새 비밀번호를 입력해주세요");
                 return;
             }
 
             if(!($("input#password_re").val())){
-                alert("비밀번호 확인을 입력해주세요");
+                alert("새 비밀번호 확인을 입력해주세요");
                 return;
             }
 

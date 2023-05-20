@@ -76,6 +76,15 @@ public class Member extends BaseEntity{
         return member;
     }
 
+    // 회원정보 수정 메소드
+    public void updateMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder){
+        String password = passwordEncoder.encode(memberFormDTO.getPassword()); // 새 비밀번호
+        this.password = password;
+        this.name = memberFormDTO.getName();
+        this.postcode = memberFormDTO.getPostcode();
+        this.address = memberFormDTO.getAddress();
+    }
+
     // 회원의 구매금액을 증가시키는 메소드
     public void addPurchase(Long orderPrice){
         this.purchase += orderPrice;
