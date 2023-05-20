@@ -6,10 +6,14 @@ import com.knotted.entity.Member;
 import com.knotted.repository.MemberRepository;
 import com.knotted.service.MemberService;
 import com.knotted.util.RandomUtils;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +31,10 @@ public class MemberController {
     private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder; // 암호화용
+    private final JavaMailSender javaMailSender; // 메일 전송용
+
+    @Value("${spring.mail.username}")
+    private String sender; // 메일 송신자
 
     // 로그인 페이지로 이동
     @GetMapping(value = "/login")
@@ -205,7 +213,7 @@ public class MemberController {
     // 비밀번호 찾기 페이지에서 해당 이메일 가진 회원 존재하는지 확인
     @PostMapping(value = "/findPw")
     @ResponseBody
-    public ResponseEntity<Void> findPasswordSubmit(@RequestParam("email") String email){
+    public ResponseEntity<String> findPasswordSubmit(@RequestParam("email") String email){
         // 이메일을 받아 해당 이메일을 가진 회원이 존재하는지 확인한다
         Member member = memberRepository.findByEmail(email);
 
@@ -224,9 +232,35 @@ public class MemberController {
             memberService.updateToken(member, token);
             
             // 이메일 보내기
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setTo(email); // 수신자 설정
+            helper.setFrom(sender); // 송신자 설정
+            helper.setSubject("[노티드 클론코딩] 임시비밀번호 발급 링크입니다."); // 제목 설정
 
+            String mailText = """
+                    <html>
+                        <body>
+                            <div>
+                                <p>안녕하세요.</p>
+                                <p>임시 비밀번호 발급을 위한 링크를 보내드립니다.</p>
+                                <p>
+                                    <a href=\"http://localhost:8888/member/findPw/%s\">
+                                        여기를 클릭하셔서 임시 비밀번호를 발급받으세요.
+                                    </a>
+                                </p>
+                                <p>감사합니다.</p>
+                            </div>
+                        </body>
+                    </html>
+                    """.formatted(token);
+
+            helper.setText(mailText, true);
+
+            javaMailSender.send(mimeMessage); // 이메일 전송
+            
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
