@@ -2,6 +2,7 @@ package com.knotted.entity;
 
 import com.knotted.constant.MemberRole;
 import com.knotted.dto.MemberFormDTO;
+import com.knotted.util.RandomUtils;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,6 +66,10 @@ public class Member extends BaseEntity{
     @Column(name = "member_withdraw_reason")
     private String withdrawReason;
 
+    // 비밀번호 변경 토큰
+    @Column(name = "member_password_token")
+    private String passwordToken;
+
     // 생성자 대신 사용할 메서드. 이렇게 구성하면 다양한 데이터를 받아 Member 객체를 생성할 수 있다. 객체지향적인 설계 방법 중 하나이다
     public static Member createMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder){
         Member member = new Member();
@@ -82,6 +87,7 @@ public class Member extends BaseEntity{
 //        member.setMemberRole(MemberRole.ADMIN); // 일단 테스트를 위해 ADMIN 롤로 가입
         member.setWithdraw(false);
         member.setWithdrawReason("");
+        member.setPasswordToken(RandomUtils.getToken()); // 회원가입 시 랜덤 토큰 발행
 
         return member;
     }
@@ -129,5 +135,10 @@ public class Member extends BaseEntity{
     // 회원의 사용 적립금을 감소시키는 메소드
     public void subtractRewardUse(Long rewardUse){
         this.rewardUse -= rewardUse;
+    }
+
+    // 회원의 비밀번호 변경 토큰을 업데이트하는 메소드
+    public void updateToken(String token){
+        this.passwordToken = token;
     }
 }

@@ -80,6 +80,16 @@
                 <p><span class="knotted_timer">3</span>초 뒤 메인으로 이동합니다.</p>
             </div>
         </div>
+
+        <!--/* 비밀번호 찾기 이메일 발송 안내 */-->
+        <div th:case="findPw" class="welcome_div">
+            <ul>
+                <li><span th:text="${email}"></span>님, 메일을 확인해주세요.</li>
+            </ul>
+            <div>
+                <p><span class="knotted_timer">3</span>초 뒤 메인으로 이동합니다.</p>
+            </div>
+        </div>
     </div>
 </th:block>
 
@@ -93,7 +103,7 @@
         $(document).ready(function(){
             let mode = $(".member_complete_container").data("mode");
 
-            if(mode === "login" || mode === "withdraw"){
+            if(mode === "login" || mode === "withdraw" || mode === "findPw"){
                 go_login_timer();
             }
         });

@@ -5,6 +5,7 @@ import com.knotted.dto.MemberFormDTO;
 import com.knotted.entity.Member;
 import com.knotted.repository.MemberRepository;
 import com.knotted.service.MemberService;
+import com.knotted.util.RandomUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -194,7 +195,58 @@ public class MemberController {
         }
 
     }
+    
+    // 비밀번호 찾기 페이지로 이동
+    @GetMapping(value = "/findPw")
+    public String findPassword(){
+        return "/member/findPw";
+    }
 
+    // 비밀번호 찾기 페이지에서 해당 이메일 가진 회원 존재하는지 확인
+    @PostMapping(value = "/findPw")
+    @ResponseBody
+    public ResponseEntity<Void> findPasswordSubmit(@RequestParam("email") String email){
+        // 이메일을 받아 해당 이메일을 가진 회원이 존재하는지 확인한다
+        Member member = memberRepository.findByEmail(email);
+
+        // 해당 회원이 없으면
+        if(member == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // 여기서 토큰을 생성하고 해당 회원의 비밀번호 변경 토큰을 업데이트하고, HttpStatus.OK를 반환한다.
+        // 프론트 쪽에서 findPwInfo로 가도록 한다
+
+        try {
+            // 해당 회원이 있으면 랜덤 토큰을 생성하여 해당 회원의 비밀번호 토큰을 업데이트하고 메일을 보낸다
+            
+            String token = RandomUtils.getToken();
+            memberService.updateToken(member, token);
+            
+            // 이메일 보내기
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 비밀번호 찾기 시 이메일을 확인해달라고 하는 화면으로 이동
+    @GetMapping(value = "/findPwInfo")
+    public String findPasswordInfo(@RequestParam("email") String email, Model model){
+
+        model.addAttribute("mode", "findPw");
+        model.addAttribute("email", email);
+
+        return "/member/complete";
+    }
+
+    // 비밀번호 변경 및 임시비밀번호 안내 페이지로 이동
+//    @GetMapping(value = "/findPw/{token}")
+//    public String changePassword(){
+//
+//    }
 }
 
 

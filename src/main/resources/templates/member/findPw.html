@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/common}">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<th:block layout:fragment="css"></th:block>
+
+<th:block layout:fragment="content">
+    <div class="container">
+        <h1>회원정보 수정</h1>
+
+        <div class="login">
+            <div class="login_outinfo">
+                <p>비밀번호를 찾을 회원님의 이메일을 입력해주세요.</p>
+            </div>
+            <ul>
+                <li>
+                    <label>이메일</label>
+                    <input type="text" id="email">
+                </li>
+            </ul>
+            <button type="button" class="findPw_submit">다음</button>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        // 다음을 눌렀을 때
+        $(".findPw_submit").on("click", function(){
+            let email = $("#email").val();
+
+            if(!email){
+                alert("이메일을 입력해주세요");
+                return;
+            }
+
+            $.ajax({
+                url: "/member/findPw",
+                method: "POST",
+                data: {
+                    email: email,
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    // 정상적으로 통과 시 이메일 보냈다는 안내 페이지로 이동
+                    location.href = "/member/findPwInfo?email=" + email;
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == "400"){
+                        alert("해당 회원이 존재하지 않습니다");
+                    }else if(jqXHR.status == "500"){
+                        alert("비밀번호 찾기 중 에러가 발생했습니다");
+                    }else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        });
+
+    </script>
+</th:block>
+
+</html>

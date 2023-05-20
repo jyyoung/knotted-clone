@@ -75,4 +75,9 @@ public class MemberService implements UserDetailsService {
         member.withdrawMember(withdrawReason);
     }
 
+    // 회원의 비밀번호 변경 토큰을 업데이트하는 메소드
+    public void updateToken(Member member, String token){
+        member.updateToken(token);
+    }
+
 }

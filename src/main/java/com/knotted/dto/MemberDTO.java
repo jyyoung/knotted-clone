@@ -2,6 +2,7 @@ package com.knotted.dto;
 
 import com.knotted.constant.MemberRole;
 import com.knotted.entity.Member;
+import jakarta.persistence.Column;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 
@@ -43,6 +44,9 @@ public class MemberDTO {
 
     // 탈퇴 사유
     private String withdrawReason;
+
+    // 비밀번호 변경 토큰
+    private String passwordToken;
 
     // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
     private static ModelMapper modelMapper = new ModelMapper();
