@@ -69,4 +69,10 @@ public class MemberService implements UserDetailsService {
     public void updateMember(Member member, MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder){
         member.updateMember(memberFormDTO, passwordEncoder);
     }
+
+    // 회원 탈퇴 메소드
+    public void withdrawMember(Member member, String withdrawReason){
+        member.withdrawMember(withdrawReason);
+    }
+
 }

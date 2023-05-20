@@ -57,6 +57,8 @@
 
             <div class="join_point">* 표시 항목은 필수 입력 항목입니다</div>
 
+            <p><a class="go_withdraw">회원탈퇴</a></p>
+
             <button type="button" class="knotted_join_submit">회원정보수정</button>
 
             <!--/* CSRF 공격 방지용 */-->
@@ -152,6 +154,10 @@
             $(".knotted_join_form").submit();
         });
 
+        // 회원탈퇴 눌렀을 때
+        $(".knotted_join_form .go_withdraw").on("click", function(){
+            location.href = "/member/withdraw";
+        });
 
     </script>
 

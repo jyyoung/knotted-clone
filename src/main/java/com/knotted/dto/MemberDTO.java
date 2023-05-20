@@ -38,6 +38,12 @@ public class MemberDTO {
     // 회원 등급
     private MemberRole memberRole;
 
+    // 탈퇴 여부
+    private boolean withdraw;
+
+    // 탈퇴 사유
+    private String withdrawReason;
+
     // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
     private static ModelMapper modelMapper = new ModelMapper();
 

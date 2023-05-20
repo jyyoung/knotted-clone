@@ -13,22 +13,28 @@
 
 <th:block layout:fragment="content">
     <div class="container">
-        <h1>회원정보 수정</h1>
+        <h1>회원탈퇴</h1>
 
         <div class="login">
             <div class="login_outinfo">
-                <p>회원님의 정보보호를 위해 비밀번호를 재확인하고 있습니다.</p>
+                <p>진행중인 주문이 있는 경우 모든 주문처리 완료 후 탈퇴 가능합니다.</p>
+                <p>회원 탈퇴 시 적립금과 쿠폰 및 회원혜택이 전부 소멸되며, 복원되지 않습니다.</p>
+                <p>탈퇴한 아이디로 재가입은 불가합니다.</p>
             </div>
             <ul>
                 <li>
-                    <label>이메일</label> <th:block th:text="${memberDTO.email}"></th:block>
+                    <label>아이디</label> <th:block th:text="${memberDTO.email}"></th:block>
                 </li>
                 <li>
                     <label>비밀번호</label>
                     <input type="password" id="password" autocomplete="off">
                 </li>
+                <li>
+                    <label>탈퇴사유</label>
+                    <input type="text" id="reason">
+                </li>
             </ul>
-            <button type="button" class="before_modify_submit">다음</button>
+            <button type="button" class="withdraw_submit">회원탈퇴</button>
         </div>
     </div>
 </th:block>
@@ -38,9 +44,10 @@
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
 
-        // 다음을 눌렀을 때
-        $(".before_modify_submit").on("click", function(){
+        // 회원탈퇴 눌렀을 때
+        $(".withdraw_submit").on("click", function(){
             let password = $("#password").val();
+            let reason = $("#reason").val(); // 탈퇴사유는 필수는 아님
 
             if(!password){
                 alert("비밀번호를 입력해주세요");
@@ -48,24 +55,25 @@
             }
 
             $.ajax({
-                url: "/member/before-modify",
+                url: "/member/withdraw",
                 method: "POST",
                 data: {
                     password: password,
+                    reason: reason,
                 },
                 cache: false,
                 beforeSend: function(xhr){
                     xhr.setRequestHeader(header, token);
                 },
                 success: function(result, status){
-                    // 정상적으로 통과 시 회원정보 수정 페이지로 이동
-                    location.href = "/member/modify";
+                    // 정상적으로 통과 시 회원탈퇴 성공 페이지로 이동
+                    location.href = "/member/complete?mode=withdraw";
                 },
                 error: function(jqXHR, status, error){
                     if(jqXHR.status == "400"){
                         alert("비밀번호가 맞지 않습니다");
                     }else if(jqXHR.status == "500"){
-                        alert("비밀번호 확인 중 에러가 발생했습니다");
+                        alert("회원탈퇴 중 에러가 발생했습니다");
                     }else{
                         alert(jqXHR.responseText);
                     }

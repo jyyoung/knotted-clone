@@ -79,7 +79,7 @@ public class MemberController {
         return new ResponseEntity<String>(result, HttpStatus.OK);
     }
 
-    // 로그인 및 회원가입 성공 페이지로 이동
+    // 로그인, 회원가입, 회원탈퇴 성공 페이지로 이동
     @GetMapping(value = "/complete")
     public String complete(@RequestParam(name = "mode") String mode, @RequestParam(name = "email", required = false) String email, Model model){
         model.addAttribute("mode", mode);
@@ -160,4 +160,44 @@ public class MemberController {
         return "redirect:/mypage";
     }
 
+    // 회원 탈퇴 페이지로 이동
+    @GetMapping(value = "/withdraw")
+    public String withdrawForm(Model model, Principal principal){
+
+        String memberEmail = principal.getName();
+        Member member = memberRepository.findByEmail(memberEmail);
+
+        MemberDTO memberDTO = MemberDTO.of(member);
+        model.addAttribute("memberDTO", memberDTO);
+
+        return "/member/withdrawForm";
+    }
+
+    // 회원 탈퇴 처리 (REST로 처리)
+    @PostMapping(value = "/withdraw")
+    @ResponseBody
+    public ResponseEntity<Void> withdrawSubmit(@RequestParam("password") String password, @RequestParam("reason") String reason, Principal principal){
+
+        String memberEmail = principal.getName();
+        Member member = memberRepository.findByEmail(memberEmail);
+
+        String encodedPassword = member.getPassword(); // 저장된 인코딩된 비밀번호
+        String rawPassword = password; // 입력 폼으로 넘어온 비밀번호
+
+        if(!verifyPassword(rawPassword, encodedPassword)){ // 비밀번호 불일치 시
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }else{
+            // 회원 탈퇴 처리하기
+            memberService.withdrawMember(member, reason);
+            
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+    }
+
 }
+
+
+
+
+

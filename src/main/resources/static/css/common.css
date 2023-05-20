@@ -3331,6 +3331,24 @@ section::after {
     top: 2px;
 }
 
+.join > p, .login > p{
+    text-align: right;
+    line-height: 24px;
+}
+
+.join > p a, .login > p a{
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.join > p a:hover, .login > p a:hover {
+    color: #666;
+}
+
+.knotted_join_form > p a:hover, .knotted_login_form > p a:hover{
+    color: #666;
+}
+
 /* 회원정보 수정 부분 E */
 
 /* 공통 푸터 부분 S */

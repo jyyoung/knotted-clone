@@ -57,6 +57,14 @@ public class Member extends BaseEntity{
     @Enumerated(EnumType.STRING) // enum 사용 시 문제 예방하기 위해 String으로 바꿈
     private MemberRole memberRole;
 
+    // 탈퇴 여부
+    @Column(name = "member_withdraw")
+    private boolean withdraw;
+
+    // 탈퇴 사유
+    @Column(name = "member_withdraw_reason")
+    private String withdrawReason;
+
     // 생성자 대신 사용할 메서드. 이렇게 구성하면 다양한 데이터를 받아 Member 객체를 생성할 수 있다. 객체지향적인 설계 방법 중 하나이다
     public static Member createMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder){
         Member member = new Member();
@@ -72,6 +80,8 @@ public class Member extends BaseEntity{
         member.setRewardUse(0L);
         member.setMemberRole(MemberRole.USER);
 //        member.setMemberRole(MemberRole.ADMIN); // 일단 테스트를 위해 ADMIN 롤로 가입
+        member.setWithdraw(false);
+        member.setWithdrawReason("");
 
         return member;
     }
@@ -83,6 +93,12 @@ public class Member extends BaseEntity{
         this.name = memberFormDTO.getName();
         this.postcode = memberFormDTO.getPostcode();
         this.address = memberFormDTO.getAddress();
+    }
+
+    // 회원 탈퇴 메소드
+    public void withdrawMember(String withdrawReason){
+        this.withdraw = true;
+        this.withdrawReason = withdrawReason;
     }
 
     // 회원의 구매금액을 증가시키는 메소드
