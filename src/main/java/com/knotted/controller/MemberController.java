@@ -277,10 +277,41 @@ public class MemberController {
     }
 
     // 비밀번호 변경 및 임시비밀번호 안내 페이지로 이동
-//    @GetMapping(value = "/findPw/{token}")
-//    public String changePassword(){
-//
-//    }
+    @GetMapping(value = "/findPw/{token}")
+    public String changePassword(@PathVariable("token") String token, Model model){
+
+        if(token == null){
+            return "redirect:/"; // 메인 페이지로 보냄
+        }
+        
+        // 해당 토큰이 존재하는지 확인
+        Member member = memberRepository.findByPasswordToken(token);
+
+        if(member == null){ // 해당 토큰을 가진 사용자가 없으면
+            return "redirect:/"; // 메인 페이지로 보냄
+        }
+
+        String memberEmail = member.getEmail();
+
+        try {
+            // 비밀번호를 랜덤으로 생성하여 회원 비밀번호를 변경함
+            String newPassword = RandomUtils.getPassword();
+
+            // 해당 사용자의 비밀번호를 변경하고 토큰도 다시 변경함 (한 트랜잭션 내에서 해야 함!)
+            memberService.changePassword(member, newPassword, passwordEncoder);
+
+            // 발급 성공 페이지에 보여줄 정보 담음
+            model.addAttribute("mode", "changePw");
+            model.addAttribute("email", memberEmail);
+            model.addAttribute("password", newPassword);
+
+        } catch (Exception e) {
+            return "redirect:/"; // 오류 시 메인 페이지로 보냄
+        }
+
+        // 임시 비밀번호 발급 성공 페이지로 이동
+        return "/member/complete";
+    }
 }
 
 

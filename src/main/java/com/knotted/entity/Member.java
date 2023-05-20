@@ -141,4 +141,10 @@ public class Member extends BaseEntity{
     public void updateToken(String token){
         this.passwordToken = token;
     }
+
+    // 회원의 비밀번호를 변경하는 메소드
+    public void changePassword(String password, PasswordEncoder passwordEncoder){
+        String newPassword = passwordEncoder.encode(password);
+        this.password = newPassword;
+    }
 }

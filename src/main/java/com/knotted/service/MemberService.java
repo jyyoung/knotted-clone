@@ -3,6 +3,7 @@ package com.knotted.service;
 import com.knotted.dto.MemberFormDTO;
 import com.knotted.entity.Member;
 import com.knotted.repository.MemberRepository;
+import com.knotted.util.RandomUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -78,6 +79,14 @@ public class MemberService implements UserDetailsService {
     // 회원의 비밀번호 변경 토큰을 업데이트하는 메소드
     public void updateToken(Member member, String token){
         member.updateToken(token);
+    }
+
+    // 회원의 비밀번호를 변경하는 메소드
+    public void changePassword(Member member, String password, PasswordEncoder passwordEncoder){
+        member.changePassword(password, passwordEncoder);
+
+        // 토큰도 당연히 랜덤으로 다시 돌려야 함
+        member.updateToken(RandomUtils.getToken());
     }
 
 }

@@ -90,6 +90,19 @@
                 <p><span class="knotted_timer">3</span>초 뒤 메인으로 이동합니다.</p>
             </div>
         </div>
+
+        <!--/* 임시 비밀번호 안내 */-->
+        <div th:case="changePw" class="welcome_div">
+            <ul>
+                <li><span th:text="${email}"></span>님 안녕하세요.</li>
+                <li>임시 비밀번호는 <span th:text="${password}"></span>입니다.</li>
+            </ul>
+            <div class="button_wrap">
+                <button type="button" class="knotted_go_login">로그인하기</button>
+            </div>
+        </div>
+
+
     </div>
 </th:block>
 
