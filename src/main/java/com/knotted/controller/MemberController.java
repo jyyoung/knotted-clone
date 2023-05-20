@@ -38,7 +38,12 @@ public class MemberController {
 
     // 로그인 페이지로 이동
     @GetMapping(value = "/login")
-    public String loginForm(){
+    public String loginForm(Principal principal){
+        // 이미 로그인했으면 메인 페이지로 보냄
+        if(principal != null){
+            return "redirect:/";
+        }
+
         return "/member/loginForm";
     }
 
@@ -52,7 +57,12 @@ public class MemberController {
 
     // 회원가입 페이지로 이동
     @GetMapping(value = "/join")
-    public String joinForm(Model model){
+    public String joinForm(Model model, Principal principal){
+        // 이미 로그인했으면 메인 페이지로 보냄
+        if(principal != null){
+            return "redirect:/";
+        }
+
         model.addAttribute("memberFormDTO", new MemberFormDTO());
 
         return "/member/joinForm";

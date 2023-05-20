@@ -2,10 +2,6 @@
 /* 사이트 공통으로 들어갈 CSS */
 @import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css);
 
-
-/* 사이트 공통으로 들어갈 CSS */
-@import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css);
-
 /* 공통 헤더 부분 S */
 html {
     font-size: 62.5%;

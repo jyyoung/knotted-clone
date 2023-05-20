@@ -30,6 +30,7 @@ public class SecurityConfig{
         // 페이지별 HTTP 요청에 대한 권한 설정
         http.authorizeHttpRequests()
                 .requestMatchers("/admin/**").hasRole("ADMIN") // User.builder().roles()를 사용했으므로 hasRole을 사용해야 Role명이 매치가 될 것임
+                .requestMatchers("/order/**", "/cart/**", "/mypage/**", "/favorite/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().permitAll(); // 다른 모든 페이지는 권한 없어도 됨
 
         return http.build();
