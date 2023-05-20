@@ -3253,6 +3253,230 @@ section::after {
 
 /* 마이페이지 부분 E */
 
+/* 나의 등급 부분 S */
+
+.mypage_smile {
+    width: calc(100% - 40px);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.mypage_smile .stampwrap {
+    margin: 0 auto;
+    margin-bottom: 50px;
+    padding-top: 60px;
+    text-align: right;
+}
+
+.mypage_smile .stampwrap .stampbar {
+    float: none;
+    width: calc(100% - 10px);
+    margin: 0 auto;
+    text-align: left;
+}
+
+.stampbar .bar {
+    position: relative;
+    background-color: #DDD;
+    border-radius: 50px;
+    width: 100%;
+    height: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.stampbar .bar:before {
+    border-right: 2px solid #FFF;
+    position: absolute;
+    top: 0;
+    left: 30%;
+    height: 50%;
+    width: 1px;
+    content: "";
+}
+
+.stampbar .bar .amount {
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: #f1e4ab;
+    height: 100%;
+    border-radius: 50px 0 0 50px;
+    display: block;
+    min-width: 30px !important;
+}
+
+.stampbar .bar .sum {
+    background-color: #f1e7ac;
+    border-radius: 10px;
+    padding: 10px 20px;
+    text-align: center;
+    position: absolute;
+    bottom: 35px;
+    right: 0;
+    transform: translate(50%,0);
+    font-size: 14px;
+}
+
+.stampbar .bar .sum span {
+    color: #ffa0c5;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.stampbar .bar .amount > .position {
+    background: url(/images/smile_2.png) 0 0 no-repeat;
+    background-position: center right;
+    background-size: 40px auto;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 40px;
+    height: 40px;
+}
+
+.stampbar .bar:after {
+    border-right: 2px solid #FFF;
+    position: absolute;
+    top: 0;
+    left: 60%;
+    height: 50%;
+    width: 1px;
+    content: "";
+}
+
+.mypage_smile .board_smile {
+    margin-bottom: 50px;
+}
+
+.smilenotice ul li {
+    padding-left: 10px;
+    text-indent: -10px;
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.smilenotice ul li:before {
+    content: "-";
+    margin-right: 5px;
+}
+
+.mypage_smile > h2 {
+    background: url(/images/reserve_info_04.png) 0 center no-repeat;
+    background-size: 20px auto;
+    padding-left: 30px;
+    line-height: 30px;
+    height: 30px;
+    margin: 50px 0 10px;
+    font-weight: 500;
+}
+
+.smiletab {
+    width: 100%;
+    min-height: 63px;
+}
+
+.smiletab input[id*="smile"] {
+    display: none;
+}
+
+.smiletab input[id*="smile"] + label {
+    display: inline-block;
+    margin: 2px 5px 2px 0;
+    padding: 0 15px;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50px;
+    border: 1px solid #282828;
+}
+
+.smiletab input[id*="smile"]:checked + label {
+    display: inline-block;
+    border: 1px solid #ffa0c5;
+    color: #ffa0c5;
+}
+
+.smiletab > .smilebenefit {
+    content: "";
+    clear: both;
+    margin-top: 15px;
+    padding-bottom: 50px;
+}
+
+.smiletab > div ul li, .smiletab > div p {
+    display: none;
+    line-height: 1.4;
+}
+
+.smiletab > div p {
+    margin: 10px 0;
+}
+
+.smiletab input[id="smile01"]:checked ~ div .basic {
+    display: block;
+}
+
+.smiletab input[id="smile02"]:checked ~ div .vip {
+    display: block;
+}
+
+.smiletab input[id="smile03"]:checked ~ div .vvip {
+    display: block;
+}
+
+.smiletab input[id="smile04"]:checked ~ div .rvip {
+    display: block;
+}
+
+.smiletab > div ul {
+    margin-top: 30px;
+}
+
+.smiletab > div ul li {
+    padding: 15px 0 15px 60px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.smiletab > div ul li.donut {
+    background: url(/images/icon_benefit.png) 0 center no-repeat;
+    background-position: 0 -50px;
+    background-size: 50px auto;
+}
+
+.smiletab > div ul li.americano {
+    background: url(/images/icon_benefit.png) 0 center no-repeat;
+    background-position: 0 -300px;
+    background-size: 50px auto;
+}
+
+.smiletab > div ul li.beverage {
+    background: url(/images/icon_benefit.png) 0 center no-repeat;
+    background-position: 0 -3px;
+    background-size: 50px auto;
+}
+
+.smiletab > div ul li.bakery {
+    background: url(/images/icon_benefit.png) 0 center no-repeat;
+    background-position: 0 -250px;
+    background-size: 50px auto;
+}
+
+.smiletab > div ul li.cake {
+    background: url(/images/icon_benefit.png) 0 center no-repeat;
+    background-position: 0 -200px;
+    background-size: 50px auto;
+}
+
+.smiletab:after {
+    content: "";
+    clear: both;
+}
+
+
+/* 나의 등급 부분 E */
+
 /* 회원정보 수정 부분 S */
 
 .login, .join_check {

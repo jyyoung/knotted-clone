@@ -9,6 +9,87 @@
 <th:block layout:fragment="content">
     <div class="container">
         <h1>나의 등급</h1>
+
+        <div class="mypage_smile" th:object="${memberDTO}">
+            <div class="stampwrap">
+                <div class="stampbar">
+                    <div class="bar">
+                        <div class="amount" th:style="'width: ' + ${memberDTO.purchase > 150000 ? 100 : memberDTO.purchase * 100 / 150000} + '%;'">
+                            <div class="sum">
+                                <th:block th:if="*{purchase >= 150000}">
+                                    내년에 쿠폰이 발급됩니다!
+                                </th:block>
+                                <th:block th:if="*{purchase < 150000}">
+                                    <span th:text="*{#numbers.formatInteger(150000 - purchase, 0, 'COMMA')}"></span>원 더 구매하시고, 쿠폰 받아가세요!
+                                </th:block>
+                            </div>
+                            <div class="position"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="board_smile">
+                <table class="board_list">
+                    <colgroup>
+                        <col width="50%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>적용기간</th>
+                        <th>내년 예상 회원등급</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${#dates.year(#dates.createNow()) + '.01.01 ~ ' + #dates.year(#dates.createNow()) + '.12.31'}"></td>
+
+                        <th:block th:if="*{purchase >= 150000}">
+                            <td>핑크스마일</td>
+                        </th:block>
+                        <th:block th:if="*{purchase < 150000}">
+                            <td>옐로우스마일</td>
+                        </th:block>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h2>회원등급 안내</h2>
+            <div class="smilenotice">
+                <ul>
+                    <li>매장에서 구매 시 회원 바코드를 보여주시면 적립이 가능합니다</li>
+                    <li>한해 동안 구매한 기록을 통해 내년 등급이 결정되며, 등급은 1년동안 유효합니다.</li>
+                </ul>
+            </div>
+            <h2>등급별 혜택</h2>
+            <div class="smiletab">
+                <input type="radio" name="smile" id="smile01" checked="">
+                <label for="smile01">옐로우스마일</label>
+                <input type="radio" name="smile" id="smile02">
+                <label for="smile02">핑크스마일</label>
+                <input type="radio" name="smile" id="smile03">
+                <label for="smile03">민트스마일</label>
+                <input type="radio" name="smile" id="smile04">
+                <label for="smile04">퍼플스마일</label>
+                <div class="smilebenefit">
+                    <p class="basic">한 해의 총 실 결제금액이 150,000원 미만일 경우<br>다음 해 아래의 쿠폰이 발행됩니다</p>
+                    <p class="vip">한 해의 총 실 결제금액이 150,000원 이상일 경우<br>다음 해 아래의 쿠폰이 발행됩니다.</p>
+                    <p class="vvip">한 해의 총 실 결제금액이 300,000원 이상일 경우<br>다음 해 아래의 쿠폰이 발행됩니다.</p>
+                    <p class="rvip">한 해의 총 실 결제금액이 500,000원 이상일 경우<br>다음 해 아래의 쿠폰이 발행됩니다.</p>
+                    <ul>
+                        <li class="donut basic vip">도넛 무료쿠폰 (1장)</li>
+                        <li class="donut vvip">도넛 무료쿠폰 (1월/4월/7월/10월 각 1장씩)</li>
+                        <li class="donut rvip">도넛 무료쿠폰 (매달 1장씩 총12장)</li>
+                        <li class="americano basic vip">커피 무료쿠폰 (1장)</li>
+                        <li class="beverage vip">음료 무료쿠폰 (1장)</li>
+                        <li class="beverage vvip">음료 무료쿠폰 (1월/4월/7월/10월 각 1장씩)</li>
+                        <li class="beverage rvip">음료 무료쿠폰 (매달 1장씩 총12장)</li>
+                        <li class="bakery vvip">베이커리 무료쿠폰 (1월/7월 각 1장씩)</li>
+                        <li class="bakery rvip">베이커리 무료쿠폰 (1월/4월/7월/10월 각 1장씩)</li>
+                        <li class="cake vip vvip rvip">생일 축하 케이크쿠폰</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </th:block>
 
