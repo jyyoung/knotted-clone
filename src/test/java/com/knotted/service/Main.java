@@ -1,7 +1,5 @@
-//package com.knotted.service;
-//
 //import java.io.*;
-//import java.util.*;
+//import java.util.StringTokenizer;
 //
 //// 연습용
 //public class Main {
@@ -9,46 +7,30 @@
 //        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 //        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 //
-//        int[] t1 = new int[3];
-//        HashMap<String, Integer> t2 = new HashMap<>(); // 해시맵을 사용해야 문자열형, 정수형 같은 형태로 저장이 가능
+//        String input = br.readLine();
 //
-//        for (int i = 0; i < 3; i++) {
-//            String input = br.readLine();
+//        StringTokenizer st = new StringTokenizer(input);
 //
-//            StringTokenizer st = new StringTokenizer(input);
+//        int n = Integer.parseInt(st.nextToken()); // 임무 총 일수
+//        int m = Integer.parseInt(st.nextToken()); // 얻고자 하는 최소 기여도
 //
-//            int p = Integer.parseInt(st.nextToken());
-//            int y = Integer.parseInt(st.nextToken());
-//            String s = st.nextToken();
+//        // 기여도를 m 이상 얻을 수 있는 방법의 수
 //
-//            t1[i] = y % 100;
-//            t2.put(s, p);
+//        // 전날 선택한 장소와 같은 장소에서 근무 시 기여도는 원래의 절반(이전의 절반이 아님)만 얻을 수 있음
+//        // 그냥 브루트포스로 조져보자
+//
+//        int count = 0; // 가능한 경우
+//
+//        // 어차피 최대 8일, 최대 6가지 중 고르는 거기 때문에, 160만 번밖에 안 된다.
+//        // 또한 중간에 이미 m 이상이 되면 빠져나갈 수 있음
+//
+//        // 0, 1, 2, 3, 4, 5번으로 인덱스를 넣고,
+//
+//        for (int i = 0; i < n; i++) {
+//
 //        }
 //
-//        Arrays.sort(t1); // 오름차순 정렬
-//        String t1_r = "";
-//        for(int v : t1){
-//            t1_r += + v;
-//        }
 //
-//        List<Map.Entry<String, Integer>> listEntries = new ArrayList<>(t2.entrySet());
-//
-//        Collections.sort(listEntries, new Comparator<Map.Entry<String, Integer>>() {
-//            @Override
-//            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-//                return o2.getValue().compareTo(o1.getValue()); // 내림차순 정렬
-//            }
-//        });
-//        String t2_r = "";
-//        for(Map.Entry<String, Integer> entry : listEntries){
-//            t2_r += entry.getKey().charAt(0);
-//        }
-//
-//        bw.write(t1_r + "\n");
-//        bw.write(t2_r);
-//
-//        bw.flush();
-//        bw.close();
 //
 //    }
 //}

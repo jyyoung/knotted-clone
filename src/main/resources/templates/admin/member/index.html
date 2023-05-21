@@ -9,9 +9,52 @@
 <th:block layout:fragment="content">
     <div class="container">
         <h1>회원 관리</h1>
+
+        <div class="sub_container">
+            <ul class="member_list object_list">
+                <li class="member object" th:each="memberDTO : ${memberDTOList}" th:object="${memberDTO}">
+                    <div class="member_buttons">
+                        <!--/* 각종 관리 버튼 (쿠폰 발급 등) */-->
+
+                    </div>
+                    <div class="member_info_sub_div subject">
+                        <div class="index">번호</div>
+                        <div class="email">이메일</div>
+                        <div class="name">이름</div>
+                        <div class="postcode">우편번호</div>
+                        <div class="address">주소</div>
+                    </div>
+                    <div class="member_info_sub_div">
+                        <div class="index" th:text="*{id}"></div>
+                        <div class="email" th:text="*{email}"></div>
+                        <div class="name" th:text="*{name}"></div>
+                        <div class="postcode" th:text="*{postcode}"></div>
+                        <div class="address" th:text="*{address}"></div>
+                    </div>
+                    <div class="member_info_sub_div sub_div_bottom subject">
+                        <div class="grade">권한</div>
+                        <div class="purchase">구매금액</div>
+                        <div class="reward">적립금</div>
+                        <div class="use_reward">사용 적립금</div>
+                        <div class="withdraw">탈퇴여부</div>
+                        <div class="reason">탈퇴사유</div>
+                    </div>
+                    <div class="member_info_sub_div">
+                        <div class="grade" th:text="*{memberRole}"></div>
+                        <div class="purchase" th:text="*{#numbers.formatInteger(purchase, 0, 'COMMA') + '원'}"></div>
+                        <div class="reward" th:text="*{#numbers.formatInteger(reward, 0, 'COMMA') + '원'}"></div>
+                        <div class="use_reward" th:text="*{#numbers.formatInteger(rewardUse, 0, 'COMMA') + '원'}"></div>
+                        <div class="withdraw" th:text="${memberDTO.withdraw eq true ? '예' : '아니오'}"></div>
+                        <div class="reason" th:text="${memberDTO.withdraw eq true ? memberDTO.withdrawReason : '-'}"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+
+</th:block>
 
 </html>

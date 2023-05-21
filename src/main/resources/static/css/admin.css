@@ -423,7 +423,80 @@ section h1{
 
 /* 관리 목록 부분 E */
 
+/* 회원 관리 부분 S */
+
+.object_list.member_list > li{
+    flex-direction: column;
+}
+
+.object_list.member_list .member_info_sub_div{
+    display: flex;
+}
+
+.object_list.member_list .member_info_sub_div div{
+    text-align: center;
+}
+
+.object_list.member_list .member_info_sub_div.sub_div_bottom{
+    margin-top: 20px;
+}
+
+.object_list.member_list .member_info_sub_div.subject div{
+    font-weight: 700;
+}
+
+.object_list.member_list .member_info_sub_div.subject{
+    margin-bottom: 3px;
+}
+
+.object_list.member_list .member_info_sub_div .index{
+    width: 10%;
+}
+
+.object_list.member_list .member_info_sub_div .email{
+    width: 30%;
+}
+
+.object_list.member_list .member_info_sub_div .name{
+    width: 10%;
+}
+
+.object_list.member_list .member_info_sub_div .postcode{
+    width: 10%;
+}
+
+.object_list.member_list .member_info_sub_div .address{
+    flex: 1;
+}
+
+.object_list.member_list .member_info_sub_div .grade{
+    width: 10%;
+}
+
+.object_list.member_list .member_info_sub_div .purchase{
+    width: 14%;
+}
+
+.object_list.member_list .member_info_sub_div .reward{
+    width: 13%;
+}
+
+.object_list.member_list .member_info_sub_div .use_reward{
+    width: 13%;
+}
+
+.object_list.member_list .member_info_sub_div .withdraw{
+    width: 10%;
+}
+
+.object_list.member_list .member_info_sub_div .reason{
+    flex: 1;
+}
+
+/* 회원 관리 부분 E */
+
 /* 등록 폼 관련 부분 S */
+
 .knotted_form {
     width: 94%;
     max-width: 768px;
@@ -647,9 +720,7 @@ section h1{
 
 /* 등록 폼 관련 부분 E */
 
-
 /* 관리자 부분 E */
-
 
 /* 공통 푸터 부분 S */
 
