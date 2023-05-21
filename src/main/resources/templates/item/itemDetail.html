@@ -82,6 +82,9 @@
                 error: function(jqXHR, status, error){
                     if(jqXHR.status == "400"){
                         alert("존재하지 않는 상품입니다");
+                    }else if(jqXHR.status == "403"){
+                        alert("로그인이 필요합니다");
+                        location.href = "/member/login";
                     }else if(jqXHR.status == "500"){
                         alert("찜 추가/삭제 중 에러가 발생했습니다");
                     }else{

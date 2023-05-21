@@ -29,6 +29,11 @@ public class FavoriteController {
     @ResponseBody
     public ResponseEntity<Boolean> toggleStoreFavorite(@PathVariable("storeId") Long storeId, Principal principal){
         // 현재 실행의 결과로 추가한 거면 true 반환, 삭제한 거면 false 반환
+        
+        if(principal == null){
+            // 로그인하지 않은 상태라면
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
         String memberEmail = principal.getName();
 
