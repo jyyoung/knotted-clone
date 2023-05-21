@@ -446,7 +446,7 @@ section h1{
 }
 
 .object_list.member_list .member_info_sub_div.subject{
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 
 .object_list.member_list .member_info_sub_div .index{
@@ -455,6 +455,7 @@ section h1{
 
 .object_list.member_list .member_info_sub_div .email{
     width: 30%;
+    word-break: break-all;
 }
 
 .object_list.member_list .member_info_sub_div .name{
@@ -467,6 +468,7 @@ section h1{
 
 .object_list.member_list .member_info_sub_div .address{
     flex: 1;
+    word-break: break-all;
 }
 
 .object_list.member_list .member_info_sub_div .grade{
@@ -491,7 +493,10 @@ section h1{
 
 .object_list.member_list .member_info_sub_div .reason{
     flex: 1;
+    word-break: break-all;
 }
+
+
 
 /* 회원 관리 부분 E */
 
