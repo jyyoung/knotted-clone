@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/common}">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<th:block layout:fragment="css"></th:block>
+
+<th:block layout:fragment="content">
+    <div class="container">
+        <th:block th:switch="${boardFormDTO.category}">
+            <h1 th:case="notice">공지사항</h1>
+            <h1 th:case="faq">자주묻는질문</h1>
+            <h1 th:case="qna">1:1문의</h1>
+            <h1 th:case="event">EVENT</h1>
+        </th:block>
+
+        <div class="board_view" th:object="${boardFormDTO}">
+            <input type="hidden" th:id="*{id}">
+
+            <div class="board_title">
+                <h2 th:text="*{subject}">22년도 크리스마스 케이크 예약</h2>
+                <p style="" th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm')}">2022-11-27 20:16</p>
+            </div>
+            <div class="board_contents" th:text="*{content}"></div>
+            <div class="btn_area">
+                <button type="button" class="btn_list">목록</button>
+
+                <th:block th:if="${isAdmin == true}">
+                    <button type="button" class="btn_modify">수정</button>
+                    <button type="button" class="btn_delete">삭제</button>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        let boardId = [[${boardId}]];
+
+        // 목록으로 가기
+        $(".board.view .btn_list").on("click", function(){
+
+        });
+
+        // 수정하기
+        $(".board.view .btn_modify").on("click", function(){
+
+        });
+
+        // 삭제하기 (REST)
+        $(".board.view .btn_delete").on("click", function(){
+
+        });
+
+    </script>
+</th:block>
+
+</html>

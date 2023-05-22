@@ -30,7 +30,6 @@ import java.util.List;
 @RequestMapping("/order")
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class OrderController {
 
     private final MemberRepository memberRepository;

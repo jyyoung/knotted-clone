@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDateTime;
+
 @Data
 public class BoardFormDTO {
 
@@ -31,6 +33,9 @@ public class BoardFormDTO {
 
     // 게시글 이미지
     private BoardImageDTO boardImageDTO;
+
+    // 작성일시
+    private LocalDateTime regDate;
 
     // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
     private static ModelMapper modelMapper = new ModelMapper();

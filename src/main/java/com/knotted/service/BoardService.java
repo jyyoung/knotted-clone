@@ -1,11 +1,13 @@
 package com.knotted.service;
 
 import com.knotted.dto.BoardDTO;
+import com.knotted.dto.BoardFormDTO;
 import com.knotted.dto.BoardImageDTO;
 import com.knotted.entity.Board;
 import com.knotted.entity.BoardImage;
 import com.knotted.repository.BoardImageRepository;
 import com.knotted.repository.BoardRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,23 @@ public class BoardService {
         }
 
         return boardDTOList;
+    }
+
+    // 게시글 하나 조회하는 메소드
+    public BoardFormDTO getBoard(Long boardId){
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        BoardFormDTO boardFormDTO = BoardFormDTO.of(board);
+        BoardImage boardImage = boardImageRepository.findByBoardId(board.getId());
+
+        // 여기서 boardImage가 있는 경우에만 넣도록 함
+        if(boardImage != null){
+            BoardImageDTO boardImageDTO = BoardImageDTO.of(boardImage);
+            boardFormDTO.setBoardImageDTO(boardImageDTO);
+        }
+
+        return boardFormDTO;
     }
 
     // 게시글 엔티티를 DTO로 변환 (이 과정에서 게시글 이미지 DTO도 게시글 DTO에 넣음)

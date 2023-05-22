@@ -3580,6 +3580,51 @@ section::after {
 
 /* 회원정보 수정 부분 E */
 
+/* 게시판 부분 S */
+
+.board_view .board_title, .board_view .reply_title {
+    padding: 15px 10px;
+    text-align: left;
+    border-top: 2px solid #AAA;
+    border-bottom: 1px solid #AAA;
+    height: auto;
+}
+
+.board_view .board_title h2, .board_view .reply_title h2 {
+    font-size: 1.8rem;
+}
+
+.board_view .board_title p, .board_view .reply_title p {
+    color: #999;
+    margin-top: 5px;
+    font-size: 1.4rem;
+}
+
+.board_view .board_contents, .board_view .reply_contents {
+    padding: 30px 10px;
+    border-bottom: 1px solid #DDD;
+    white-space: pre-wrap;
+}
+
+.board_view .btn_area, .board_write .btn_area {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.board_view .btn_area button, .board_write .btn_area button {
+    margin: 0 2px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 100px;
+    background-color: inherit;
+    font-size: 1em;
+    color: #282828;
+}
+
+
+
+/* 게시판 부분 E */
+
 /* 공통 푸터 부분 S */
 
 footer{
