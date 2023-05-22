@@ -3621,6 +3621,15 @@ section::after {
     color: #282828;
 }
 
+.board_view .board_image_wrap{
+    width: 100%;
+}
+
+.board_view .board_image_wrap img{
+    display: block;
+    width: 100%;
+}
+
 
 
 /* 게시판 부분 E */

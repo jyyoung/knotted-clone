@@ -76,4 +76,7 @@ public class AdminBoardController {
         return "redirect:/admin/board";
     }
 
+    // 게시글 삭제 처리
+
+
 }

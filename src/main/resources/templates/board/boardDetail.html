@@ -24,10 +24,16 @@
             <input type="hidden" th:id="*{id}">
 
             <div class="board_title">
-                <h2 th:text="*{subject}">22년도 크리스마스 케이크 예약</h2>
-                <p style="" th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm')}">2022-11-27 20:16</p>
+                <h2 th:text="*{subject}"></h2>
+                <p style="" th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm')}"></p>
             </div>
-            <div class="board_contents" th:text="*{content}"></div>
+            <div class="board_contents"><th:block th:text="*{content}"></th:block>
+                <th:block th:if="*{boardImageDTO}">
+                    <div class="board_image_wrap">
+                        <img th:src="*{boardImageDTO.imageUrl}" alt="게시글 이미지">
+                    </div>
+                </th:block>
+            </div>
             <div class="btn_area">
                 <button type="button" class="btn_list">목록</button>
 
