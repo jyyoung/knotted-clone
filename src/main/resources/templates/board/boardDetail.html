@@ -52,16 +52,17 @@
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
 
+        let category = "[[${category}]]";
         let boardId = [[${boardId}]];
 
         // 목록으로 가기
-        $(".board.view .btn_list").on("click", function(){
-
+        $(".board_view .btn_list").on("click", function(){
+            location.href = "/board/" + category;
         });
 
-        // 수정하기
-        $(".board.view .btn_modify").on("click", function(){
-
+        // 게시글 수정 페이지로 가기
+        $(".board_view .btn_modify").on("click", function(){
+            location.href = "/admin/board/" + boardId;
         });
 
         // 삭제하기 (REST)
@@ -105,10 +106,6 @@
             });
         }
 
-        // 게시글 수정 페이지로 가기
-        $(".board_view .btn_modify").on("click", function(){
-            location.href = "/admin/board/" + boardId;
-        });
 
     </script>
 </th:block>

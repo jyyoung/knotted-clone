@@ -52,15 +52,19 @@
                     <th:block th:if="*{id != null}">
 
                         <!--/* 오류나서 다시 돌아올 때 NPE 방지 */-->
-                        <input type="hidden" name="imageName" th:value="*{boardImageDTO.originalImageName}">
-                        <input type="hidden" name="imageId" th:value="*{boardImageDTO.id}">
+                        <th:block th:if="*{boardImageDTO != null}">
+                            <input type="hidden" name="imageName" th:value="*{boardImageDTO.originalImageName}">
+                            <input type="hidden" name="imageId" th:value="*{boardImageDTO.id}">
+                        </th:block>
 
                         <div class="file_div">
-                            <div class="file_preview">
-                                현재 이미지 : <span th:text="*{boardImageDTO.originalImageName}"></span>
-                            </div>
+                            <th:block th:if="*{boardImageDTO != null}">
+                                <div class="file_preview">
+                                    현재 이미지 : <span th:text="*{boardImageDTO.originalImageName}"></span>
+                                </div>
+                                <input type="hidden" name="boardImageId" th:value="*{boardImageDTO.id}">
+                            </th:block>
                             <input type="file" name="boardImageFile" id="boardImage">
-                            <input type="hidden" name="boardImageId" th:value="*{boardImageDTO.id}">
                         </div>
                     </th:block>
 

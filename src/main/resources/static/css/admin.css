@@ -976,7 +976,18 @@ section h1{
     cursor: pointer;
 }
 
+.board_listview tr th{
+    height: 30px;
+    line-height: 30px;
+}
+
+.board_listview tr td {
+    height: 40px;
+    vertical-align: middle;
+}
+
 /* 게시판 관리 부분 E */
+
 
 /* 관리자 부분 E */
 

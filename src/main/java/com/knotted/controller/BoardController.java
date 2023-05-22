@@ -1,5 +1,6 @@
 package com.knotted.controller;
 
+import com.knotted.dto.BoardDTO;
 import com.knotted.dto.BoardFormDTO;
 import com.knotted.entity.Member;
 import com.knotted.repository.MemberRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.List;
 
 @RequestMapping("/board")
 @Controller
@@ -31,6 +33,11 @@ public class BoardController {
         if(!Arrays.asList(categories).contains(category)){ // 해당 리스트에 없는 경우
             return "redirect:/";
         }
+
+        model.addAttribute("category", category);
+        List<BoardDTO> boardDTOList = boardService.getCategoryBoards(category);
+
+        model.addAttribute("boardDTOList", boardDTOList);
 
         // 카테고리에 따라 다른 View를 보여줄 것임
         return "/board/index";
@@ -60,6 +67,7 @@ public class BoardController {
         }
 
         BoardFormDTO boardFormDTO = boardService.getBoard(boardId);
+        model.addAttribute("category", category);
         model.addAttribute("boardId", boardId);
         model.addAttribute("boardFormDTO", boardFormDTO);
 

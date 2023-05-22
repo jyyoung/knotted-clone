@@ -110,7 +110,6 @@ public class AdminBoardController {
         return "/admin/board/boardForm";
     }
 
-
     // 게시글 수정 처리
     @PostMapping(value = "/{boardId}")
     public String boardUpdate(@PathVariable("boardId") Long boardId, String imageName, String imageId, @Valid BoardFormDTO boardFormDTO, BindingResult bindingResult, Model model, MultipartFile boardImageFile){

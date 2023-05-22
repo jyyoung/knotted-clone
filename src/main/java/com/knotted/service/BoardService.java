@@ -35,6 +35,18 @@ public class BoardService {
         return boardDTOList;
     }
 
+    // 특정 게시판의 게시글만 조회하는 메소드
+    public List<BoardDTO> getCategoryBoards(String category){
+        List<Board> boardList = boardRepository.findByCategory(category, Sort.by(Sort.Direction.DESC, "id"));
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+
+        for(Board board : boardList){
+            boardDTOList.add(convertToBoardDTO(board));
+        }
+
+        return boardDTOList;
+    }
+
     // 게시글 하나 조회하는 메소드
     public BoardFormDTO getBoard(Long boardId){
         Board board = boardRepository.findById(boardId)

@@ -8,10 +8,91 @@
 
 <th:block layout:fragment="content">
     <div class="container">
-        <h1>게시판</h1>
+        <th:block th:switch="${category}">
+            <h1 th:case="notice">공지사항</h1>
+            <h1 th:case="faq">자주묻는질문</h1>
+            <h1 th:case="qna">1:1문의</h1>
+            <h1 th:case="event">EVENT</h1>
+        </th:block>
+
+        <div class="noticetab">
+            <button type="button" data-category="notice" th:class="${category.equals('notice')} ? 'on' : ''">공지사항</button>
+            <button type="button" data-category="faq" th:class="${category.equals('faq')} ? 'on' : ''">자주묻는질문</button>
+            <button type="button" data-category="event" th:class="${category.equals('event')} ? 'on' : ''">이벤트</button>
+        </div>
+
+        <th:block th:if="${category == 'notice' || category == 'event'}">
+
+            <div class="boardcategory">
+                <div class="search">
+                    <input type="text" id="search_board">
+                    <label for="search_board"></label>
+                    <button type="submit">검색</button>
+                </div>
+            </div>
+
+            <table class="board_list board_notice">
+                <colgroup>
+                    <col style="width: 80px;">
+                    <col style="width: auto;">
+                    <col style="width: 100px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="boardDTO : ${boardDTOList}" th:object="${boardDTO}">
+                        <td th:text="*{id}"></td>
+                        <td th:text="*{subject}"></td>
+                        <td th:text="*{#temporals.format(regDate, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </th:block>
+
+
+        <th:block th:if="${category == 'faq'}">
+
+            <div class="boardcategory">
+                <div class="search">
+                    <input type="text" id="search_board">
+                    <label for="search_board"></label>
+                    <button type="submit">검색</button>
+                </div>
+
+                <div class="category">
+                    <span>
+                        <input type="radio" name="category" id="category0" value="전체" checked>
+                        <label for="category0">전체</label>
+                    </span>
+                </div>
+            </div>
+
+            <ul class="qna">
+                <li th:each="boardDTO, status : ${boardDTOList}" th:object="${boardDTO}">
+                    <input type="checkbox" th:id="'qna' + ${status.index}">
+                    <label th:for="'qna' + ${status.index}" th:text="*{subject}"></label>
+                    <div th:text="*{content}"></div>
+                </li>
+            </ul>
+        </th:block>
+
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script>
+        // 게시판 이동
+        $(".noticetab button").on("click", function(){
+            let category = $(this).data("category");
+
+            location.href = "/board/" + category;
+        });
+    </script>
+</th:block>
 
 </html>

@@ -64,8 +64,11 @@ public class AdminBoardService {
         // 애초에 정상적으로 찾아졌으면 여기로 넘어옴
         BoardFormDTO boardFormDTO = BoardFormDTO.of(board);
         BoardImage boardImage = adminBoardImageRepository.findByBoardId(board.getId());
-        BoardImageDTO boardImageDTO = BoardImageDTO.of(boardImage);
-        boardFormDTO.setBoardImageDTO(boardImageDTO);
+
+        if(boardImage != null){
+            BoardImageDTO boardImageDTO = BoardImageDTO.of(boardImage);
+            boardFormDTO.setBoardImageDTO(boardImageDTO);
+        }
 
         return boardFormDTO;
     }
