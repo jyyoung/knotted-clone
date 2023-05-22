@@ -8,6 +8,8 @@
 
 <th:block layout:fragment="content">
     <div class="container">
+        <input type="hidden" name="category" id="category" th:value="${category}">
+
         <th:block th:switch="${category}">
             <h1 th:case="notice">공지사항</h1>
             <h1 th:case="faq">자주묻는질문</h1>
@@ -45,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="boardDTO : ${boardDTOList}" th:object="${boardDTO}">
+                    <tr th:each="boardDTO : ${boardDTOList}" th:object="${boardDTO}" class="go_board_detail" th:attr="data-id=*{id}">
                         <td th:text="*{id}"></td>
                         <td th:text="*{subject}"></td>
                         <td th:text="*{#temporals.format(regDate, 'yyyy-MM-dd')}"></td>
@@ -86,11 +88,20 @@
 
 <th:block layout:fragment="script">
     <script>
+        let category = $("input#category").val();
+
         // 게시판 이동
         $(".noticetab button").on("click", function(){
             let category = $(this).data("category");
 
             location.href = "/board/" + category;
+        });
+
+        // 게시글 상세보기로 가기
+        $(".board_list .go_board_detail").on("click", function(){
+            let boardId = $(this).data("id");
+
+            location.href = "/board/" + category + "/" + boardId;
         });
     </script>
 </th:block>

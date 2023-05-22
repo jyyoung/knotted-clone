@@ -3603,7 +3603,7 @@ section::after {
 .board_view .board_contents, .board_view .reply_contents {
     padding: 30px 10px;
     border-bottom: 1px solid #DDD;
-    white-space: pre-wrap;
+    white-space: pre-line;
 }
 
 .board_view .btn_area, .board_write .btn_area {
@@ -3627,7 +3627,7 @@ section::after {
 
 .board_view .board_image_wrap img{
     display: block;
-    max-width: 100%;
+    width: 100%;
 }
 
 .board_view .btn_area button{

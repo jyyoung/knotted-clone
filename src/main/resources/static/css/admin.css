@@ -950,6 +950,10 @@ section h1{
     width: 100px;
 }
 
+.board_listview tr th:nth-child(2){
+    width: 150px;
+}
+
 .board_listview tr th:nth-child(3){
     width: auto;
 }
@@ -984,6 +988,11 @@ section h1{
 .board_listview tr td {
     height: 40px;
     vertical-align: middle;
+}
+
+.knotted_form .textarea_li .fieldError{
+    margin-top: 0;
+    margin-bottom: 15px;
 }
 
 /* 게시판 관리 부분 E */
