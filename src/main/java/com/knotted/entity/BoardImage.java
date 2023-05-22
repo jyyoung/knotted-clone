@@ -33,7 +33,7 @@ public class BoardImage extends BaseEntity{
     private String imageUrl;
 
     // 파일 업로드 성공 시 바꿀 엔티티 정보 업데이트
-    public void updateItemImage(String imageName, String originalImageName, String imageUrl){
+    public void updateBoardImage(String imageName, String originalImageName, String imageUrl){
         this.imageName = imageName;
         this.originalImageName = originalImageName;
         this.imageUrl = imageUrl;
