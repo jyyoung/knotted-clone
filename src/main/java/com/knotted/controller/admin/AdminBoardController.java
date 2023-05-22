@@ -1,6 +1,11 @@
 package com.knotted.controller.admin;
 
+import com.knotted.dto.BoardDTO;
 import com.knotted.dto.BoardFormDTO;
+import com.knotted.dto.MemberDTO;
+import com.knotted.entity.Member;
+import com.knotted.repository.MemberRepository;
+import com.knotted.service.BoardService;
 import com.knotted.service.admin.AdminBoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,16 +17,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
+import java.util.List;
+
 @RequestMapping("/admin/board")
 @Controller
 @RequiredArgsConstructor
 public class AdminBoardController {
 
+    private final BoardService boardService;
     private final AdminBoardService adminBoardService;
+    private final MemberRepository memberRepository;
 
     // 게시판 관리 메인. 목록도 읽어옴
     @GetMapping(value = {"", "/"})
     public String main(Model model){
+        List<BoardDTO> boardDTOList = boardService.getAllBoards();
+
+        model.addAttribute("boardDTOList", boardDTOList);
+
         return "/admin/board/index";
     }
 
@@ -35,11 +49,15 @@ public class AdminBoardController {
     
     // 게시글 등록 처리
     @PostMapping(value = "/new")
-    public String boardSubmit(@Valid BoardFormDTO boardFormDTO, BindingResult bindingResult, Model model, MultipartFile boardImageFile){
+    public String boardSubmit(@Valid BoardFormDTO boardFormDTO, BindingResult bindingResult, Model model, MultipartFile boardImageFile, Principal principal){
 
         if(bindingResult.hasErrors()){
             return "/admin/board/boardForm";
         }
+
+        Member member = memberRepository.findByEmail(principal.getName());
+        MemberDTO memberDTO = MemberDTO.of(member);
+        boardFormDTO.setMemberDTO(memberDTO);
 
         if(!boardImageFile.isEmpty() && !boardImageFile.getContentType().startsWith("image/")){ // 파일을 올렸는데 해당 파일이 이미지 파일이 아니라면
             model.addAttribute("errorMessage", "이미지 파일이 아닙니다");

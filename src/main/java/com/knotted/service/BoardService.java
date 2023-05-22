@@ -1,28 +1,49 @@
 package com.knotted.service;
 
+import com.knotted.dto.BoardDTO;
+import com.knotted.dto.BoardImageDTO;
+import com.knotted.entity.Board;
+import com.knotted.entity.BoardImage;
+import com.knotted.repository.BoardImageRepository;
 import com.knotted.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
-    
-    // 카테고리 굳이 필요 없어서 지움
-//    private final BoardCategoryRepository boardCategoryRepository;
+    private final BoardImageRepository boardImageRepository;
 
-    // 카테고리명 얻어오는 메소드
-    // 카테고리 굳이 필요 없어서 지움
-//    public String getBoardCategory(String category){
-//        BoardCategory boardCategory = boardCategoryRepository.findByCategory(category);
-//
-//        if(boardCategory != null){ // 해당 카테고리가 존재하면
-//            return boardCategory.getName();
-//        }else{
-//            return "";
-//        }
-//    }
+    // 모든 게시글 조회하는 메소드
+    public List<BoardDTO> getAllBoards(){
+        List<Board> boardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+
+        for(Board board : boardList){
+            boardDTOList.add(convertToBoardDTO(board));
+        }
+
+        return boardDTOList;
+    }
+
+    // 게시글 엔티티를 DTO로 변환 (이 과정에서 게시글 이미지 DTO도 게시글 DTO에 넣음)
+    public BoardDTO convertToBoardDTO(Board board){
+        BoardDTO boardDTO = BoardDTO.of(board);
+        // 해당 Board로 BoardImage를 찾아내서 추가한다
+        BoardImage boardImage = boardImageRepository.findByBoardId(board.getId());
+
+        if(boardImage != null){ // 해당 이미지가 있으면
+            BoardImageDTO boardImageDTO = BoardImageDTO.of(boardImage);
+            boardDTO.setBoardImageDTO(boardImageDTO);
+        }
+
+        return boardDTO;
+    }
 }

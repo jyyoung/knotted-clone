@@ -19,14 +19,14 @@
 
         <table class="order_listview reserve_listview">
             <thead>
-            <tr>
-                <th>주문일</th>
-                <th>주문번호</th>
-                <th>주문자</th>
-                <th>주문내용</th>
-                <th>결제금액</th>
-                <th>주문상태</th>
-            </tr>
+                <tr>
+                    <th>주문일</th>
+                    <th>주문번호</th>
+                    <th>주문자</th>
+                    <th>주문내용</th>
+                    <th>결제금액</th>
+                    <th>주문상태</th>
+                </tr>
             </thead>
             <tbody>
             <!--/* 여기 tr 부분을 순회하면서 주문 내역 출력 */-->
@@ -37,10 +37,10 @@
                     <span th:text="*{#temporals.format(regDate, 'HH:mm:ss')}"></span>
                 </td>
                 <td>
-                    <a th:text="*{id}"></a>
+                    <span th:text="*{id}"></span>
                 </td>
                 <td>
-                    <a th:text="*{memberDTO.getEmail()}"></a>
+                    <span th:text="*{memberDTO.getEmail()}"></span>
                 </td>
                 <td>
                     <!--/* 상품은 첫 번째 상품명만 표시해준다 */-->

@@ -13,6 +13,9 @@ public class BoardFormDTO {
     // 게시글 ID
     private Long id;
 
+    // 회원 DTO
+    private MemberDTO memberDTO;
+
     // 게시글 카테고리
     @NotBlank(message = "카테고리는 필수 입력값입니다")
     @Pattern(regexp = "^(notice|faq|qna|event)$", message = "카테고리는 공지사항, 자주묻는질문, 1:1문의, 이벤트 중 하나여야 합니다")

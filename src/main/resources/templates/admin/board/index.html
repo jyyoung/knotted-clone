@@ -12,16 +12,57 @@
 
         <div class="sub_container">
             <div class="list_top_wrap">
-                <a href="/admin/board/new">등록하기</a>
+                <div class="search">
+                    <input type="text" id="search_word"><label for="search_word"></label>
+                    <button type="button" class="store_search">검색</button>
+                </div>
             </div>
 
-            <ul class="board_list object_list">
-
-            </ul>
+            <table class="order_listview reserve_listview board_listview">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>게시판</th>
+                        <th>제목</th>
+                        <th>날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="boardDTO : ${boardDTOList}" th:object="${boardDTO}" th:attr="data-id=${boardDTO.id}, data-category=${boardDTO.category}" class="go_board_detail">
+                        <td>
+                            <span th:text="*{id}"></span>
+                        </td>
+                        <td>
+                            <th:block th:switch="${boardDTO.category}">
+                                <span th:case="notice">공지사항</span>
+                                <span th:case="faq">자주묻는질문</span>
+                                <span th:case="qna">1:1문의</span>
+                                <span th:case="event">이벤트</span>
+                            </th:block>
+                        </td>
+                        <td>
+                            <span th:text="*{subject}"></span>
+                        </td>
+                        <td>
+                            <span th:text="*{#temporals.format(regDate, 'yyyy-MM-dd')}"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+    <script>
+        // 게시글 상세보기로 가기
+        $(".board_listview .go_board_detail").on("click", function(){
+            let category = $(this).closest("tr").data("category");
+            let boardId = $(this).closest("tr").data("id");
+
+            location.href = "/board/" + category + "/" + boardId;
+        });
+    </script>
+</th:block>
 
 </html>

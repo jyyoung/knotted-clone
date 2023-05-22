@@ -13,9 +13,9 @@
         <form th:action="${boardId == null} ? '/admin/board/new' : '/admin/board/' + ${boardId}" method="post" role="form" enctype="multipart/form-data" class="knotted_board_form knotted_form" th:object="${boardFormDTO}">
 
             <input type="hidden" th:field="*{id}">
+            <input type="text">
 
             <ul>
-
                 <li class="required">
                     <label th:for="name">카테고리</label>
 

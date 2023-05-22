@@ -12,6 +12,7 @@ public class BoardImage extends BaseEntity{
 
     // 게시글 이미지 ID
     @Id
+    @GeneratedValue
     @Column(name = "board_image_id")
     private Long id;
 

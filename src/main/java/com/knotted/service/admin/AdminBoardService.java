@@ -31,8 +31,12 @@ public class AdminBoardService {
         BoardImage boardImage = new BoardImage();
         boardImage.setBoard(board); // 위에서 저장한 엔티티를 FK로 넣어준다
 
-        adminBoardImageService.saveBoardImage(boardImage, boardImageFile);
+        if(!boardImageFile.isEmpty()) { // 게시글 이미지를 올렸을 때만
+            adminBoardImageService.saveBoardImage(boardImage, boardImageFile);
+        }
 
         // 여기까지 정상적으로 됐으면 게시글 및 게시글 이미지 업로드, 게시글 이미지 DB까지 저장 완료.
     }
+
+
 }
