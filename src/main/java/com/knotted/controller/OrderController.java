@@ -12,8 +12,12 @@ import com.knotted.service.*;
 import com.knotted.util.TimeUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +30,7 @@ import java.util.List;
 @RequestMapping("/order")
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class OrderController {
 
     private final MemberRepository memberRepository;
@@ -343,8 +348,15 @@ public class OrderController {
                     .orElseThrow(EntityNotFoundException::new);
             Member savedMember = order.getMember();
 
-            // 해당 주문 사용자와 현재 사용자가 다른 경우
-            if(!savedMember.equals(member)){
+            // 현재 사용자의 역할 정보 가져오기
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            GrantedAuthority authority = authentication.getAuthorities().iterator().next();
+            String role = authority.getAuthority();
+
+            log.info(role);
+
+            // 관리자가 아니면서 해당 주문 사용자와 현재 사용자가 다른 경우
+            if(!role.equals("ROLE_ADMIN") && !savedMember.equals(member)){
                 return "redirect:/";
             }
 

@@ -137,6 +137,7 @@
 
 <th:block layout:fragment="script">
     <script>
+        // 주문 상세보기로 가기
         $(".order_listview .go_order_detail").on("click", function(){
             let orderId = $(this).closest("tr").data("id");
 

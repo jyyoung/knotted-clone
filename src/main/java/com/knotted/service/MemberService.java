@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MemberService implements UserDetailsService {
+public class MemberService implements UserDetailsService { // UserDetailsService는 인증을 수행하기 위해 사용되는 인터페이스.
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
