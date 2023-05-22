@@ -23,7 +23,7 @@
             <button type="button" data-category="event" th:class="${category.equals('event')} ? 'on' : ''">이벤트</button>
         </div>
 
-        <th:block th:if="${category == 'notice' || category == 'event'}">
+        <th:block th:if="${category == 'notice'}">
 
             <div class="boardcategory">
                 <div class="search">
@@ -56,7 +56,6 @@
             </table>
         </th:block>
 
-
         <th:block th:if="${category == 'faq'}">
 
             <div class="boardcategory">
@@ -83,6 +82,29 @@
             </ul>
         </th:block>
 
+        <th:block th:if="${category == 'event'}">
+
+            <div class="board_event">
+                <ul th:each="boardDTO : ${boardDTOList}" th:object="${boardDTO}">
+                    <li class="go_board_detail" th:attr="data-id=*{id}">
+                        <div>
+                            <!--/* 이미지가 없을 시 준비해 둔 no_image를 띄워준다 */-->
+                            <th:block th:if="*{boardImageDTO.originalImageName == null}">
+                                <img th:src="@{/images/no_image.jpg}" alt="이벤트 이미지">
+                            </th:block>
+
+                            <th:block th:if="*{boardImageDTO.originalImageName != null}">
+                                <img th:src="*{boardImageDTO.imageUrl}">
+                            </th:block>
+                        </div>
+                        <h2 th:text="*{subject}"></h2>
+                        <p th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                    </li>
+                </ul>
+            </div>
+
+        </th:block>
+
     </div>
 </th:block>
 
@@ -98,7 +120,7 @@
         });
 
         // 게시글 상세보기로 가기
-        $(".board_list .go_board_detail").on("click", function(){
+        $(".go_board_detail").on("click", function(){
             let boardId = $(this).data("id");
 
             location.href = "/board/" + category + "/" + boardId;

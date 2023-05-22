@@ -3805,6 +3805,54 @@ section::after {
     display: block;
 }
 
+.board_event {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    -moz-column-gap: 30px;
+    column-gap: 30px;
+    padding-top: 10px;
+}
+
+.board_event ul {
+    padding-bottom: 50px;
+    display: inline-grid;
+}
+
+.board_event ul li div {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    height: 0;
+    padding-top: 60%;
+}
+
+.board_event ul li div img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 50%;
+    bottom: 50%;
+    display: block;
+    margin: auto;
+    width: 100%;
+    transform: translate(-50%, 0);
+    cursor: pointer;
+}
+
+.board_event ul li h2 {
+    padding: 12px 20px 5px 10px;
+}
+
+.board_event ul li p {
+    padding-left: 10px;
+    font-size: 14px;
+    color: #999;
+}
+
+.board_event .go_board_detail{
+    cursor: pointer;
+}
+
 /* 게시판 부분 E */
 
 /* 공통 푸터 부분 S */
