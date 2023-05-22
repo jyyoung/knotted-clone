@@ -8,6 +8,9 @@ import com.knotted.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -239,7 +242,14 @@ public class OrderService {
         // 취소 요청된 주문이 현재 사용자의 주문인지 확인
         Member member = memberRepository.findByEmail(memberEmail);
         Member savedMember = order.getMember();
-        if(!member.equals(savedMember)){
+
+        // 현재 사용자의 역할 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        GrantedAuthority authority = authentication.getAuthorities().iterator().next();
+        String role = authority.getAuthority();
+
+        // 관리자가 아니면서 해당 주문 사용자와 현재 사용자가 다른 경우
+        if(!role.equals("ROLE_ADMIN") && !member.equals(savedMember)){
             throw new IllegalStateException();
         }
 

@@ -427,7 +427,7 @@ section h1{
 }
 
 .object_list{
-    border-top: 1px solid #ddd;
+    border-top: 2px solid #333;
     margin-top: 15px;
 }
 
@@ -827,15 +827,19 @@ section h1{
     line-height: 40px;
 }
 
-.order_listview tr th:nth-child(1), .order_listview tr th:nth-child(4), .order_listview tr th:nth-child(5) {
+.order_listview tr th:nth-child(1), .order_listview tr th:nth-child(5), .order_listview tr th:nth-child(6) {
     width: 150px;
 }
 
 .order_listview tr th:nth-child(2) {
-    width: 200px;
+    width: 100px;
 }
 
-.reserve_listview tr td:nth-child(3) {
+.order_listview tr th:nth-child(3) {
+    width: 250px;
+}
+
+.reserve_listview tr td:nth-child(4) {
     line-height: 20px;
 }
 
@@ -852,40 +856,40 @@ section h1{
     font-weight: 600;
 }
 
-.order_listview tr td:nth-child(3) {
+.order_listview tr td:nth-child(4) {
     text-align: left;
     padding-left: 20px;
     padding-right: 20px;
 }
 
-.order_listview tr td:nth-child(3) h2 {
+.order_listview tr td:nth-child(4) h2 {
     line-height: 60px;
     font-size: 120%;
 }
 
-.reserve_listview tr td:nth-child(3) h2 {
+.reserve_listview tr td:nth-child(4) h2 {
     margin-top: 2px;
     margin-bottom: 10px;
     line-height: 20px;
 }
 
-.reserve_listview tr td:nth-child(3) p {
+.reserve_listview tr td:nth-child(4) p {
     color: #999;
     line-height: 20px;
 }
 
-.reserve_listview tr td:nth-child(3) span {
+.reserve_listview tr td:nth-child(4) span {
     margin: 0 20px 0 0;
     color: #282828;
 }
 
-.reserve_listview tr td:nth-child(3) span:before {
+.reserve_listview tr td:nth-child(4) span:before {
     content: ":";
     margin: 0 5px;
     color: #999;
 }
 
-.order_listview tr td:nth-child(5) {
+.order_listview tr td:nth-child(6) {
     color: #f5a9ca;
     font-weight: 500;
 }

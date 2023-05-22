@@ -318,8 +318,13 @@ public class OrderController {
                     .orElseThrow(EntityNotFoundException::new);
             Member savedMember = order.getMember();
 
-            // 해당 주문 사용자와 현재 사용자가 다른 경우
-            if(!savedMember.equals(member)){
+            // 현재 사용자의 역할 정보 가져오기
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            GrantedAuthority authority = authentication.getAuthorities().iterator().next();
+            String role = authority.getAuthority();
+
+            // 관리자가 아니면서 해당 주문 사용자와 현재 사용자가 다른 경우
+            if(!role.equals("ROLE_ADMIN") && !savedMember.equals(member)){
                 return "redirect:/";
             }
 
@@ -352,8 +357,6 @@ public class OrderController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             GrantedAuthority authority = authentication.getAuthorities().iterator().next();
             String role = authority.getAuthority();
-
-            log.info(role);
 
             // 관리자가 아니면서 해당 주문 사용자와 현재 사용자가 다른 경우
             if(!role.equals("ROLE_ADMIN") && !savedMember.equals(member)){
@@ -401,8 +404,13 @@ public class OrderController {
                     .orElseThrow(EntityNotFoundException::new);
             Member savedMember = order.getMember();
 
-            // 해당 주문 사용자와 현재 사용자가 다른 경우
-            if(!savedMember.equals(member)){
+            // 현재 사용자의 역할 정보 가져오기
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            GrantedAuthority authority = authentication.getAuthorities().iterator().next();
+            String role = authority.getAuthority();
+
+            // 관리자가 아니면서 해당 주문 사용자와 현재 사용자가 다른 경우
+            if(!role.equals("ROLE_ADMIN") && !savedMember.equals(member)){
                 return "redirect:/";
             }
 

@@ -15,6 +15,7 @@
             <tr>
                 <th>주문일</th>
                 <th>주문번호</th>
+                <th>주문자</th>
                 <th>주문내용</th>
                 <th>결제금액</th>
                 <th>주문상태</th>
@@ -30,6 +31,9 @@
                 </td>
                 <td>
                     <a th:text="*{id}"></a>
+                </td>
+                <td>
+                    <a th:text="*{memberDTO.getEmail()}"></a>
                 </td>
                 <td>
                     <!--/* 상품은 첫 번째 상품명만 표시해준다 */-->
