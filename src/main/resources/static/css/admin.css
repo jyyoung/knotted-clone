@@ -417,13 +417,15 @@ section h1{
 .list_top_wrap{
     display: flex;
     justify-content: flex-end;
+    height: 40px;
 }
 
 .list_top_wrap a{
-    padding: 5px 20px;
+    padding: 10px 25px;
     border: 1px solid #aaa;
     box-shadow: 0 0 3px #aaa;
     border-radius: 5px;
+    font-weight: 600;
 }
 
 .object_list{
@@ -802,10 +804,10 @@ section h1{
 
 /* 주문 관리 부분 S */
 
-
 .order_listview {
     width: 100%;
     border-top: 2px solid #333;
+    margin-top: 15px;
 }
 
 .order_listview tr {
@@ -893,6 +895,40 @@ section h1{
     color: #f5a9ca;
     font-weight: 500;
 }
+
+.search{
+    width: 30%;
+    float: right;
+    border-radius: 50px;
+    background-color: #ebebeb;
+    padding: 5px 10px;
+}
+
+.search input[type=text] {
+    background-color: transparent;
+    width: calc(100% - 50px);
+    height: 30px;
+    float: left;
+    border: none;
+}
+
+.search button {
+    background: url(/images/icon_search.png) 50% 50% no-repeat;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    font-size: 0;
+    background-size: 22px auto;
+    float: right;
+}
+
+.search:after {
+    content: "";
+    clear: both;
+    float: none;
+}
+
+
 
 /* 주문 관리 부분 E */
 
