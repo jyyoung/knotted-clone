@@ -9,12 +9,12 @@ import com.knotted.service.BoardService;
 import com.knotted.service.admin.AdminBoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
@@ -77,6 +77,18 @@ public class AdminBoardController {
     }
 
     // 게시글 삭제 처리
+    @DeleteMapping(value = "/{boardId}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteBoard(@PathVariable("boardId") Long boardId){
+
+        try {
+            adminBoardService.deleteBoard(boardId);
+        } catch (Exception e) {
+            return new ResponseEntity("게시글 삭제 중 에러가 발생했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

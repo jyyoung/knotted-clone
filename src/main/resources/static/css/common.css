@@ -3627,10 +3627,12 @@ section::after {
 
 .board_view .board_image_wrap img{
     display: block;
-    width: 100%;
+    max-width: 100%;
 }
 
-
+.board_view .btn_area button{
+    border: 1px solid #DDD;
+}
 
 /* 게시판 부분 E */
 

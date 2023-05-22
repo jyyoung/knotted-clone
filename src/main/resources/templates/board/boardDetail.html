@@ -65,9 +65,44 @@
         });
 
         // 삭제하기 (REST)
-        $(".board.view .btn_delete").on("click", function(){
+        $(".board_view .btn_delete").on("click", function(){
+            let confirm_text = confirm("정말 삭제하시겠습니까?");
 
+            if(!confirm_text){
+                return;
+            }
+
+            deleteBoard();
         });
+
+        function deleteBoard(){
+
+            let url = "/admin/board/" + boardId;
+
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                data: {
+                    boardId: boardId,
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    alert("게시글을 삭제했습니다");
+                    location.href = "/admin/board";
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == "500"){
+                        alert("게시글 삭제에 실패했습니다");
+                        return;
+                    }else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        }
 
     </script>
 </th:block>
