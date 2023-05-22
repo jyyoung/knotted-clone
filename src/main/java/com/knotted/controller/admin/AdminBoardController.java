@@ -2,11 +2,13 @@ package com.knotted.controller.admin;
 
 import com.knotted.dto.BoardDTO;
 import com.knotted.dto.BoardFormDTO;
+import com.knotted.dto.BoardImageDTO;
 import com.knotted.dto.MemberDTO;
 import com.knotted.entity.Member;
 import com.knotted.repository.MemberRepository;
 import com.knotted.service.BoardService;
 import com.knotted.service.admin.AdminBoardService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -88,6 +90,59 @@ public class AdminBoardController {
         }
 
         return ResponseEntity.noContent().build();
+    }
+
+
+    // 게시글 수정 페이지로 이동
+    @GetMapping(value = "/{boardId}")
+    public String boardFormUpdate(@PathVariable("boardId") Long boardId, Model model){
+        // BoardFormDTO를 넘겨준다
+
+        try {
+            BoardFormDTO boardFormDTO = adminBoardService.getBoard(boardId);
+            model.addAttribute("boardId", boardId);
+            model.addAttribute("boardFormDTO", boardFormDTO);
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("errorMessage", "존재하지 않는 게시글입니다");
+            return "redirect:/admin/board";
+        }
+
+        return "/admin/board/boardForm";
+    }
+
+
+    // 게시글 수정 처리
+    @PostMapping(value = "/{boardId}")
+    public String boardUpdate(@PathVariable("boardId") Long boardId, String imageName, String imageId, @Valid BoardFormDTO boardFormDTO, BindingResult bindingResult, Model model, MultipartFile boardImageFile){
+
+        if(bindingResult.hasErrors()){
+            // 바인딩 에러 나면 boardImageDTO가 없어서 타임리프에서 NPE가 뜨는 것 방지
+            BoardImageDTO boardImageDTO = new BoardImageDTO();
+            boardImageDTO.setOriginalImageName(imageName);
+            boardImageDTO.setId(Long.valueOf(imageId));
+            boardFormDTO.setBoardImageDTO(boardImageDTO);
+
+            return "/admin/board/boardForm";
+        }
+
+        // 이미지 관련 작업부터 하기
+        if(!boardImageFile.isEmpty()) { // 새로 올린 파일이 있다면
+            // 이미지인지 확인
+            if(!boardImageFile.getContentType().startsWith("image/")){ // 이미지 파일이 아니라면
+                model.addAttribute("errorMessage", "이미지 파일이 아닙니다");
+                return "/admin/board/boardForm";
+            }
+        }
+
+        try {
+            adminBoardService.updateBoard(boardFormDTO, boardImageFile);
+        } catch(Exception e) {
+            model.addAttribute("errorMessage", "게시글 수정 중 에러가 발생했습니다");
+            return "/admin/board/boardForm";
+        }
+
+        // 성공 시 게시글 관리 페이지로 이동
+        return "redirect:/admin/board";
     }
 
 

@@ -75,6 +75,7 @@
             deleteBoard();
         });
 
+        // 게시글 삭제 함수
         function deleteBoard(){
 
             let url = "/admin/board/" + boardId;
@@ -103,6 +104,11 @@
                 }
             });
         }
+
+        // 게시글 수정 페이지로 가기
+        $(".board_view .btn_modify").on("click", function(){
+            location.href = "/admin/board/" + boardId;
+        });
 
     </script>
 </th:block>

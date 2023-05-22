@@ -1,5 +1,6 @@
 package com.knotted.entity;
 
+import com.knotted.dto.BoardFormDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -32,8 +33,13 @@ public class Board extends BaseEntity{
     // 게시글 내용
     @Column(name = "board_content")
     private String content;
-
-
+    
+    // 게시글 수정 메소드
+    public void updateBoard(BoardFormDTO boardFormDTO){
+        this.category = boardFormDTO.getCategory();
+        this.subject = boardFormDTO.getSubject();
+        this.content = boardFormDTO.getContent();
+    }
 }
 
 
