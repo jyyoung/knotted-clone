@@ -9,6 +9,10 @@ import com.knotted.util.RandomUtils;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +30,7 @@ import java.security.Principal;
 @RequestMapping("/member")
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberRepository memberRepository;
@@ -76,6 +81,20 @@ public class MemberController {
         if(bindingResult.hasErrors()){
             return "/member/joinForm";
         }
+
+        // 테스트겸 여기서 해보는 거임. 실제로는 Service에 옮길 거임
+        // 여기서 MemberFormDTO의 latitude, longitude와 geometryFactory를 이용해 Point를 만들어보자
+
+        Double latitude = memberFormDTO.getLatitude(); // 위도
+        Double longitude = memberFormDTO.getLongitude(); // 경도
+
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Coordinate coordinate = new Coordinate(longitude, latitude); // 경도, 위도 순으로 입력
+        Point point = geometryFactory.createPoint(coordinate); // 좌표 객체 생성
+
+        log.info(point.toString());
+
+        memberFormDTO.setCoordinate(point); // memberFormDTO에 생성한 좌표 설정
 
         Member member = Member.createMember(memberFormDTO, passwordEncoder);
         memberService.saveMember(member);

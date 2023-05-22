@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 import org.modelmapper.ModelMapper;
 
 @Data
@@ -38,6 +39,14 @@ public class MemberFormDTO {
     @NotBlank(message = "주소는 필수 입력값입니다")
     @Size(max = 100, message = "주소는 100자 이내로 입력해주세요")
     private String address;
+
+    // 주소 좌표
+    private Point coordinate;
+
+    // 위도 데이터 전달용
+    private Double latitude;
+    // 경도 데이터 전달용
+    private Double longitude;
 
     // 현재 비밀번호 (회원정보 수정용)
     private String nowPassword;

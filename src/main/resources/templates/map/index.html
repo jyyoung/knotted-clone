@@ -9,9 +9,36 @@
 <th:block layout:fragment="content">
     <div class="container">
         <h1>주변매장찾기</h1>
+
+        <!--/* 카카오 지도를 띄울 부분 */-->
+        <div class="sub_container">
+
+            <div class="kakao_map_wrap">
+                <div id="kakao_map">
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </th:block>
 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+
+    <!--/* 지도를 그리는 카카오 지도 API 불러옴 (자바스크립트 키가 포함되어 있으므로 레포지토리를 절대 public으로 하면 안 됨) */-->
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7571150af31c845a300dfabc6d0b71c9"></script>
+
+    <script>
+        let container = document.getElementById("kakao_map");
+
+        let options = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도 중심좌표
+            level: 3 // 지도 확대 레벨
+        };
+
+        let map = new kakao.maps.Map(container, options);
+    </script>
+
+</th:block>
 
 </html>

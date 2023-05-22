@@ -2,8 +2,8 @@ package com.knotted.dto;
 
 import com.knotted.constant.MemberRole;
 import com.knotted.entity.Member;
-import jakarta.persistence.Column;
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 import org.modelmapper.ModelMapper;
 
 @Data
@@ -26,6 +26,9 @@ public class MemberDTO {
 
     // 주소
     private String address;
+
+    // 주소 좌표
+    private Point coordinate;
 
     // 총 구매금액
     private Long purchase;

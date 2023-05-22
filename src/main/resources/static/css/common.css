@@ -3855,6 +3855,19 @@ section::after {
 
 /* 게시판 부분 E */
 
+/* 주변매장찾기 (지도) 부분 S */
+
+.sub_container {
+    padding: 0 150px;
+}
+
+#kakao_map{
+    width: 100%;
+    height: 600px;
+}
+
+/* 주변매장찾기 (지도) 부분 E */
+
 /* 공통 푸터 부분 S */
 
 footer{

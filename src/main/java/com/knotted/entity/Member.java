@@ -5,6 +5,7 @@ import com.knotted.dto.MemberFormDTO;
 import com.knotted.util.RandomUtils;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 // 회원 엔티티
@@ -39,6 +40,10 @@ public class Member extends BaseEntity{
     // 주소
     @Column(name = "member_address")
     private String address;
+
+    // 주소 좌표
+    @Column(name = "member_coordinate", columnDefinition = "POINT")
+    private Point coordinate;
 
     // 총 구매금액
     @Column(name = "member_purchase")
@@ -80,6 +85,7 @@ public class Member extends BaseEntity{
         member.setName(memberFormDTO.getName());
         member.setPostcode(memberFormDTO.getPostcode());
         member.setAddress(memberFormDTO.getAddress());
+        member.setCoordinate(memberFormDTO.getCoordinate());
         member.setPurchase(0L);
         member.setReward(0L);
         member.setRewardUse(0L);
