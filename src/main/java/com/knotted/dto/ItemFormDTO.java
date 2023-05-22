@@ -1,7 +1,10 @@
 package com.knotted.dto;
 
 import com.knotted.entity.Item;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 

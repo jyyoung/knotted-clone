@@ -21,6 +21,10 @@ public class Board extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
+    // 게시글 카테고리
+    @Column(name = "board_category")
+    private String category;
+
     // 게시글 제목
     @Column(name = "board_subject")
     private String subject;

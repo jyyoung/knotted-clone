@@ -13,6 +13,9 @@ public class BoardDTO {
     // 회원 DTO
     private MemberDTO memberDTO;
 
+    // 게시글 카테고리
+    private String category;
+
     // 게시글 제목
     private String subject;
 
