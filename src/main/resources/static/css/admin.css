@@ -800,6 +800,24 @@ section h1{
 
 /* 매장 상품 관리 부분 E */
 
+/* 게시판 관리 부분 S */
+
+.knotted_form li.textarea_li{
+    padding-bottom: 0;
+}
+
+.knotted_form li textarea{
+    border-radius: 5px;
+    width: 100%;
+    height: 300px;
+    background-color: inherit;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 5px;
+}
+
+/* 게시판 관리 부분 E */
+
 /* 등록 폼 관련 부분 E */
 
 /* 주문 관리 부분 S */
@@ -927,8 +945,6 @@ section h1{
     clear: both;
     float: none;
 }
-
-
 
 /* 주문 관리 부분 E */
 

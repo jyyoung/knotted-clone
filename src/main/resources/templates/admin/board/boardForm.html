@@ -25,11 +25,11 @@
                         <input type="radio" name="category" id="category_notice" value="notice" th:checked="${boardId == null ? 'true' : (boardFormDTO.category == 'notice' ? 'true' : 'false')}">
                         <label for="category_notice" th:class="${(boardId == null || (boardId != null && boardFormDTO.category == 'notice')) ? 'category_on' : ''}">공지사항</label>
 
-                        <input type="radio" name="category" id="category_faq" value="notice" th:checked="${boardId == null ? 'true' : (boardFormDTO.category == 'faq' ? 'true' : 'false')}">
-                        <label for="category_faq" th:class="${(boardId == null || (boardId != null && boardFormDTO.category == 'faq')) ? 'category_on' : ''}">자주묻는질문</label>
+                        <input type="radio" name="category" id="category_faq" value="faq" th:checked="${boardId != null && boardFormDTO.category == 'faq'}">
+                        <label for="category_faq" th:class="${boardId != null && boardFormDTO.category == 'faq' ? 'category_on' : ''}">자주묻는질문</label>
 
-                        <input type="radio" name="category" id="category_event" value="notice" th:checked="${boardId == null ? 'true' : (boardFormDTO.category == 'event' ? 'true' : 'false')}">
-                        <label for="category_event" th:class="${(boardId == null || (boardId != null && boardFormDTO.category == 'event')) ? 'category_on' : ''}">이벤트</label>
+                        <input type="radio" name="category" id="category_event" value="event" th:checked="${boardId != null && boardFormDTO.category == 'event'}">
+                        <label for="category_event" th:class="${boardId != null && boardFormDTO.category == 'event' ? 'category_on' : ''}">이벤트</label>
                     </div>
 
                     <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="fieldError"></p>
@@ -41,9 +41,9 @@
                     <p th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="fieldError"></p>
                 </li>
 
-                <li class="required">
+                <li class="required textarea_li">
                     <label th:for="content">내용</label>
-                    <input type="text" th:field="*{content}" placeholder="내용을 입력해주세요">
+                    <textarea th:field="*{content}" placeholder="내용을 입력해주세요"></textarea>
                     <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"></p>
                 </li>
 
@@ -92,6 +92,12 @@
             if(errorMessage){
                 alert(errorMessage);
             }
+        });
+
+        // 카테고리 클릭 시
+        $(".category_wrap label").on("click", function(){
+            $(this).siblings().removeClass("category_on");
+            $(this).addClass("category_on");
         });
 
         $(".knotted_submit").on("click", function(){
