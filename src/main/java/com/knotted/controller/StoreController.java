@@ -34,9 +34,9 @@ public class StoreController {
     // 검색어로 매장 리스트 반환 (REST)
     @PostMapping(value = "/search")
     @ResponseBody
-    public ResponseEntity<List<StoreDTO>> getStoresBySearch(@RequestParam("searchWord") String searchWord){
+    public ResponseEntity<List<StoreDTO>> getStoresBySearch(@RequestParam("searchWord") String searchWord, Principal principal){
         try{
-            List<StoreDTO> storeList = storeService.getStoresBySearchWord(searchWord);
+            List<StoreDTO> storeList = storeService.getStoresBySearchWord(searchWord, principal);
             return new ResponseEntity<>(storeList, HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

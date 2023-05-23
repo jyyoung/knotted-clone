@@ -26,7 +26,7 @@ public class StoreDTO {
     private String address;
 
     // 주소 좌표
-    private Point coordinate;
+    private Point coordinate; // 이거 넣으니까 순환참조 남!
 
     // 영업시작시간
     private String openTime;
@@ -39,6 +39,9 @@ public class StoreDTO {
 
     // 매장 이미지
     private StoreImageDTO storeImageDTO;
+    
+    // 회원과 매장 사이의 거리 (m, 미터)
+    private Long distance; // 반올림하여 저장할 것임
 
     // 엔티티 <-> DTO간 변환에 사용할 ModelMapper 객체
     private static ModelMapper modelMapper = new ModelMapper();
