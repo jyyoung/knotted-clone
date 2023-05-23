@@ -16,7 +16,7 @@
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="javascript:;">
+                    <a th:href="@{/board/event/402}">
                         <img th:src="@{/images/main_banner_2.png}" alt="메인 배너">
                     </a>
                 </div>
@@ -24,11 +24,64 @@
 
             <div class="swiper-pagination"></div>
         </div>
+
+        <!--/* 이벤트 3개 가져옴 */-->
+        <div class="event">
+            <div class="inner">
+                <h1>EVENT</h1>
+                <ul>
+                    <li th:each="boardDTO : ${boardDTOList}" th:object="${boardDTO}" th:attr="data-id=*{id}">
+                        <a class="go_event_detail">
+                            <img th:src="*{boardImageDTO.imageUrl}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--/* 이 부분은 크게 의미 없으니 그냥 복붙하도록 하겠음 */-->
+        <div class="insta" style="">
+            <div class="inner">
+                <h1>INSTAGRAM</h1>
+                <ul>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/18017393788520492"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/17853008945967219"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/17956301624578884"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/17979139229181637"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/17966834078460537"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/17986303457012074"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/18183381034256525"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/17970854822147853"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/18178042285281246"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/17973739481090146"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/17946101675618432"></a></li>
+                    <li><a><img src="https://img-app.knotted-order.com/instagrams/17987049619988211"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="newsletter">
+            <div>
+                <h1>Sign up newsletter</h1>
+                <p>메일주소를 남겨주시면 회원가입 없이 <br>노티드의 신제품, 이벤트 소식을 받아보실 수 있습니다.</p>
+            </div>
+            <div class="right">
+                <p class="mailbox">
+                    <input type="text" id="newsletter_email">
+                    <button type="submit" class="subscribe_button">subscribe</button>
+                </p>
+                <p>
+                    <input type="checkbox" id="newsletter">
+                    <label for="newsletter"></label> 개인정보 수집 및 이용에 동의합니다.
+                </p>
+            </div>
+        </div>
     </div>
 </th:block>
 
 <th:block layout:fragment="script">
     <script>
+        // 메인 배너 스와이퍼
         let swiper = new Swiper(".knotted_main_swiper", {
             pagination: {
                 el: ".swiper-pagination",
@@ -40,6 +93,35 @@
             allowTouchMove: false,
             speed: 1000
         });
+
+        // 이벤트 게시글로 이동
+        $(".go_event_detail").on("click", function(){
+            let boardId = $(this).closest("li").data("id");
+            location.href = "/board/event/" + boardId;
+        });
+
+        // 노티드 인스타로 이동 (근데 노티드 인스타 삭제됨)
+        $(".insta a").on("click", function(){
+            window.open("https://www.instagram.com/cafeknotted/");
+        });
+
+        // 뉴스레터 구독 버튼 눌렀을 때
+        $(".newsletter .subscribe_button").on("click", function(){
+            // 개인정보 수집에 동의했는지 확인
+
+            if(!$("#newsletter").is(":checked")){
+                alert("개인정보 수집 및 이용에 동의해주세요");
+                return;
+            }
+
+            // 이메일을 적었는지 확인
+            if(!$("#newsletter_email").val()){
+                alert("뉴스레터에 등록할 이메일 주소를 입력해주세요");
+                return;
+            }
+        });
+
+
     </script>
 </th:block>
 
