@@ -25,9 +25,9 @@
                 </div>
             </div>
             <ul class="listview" id="items">
-                <li style="" v-for="item in items" :key="item.id" :data-id="item.id" class="item_link">
+                <li style="" v-for="item in items" :key="item.id" :data-id="item.id">
                     <div>
-                        <div class="img">
+                        <div class="img item_link">
                             <img :src="item.itemImageDTO.imageUrl" style="width: 100%;">
                         </div>
                         <button type="button" class="btn_listdelete">삭제</button>
@@ -38,9 +38,9 @@
             </ul>
 
             <ul class="listview display_none" id="stores">
-                <li style="" v-for="store in stores" :key="store.id" :data-id="store.id" class="store_link">
+                <li style="" v-for="store in stores" :key="store.id" :data-id="store.id">
                     <div>
-                        <div class="img">
+                        <div class="img store_link">
                             <img :src="store.storeImageDTO.imageUrl" style="width: 100%;">
                         </div>
                         <button type="button" class="btn_listdelete">삭제</button>
@@ -137,15 +137,61 @@
 
         // 상품 클릭 시
         $(".menulist").on("click", ".item_link", function(){
-            let itemId = $(this).data("id");
+            let itemId = $(this).closest("li").data("id");
             location.href = "/menu/" + itemId;
         });
 
         // 매장 클릭 시
         $(".menulist").on("click", ".store_link", function(){
-            let storeId = $(this).data("id");
+            let storeId = $(this).closest("li").data("id");
             location.href = "/store/" + storeId;
         });
+
+        // 상품 찜 삭제 버튼 클릭 시
+        $(".menulist").on("click", "#items .btn_listdelete", function(){
+            let itemId = $(this).closest("li").data("id");
+
+            toggleFavorite("item", itemId);
+        });
+
+        // 매장 찜 삭제 버튼 클릭 시
+        $(".menulist").on("click", "#stores .btn_listdelete", function(){
+            let storeId = $(this).closest("li").data("id");
+
+            toggleFavorite("store", storeId);
+        });
+
+        // 즐겨찾기 토글 메소드
+        function toggleFavorite(type, id){
+            $.ajax({
+                url: "/favorite/" + type + "/" + id,
+                method: "POST",
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    alert("찜이 삭제되었습니다");
+                    if(type == "item"){
+                        loadItems();
+                    }else if(type == "store"){
+                        loadStores();
+                    }
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == "400"){
+                        alert("존재하지 않는 상품 또는 매장입니다");
+                    }else if(jqXHR.status == "403"){
+                        alert("로그인이 필요합니다");
+                        location.href = "/member/login";
+                    }else if(jqXHR.status == "500"){
+                        alert("찜 추가/삭제 중 에러가 발생했습니다");
+                    }else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        }
 
     </script>
 
