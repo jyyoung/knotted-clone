@@ -5,6 +5,8 @@ import com.knotted.dto.MemberFormDTO;
 import com.knotted.util.RandomUtils;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -85,7 +87,17 @@ public class Member extends BaseEntity{
         member.setName(memberFormDTO.getName());
         member.setPostcode(memberFormDTO.getPostcode());
         member.setAddress(memberFormDTO.getAddress());
-        member.setCoordinate(memberFormDTO.getCoordinate());
+
+        // 여기서 MemberFormDTO의 latitude, longitude와 geometryFactory를 이용해 Point를 만들어 Coordinate 필드에 저장할 것이다
+        Double latitude = memberFormDTO.getLatitude(); // 위도
+        Double longitude = memberFormDTO.getLongitude(); // 경도
+
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Coordinate coordinate = new Coordinate(longitude, latitude); // 경도, 위도 순으로 입력
+        Point point = geometryFactory.createPoint(coordinate); // 좌표 객체 생성
+
+        member.setCoordinate(point);
+
         member.setPurchase(0L);
         member.setReward(0L);
         member.setRewardUse(0L);
@@ -105,6 +117,19 @@ public class Member extends BaseEntity{
         this.name = memberFormDTO.getName();
         this.postcode = memberFormDTO.getPostcode();
         this.address = memberFormDTO.getAddress();
+        
+        // 정보 수정 시에도 latitude, longitude 필드가 만약에 있으면 수정한다
+        Double latitude = memberFormDTO.getLatitude(); // 위도
+        Double longitude = memberFormDTO.getLongitude(); // 경도
+
+        if (latitude != null && longitude != null) { // 위도, 경도가 넘어온 경우에만 수정한다
+            GeometryFactory geometryFactory = new GeometryFactory();
+            Coordinate coordinate = new Coordinate(longitude, latitude); // 경도, 위도 순으로 입력
+            Point point = geometryFactory.createPoint(coordinate); // 좌표 객체 생성
+
+            this.coordinate = point;
+        }
+
     }
 
     // 회원 탈퇴 메소드
