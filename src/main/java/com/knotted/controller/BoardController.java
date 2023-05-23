@@ -65,11 +65,15 @@ public class BoardController {
         }else{
             model.addAttribute("isAdmin", false);
         }
-
-        BoardFormDTO boardFormDTO = boardService.getBoard(boardId);
-        model.addAttribute("category", category);
-        model.addAttribute("boardId", boardId);
-        model.addAttribute("boardFormDTO", boardFormDTO);
+        
+        try {
+            BoardFormDTO boardFormDTO = boardService.getBoard(boardId);
+            model.addAttribute("category", category);
+            model.addAttribute("boardId", boardId);
+            model.addAttribute("boardFormDTO", boardFormDTO);
+        } catch (Exception e) { // 해당 글이 없거나 한 경우
+            return "redirect:/"; // 메인으로 보냄
+        }
 
         // 카테고리에 따라 다른 View를 보여줄 것임
         return "board/boardDetail";
