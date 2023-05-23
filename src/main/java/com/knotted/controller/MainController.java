@@ -22,6 +22,6 @@ public class MainController {
 
         model.addAttribute("boardDTOList", boardDTOList);
 
-        return "/index";
+        return "index";
     }
 }
