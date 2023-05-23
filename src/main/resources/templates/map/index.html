@@ -4,6 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/common}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css"></th:block>
 
 <th:block layout:fragment="content">
@@ -29,14 +34,67 @@
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7571150af31c845a300dfabc6d0b71c9"></script>
 
     <script>
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
         let container = document.getElementById("kakao_map");
 
         let options = {
-            center: new kakao.maps.LatLng(37.496486, 127.028361), // 지도 중심좌표
-            level: 9 // 지도 확대 레벨
+            center: new kakao.maps.LatLng(37.53, 126.98), // 지도 중심좌표
+            level: 8 // 지도 확대 레벨
         };
 
         let map = new kakao.maps.Map(container, options);
+
+        // 매장 리스트를 ajax로 받아온다
+
+
+        $(document).ready(function(){
+            // 페이지 로드 완료되면 바로 loadCategoryItems로 전체 상품 불러옴
+            loadStores("");
+        });
+
+        // 검색어로 매장 리스트 받아오는 함수
+        function loadStores(searchWord){
+            $.ajax({
+                url: "/store/search",
+                method: "POST",
+                data: {
+                    searchWord: searchWord,
+                },
+                cache: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(result, status){
+                    // 넘어온 매장을 순회하면서 마커를 생성한다
+
+                    for (let i = 0; i < result.length; i++) {
+                        let store = result[i];
+
+                        let latitude = store.latitude;
+                        let longitude = store.longitude;
+
+                        // 마커 위치를 설정
+                        let markerPosition = new kakao.maps.LatLng(latitude, longitude);
+
+                        // 마커를 생성
+                        let marker = new kakao.maps.Marker({
+                            position: markerPosition,
+                            clickable: true // 마커를 클릭 시 지도 클릭 이벤트가 발생하지 않게 함
+                        });
+
+                        // 마커를 생성한 지도에 표시
+                        marker.setMap(map);
+
+                        // marker.setMap(null) 이렇게 하면 아까 생성한 마커가 지도에서 삭제됨
+                    }
+                },
+                error: function(jqXHR, status, error){
+                    alert(jqXHR.responseText);
+                }
+            });
+        }
     </script>
 
 </th:block>

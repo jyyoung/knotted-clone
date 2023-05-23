@@ -30,6 +30,12 @@ public class StoreDTO {
     @JsonIgnore // 왜 그런지 모르겠지만 순환참조 발생으로 넣었음
     private Point coordinate; // 이거 넣으니까 순환참조 남!
 
+    // 주소 위도
+    private Double latitude;
+
+    // 주소 경도
+    private Double longitude;
+
     // 영업시작시간
     private String openTime;
 

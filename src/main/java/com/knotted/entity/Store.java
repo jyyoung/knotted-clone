@@ -54,6 +54,14 @@ public class Store extends BaseEntity{
     @Column(name = "store_coordinate", columnDefinition = "POINT")
     private Point coordinate;
 
+    // 주소 위도
+    @Column(name = "store_latitude")
+    private Double latitude;
+
+    // 주소 경도
+    @Column(name = "store_longitude")
+    private Double longitude;
+
     // 영업시작시간
     @Column(name = "store_open_time")
     private String openTime;
@@ -85,6 +93,8 @@ public class Store extends BaseEntity{
             Coordinate coordinate = new Coordinate(longitude, latitude); // 경도, 위도 순으로 입력
             Point point = geometryFactory.createPoint(coordinate); // 좌표 객체 생성
 
+            this.latitude = latitude;
+            this.longitude = longitude;
             this.coordinate = point;
         }
     }
