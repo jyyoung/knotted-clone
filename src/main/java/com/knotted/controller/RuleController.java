@@ -23,9 +23,9 @@ public class RuleController {
 
         if(Arrays.asList(rules).contains(rule)){ // 위의 rules 안에 있는 경우
             model.addAttribute("rule", rule);
-            return "/rule/index";
+            return "rule/index";
         }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            return "redirect:/";
         }
 
     }

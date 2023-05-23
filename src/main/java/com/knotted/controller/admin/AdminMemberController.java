@@ -26,7 +26,7 @@ public class AdminMemberController {
 
         model.addAttribute("memberDTOList", memberDTOList);
 
-        return "/admin/member/index";
+        return "admin/member/index";
     }
 
 }

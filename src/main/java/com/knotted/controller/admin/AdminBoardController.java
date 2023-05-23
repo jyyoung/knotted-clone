@@ -38,7 +38,7 @@ public class AdminBoardController {
 
         model.addAttribute("boardDTOList", boardDTOList);
 
-        return "/admin/board/index";
+        return "admin/board/index";
     }
 
     // 게시글 등록 페이지로 이동
@@ -46,7 +46,7 @@ public class AdminBoardController {
     public String boardForm(Model model){
         model.addAttribute("boardFormDTO", new BoardFormDTO());
 
-        return "/admin/board/boardForm";
+        return "admin/board/boardForm";
     }
     
     // 게시글 등록 처리
@@ -54,7 +54,7 @@ public class AdminBoardController {
     public String boardSubmit(@Valid BoardFormDTO boardFormDTO, BindingResult bindingResult, Model model, MultipartFile boardImageFile, Principal principal){
 
         if(bindingResult.hasErrors()){
-            return "/admin/board/boardForm";
+            return "admin/board/boardForm";
         }
 
         Member member = memberRepository.findByEmail(principal.getName());
@@ -63,7 +63,7 @@ public class AdminBoardController {
 
         if(!boardImageFile.isEmpty() && !boardImageFile.getContentType().startsWith("image/")){ // 파일을 올렸는데 해당 파일이 이미지 파일이 아니라면
             model.addAttribute("errorMessage", "이미지 파일이 아닙니다");
-            return "/admin/board/boardForm";
+            return "admin/board/boardForm";
         }
 
         // 이미지가 있으면 게시글 및 게시글 이미지 저장 로직을 호출
@@ -71,7 +71,7 @@ public class AdminBoardController {
             adminBoardService.saveBoard(boardFormDTO, boardImageFile);
         }catch (Exception e){
             model.addAttribute("errorMessage", e.getMessage());
-            return "/admin/board/boardForm";
+            return "admin/board/boardForm";
         }
 
         // 성공 시 게시글 관리 페이지로 이동
@@ -107,7 +107,7 @@ public class AdminBoardController {
             return "redirect:/admin/board";
         }
 
-        return "/admin/board/boardForm";
+        return "admin/board/boardForm";
     }
 
     // 게시글 수정 처리
@@ -121,7 +121,7 @@ public class AdminBoardController {
             boardImageDTO.setId(Long.valueOf(imageId));
             boardFormDTO.setBoardImageDTO(boardImageDTO);
 
-            return "/admin/board/boardForm";
+            return "admin/board/boardForm";
         }
 
         // 이미지 관련 작업부터 하기
@@ -129,7 +129,7 @@ public class AdminBoardController {
             // 이미지인지 확인
             if(!boardImageFile.getContentType().startsWith("image/")){ // 이미지 파일이 아니라면
                 model.addAttribute("errorMessage", "이미지 파일이 아닙니다");
-                return "/admin/board/boardForm";
+                return "admin/board/boardForm";
             }
         }
 
@@ -137,7 +137,7 @@ public class AdminBoardController {
             adminBoardService.updateBoard(boardFormDTO, boardImageFile);
         } catch(Exception e) {
             model.addAttribute("errorMessage", "게시글 수정 중 에러가 발생했습니다");
-            return "/admin/board/boardForm";
+            return "admin/board/boardForm";
         }
 
         // 성공 시 게시글 관리 페이지로 이동

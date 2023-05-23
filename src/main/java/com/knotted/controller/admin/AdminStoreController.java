@@ -31,7 +31,7 @@ public class AdminStoreController {
         List<StoreDTO> storeList = adminStoreService.getAllStores();
         model.addAttribute("storeList", storeList);
 
-        return "/admin/store/index";
+        return "admin/store/index";
     }
 
     // 매장 등록 페이지로 이동
@@ -39,7 +39,7 @@ public class AdminStoreController {
     public String storeForm(Model model){
         model.addAttribute("storeFormDTO", new StoreFormDTO());
 
-        return "/admin/store/storeForm";
+        return "admin/store/storeForm";
     }
 
     // 매장 등록 처리
@@ -47,17 +47,17 @@ public class AdminStoreController {
     public String storeSubmit(@Valid StoreFormDTO storeFormDTO, BindingResult bindingResult, Model model, MultipartFile storeImageFile){
 
         if(bindingResult.hasErrors()){
-            return "/admin/store/storeForm";
+            return "admin/store/storeForm";
         }
 
         if(storeImageFile.isEmpty()){ // 이미지가 없다면
             model.addAttribute("errorMessage", "매장 이미지가 없습니다");
-            return "/admin/store/storeForm";
+            return "admin/store/storeForm";
         }
         
         if(!storeImageFile.getContentType().startsWith("image/")){ // 이미지 파일이 아니라면
             model.addAttribute("errorMessage", "이미지 파일이 아닙니다");
-            return "/admin/store/storeForm";
+            return "admin/store/storeForm";
         }
 
         // 이미지가 있으면 매장 및 매장 이미지 저장 로직을 호출
@@ -65,7 +65,7 @@ public class AdminStoreController {
             adminStoreService.saveStore(storeFormDTO, storeImageFile);
         }catch (Exception e){
             model.addAttribute("errorMessage", "매장 등록 중 에러가 발생했습니다");
-            return "/admin/store/storeForm";
+            return "admin/store/storeForm";
         }
 
         // 성공 시 매장 관리 페이지로 이동
@@ -100,7 +100,7 @@ public class AdminStoreController {
             return "redirect:/admin/store";
         }
 
-        return "/admin/store/storeForm";
+        return "admin/store/storeForm";
     }
 
     // 매장 수정 처리
@@ -116,7 +116,7 @@ public class AdminStoreController {
             storeImageDTO.setId(Long.valueOf(imageId));
             storeFormDTO.setStoreImageDTO(storeImageDTO);
 
-            return "/admin/store/storeForm";
+            return "admin/store/storeForm";
         }
 
         // 이미지 관련 작업부터 하기
@@ -124,7 +124,7 @@ public class AdminStoreController {
             // 이미지인지 확인
             if(!storeImageFile.getContentType().startsWith("image/")){ // 이미지 파일이 아니라면
                 model.addAttribute("errorMessage", "이미지 파일이 아닙니다");
-                return "/admin/store/storeForm";
+                return "admin/store/storeForm";
             }
         }
 
@@ -132,7 +132,7 @@ public class AdminStoreController {
             adminStoreService.updateStore(storeFormDTO, storeImageFile);
         } catch(Exception e) {
             model.addAttribute("errorMessage", "매장 수정 중 에러가 발생했습니다");
-            return "/admin/store/storeForm";
+            return "admin/store/storeForm";
         }
         
         // 성공 시 매장 관리 페이지로 이동
@@ -153,7 +153,7 @@ public class AdminStoreController {
             return "redirect:/admin/store";
         }
 
-        return "/admin/store/storeItem";
+        return "admin/store/storeItem";
     }
 
     // 전체 상품 리스트 및 매장별 재고를 받아옴

@@ -25,7 +25,7 @@ public class AdminOrderController {
 
         model.addAttribute("orderDTOList", orderDTOList);
 
-        return "/admin/order/index";
+        return "admin/order/index";
     }
 
 

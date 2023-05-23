@@ -45,7 +45,7 @@ public class OrderController {
     // 주문(예약) 메인으로 이동
     @GetMapping(value = {"", "/"})
     public String main(Model model){
-        return "/order/index";
+        return "order/index";
     }
 
     // 해당 매장 존재 여부를 확인하고 있으면 StoreName을 반환함
@@ -67,7 +67,7 @@ public class OrderController {
     @GetMapping(value = "/store-pick")
     public String storePick(Model model){
         model.addAttribute("mode", "store");
-        return "/order/orderSelect";
+        return "order/orderSelect";
     }
     
     // 예약 - 일자선택 페이지로 이동
@@ -89,7 +89,7 @@ public class OrderController {
         // 일단 오늘 날짜로부터 +2일 ~ +7일 총 6일간을 선택 가능하게 해야 하고,
         // 근데 이 부분은 REST로 설정하는 게 좋아 보인다
 
-        return "/order/orderSelect";
+        return "order/orderSelect";
     }
 
     // 예약 - 일자선택에서 오늘 날짜를 기준으로 달력을 만들어 반환하는 REST API
@@ -180,7 +180,7 @@ public class OrderController {
             return "redirect:/order/store-pick";
         }
 
-        return "/order/orderSelect";
+        return "order/orderSelect";
     }
 
     // 예약 - 메뉴선택 메뉴 상세 페이지로 이동
@@ -210,7 +210,7 @@ public class OrderController {
             return "redirect:/order/store-pick";
         }
 
-        return "/order/orderSelect";
+        return "order/orderSelect";
     }
 
     // 해당 매장의 해당 상품의 현재 재고를 확인하여 리턴함
@@ -250,7 +250,7 @@ public class OrderController {
         model.addAttribute("cartDTO", cartDTO);
         model.addAttribute("reserveDate", reserveDate);
 
-        return "/order/orderForm";
+        return "order/orderForm";
     }
 
     // 주문 결제 처리
@@ -337,7 +337,7 @@ public class OrderController {
             return "redirect:/"; // 에러 시 그냥 메인으로 보냄 (추후 에러메시지 기능 추가할 것)
         }
 
-        return "/order/orderPaid";
+        return "order/orderPaid";
     }
 
     // 주문 상세 보기 페이지로 이동
@@ -388,7 +388,7 @@ public class OrderController {
             return "redirect:/";
         }
 
-        return "/order/orderDetail";
+        return "order/orderDetail";
     }
 
     // 주문 취소 페이지로 이동
@@ -435,7 +435,7 @@ public class OrderController {
             return "redirect:/";
         }
 
-        return "/order/orderCancel";
+        return "order/orderCancel";
     }
     
     // 주문 취소 처리
@@ -470,7 +470,7 @@ public class OrderController {
         orderDTOList = orderService.getOrders(memberEmail);
         model.addAttribute("orderDTOList", orderDTOList);
 
-        return "/order/orderList";
+        return "order/orderList";
     }
 
 }

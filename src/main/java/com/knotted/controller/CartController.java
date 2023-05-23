@@ -33,7 +33,7 @@ public class CartController {
             model.addAttribute("reserveDate", reserveDate);
         }
 
-        return "/cart/index";
+        return "cart/index";
     }
 
     // 장바구니 리스트 조회

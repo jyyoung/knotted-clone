@@ -13,7 +13,7 @@ public class AdminMainController { // 빈으로 등록된 클래스의 이름이
 
     @GetMapping(value = {"", "/"})
     public String main(Model model){
-        return "/admin/index";
+        return "admin/index";
     }
 
 }

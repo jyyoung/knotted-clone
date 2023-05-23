@@ -33,7 +33,7 @@ public class MypageController {
 
         model.addAttribute("memberDTO", memberDTO);
 
-        return "/mypage/index";
+        return "mypage/index";
     }
 
     // 나의 등급 페이지로 이동
@@ -46,7 +46,7 @@ public class MypageController {
 
         model.addAttribute("memberDTO", memberDTO);
 
-        return "/mypage/myScore";
+        return "mypage/myScore";
     }
 
     // 적립 내역 페이지로 이동
@@ -67,7 +67,7 @@ public class MypageController {
         model.addAttribute("acquireList", acquireList);
         model.addAttribute("useList", useList);
 
-        return "/mypage/point";
+        return "mypage/point";
     }
 
     // 찜 리스트 페이지로 이동
@@ -80,6 +80,6 @@ public class MypageController {
 
         model.addAttribute("memberDTO", memberDTO);
 
-        return "/mypage/bookmark";
+        return "mypage/bookmark";
     }
 }

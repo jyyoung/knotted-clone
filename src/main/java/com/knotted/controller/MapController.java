@@ -22,6 +22,6 @@ public class MapController {
     public String main(Model model){
         // 매장 리스트를 여기서 읽지 말고, JSON 형태로 받아야 하기에 REST로 따로 받아서 처리한다.
 
-        return "/map/index";
+        return "map/index";
     }
 }

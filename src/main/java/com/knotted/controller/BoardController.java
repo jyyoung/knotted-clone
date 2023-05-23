@@ -40,7 +40,7 @@ public class BoardController {
         model.addAttribute("boardDTOList", boardDTOList);
 
         // 카테고리에 따라 다른 View를 보여줄 것임
-        return "/board/index";
+        return "board/index";
     }
 
     // 각 카테고리 글 보기 (카테고리로 따로 검색하진 않음. 그냥 조건 분기용)
@@ -72,6 +72,6 @@ public class BoardController {
         model.addAttribute("boardFormDTO", boardFormDTO);
 
         // 카테고리에 따라 다른 View를 보여줄 것임
-        return "/board/boardDetail";
+        return "board/boardDetail";
     }
 }

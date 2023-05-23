@@ -30,7 +30,7 @@ public class AdminItemController {
         List<ItemDTO> itemList = adminItemService.getAllItems();
         model.addAttribute("itemList", itemList);
 
-        return "/admin/item/index";
+        return "admin/item/index";
     }
 
     // 상품 등록 페이지로 이동
@@ -38,7 +38,7 @@ public class AdminItemController {
     public String itemForm(Model model){
         model.addAttribute("itemFormDTO", new ItemFormDTO());
 
-        return "/admin/item/itemForm";
+        return "admin/item/itemForm";
     }
 
     // 상품 등록 처리
@@ -46,17 +46,17 @@ public class AdminItemController {
     public String itemSubmit(@Valid ItemFormDTO itemFormDTO, BindingResult bindingResult, Model model, MultipartFile itemImageFile){
 
         if(bindingResult.hasErrors()){
-            return "/admin/item/itemForm";
+            return "admin/item/itemForm";
         }
 
         if(itemImageFile.isEmpty()){ // 이미지가 없다면
             model.addAttribute("errorMessage", "상품 이미지가 없습니다");
-            return "/admin/item/itemForm";
+            return "admin/item/itemForm";
         }
 
         if(!itemImageFile.getContentType().startsWith("image/")){ // 이미지 파일이 아니라면
             model.addAttribute("errorMessage", "이미지 파일이 아닙니다");
-            return "/admin/item/itemForm";
+            return "admin/item/itemForm";
         }
 
         // 이미지가 있으면 상품 및 상품 이미지 저장 로직을 호출
@@ -64,7 +64,7 @@ public class AdminItemController {
             adminItemService.saveItem(itemFormDTO, itemImageFile);
         }catch (Exception e){
             model.addAttribute("errorMessage", "상품 등록 중 에러가 발생했습니다");
-            return "/admin/item/itemForm";
+            return "admin/item/itemForm";
         }
 
         // 성공 시 상품 관리 페이지로 이동
@@ -99,7 +99,7 @@ public class AdminItemController {
             return "redirect:/admin/item";
         }
 
-        return "/admin/item/itemForm";
+        return "admin/item/itemForm";
     }
 
 
@@ -114,7 +114,7 @@ public class AdminItemController {
             itemImageDTO.setId(Long.valueOf(imageId));
             itemFormDTO.setItemImageDTO(itemImageDTO);
 
-            return "/admin/item/itemForm";
+            return "admin/item/itemForm";
         }
 
         // 이미지 관련 작업부터 하기
@@ -122,7 +122,7 @@ public class AdminItemController {
             // 이미지인지 확인
             if(!itemImageFile.getContentType().startsWith("image/")){ // 이미지 파일이 아니라면
                 model.addAttribute("errorMessage", "이미지 파일이 아닙니다");
-                return "/admin/item/itemForm";
+                return "admin/item/itemForm";
             }
         }
 
@@ -130,7 +130,7 @@ public class AdminItemController {
             adminItemService.updateItem(itemFormDTO, itemImageFile);
         } catch(Exception e) {
             model.addAttribute("errorMessage", "상품 수정 중 에러가 발생했습니다");
-            return "/admin/item/itemForm";
+            return "admin/item/itemForm";
         }
 
         // 성공 시 상품 관리 페이지로 이동

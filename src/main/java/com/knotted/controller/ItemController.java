@@ -32,7 +32,7 @@ public class ItemController {
         List<ItemDTO> itemList = itemService.getAllItems();
         model.addAttribute("itemList", itemList);
 
-        return "/item/index";
+        return "item/index";
     }
 
     // 카테고리 선택 시 해당 카테고리 리스트 반환 (REST)
@@ -110,7 +110,7 @@ public class ItemController {
             return "redirect:/item";
         }
 
-        return "/item/itemDetail";
+        return "item/itemDetail";
     }
 
 }

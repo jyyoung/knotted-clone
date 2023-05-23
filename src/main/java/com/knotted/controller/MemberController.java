@@ -49,7 +49,7 @@ public class MemberController {
             return "redirect:/";
         }
 
-        return "/member/loginForm";
+        return "member/loginForm";
     }
 
     // 로그인 실패 페이지로 이동
@@ -57,7 +57,7 @@ public class MemberController {
     public String loginError(@RequestParam(name = "error", required = false) String error, Model model){
         model.addAttribute("errorMessage", "이메일 또는 비밀번호를 확인해주세요");
 
-        return "/member/loginForm";
+        return "member/loginForm";
     }
 
     // 회원가입 페이지로 이동
@@ -70,7 +70,7 @@ public class MemberController {
 
         model.addAttribute("memberFormDTO", new MemberFormDTO());
 
-        return "/member/joinForm";
+        return "member/joinForm";
     }
 
     // 회원가입 처리
@@ -79,7 +79,7 @@ public class MemberController {
 
         // DTO의 Validation이 실패했을 경우 이동
         if(bindingResult.hasErrors()){
-            return "/member/joinForm";
+            return "member/joinForm";
         }
 
         Member member = Member.createMember(memberFormDTO, passwordEncoder);
@@ -108,7 +108,7 @@ public class MemberController {
     public String complete(@RequestParam(name = "mode") String mode, @RequestParam(name = "email", required = false) String email, Model model){
         model.addAttribute("mode", mode);
         model.addAttribute("email", email);
-        return "/member/complete";
+        return "member/complete";
     }
 
     // 회원정보 수정 비밀번호 확인 페이지로 이동
@@ -120,7 +120,7 @@ public class MemberController {
         MemberDTO memberDTO = MemberDTO.of(member);
         model.addAttribute("memberDTO", memberDTO);
 
-        return "/member/beforeModify";
+        return "member/beforeModify";
     }
 
     // 회원정보 수정 비밀번호 확인 처리
@@ -149,7 +149,7 @@ public class MemberController {
         MemberFormDTO memberFormDTO = MemberFormDTO.of(member);
         model.addAttribute("memberFormDTO", memberFormDTO);
 
-        return "/member/modifyForm";
+        return "member/modifyForm";
     }
     
     // PasswordEncoder 객체의 matches() 메소드로 인코딩되지 않은 비밀번호와 인코딩된 비밀번호가 같은지 여부 확인
@@ -173,7 +173,7 @@ public class MemberController {
         }
 
         if(bindingResult.hasErrors()){
-            return "/member/modifyForm";
+            return "member/modifyForm";
         }
 
         // 회원정보 수정 메소드 호출
@@ -194,7 +194,7 @@ public class MemberController {
         MemberDTO memberDTO = MemberDTO.of(member);
         model.addAttribute("memberDTO", memberDTO);
 
-        return "/member/withdrawForm";
+        return "member/withdrawForm";
     }
 
     // 회원 탈퇴 처리 (REST로 처리)
@@ -222,7 +222,7 @@ public class MemberController {
     // 비밀번호 찾기 페이지로 이동
     @GetMapping(value = "/findPw")
     public String findPassword(){
-        return "/member/findPw";
+        return "member/findPw";
     }
 
     // 비밀번호 찾기 페이지에서 해당 이메일 가진 회원 존재하는지 확인
@@ -288,7 +288,7 @@ public class MemberController {
         model.addAttribute("mode", "findPw");
         model.addAttribute("email", email);
 
-        return "/member/complete";
+        return "member/complete";
     }
 
     // 비밀번호 변경 및 임시비밀번호 안내 페이지로 이동
@@ -325,7 +325,7 @@ public class MemberController {
         }
 
         // 임시 비밀번호 발급 성공 페이지로 이동
-        return "/member/complete";
+        return "member/complete";
     }
 }
 

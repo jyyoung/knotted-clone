@@ -28,7 +28,7 @@ public class StoreController {
         List<StoreDTO> storeList = storeService.getAllStores();
         model.addAttribute("storeList", storeList);
 
-        return "/store/index";
+        return "store/index";
     }
 
     // 검색어로 매장 리스트 반환 (REST)
@@ -63,7 +63,7 @@ public class StoreController {
             return "redirect:/store";
         }
 
-        return "/store/storeDetail";
+        return "store/storeDetail";
     }
 
 }

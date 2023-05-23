@@ -13,6 +13,6 @@ public class BrandController {
 
     @GetMapping(value = {"", "/"})
     public String main(Model model){
-        return "/brand/index";
+        return "brand/index";
     }
 }
