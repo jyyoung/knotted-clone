@@ -4136,7 +4136,7 @@ section::after {
 
 #kakao_map .marker_popup .go_store_detail{
     font-size: 1.3rem;
-    display: flex;
+    display: inline-flex;
     justify-content: flex-end;
     align-items: center;
 }
