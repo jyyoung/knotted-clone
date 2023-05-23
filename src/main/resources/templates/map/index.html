@@ -54,6 +54,12 @@
             loadStores("");
         });
 
+        // 생성된 인포윈도우를 담아둘 배열
+        let infoWindows = [];
+
+        // 생성된 커스텀 오버레이를 담아둘 배열
+        let overlays = [];
+
         // 검색어로 매장 리스트 받아오는 함수
         function loadStores(searchWord){
             $.ajax({
@@ -87,12 +93,75 @@
                         // 마커를 생성한 지도에 표시
                         marker.setMap(map);
 
+                        // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우 생성
+                        let iwContent = `<div class='marker_popup'>${store.name}</div>`,
+                            iwRemovable = true; // 인포윈도우를 닫을 수 있는 X 버튼 표시
+
+                        // 인포윈도우 생성
+                        let infoWindow = new kakao.maps.InfoWindow({
+                            content: iwContent,
+                            removable: iwRemovable
+                        });
+
+                        infoWindows.push(infoWindow); // 인포윈도우 배열에 인포윈도우 추가
+
+                        // 커스텀 오버레이 선언
+                        let customContent = `<div class='marker_popup'>${store.name}</div>`;
+
+                        // 마커 위에 커스텀 오버레이 표시
+                        let overlay = new kakao.maps.CustomOverlay({
+                            content: customContent,
+                            map: map,
+                            position: marker.getPosition()
+                        });
+
+                        overlays.push(overlay);
+
+                        // 마커에 클릭 이벤트 등록
+                        kakao.maps.event.addListener(marker, 'click', function(){
+                            // 다른 인포윈도우는 전부 닫는다
+                            // closeWindows();
+
+                            // 마커 위에 인포윈도우 표시
+                            // infoWindow.open(map, marker);
+
+                            // 다른 커스텀 오버레이는 전부 닫는다
+                            closeOverlays();
+
+                            // 마커 위에 커스텀 오버레이 표시
+                            overlay.setMap(map);
+
+                            // 중심도 부드럽게 이동하도록 함
+                            setCenter(latitude, longitude);
+                        });
+
                         // marker.setMap(null) 이렇게 하면 아까 생성한 마커가 지도에서 삭제됨
                     }
                 },
                 error: function(jqXHR, status, error){
                     alert(jqXHR.responseText);
                 }
+            });
+        }
+
+        // 클릭한 곳으로 지도 중심을 이동시키기 위한 함수
+        function setCenter(latitude, longitude){
+            let moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+
+            map.panTo(moveLatLon);
+        }
+
+        // 다른 마커를 닫는 함수
+        function closeWindows(){
+            // 마커 객체 순회하면서 닫는다.
+            infoWindows.forEach(function(e){
+                e.close(); // 닫음
+            });
+        }
+
+        function closeOverlays(){
+            overlays.forEach(function(e){
+                e.setMap(null);
             });
         }
     </script>
