@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -219,15 +220,18 @@ public class OrderService {
     // 주문 취소(삭제) 처리
     public void cancelOrder(String memberEmail, Long orderId, OrderCancelType cancelType, String cancelDescription){
 
-        // 해당 주문으로 인해 받은 적립금이 있는지 확인 후,
-        // 해당 적립금 획득 내역을 삭제한다
-        // 해당 회원의 적립금을 감소시킨다.
-        // 또한 해당 회원의 구매금액을 결제금액만큼 감소시킨다.
+        // 해당 주문으로 인해 받은 적립금이 있는지 확인 후, - OK
+        // 해당 적립금 획득 내역을 삭제한다 - OK
+        // 해당 회원의 적립금을 감소시킨다. - OK
+        // 또한 해당 회원의 구매금액을 결제금액만큼 감소시킨다. - OK
         
-        // 해당 주문에 사용된 적립금이 있는지 확인 후,
-        // 해당 적립금 사용 내역을 삭제한다.
-        // 해당 회원의 적립금을 증가시킨다.
-        // 해당 회원의 사용 적립금을 감소시킨다.
+        // 해당 주문에 사용된 적립금이 있는지 확인 후, - OK
+        // 해당 적립금 사용 내역을 삭제한다. - OK
+        // 해당 회원의 적립금을 증가시킨다. - OK
+        // 해당 회원의 사용 적립금을 감소시킨다. - OK
+
+        // 해당 매장 상품의 재고를 다시 증가시킨다 - OK
+        // 해당 상품의 판매량을 감소시킨다
         
         // 해당 주문의 주문 상태를 CANCEL로 바꾸고, 예약 취소 사유 및 예약 취소 상세사유를 설정한다.
 
@@ -296,7 +300,15 @@ public class OrderService {
             Long count = orderItemDTO.getCount();
             StoreItem storeItem = storeItemRepository.findByStoreIdAndItemId(store.getId(), itemId);
 
-            storeItem.addStock(count); // 해당 매장의 재고를 증가시킨다
+            // 주문한 이후 해당 상품이 DB에서 제거될 경우를 대비해 옵셔널 객체로 처리한다
+            Optional<Item> optionalItem = itemRepository.findById(itemId);
+            
+            if(optionalItem.isPresent()){ // 내부 Item 객체가 존재하면
+                Item item = optionalItem.get();
+                item.subtractSaleCount(count); // 해당 상품의 판매량을 다시 감소시킨다
+            }
+
+            storeItem.addStock(count); // 해당 매장 상품의 재고를 다시 증가시킨다
         }
 
         // 주문 업데이트

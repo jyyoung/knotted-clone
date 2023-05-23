@@ -77,6 +77,11 @@ public class Item extends BaseEntity{
         this.saleCount += saleCount;
     }
 
+    // 상품의 판매량을 감소시키는 메소드
+    public void subtractSaleCount(Long saleCount){
+        this.saleCount -= saleCount;
+    }
+
 }
 
 

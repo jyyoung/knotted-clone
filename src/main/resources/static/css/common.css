@@ -580,6 +580,21 @@ section::after {
     border-radius: 10px;
 }
 
+.listview li div.sale_count{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    text-align: right;
+    padding-right: 15px;
+    padding-top: 12px;
+}
+
+.listview li div.sale_count span{
+    color: #ffa0c5;
+    font-size: 1.5rem;
+}
+
 .storelist .listview li div > .img, .menulist .listview li div > .img {
     background: #EEE;
     width: 100%;

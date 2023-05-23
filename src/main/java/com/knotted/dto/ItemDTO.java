@@ -33,7 +33,7 @@ public class ItemDTO {
     private String origin;
 
     // 판매량
-    private String saleCount;
+    private Long saleCount;
 
     // 특정 매장에서의 재고 여부
     private boolean onStock;
