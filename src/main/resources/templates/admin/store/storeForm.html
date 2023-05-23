@@ -82,6 +82,11 @@
                 </li>
             </ul>
 
+            <!--/* 위도 */-->
+            <input type="hidden" th:field="*{latitude}">
+            <!--/* 경도 */-->
+            <input type="hidden" th:field="*{longitude}">
+
             <div class="require_text">* 표시 항목은 필수 입력 항목입니다</div>
 
             <button type="button" class="knotted_submit" th:text="${storeId == null ? '등록하기' : '수정하기'}"></button>
@@ -96,6 +101,10 @@
 
     <!--/* 다음 주소 API */-->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <!--/* 다음 지도 API */-->
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7571150af31c845a300dfabc6d0b71c9&libraries=services"></script>
+
     <script>
 
         // 유효성 검사 실패 등으로 다시 돌아오면 에러메시지 출력
@@ -154,6 +163,25 @@
                     } else {
                         document.getElementById("extraAddress").value = '';
                     }
+
+                    // 여기서 oncomplete시 geocoder를 사용해 좌표값을 input hidden에 넣을 것임
+                    // 주소-좌표 변환 객체 생성
+                    let geocoder = new kakao.maps.services.Geocoder();
+
+                    // 주소로 좌표를 검색한다. (위에서 받은 data.roadAddress 이용)
+                    geocoder.addressSearch(data.roadAddress, function(result, status){
+                        // 정상적으로 검색이 완료됐으면
+                        if(status === kakao.maps.services.Status.OK){
+                            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                            // console.log(coords); // 출력해본다
+
+                            let longitude = coords.La; // 경도
+                            $("#longitude").val(longitude);
+                            let latitude = coords.Ma; // 위도
+                            $("#latitude").val(latitude);
+                        }
+                    });
                 }
             }).open();
         }

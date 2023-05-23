@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 import org.modelmapper.ModelMapper;
 
 @Data
@@ -31,6 +32,14 @@ public class StoreFormDTO {
     // 주소
     @NotBlank(message = "주소는 필수 입력값입니다")
     private String address;
+
+    // 주소 좌표
+    private Point coordinate;
+
+    // 위도 데이터 전달용
+    private Double latitude;
+    // 경도 데이터 전달용
+    private Double longitude;
 
     // 영업시작시간
     @NotBlank(message = "영업시작시간은 필수 입력값입니다")

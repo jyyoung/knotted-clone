@@ -3,6 +3,9 @@ package com.knotted.entity;
 import com.knotted.dto.StoreFormDTO;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +50,10 @@ public class Store extends BaseEntity{
     @Column(name = "store_address")
     private String address;
 
+    // 주소 좌표
+    @Column(name = "store_coordinate", columnDefinition = "POINT")
+    private Point coordinate;
+
     // 영업시작시간
     @Column(name = "store_open_time")
     private String openTime;
@@ -68,5 +75,17 @@ public class Store extends BaseEntity{
         this.openTime = storeFormDTO.getOpenTime();
         this.closeTime = storeFormDTO.getCloseTime();
         this.description = storeFormDTO.getDescription();
+
+        // 정보 수정 시에도 latitude, longitude 필드가 만약에 있으면 수정한다
+        Double latitude = storeFormDTO.getLatitude(); // 위도
+        Double longitude = storeFormDTO.getLongitude(); // 경도
+
+        if (latitude != null && longitude != null) { // 위도, 경도가 넘어온 경우에만 수정한다
+            GeometryFactory geometryFactory = new GeometryFactory();
+            Coordinate coordinate = new Coordinate(longitude, latitude); // 경도, 위도 순으로 입력
+            Point point = geometryFactory.createPoint(coordinate); // 좌표 객체 생성
+
+            this.coordinate = point;
+        }
     }
 }

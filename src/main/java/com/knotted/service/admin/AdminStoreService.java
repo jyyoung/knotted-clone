@@ -10,6 +10,9 @@ import com.knotted.repository.admin.AdminStoreRepository;
 import com.knotted.util.TimeUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +40,17 @@ public class AdminStoreService {
         // 매장 등록 전 시간을 먼저 가운데 :를 넣어준다 (util 패키지의 클래스로 해당 기능을 구현해놓았음)
         storeFormDTO.setOpenTime(TimeUtils.addColonToTime(storeFormDTO.getOpenTime()));
         storeFormDTO.setCloseTime(TimeUtils.addColonToTime(storeFormDTO.getCloseTime()));
+
+        // 매장도 좌표를 넣을 건데, 기존에 ModelMapper로 그냥 매핑해서 만들었기 때문에
+        // 미리 storeFormDTO에 Point로 처리를 해서 set 해놓자
+        Double latitude = storeFormDTO.getLatitude(); // 위도
+        Double longitude = storeFormDTO.getLongitude(); // 경도
+
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Coordinate coordinate = new Coordinate(longitude, latitude); // 경도, 위도 순으로 입력
+        Point point = geometryFactory.createPoint(coordinate); // 좌표 객체 생성
+
+        storeFormDTO.setCoordinate(point); // 생성된 좌표를 coordinate 필드에 담는다 (그럼 자동으로 매핑할 것이다)
 
         // 매장을 먼저 등록한다
         Store store = storeFormDTO.createStore(); // 받은 StoreFormDTO 객체를 엔티티로 변환 후 저장

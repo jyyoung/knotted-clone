@@ -3,6 +3,7 @@ package com.knotted.dto;
 
 import com.knotted.entity.Store;
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 import org.modelmapper.ModelMapper;
 
 // 매장 정보를 화면에 뿌려주기 위한 DTO
@@ -23,6 +24,9 @@ public class StoreDTO {
 
     // 주소
     private String address;
+
+    // 주소 좌표
+    private Point coordinate;
 
     // 영업시작시간
     private String openTime;
