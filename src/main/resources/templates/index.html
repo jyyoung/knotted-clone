@@ -15,9 +15,10 @@
                         <img th:src="@{/images/main_banner_1.png}" alt="메인 배너">
                     </a>
                 </div>
+                <!--/* 두 번째 슬라이드는 이벤트를 하나 보여준다 */-->
                 <div class="swiper-slide">
-                    <a th:href="@{/board/event/402}">
-                        <img th:src="@{/images/main_banner_2.png}" alt="메인 배너">
+                    <a th:href="${'/board/event/' + boardDTOList[0].id}">
+                        <img th:src="${boardDTOList[0].boardImageDTO.imageUrl}">
                     </a>
                 </div>
             </div>
