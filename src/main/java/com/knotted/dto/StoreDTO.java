@@ -1,6 +1,7 @@
 package com.knotted.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.knotted.entity.Store;
 import lombok.Data;
 import org.locationtech.jts.geom.Point;
@@ -26,6 +27,7 @@ public class StoreDTO {
     private String address;
 
     // 주소 좌표
+    @JsonIgnore // 왜 그런지 모르겠지만 순환참조 발생으로 넣었음
     private Point coordinate; // 이거 넣으니까 순환참조 남!
 
     // 영업시작시간

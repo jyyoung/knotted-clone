@@ -42,6 +42,10 @@
                 <!-- 일단 items에 담았기 때문에 이를 순회하면서 값을 가져온다 -->
                 <li v-for="store in stores" :key="store.id" :data-id="store.id" class="store_link">
                     <div>
+                        <div class="distance" v-if="store.distance">
+                            <img th:src="@{/images/marker.png}">
+                            {{ formatDistance(store.distance) }}km
+                        </div>
                         <div class="img">
                             <img :src="store.storeImageDTO.imageUrl" />
                         </div>
@@ -74,6 +78,12 @@
             el: "#stores",
             data: {
                 stores: []
+            },
+            methods: {
+                // 미터 단위를 킬로미터 단위로 변환 (소수점 1자리)
+                formatDistance(value){
+                    return (value / 1000).toFixed(1);
+                }
             }
         });
 

@@ -765,6 +765,24 @@ section::after {
     border-radius: 10px;
 }
 
+.listview li div.distance{
+    position: absolute;
+    z-index: 10;
+    top: 10px;
+    right: 10px;
+    padding: 5px 9px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 1.3rem;
+}
+
+.listview li div.distance img{
+    display: inline-block;
+    width: 15px;
+}
+
 .listview li div.sale_count{
     position: absolute;
     top: 0;
