@@ -4084,6 +4084,75 @@ section::after {
     height: 600px;
 }
 
+#kakao_map .marker_popup{
+    width: 270px;
+    height: 130px;
+    padding: 25px;
+    background-color: #ffa0c5;
+    position: relative;
+    bottom: 145px;
+}
+
+#kakao_map .marker_popup:after {
+    border-top: 10px solid #ffa0c5;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 0px solid transparent;
+    content: "";
+    position: absolute;
+    bottom: -9px;
+    left: 151px;
+}
+
+#kakao_map .marker_popup div{
+
+}
+
+#kakao_map .marker_popup .store_name{
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+#kakao_map .marker_popup .store_address{
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+#kakao_map .marker_popup .store_phonenumber{
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+#kakao_map .marker_popup .store_opentime{
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+#kakao_map .marker_popup .store_detail{
+    text-align: right;
+    position: relative;
+}
+
+#kakao_map .marker_popup .go_store_detail{
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#kakao_map .marker_popup .go_store_detail:after{
+    content: '';
+    background: url(/images/go_detail_button.png) left top no-repeat;
+    background-size: 36px 18px;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    margin: 0 0 1px 3px;
+}
+
+
 /* 주변매장찾기 (지도) 부분 E */
 
 /* 공통 푸터 부분 S */

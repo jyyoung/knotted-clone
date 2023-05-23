@@ -94,7 +94,7 @@
                         marker.setMap(map);
 
                         // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우 생성
-                        let iwContent = `<div class='marker_popup'>${store.name}</div>`,
+                        let iwContent = `<div class="marker_popup"><div class="store_name">${store.name}</div><div class="store_address">${store.address}</div><div class="phoneNumber">${store.phoneNumber}</div><div class="store_detail"><a href="javascript:;">자세히 보기</a></div></div></div>`,
                             iwRemovable = true; // 인포윈도우를 닫을 수 있는 X 버튼 표시
 
                         // 인포윈도우 생성
@@ -106,7 +106,7 @@
                         infoWindows.push(infoWindow); // 인포윈도우 배열에 인포윈도우 추가
 
                         // 커스텀 오버레이 선언
-                        let customContent = `<div class='marker_popup'>${store.name}</div>`;
+                        let customContent = `<div class="marker_popup"><div class="store_name">${store.name}</div><div class="store_address">${store.address}</div><div class="store_phonenumber">${store.phoneNumber}</div><div class="store_opentime">${store.openTime} ~ ${store.closeTime}</div><div class="store_detail"><a href="javascript:;" class="go_store_detail" data-id="${store.id}">자세히 보기</a></div></div></div>`;
 
                         // 마커 위에 커스텀 오버레이 표시
                         let overlay = new kakao.maps.CustomOverlay({
@@ -129,13 +129,14 @@
                             closeOverlays();
 
                             // 마커 위에 커스텀 오버레이 표시
-                            overlay.setMap(map);
+                            openOverlay(overlay);
 
                             // 중심도 부드럽게 이동하도록 함
                             setCenter(latitude, longitude);
                         });
 
-                        // marker.setMap(null) 이렇게 하면 아까 생성한 마커가 지도에서 삭제됨
+                        // 일단 모든 오버레이는 닫고 시작한다
+                        closeOverlays();
                     }
                 },
                 error: function(jqXHR, status, error){
@@ -146,7 +147,7 @@
 
         // 클릭한 곳으로 지도 중심을 이동시키기 위한 함수
         function setCenter(latitude, longitude){
-            let moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+            let moveLatLon = new kakao.maps.LatLng(latitude + 0.01, longitude); // 중심보다 살짝 위로 이동
 
             map.panTo(moveLatLon);
         }
@@ -159,11 +160,24 @@
             });
         }
 
+        // 다른 오버레이를 닫는 함수
         function closeOverlays(){
             overlays.forEach(function(e){
                 e.setMap(null);
             });
         }
+
+        // 현재 오버레이를 여는 함수
+        function openOverlay(overlay){
+            overlay.setMap(map);
+        }
+
+        // 매장 상세보기로 가기
+        $("#kakao_map").on("click", ".go_store_detail", function(){
+            let storeId = $(this).data("id");
+
+            location.href = "/store/" + storeId;
+        });
     </script>
 
 </th:block>
