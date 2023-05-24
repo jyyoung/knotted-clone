@@ -14,7 +14,7 @@
     <div class="container">
         <h1>장바구니</h1>
 
-        <div id="cartItems" class="display_none">
+        <div id="cartItems">
             <div class="carttab">
                 <input type="radio" name="cart" id="cart02" checked>
                 <label for="cart02">예약</label>
@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <div class="cartlist" v-if="cartItems && cartItems.cartItemDTOList && cartItems.cartItemDTOList.length > 0" th:if="${cart != null}">
+            <div class="cartlist display_none" v-if="cartItems && cartItems.cartItemDTOList && cartItems.cartItemDTOList.length > 0" th:if="${cart != null}">
                 <ul>
                     <li v-for="cartItem in cartItems.cartItemDTOList" :key="cartItem.id" :data-id="cartItem.id" class="cartItem">
                         <ul>
@@ -59,7 +59,7 @@
                 <button type="button" class="on go_pay">결제하기</button>
             </div>
 
-            <div class="cart_null" v-if="!cartItems || !cartItems.cartItemDTOList || cartItems.cartItemDTOList.length === 0">
+            <div class="cart_null display_none" v-if="!cartItems || !cartItems.cartItemDTOList || cartItems.cartItemDTOList.length === 0">
                 <p>장바구니가 비었습니다</p>
             </div>
 
@@ -127,7 +127,8 @@
                     },
                     success: function(result, status){
                         cartItems.cartItems = result;
-                        $("#cartItems").removeClass("display_none");
+                        $("#cartItems .cartlist").removeClass("display_none");
+                        $("#cartItems .cart_null").removeClass("display_none");
                     },
                     error: function(jqXHR, status, error){
                         alert(jqXHR.responseText);
