@@ -61,11 +61,14 @@
 
 <th:block layout:fragment="script">
     <script>
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
         // 매장 삭제를 ajax로 구현
         $(".delete_store").on("click", function(){
 
-            let token = $("meta[name='_csrf']").attr("content");
-            let header = $("meta[name='_csrf_header']").attr("content");
+            alert("참조 엔티티 관련 문제로 지원하지 않습니다");
+            return;
 
             let storeId = $(this).closest(".store").data("id");
             let url = "/admin/store/" + storeId;

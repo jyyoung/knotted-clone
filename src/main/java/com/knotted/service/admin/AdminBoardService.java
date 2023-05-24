@@ -49,7 +49,9 @@ public class AdminBoardService {
         BoardImage boardImage = adminBoardImageRepository.findByBoardId(board.getId());
 
         // 게시글 이미지 파일 및 DB 먼저 제거
-        adminBoardImageService.deleteBoardImage(boardImage);
+        if(boardImage != null){ // 있으면 제거
+            adminBoardImageService.deleteBoardImage(boardImage);
+        }
 
         // 정상적으로 됐으면 게시글 제거
         adminBoardRepository.delete(board);
