@@ -5,6 +5,7 @@ import com.knotted.dto.StoreFormDTO;
 import com.knotted.service.FavoriteService;
 import com.knotted.service.StoreService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/store")
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class StoreController {
 
     private final StoreService storeService;
@@ -39,6 +41,7 @@ public class StoreController {
             List<StoreDTO> storeList = storeService.getStoresBySearchWord(searchWord, principal);
             return new ResponseEntity<>(storeList, HttpStatus.OK);
         }catch(Exception e){
+            log.info(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

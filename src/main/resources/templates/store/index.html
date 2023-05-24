@@ -38,7 +38,7 @@
 
 
             <!--/* Vue.js로 v-for 반복문을 돌아 렌더링할 부분 */-->
-            <ul class="listview" id="stores">
+            <ul class="listview display_none" id="stores">
                 <!-- 일단 items에 담았기 때문에 이를 순회하면서 값을 가져온다 -->
                 <li v-for="store in stores" :key="store.id" :data-id="store.id" class="store_link">
                     <div>
@@ -109,6 +109,7 @@
                 },
                 success: function(result, status){
                     stores.stores = result;
+                    $("#stores").removeClass("display_none");
                 },
                 error: function(jqXHR, status, error){
                     alert(jqXHR.responseText);

@@ -40,7 +40,7 @@
                 </th:block>
             </ul>
 
-            <ul class="store_item_list object_list" id="items">
+            <ul class="store_item_list object_list display_none" id="items">
                 <li v-for="item in items" :key="item.id" :data-id="item.id" class="store_item">
                     <ul>
                         <li>
@@ -97,6 +97,7 @@
                 cache: false,
                 success: function(result, status){
                     storeItems.items = result;
+                    $("#items").removeClass("display_none");
                 },
                 error: function(jqXHR, status, error){
                     alert(jqXHR.responseText);

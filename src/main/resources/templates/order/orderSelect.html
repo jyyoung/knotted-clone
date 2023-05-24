@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <ul class="storelist" id="stores">
+                    <ul class="storelist display_none" id="stores">
                         <!--/* 이 부분도 Vue.js로 받기 */-->
                         <li v-for="store in stores" :key="store.id" :data-id="store.id" class="store_link">
                             <div class="thumb">
@@ -106,7 +106,7 @@
                 <div class="reserve_date">
                     <!--/* cal 클래스 이 부분도 통째로 REST, Vue.js로 구현해야 함 */-->
                     <!--/* 이 부분도 Vue.js로 받기 */-->
-                    <div class="cal" id="calendar" :data-year="calendar.year" :data-month="(calendar.month + 1)">
+                    <div class="cal display_none" id="calendar" :data-year="calendar.year" :data-month="(calendar.month + 1)">
                         <div class="month">
                             <ul>
                                 <li>
@@ -239,7 +239,7 @@
                         <input type="radio" name="category" id="category04" value="bakery">
                         <label for="category04" style="" data-category="bakery">베이커리</label>
                     </div>
-                    <ul class="menulist" id="items">
+                    <ul class="menulist display_none" id="items">
                         <li v-for="item in items" :key="item.id" :data-id="item.id" class="item_link">
                             <div v-if="item.onStock === false" class="no_stock_item">
                                 현재 매장에 재고가 없는 상품입니다
@@ -393,6 +393,7 @@
                     },
                     success: function(result, status){
                         stores.stores = result;
+                        $("#stores").removeClass("display_none");
                     },
                     error: function(jqXHR, status, error){
                         alert(jqXHR.responseText);
@@ -472,6 +473,7 @@
                     cache: false,
                     success: function(result, status){
                         calendar.calendar = result;
+                        $("#calendar").removeClass("display_none");
 
                         if(result.activeExists === false){
                             $(".reserve_time .timetable").find("input[type='radio']").prop("checked", false).prop("disabled", true);
@@ -600,6 +602,7 @@
                     },
                     success: function(result, status){
                         items.items = result;
+                        $("#items").removeClass("display_none");
                     },
                     error: function(jqXHR, status, error){
                         alert(jqXHR.responseText);

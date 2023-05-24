@@ -14,7 +14,7 @@
     <div class="container">
         <h1>장바구니</h1>
 
-        <div id="cartItems">
+        <div id="cartItems" class="display_none">
             <div class="carttab">
                 <input type="radio" name="cart" id="cart02" checked>
                 <label for="cart02">예약</label>
@@ -127,6 +127,7 @@
                     },
                     success: function(result, status){
                         cartItems.cartItems = result;
+                        $("#cartItems").removeClass("display_none");
                     },
                     error: function(jqXHR, status, error){
                         alert(jqXHR.responseText);

@@ -802,7 +802,6 @@ section::after {
 }
 
 .storelist .listview li div > .img, .menulist .listview li div > .img {
-    background: #EEE;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -1857,7 +1856,6 @@ section::after {
 }
 
 .order_box_wrap .menulist li > a > div {
-    background-color: #CCC;
     width: 100%;
     margin-bottom: 10px;
     position: relative;
