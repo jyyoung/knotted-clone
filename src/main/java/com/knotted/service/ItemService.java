@@ -28,7 +28,7 @@ public class ItemService {
 
     // 모든 상품 조회하는 메소드
     public List<ItemDTO> getAllItems(){
-        List<Item> itemList = itemRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        List<Item> itemList = itemRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
         List<ItemDTO> itemDTOList = new ArrayList<>();
 
         for(Item item : itemList){
@@ -44,15 +44,15 @@ public class ItemService {
 
         if(category.equals("all")){
             if(searchWord != null && !searchWord.isEmpty()){
-                itemList = itemRepository.findAllByNameContainingIgnoreCase(searchWord, Sort.by(Sort.Direction.DESC, "id"));
+                itemList = itemRepository.findAllByNameContainingIgnoreCase(searchWord, Sort.by(Sort.Direction.ASC, "id"));
             }else{
-                itemList = itemRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+                itemList = itemRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
             }
         }else{
             if(searchWord != null && !searchWord.isEmpty()){
-                itemList = itemRepository.findByCategoryAndNameContainingIgnoreCase(category, searchWord, Sort.by(Sort.Direction.DESC, "id"));
+                itemList = itemRepository.findByCategoryAndNameContainingIgnoreCase(category, searchWord, Sort.by(Sort.Direction.ASC, "id"));
             }else{
-                itemList = itemRepository.findByCategory(category, Sort.by(Sort.Direction.DESC, "id"));
+                itemList = itemRepository.findByCategory(category, Sort.by(Sort.Direction.ASC, "id"));
             }
         }
 

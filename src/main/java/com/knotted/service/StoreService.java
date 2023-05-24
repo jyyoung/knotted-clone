@@ -33,7 +33,7 @@ public class StoreService {
 
     // 모든 매장 조회하는 메소드
     public List<StoreDTO> getAllStores(){
-        List<Store> storeList = storeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        List<Store> storeList = storeRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
         List<StoreDTO> storeDTOList = new ArrayList<>();
 
         for(Store store : storeList){
@@ -57,9 +57,9 @@ public class StoreService {
         List<Store> storeList;
 
         if(searchWord != null && !searchWord.isEmpty()){
-            storeList = storeRepository.findAllByNameContainingIgnoreCase(searchWord, Sort.by(Sort.Direction.DESC, "id"));
+            storeList = storeRepository.findAllByNameContainingIgnoreCase(searchWord, Sort.by(Sort.Direction.ASC, "id"));
         }else{
-            storeList = storeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+            storeList = storeRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
         }
 
         List<StoreDTO> storeDTOList = new ArrayList<>();
