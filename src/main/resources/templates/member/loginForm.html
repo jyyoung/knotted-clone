@@ -76,6 +76,14 @@
             $(".knotted_login_form").submit();
         });
 
+        // 엔터 치면 submit 되게 하기
+        $(".knotted_login_form").on("keydown", "input", function(e){
+            if(e.keyCode === 13){
+                e.preventDefault();
+                $(".knotted_login_form").submit();
+            }
+        });
+
     </script>
 </th:block>
 

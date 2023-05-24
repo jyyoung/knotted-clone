@@ -71,6 +71,14 @@
             });
         });
 
+        // 엔터 치면 submit 되게 하기
+        $(".login").on("keydown", "input", function(e){
+            if(e.keyCode === 13){
+                e.preventDefault();
+                $(".findPw_submit").click();
+            }
+        });
+
     </script>
 </th:block>
 

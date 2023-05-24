@@ -106,7 +106,7 @@
                         infoWindows.push(infoWindow); // 인포윈도우 배열에 인포윈도우 추가
 
                         // 커스텀 오버레이 선언
-                        let customContent = `<div class="marker_popup"><div class="store_name">${store.name}</div><div class="store_address">${store.address}</div><div class="store_phonenumber">${store.phoneNumber}</div><div class="store_opentime">${store.openTime} ~ ${store.closeTime}</div><div class="store_detail"><a href="javascript:;" class="go_store_detail" data-id="${store.id}">자세히 보기</a></div></div></div>`;
+                        let customContent = `<div class="marker_popup"><a href="javascript:;" class="close_button"></a><div class="store_name">${store.name}</div><div class="store_address">${store.address}</div><div class="store_phonenumber">${store.phoneNumber}</div><div class="store_opentime">${store.openTime} ~ ${store.closeTime}</div><div class="store_detail"><a href="javascript:;" class="go_store_detail" data-id="${store.id}">자세히 보기</a></div></div></div>`;
 
                         // 마커 위에 커스텀 오버레이 표시
                         let overlay = new kakao.maps.CustomOverlay({
@@ -138,6 +138,7 @@
                         // 일단 모든 오버레이는 닫고 시작한다
                         closeOverlays();
                     }
+
                 },
                 error: function(jqXHR, status, error){
                     alert(jqXHR.responseText);
@@ -147,7 +148,7 @@
 
         // 클릭한 곳으로 지도 중심을 이동시키기 위한 함수
         function setCenter(latitude, longitude){
-            let moveLatLon = new kakao.maps.LatLng(latitude + 0.01, longitude); // 중심보다 살짝 위로 이동
+            let moveLatLon = new kakao.maps.LatLng(latitude, longitude);
 
             map.panTo(moveLatLon);
         }
@@ -162,8 +163,8 @@
 
         // 다른 오버레이를 닫는 함수
         function closeOverlays(){
-            overlays.forEach(function(e){
-                e.setMap(null);
+            overlays.forEach(function(overlay){
+                overlay.setMap(null);
             });
         }
 
@@ -178,6 +179,12 @@
 
             location.href = "/store/" + storeId;
         });
+
+        // 오버레이 닫기 버튼 눌렀을 때
+        $(".kakao_map_wrap").on("click", ".close_button", function(){
+            closeOverlays();
+        });
+
     </script>
 
 </th:block>

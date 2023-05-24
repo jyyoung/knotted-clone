@@ -4086,23 +4086,33 @@ section::after {
 }
 
 #kakao_map .marker_popup{
-    width: 270px;
+    width: 240px;
     height: 130px;
     padding: 25px;
     background-color: #ffa0c5;
     position: relative;
-    bottom: 145px;
 }
 
 #kakao_map .marker_popup:after {
-    border-top: 10px solid #ffa0c5;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 0px solid transparent;
-    content: "";
+    /*border-top: 10px solid #ffa0c5;*/
+    /*border-left: 10px solid transparent;*/
+    /*border-right: 10px solid transparent;*/
+    /*border-bottom: 0px solid transparent;*/
+    /*content: "";*/
+    /*position: absolute;*/
+    /*bottom: -9px;*/
+    /*left: 136px;*/
+}
+
+#kakao_map .marker_popup .close_button{
     position: absolute;
-    bottom: -9px;
-    left: 151px;
+    top: 15px;
+    right: 15px;
+    width: 12px;
+    height: 12px;
+    display: block;
+    background: url(/images/close_button_3.png) left top no-repeat;
+    background-size: 12px 12px;
 }
 
 #kakao_map .marker_popup div{
@@ -4116,7 +4126,8 @@ section::after {
 }
 
 #kakao_map .marker_popup .store_address{
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    color: #555;
     margin-bottom: 8px;
 }
 
