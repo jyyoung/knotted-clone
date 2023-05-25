@@ -15,7 +15,7 @@ public class MemberFormDTO {
     // 비밀번호
     @NotBlank(message = "비밀번호는 필수 입력값입니다")
     @Size(min = 8, max = 16, message = "비밀번호는 8자 이상, 16자 이하로 입력해주세요")
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).+")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).+", message = "비밀번호는 숫자, 영문 대소문자, 특수문자 @#$%^&+=! 중 하나를 포함하여 입력해주세요")
     private String password;
 
     // 이메일 (아이디처럼 사용)
@@ -26,13 +26,13 @@ public class MemberFormDTO {
     // 이름
     @NotBlank(message = "이름은 필수 입력값입니다")
     @Size(max = 6, message = "이름은 6자 이내로 입력해주세요")
-    @Pattern(regexp = "^[a-zA-Zㄱ-ㅎ가-힣]*$")
+    @Pattern(regexp = "^[a-zA-Zㄱ-ㅎ가-힣]*$", message = "이름은 한글, 영문 대소문자만 가능합니다")
     private String name;
 
     // 우편번호
     @NotBlank(message = "우편번호는 필수 입력값입니다")
     @Size(max = 6, message = "우편번호는 최대 6자리입니다")
-    @Pattern(regexp = "^[0-9]*$")
+    @Pattern(regexp = "^[0-9]*$", message = "우편번호는 숫자만 입력해주세요")
     private String postcode;
 
     // 주소
