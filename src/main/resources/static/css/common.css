@@ -4020,6 +4020,10 @@ section::after {
     background-color: #ebebeb;
 }
 
+.qna .qna_content{
+    white-space: pre-line;
+}
+
 .qna input:checked+label+div {
     display: block;
 }

@@ -77,7 +77,7 @@
                 <li th:each="boardDTO, status : ${boardDTOList}" th:object="${boardDTO}">
                     <input type="checkbox" th:id="'qna' + ${status.index}">
                     <label th:for="'qna' + ${status.index}" th:text="*{subject}"></label>
-                    <div th:text="*{content}"></div>
+                    <div th:text="*{content}" class="qna_content"></div>
                 </li>
             </ul>
         </th:block>
