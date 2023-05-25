@@ -498,6 +498,14 @@ section h1{
     margin-left: 10px;
 }
 
+.object_list > li .object_list_right a.delete_item{
+    display: none;
+}
+
+.object_list > li .object_list_right a.delete_store{
+    display: none;
+}
+
 /* 관리 목록 부분 E */
 
 /* 회원 관리 부분 S */

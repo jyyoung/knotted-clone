@@ -3827,7 +3827,7 @@ section::after {
 
 .board_view .btn_area, .board_write .btn_area {
     text-align: right;
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .board_view .btn_area button, .board_write .btn_area button {

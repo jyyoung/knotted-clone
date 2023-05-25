@@ -23,6 +23,15 @@
         <div class="board_view" th:object="${boardFormDTO}">
             <input type="hidden" th:id="*{id}">
 
+            <div class="btn_area">
+                <button type="button" class="btn_list">목록</button>
+
+                <th:block th:if="${isAdmin == true}">
+                    <button type="button" class="btn_modify">수정</button>
+                    <button type="button" class="btn_delete">삭제</button>
+                </th:block>
+            </div>
+
             <div class="board_title">
                 <h2 th:text="*{subject}"></h2>
                 <p style="" th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm')}"></p>
@@ -32,14 +41,6 @@
                     <div class="board_image_wrap">
                         <img th:src="*{boardImageDTO.imageUrl}" alt="게시글 이미지">
                     </div>
-                </th:block>
-            </div>
-            <div class="btn_area">
-                <button type="button" class="btn_list">목록</button>
-
-                <th:block th:if="${isAdmin == true}">
-                    <button type="button" class="btn_modify">수정</button>
-                    <button type="button" class="btn_delete">삭제</button>
                 </th:block>
             </div>
         </div>
