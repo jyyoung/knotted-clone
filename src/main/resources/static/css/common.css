@@ -216,6 +216,12 @@ header nav input, header nav label {
     display: none;
 }
 
+header nav > .box:after{
+    clear: both;
+    display: block;
+    content: "";
+}
+
 header nav > .box > .gnb {
     display: block;
     float: left;
@@ -300,6 +306,10 @@ section::after {
 /* 공통 헤더 부분 E */
 
 /* 메인 페이지 부분 S */
+
+div.knotted_main{
+    min-width: 1366px;
+}
 
 .knotted_main .knotted_main_swiper{
 
@@ -3313,6 +3323,7 @@ section::after {
 
 .business {
     width: 100%;
+    min-width: 1366px;
     max-width: 100% !important;
     margin-bottom: -100px;
     padding: 0 !important;
@@ -4174,6 +4185,7 @@ section::after {
 /* 공통 푸터 부분 S */
 
 footer{
+    min-width: 1366px;
     padding: 20px 0 30px;
     margin-top: 100px;
     border-top: 1px solid #ccc;
