@@ -260,7 +260,7 @@ public class MemberController {
                                 <p>안녕하세요.</p>
                                 <p>임시 비밀번호 발급을 위한 링크를 보내드립니다.</p>
                                 <p>
-                                    <a href=\"http://knotted.site/member/findPw/%s\">
+                                    <a href=\"https://knotted.site/member/findPw/%s\">
                                         여기를 클릭하셔서 임시 비밀번호를 발급받으세요.
                                     </a>
                                 </p>
