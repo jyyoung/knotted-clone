@@ -38,6 +38,10 @@
             font-size: 3rem;
         }
 
+        .agreement .knotted_site_link{
+            color: #ffa0c5;
+        }
+
         .agreement img{
             width: 250px;
             display: inline-block;
@@ -80,12 +84,14 @@
             </th:block>
 
             <div class="rule_subject">
+                <p>이 사이트는 <a href="https://knotted-order.com/" class="knotted_site_link">노티드 예약 사이트</a>를 따라 만든 것으로,</p>
+                <p>공부용 사이트이며 모든 저작권은 노티드에게 있습니다.</p>
+                <p>노티드 많이 사랑해주세요!</p>
+                <img th:src="@{/images/rule_main.gif}" alt="약관 메인">
                 <p>만든이 : 황정민</p>
                 <p>제작 : 2023.05.04 ~ 2023.05.24</p>
                 <p><a href="https://github.com/jungmin0917" class="github_link">github : jungmin0917</a></p>
             </div>
-
-            <img th:src="@{/images/rule_main.gif}" alt="약관 메인">
 
             <p class="rule_content">
                 안녕하세요.<br>
