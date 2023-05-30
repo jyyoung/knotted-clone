@@ -159,6 +159,7 @@ public class OrderController {
             if(year == nowYear && month == nowMonth + 1 && nowDay + 7 > lastDayOfMonth){
                 if(i < nowDay + 7 - lastDayOfMonth){
                     dayInfoDTO.setActive(true);
+                    calendarDTO.setActiveExists(true); // 하나라도 active가 있으면 true
                 }
             }
 
