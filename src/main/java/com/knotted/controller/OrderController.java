@@ -155,6 +155,13 @@ public class OrderController {
                 dayInfoDTO.setActive(false);
             }
 
+            // 현재 버그 있음. 다음 달 날짜 활성화가 되지 않음. 그 부분도 수정하기
+            if(year == nowYear && month == nowMonth + 1 && nowDay + 7 > lastDayOfMonth){
+                if(i < nowDay + 7 - lastDayOfMonth){
+                    dayInfoDTO.setActive(true);
+                }
+            }
+
             days.add(dayInfoDTO);
         }
 
