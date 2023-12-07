@@ -71,10 +71,10 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
+        run:
           aws deploy create-deployment \
           --application-name knotted \
           --deployment-group-name knotted-group \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=bucket-jungmin-githubactions,bundleType=zip,key=jungmin.zip \ 
+          --s3-location bucket=bucket-jungmin-githubactions,bundleType=zip,key=jungmin.zip \
           --region ap-northeast-2
