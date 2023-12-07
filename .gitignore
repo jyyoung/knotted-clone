@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### 기타 민감 정보
+*.properties
