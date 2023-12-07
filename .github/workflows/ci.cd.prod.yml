@@ -42,6 +42,10 @@ jobs:
       - name: Make Directory for deliver
         run: mkdir deploy
 
+      # script files 복사
+      - name: Copy script
+        run: cp ./scripts/*.sh ./deploy/
+
       - name: Copy Jar
         run: cp ./target/*.jar ./deploy/
 

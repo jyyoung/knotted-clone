@@ -16,7 +16,7 @@ permissions:
 
 # 새로운 버전의 애플리케이션이 배포 시 배포 프로세스가 완료된 후 ApplicationStart 훅이 작동한다.
 hooks:
-  AfterInstall:
-    - location: scripts/deploy.sh
-      timeout: 2000
-      runas: root
+  ApplicationStart:
+    - location: deploy.sh
+      timeout: 60
+      runas: ubuntu
