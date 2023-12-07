@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'corretto'
+          distribution: 'adopt'
 
       - name: Create .properties file
         uses: actions/checkout@v3
@@ -25,8 +25,15 @@ jobs:
       - run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.properties
       - run: cat ./src/main/resources/application.properties
 
-      - name: Build with Maven
-        run: |
-          chmod +x mvnw
-          ./mvnw clean install
+      - name: Grant execute permission for Maven
+        run: chmod +x mvnw
 
+      - name: Build with Maven
+        run: ./mvnw clean install
+
+      - name: 🌎 Access to AWS
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
